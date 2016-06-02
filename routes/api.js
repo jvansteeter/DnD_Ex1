@@ -25,10 +25,11 @@ router.post('/users/register', function (req, res)
 	// find or create the user with the given username
     User.findOrCreate({username: req.body.username}, function(err, user, created) 
     {
+    	console.log("User not already in database");
         if (created) 
         {
             // if this username is not taken, then create a user record
-            user.name = req.body.name;
+            user.name = req.body.username;
             user.set_password(req.body.password);
             user.save(function(err) 
             {
