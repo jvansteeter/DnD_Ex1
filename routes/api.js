@@ -13,7 +13,19 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 //
 
 // register a user
-router.post('/users/register', function (req, res) 
+router.post('/auth/register', passport.authenticate('local-register', {
+    successRedirect: '/',
+    failureRedirect: '/bad'
+}));
+
+// login a local user using passport
+router.post('/auth/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/'
+}));
+
+// register a user
+/*router.post('/users/register', function (req, res) 
 {
 	console.log("attempting to register a new user");
     
@@ -53,7 +65,7 @@ router.post('/users/register', function (req, res)
 		    res.sendStatus("403");
 		}
     });
-});
+});*/
 
 // login a user
 router.post('/users/login', function(req, res, next)
@@ -65,19 +77,19 @@ router.post('/users/login', function(req, res, next)
 
 	passport.authenticate('local', function(err, user, info)
 	{
-	if(err)
-	{ 
-		return next(err); 
-	}
+    	if(err)
+    	{ 
+    		return next(err); 
+    	}
 
-	if(user)
-	{
-		return res.json({token: User.generateToken(user.username)});
-	} 
-	else 
-	{
-		return res.status(401).json(info);
-	}
+    	if(user)
+    	{
+    		return res.json({token: User.generateToken(user.username)});
+    	} 
+    	else 
+    	{
+    		return res.status(401).json(info);
+    	}
 	})(req, res, next);
 });
 

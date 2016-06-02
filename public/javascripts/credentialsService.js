@@ -4,6 +4,11 @@ clientApp.service('Credentials', function($window)
 {
     var credService = {};
 
+    credService.setToken = function(token)
+    {
+        $window.sessionStorage.setItem("authorization", token);
+    };
+
     credService.getUsername = function()
     {
         //return username;
