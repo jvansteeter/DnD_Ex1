@@ -34,6 +34,7 @@ passport.use('local-register', new LocalStrategy(function (username, password, d
             {
                 if (err)
                     throw err;
+                console.log("New User Created");
                 return done(null, newUser);
             });
         }

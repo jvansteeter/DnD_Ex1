@@ -7,13 +7,15 @@ var passport = require('passport');
 //
 
 // register a user
-router.post('/register', passport.authenticate('local-register', {
+router.post('/register', passport.authenticate('local-register', 
+{
     successRedirect: '/good',
     failureRedirect: '/bad'
 }));
 
 // login a local user using passport
-router.post('/login', passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', 
+{
     successRedirect: '/',
     failureRedirect: '/'
 }));
