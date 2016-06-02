@@ -36,7 +36,7 @@ router.post('/users/register', function (req, res)
             {
 				if (err) 
 				{
-					console.log("There was an error while saving the user"):
+					console.log("There was an error while saving the user");
 				    res.sendStatus("403");
 				    return;
 				}
