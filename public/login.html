@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="blogApp">
+	<head ng-controller="headerControl">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Login</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="stylesheets/styles.css" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	</head>
+	<body ng-controller="loginControl">
+<nav class="navbar navbar-static">
+    <div class="container">
+      
+    </div>
+</nav><!-- /.navbar -->
+
+<!-- Begin Body -->
+<div class="container">
+	<div class="row row-centered">
+      		<div class="col col-sm-4 col-centered">
+				<form>
+					<span>User ID: <i class="fa fa-user"></i><input type="text" class="form-control" ng-model="usernameInput" placeholder="User ID">
+					</span>
+					<span>Password: <i class="fa fa-key"></i><input type="password" class="form-control" ng-model="passwordInput" placeholder="Password">
+					</span>
+					<br>
+					<button class="btn btn-default" ng-click="login()">Log in</button>
+					<button class="btn btn-default" ng-click="createUser()">Create New User</button><br>
+					<p style="color : red">{{ loginInfo }}</p>
+				</form>
+          </div>
+      	</div>
+  	</div>
+</div>
+
+	<!-- script references -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="javascripts/bootstrap.min.js"></script>
+		<script src="javascripts/scripts.js"></script>
+	</body>
+</html>
