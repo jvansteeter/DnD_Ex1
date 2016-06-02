@@ -21,7 +21,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
         return;
       }
 
-      var url = "api/users/login";
+      var url = "users/login";
       console.log(url);
       var data =  {
                   "username" : $scope.usernameInput,
@@ -58,7 +58,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
       });
     };
 
-    $scope.createUser = function()
+    $scope.register = function()
     {
       if ($scope.usernameInput === "")
       {
@@ -71,7 +71,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
         return;
       }
 
-      var url = "api/auth/register";
+      var url = "auth/register";
       var data = {
           "username" : $scope.usernameInput,
           "password" : $scope.passwordInput
