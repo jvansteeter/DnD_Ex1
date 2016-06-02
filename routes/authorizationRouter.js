@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 
 //
-// API
+// API for user authentication
 //
 
 // register a user
@@ -17,3 +17,5 @@ router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/'
 }));
+
+module.exports = router;
