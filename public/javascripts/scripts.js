@@ -133,14 +133,21 @@ blogApp.controller('loginControl', function($scope, $window, $http, Credentials)
         $scope.loginInfo = "Username is blank";
         return;
       }
+
       if ($scope.passwordInput === "")
       {
         $scope.loginInfo = "Password is blank";
         return;
       }
-      var url = "validateUser?u=" + $scope.usernameInput + "&p=" + $scope.passwordInput;
+
+      var url = "api/users/login";
       console.log(url);
-      $http.get(url).success(function(data)
+      var data =  {
+                  "username" : $scope.usernameInput,
+                  "password" : $scope.passwordInput
+                };
+
+      $http.post(url, data).success(function(data)
       {
         console.log(data);
         if(data.length === 0)
@@ -153,11 +160,6 @@ blogApp.controller('loginControl', function($scope, $window, $http, Credentials)
         {
           Credentials.setUsername($scope.usernameInput);
           Credentials.setPassword($scope.passwordInput);
-          /*url = "getTodoList?u=" + $scope.usernameInput;
-          $http.get(url).success(function(data)
-          {
-              Credentials.setTodoList(data);
-          });*/
           $window.location.href = "index.html";
         }
         else if(data === "false")
@@ -165,27 +167,36 @@ blogApp.controller('loginControl', function($scope, $window, $http, Credentials)
         else
           $scope.loginInfo = "Unknown Error";
       });
-
-      /*url = "getTodoList?u=" + $scope.usernameInput;
-      $http.get(url).success(function(data)
-      {
-          Credentials.setTodoList(data);
-      });*/
     };
 
     $scope.createUser = function()
     {
-        var url = "createUser?u=" + $scope.usernameInput + "&p=" + $scope.passwordInput;
-        $http.get(url).success(function(data)
-        {
-            if(data === "OK")
-            {
-                $scope.loginInfo = "User created";
-            }
-            else
-                $scope.loginInfo = data;
-        });
-    }    
+      if ($scope.usernameInput === "")
+      {
+        $scope.loginInfo = "Username is blank";
+        return;
+      }
+      if ($scope.passwordInput === "")
+      {
+        $scope.loginInfo = "Password is blank";
+        return;
+      }
+
+      var url = "api/users/register";
+      var data = {
+          "username" : $scope.usernameInput,
+          "password" : $scope.passwordInput
+      };
+      $http.post(url, data).success(function(data)
+      {
+          if(data === "OK")
+          {
+              $scope.loginInfo = "User created";
+          }
+          else
+              $scope.loginInfo = data;
+      });
+    } 
 });
 
 blogApp.controller('newPostControl', function($scope, $window, $http, Credentials) 

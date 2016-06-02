@@ -5,7 +5,6 @@ var User = mongoose.model('User');
 
 passport.use(new LocalStrategy(function (username, password, done)
 {
-	console.log("in passport.js");
 	User.findOne({ username: username }, function (error, user)
 	{
 		if (error)
