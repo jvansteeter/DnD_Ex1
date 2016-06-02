@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var findOrCreate = require('mongoose-findorcreate');
 
 // setup bcrypt
 var bcrypt = require('bcrypt');
@@ -71,5 +72,8 @@ userSchema.statics.verifyToken = function(token,cb)
 		});
     });
 };
+
+// add findOrCreate
+userSchema.plugin(findOrCreate);
 
 mongoose.model('User', userSchema);
