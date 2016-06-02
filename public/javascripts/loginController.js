@@ -32,7 +32,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
       {
         console.log("Login was successful");
         console.log(data);
-        
+
         if(data.length === 0)
         {
           $scope.loginInfo = "Server Error";
@@ -71,7 +71,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
         return;
       }
 
-      var url = "api/users/register";
+      var url = "api/auth/register";
       var data = {
           "username" : $scope.usernameInput,
           "password" : $scope.passwordInput
