@@ -9,6 +9,7 @@ passport.use('local-register', new LocalStrategy(function (username, password, d
     // we are checking to see if the user trying to login already exists
     User.findOne({ username: username }, function(err, user) 
     {
+    	console.log("Attempting to register a new user");
         // if there are any errors, return the error
         if (err)
             return done(err);

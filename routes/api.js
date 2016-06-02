@@ -13,18 +13,6 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 //
 
 // register a user
-router.post('/auth/register', passport.authenticate('local-register', {
-    successRedirect: '/',
-    failureRedirect: '/bad'
-}));
-
-// login a local user using passport
-router.post('/auth/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/'
-}));
-
-// register a user
 /*router.post('/users/register', function (req, res) 
 {
 	console.log("attempting to register a new user");

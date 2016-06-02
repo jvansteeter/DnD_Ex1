@@ -8,7 +8,7 @@ var passport = require('passport');
 
 // register a user
 router.post('/register', passport.authenticate('local-register', {
-    successRedirect: '/',
+    successRedirect: '/good',
     failureRedirect: '/bad'
 }));
 
