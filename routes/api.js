@@ -30,8 +30,8 @@ router.post('/users/register', function (req, res)
         {
         	console.log("User was created");
             // if this username is not taken, then create a user record
-            user.name = req.body.username;
-            user.password = req.body.password;
+            user.username = req.body.username;
+            user.setPassword(req.body.password);
             user.save(function(err) 
             {
 				if (err) 
@@ -49,7 +49,7 @@ router.post('/users/register', function (req, res)
 		else 
 		{
 		    // return an error if the username is taken
-		    console.log("User was not created");
+		    console.log("Username already exists");
 		    res.sendStatus("403");
 		}
     });

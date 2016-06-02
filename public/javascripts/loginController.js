@@ -8,7 +8,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
     
     $scope.login = function()
     {
-      console.log("login username =" + $scope.usernameInput);
+      console.log("login username=" + $scope.usernameInput);
       if ($scope.usernameInput === "")
       {
         $scope.loginInfo = "Username is blank";
