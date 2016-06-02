@@ -30,7 +30,7 @@ router.post('/users/register', function (req, res)
         {
             // if this username is not taken, then create a user record
             user.name = req.body.username;
-            user.set_password(req.body.password);
+            user.password = req.body.password;
             user.save(function(err) 
             {
 				if (err) 
