@@ -55,7 +55,7 @@ router.post('/register', function (req, res)
 router.post('/login', passport.authenticate('local'), function (req, res)
 {
 	console.log("Here: " + req);
-	res.redirect('/good');
+	res.sendStatus(200);
 });
 
 module.exports = router;
