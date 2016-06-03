@@ -20,8 +20,10 @@ passport.deserializeUser(function(id, done)
 
 passport.use('local', new LocalStrategy(function (username, password, done)
 {
+	console.log("Authenticating user locally");
 	User.findOne({ username: username }, function (error, user)
 	{
+		console.log("User successfully authenticated");
 		if (error)
 		{
 			return done(error);

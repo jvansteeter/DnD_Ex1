@@ -54,8 +54,8 @@ router.post('/register', function (req, res)
 // login a local user using passport
 router.post('/login', passport.authenticate('local', 
 {
-    successRedirect: '/',
-    failureRedirect: '/'
+    successRedirect: '/index.html',
+    failureRedirect: '/goDie'
 }));
 
 module.exports = router;
