@@ -9,6 +9,10 @@ router.get('/', function(req, res)
 // if user is not logged-in redirect back to login page //
         console.log('User not logged in');
         res.redirect('/login.html');
+    }
+    else
+    {
+    	res.redirect('/dnd/home.html');
     }   
 });
 
