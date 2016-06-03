@@ -9,7 +9,6 @@ var passport = require('passport');
 // register a user
 router.post('/register', passport.authenticate('local-register', 
 {
-    successRedirect: '/good',
     failureRedirect: '/bad'
 }), function(req, res)
 {
