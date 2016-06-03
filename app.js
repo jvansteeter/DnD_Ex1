@@ -43,7 +43,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use(function(req, res, next) 
+{
+    if (req.session.user == null)
+    {
+// if user is not logged-in redirect back to login page //
+        res.redirect('/login.html');
+    }   else{
+        next();
+    }
+});
+
+// app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/api', api);
 
