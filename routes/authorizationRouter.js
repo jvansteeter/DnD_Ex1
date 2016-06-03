@@ -56,6 +56,10 @@ router.post('/login', passport.authenticate('local',
 {
     successRedirect: '/index.html',
     failureRedirect: '/goDie'
-}));
+}), function (req, res)
+{
+	console.log("Here: " + req);
+	res.sendStatus(401);
+});
 
 module.exports = router;

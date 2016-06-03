@@ -30,7 +30,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
 
       $http.post(url, data).success(function(data)
       {
-        console.log("Login was successful");
+        /*console.log("Login was successful");
         console.log(data);
 
         if(data.length === 0)
@@ -54,7 +54,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
         else
         {
           $scope.loginInfo = "Unknown Error";
-        }
+        }*/
       });
     };
 
