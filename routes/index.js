@@ -7,9 +7,4 @@ router.get('/', function(req, res)
   	res.redirect('/login.html');
 });
 
-router.get('/bad', function(req, res)
-{
-	res.redirect('/login.html');
-});
-
 module.exports = router;
