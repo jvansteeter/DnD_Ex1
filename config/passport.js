@@ -5,44 +5,37 @@ var User = mongoose.model('User');
 
 passport.use('local-register', new LocalStrategy(function (username, password, done) 
 {
-    console.log("Username: " + username);
-    console.log("Password: " + password);
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-    User.findOrCreate({ username: username }, function(err, user, created) 
+    console.log("Authenticate with local-register");
+    User.findOne({ username: username }, function(err, user) 
     {
-    	console.log("Attempting to register a new user");
-        console.log("Username: " + username);
-        console.log("Password: " + password);
-        // if there are any errors, return the error
         if (err)
         {
             return done(err);
         }
 
-        // check to see if theres already a user with that email
-        if (created) 
+        if (user) 
         {
-            // if this username is not taken, then create a user record
-            user.name = req.body.name;
-            user.setPassword(req.body.password);
-            user.save(function(err) 
-            {
-                if (err) 
-                {
-                    res.sendStatus("403");
-                    return;
-                }
-                // create a token
-                var token = User.generateToken(user.name);
-                // return value is JSON containing the user's name and token
-                res.json({name: user.name, token: token});
-            });
+            return done(null, false, {message: "username already taken"});
         } 
         else 
         {
-            // return an error if the username is taken
-            res.sendStatus("403");
+            // if there is no user with that email
+            // create the user
+            var newUser = new User();
+
+            // set the user's local credentials
+            newUser.username = username;
+            console.log("<about to set password>");
+            newUser.setPassword(password); 
+            console.log("<Set password complete>");
+
+            // save the user
+            newUser.save(function(err) 
+            {
+                if (err)
+                    throw err;
+                return done(null, newUser);
+            });
         }
     });
 }));
