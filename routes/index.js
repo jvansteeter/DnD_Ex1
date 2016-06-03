@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/dnd', function(req, res) 
+router.get('/', function(req, res) 
 {
   	if (req.session.user == null)
     {
