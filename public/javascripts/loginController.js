@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('loginControl', function($scope, $window, $http, Credentials) 
+clientApp.controller('loginControl', function($scope, $window, $http, $location) 
 {
     $scope.usernameInput = "";
     $scope.passwordInput = "";
@@ -29,10 +29,12 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
 
       $http.post(url, data).success(function(data)
       {
-        /*console.log("Login was successful");
+        console.log("Login was successful");
         console.log(data);
 
-        if(data.length === 0)
+        $location.url('/index.html');
+
+        /*if(data.length === 0)
         {
           $scope.loginInfo = "Server Error";
         }

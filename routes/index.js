@@ -7,15 +7,9 @@ router.get('/', function(req, res)
   res.redirect('/login.html');
 });
 
-function isLoggedIn(req, res, next)
+router.get('/bad', function(req, res)
 {
-    //console.log("isLoggedIn");
-    //console.log("<User>: " + JSON.stringify(req.user));
-    if (req.isAuthenticated())
-        return next();
-
-    //console.log("not logged in");
-    res.sendStatus(401);
-};
+	res.redirect('/login.html');
+});
 
 module.exports = router;
