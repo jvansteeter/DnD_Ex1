@@ -45,9 +45,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next)
 {
-    if (req.user == null)
+    if (req.user == null && req.path != '/login.html')
     {
-        res.redirect('/login');
+        console.log("User not authenticated");
+        res.redirect('/login.html');
     }
 });
 
