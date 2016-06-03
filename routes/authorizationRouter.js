@@ -11,7 +11,11 @@ router.post('/register', passport.authenticate('local-register',
 {
     successRedirect: '/good',
     failureRedirect: '/bad'
-}));
+}), function(req, res)
+{
+	console.log("Successfully registered new user");
+	res.sendStatus(200);
+});
 
 // login a local user using passport
 router.post('/login', passport.authenticate('local', 
