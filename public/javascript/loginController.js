@@ -32,7 +32,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location)
         console.log("Login was successful");
         console.log(data);
 
-        $location.url('/index.html');
+        window.location = 'home.html';
 
         /*if(data.length === 0)
         {
