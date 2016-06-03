@@ -21,7 +21,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, Credential
         return;
       }
 
-      var url = "users/login";
+      var url = "auth/login";
       console.log(url);
       var data =  {
                   "username" : $scope.usernameInput,
