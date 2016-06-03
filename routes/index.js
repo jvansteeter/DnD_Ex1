@@ -9,7 +9,7 @@ router.get('/', function(req, res)
 
 router.get('/login', function(req, res) 
 {
-	var body = require('../public/login');
+	var body = require('../public/login.html');
   	res.writeHead(200, 
   	{
   		'Content-Length': body.length,
