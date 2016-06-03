@@ -52,14 +52,10 @@ router.post('/register', function (req, res)
 });
 
 // login a local user using passport
-router.post('/login', passport.authenticate('local', 
-{
-    successRedirect: '/index.html',
-    failureRedirect: '/goDie'
-}), function (req, res)
+router.post('/login', passport.authenticate('local'), function (req, res)
 {
 	console.log("Here: " + req);
-	res.sendStatus(401);
+	res.redirect('/good');
 });
 
 module.exports = router;
