@@ -47,7 +47,7 @@ app.use(function(req, res, next)
 {
     if (req.user == null && req.path != '/login.html')
     {
-        console.log("User not authenticated");
+        console.log("User not authenticated " + req.path);
         res.redirect('/login.html');
     }
 });
