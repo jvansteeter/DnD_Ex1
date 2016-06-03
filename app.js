@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) 
 {
-    if (req.session.user == null)
+    if (req.session.user == null && req.path.indexOf('/dnd') === 0)
     {
 // if user is not logged-in redirect back to login page //
         console.log('User not logged in');

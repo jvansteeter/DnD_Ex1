@@ -2,9 +2,14 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res) 
+router.get('/dnd', function(req, res) 
 {
-  	res.redirect('/login.html');
+  	if (req.session.user == null)
+    {
+// if user is not logged-in redirect back to login page //
+        console.log('User not logged in');
+        res.redirect('/login.html');
+    }   
 });
 
 module.exports = router;
