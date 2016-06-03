@@ -48,8 +48,11 @@ app.use(function(req, res, next)
     if (req.session.user == null)
     {
 // if user is not logged-in redirect back to login page //
+        console.log('User not logged in');
         res.redirect('/login.html');
-    }   else{
+    }   
+    else
+    {
         next();
     }
 });
