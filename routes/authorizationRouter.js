@@ -55,7 +55,7 @@ router.post('/register', function (req, res)
 router.post('/login', passport.authenticate('local'), function (req, res)
 {
 	console.log("Here: " + req);
-	res.redirect('/index.html');
+	res.redirect('/dnd/home.html');
 });
 
 module.exports = router;
