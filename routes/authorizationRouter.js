@@ -51,8 +51,10 @@ router.post('/register', function (req, res)
     });
 });
 
-router.post('/login',
-  passport.authenticate('local'));
+router.post('/login',passport.authenticate('local')
+{		
+	res.sendStatus(200);
+});
 
 // login a local user using passport
 /*router.post('/login', passport.authenticate('local'), function (req, res)
