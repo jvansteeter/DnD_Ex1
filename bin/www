@@ -25,7 +25,7 @@ var server = http.createServer(app);
  * Add socket listener to server.
  */
 
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(server);
 var socket = require('./routes/socket.js');
 io.sockets.on('connection', socket);
 
