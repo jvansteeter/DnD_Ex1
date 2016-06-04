@@ -13,13 +13,11 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 //
 
 // get all items for the user
-router.get('/user', function (req,res) 
+router.get('/user', isLoggedIn, function (req,res) 
 {
     console.log("---!!! In api/user and authenticated !!!---");
     console.log(req.user);
     res.send(req.user);
-
-    
 });
 
 // get all items for the user
@@ -144,5 +142,14 @@ router.delete('/api/items/:item_id', function (req,res) {
         }
     });
 });
+
+function isLoggedIn(req, res, next) 
+{
+    // if user is authenticated in the session, carry on 
+    if (req.isAuthenticated())
+        return next();
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
 
 module.exports = router;
