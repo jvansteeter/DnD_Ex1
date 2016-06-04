@@ -13,6 +13,16 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 //
 
 // get all items for the user
+router.get('/user', passport.authenticate('local'), function (req,res) 
+{
+    console.log("---!!! In api/user and authenticated !!!---");
+    console.log(req.user);
+    res.send(req.user);
+    
+    
+});
+
+// get all items for the user
 router.get('/api/items', function (req,res) {
     // validate the supplied token
     user = User.verifyToken(req.headers.authorization, function(user) 

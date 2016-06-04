@@ -32,30 +32,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location)
         console.log("Login was successful");
         console.log(data);
 
-        //window.location = 'home.html';
-
-        /*if(data.length === 0)
-        {
-          $scope.loginInfo = "Server Error";
-        }
-        else if(data === "Invalid Username")
-        {
-          $scope.loginInfo = data;
-        }
-        else if(data === "true")
-        {
-          Credentials.setUsername($scope.usernameInput);
-          Credentials.setPassword($scope.passwordInput);
-          $window.location.href = "index.html";
-        }
-        else if(data === "false")
-        {
-          $scope.loginInfo = "Invalid Password";
-        }
-        else
-        {
-          $scope.loginInfo = "Unknown Error";
-        }*/
+        window.location = 'home.html';
       });
     };
 

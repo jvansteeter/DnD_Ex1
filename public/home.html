@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="blogApp">
+<html lang="en" ng-app="dndApp">
 	<head ng-controller="headerControl">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -13,8 +13,13 @@
 		<![endif]-->
 		<link href="stylesheet/styles.css" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/homeController.js"></script>
+    <script src="javascript/headerController.js"></script>
 	</head>
-	<body ng-controller="blogControl">
+	<body ng-controller="homeControl">
 <nav class="navbar navbar-static">
     <div class="container">
       <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -105,10 +110,5 @@
       	</div>
   	</div>
 </div>
-
-	<!-- script references -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="javascript/bootstrap.min.js"></script>
-		<script src="javascript/scripts.js"></script>
 	</body>
 </html>
