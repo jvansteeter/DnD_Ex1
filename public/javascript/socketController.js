@@ -4,10 +4,8 @@
 
 function AppCtrl($scope, socket) 
 {
-
   // Socket listeners
   // ================
-
   	socket.on('init', function (data) 
   	{
     	$scope.name = data.name;
@@ -54,9 +52,8 @@ function AppCtrl($scope, socket)
     	}
   	});
 
-  // Private helpers
-  // ===============
-
+  	// Private helpers
+  	// ===============
   	var changeName = function (oldName, newName) 
   	{
     	// rename user in list of users
@@ -76,8 +73,8 @@ function AppCtrl($scope, socket)
     	});
   	}
 
-  // Methods published to the scope
-  // ==============================
+  	// Methods published to the scope
+  	// ==============================
   	$scope.changeName = function () 
   	{
     	socket.emit('change:name', 
