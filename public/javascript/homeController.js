@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('blogControl', function($scope, $window, $http, Credentials) 
+clientApp.controller('blogControl', function($scope, $window, $http) 
 {
   posts = [];
 
@@ -16,9 +16,9 @@ clientApp.controller('blogControl', function($scope, $window, $http, Credentials
       "cats"
     ]
   };
-  var url = "getAllPosts?u=" + Credentials.getUsername() + "&p=" + Credentials.getPassword();
+  // var url = "getAllPosts?u=" + Credentials.getUsername() + "&p=" + Credentials.getPassword();
   console.log(url);
-  $http.get(url).success(function(data)
+  /*$http.get(url).success(function(data)
   {
     console.log(data);
     for(var k = 0; k < data.length; k++)
@@ -37,7 +37,7 @@ clientApp.controller('blogControl', function($scope, $window, $http, Credentials
         posts.push(post);
       }
     }
-  });
+  });*/
   //$scope.posts.reverse();
   posts.push(post1);
   $scope.posts = posts;
