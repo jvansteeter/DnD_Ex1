@@ -12,7 +12,7 @@ router.get('/', function(req, res)
     }
     else
     {
-    	res.redirect('/dnd/home.html');
+    	res.redirect('/home.html');
     }   
 });
 
