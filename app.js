@@ -9,6 +9,11 @@ var session = require('express-session');
 
 var app = express();
 
+// setup socket.io
+var io = require('socket.io').listen(app);
+var socket = require('./routes/socket.js');
+io.sockets.on('connection', socket);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
