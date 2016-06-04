@@ -29,50 +29,6 @@ userSchema.methods.checkPassword = function(password)
     return bcrypt.compareSync(password,this.password_hash);
 };
 
-// Generate a token for a client
-/*userSchema.statics.generateToken = function(user) 
-{
-	var today = new Date();
-	var exp = new Date(today);
-	exp.setDate(today.getDate() + 1);
-
-    return jwt.sign(
-    { 
-    	username: user,
-    	exp: parseInt(exp.getTime() / 1000) 
-    }, SECRET);
-};*/
-
-// Verify the token from a client. Call the callback with a user object if successful or null otherwise.
-/*userSchema.statics.verifyToken = function(token,cb) 
-{
-    if (!token) 
-    {
-        cb(null);
-        return;
-    }
-    // decrypt the token and verify that the encoded user id is valid
-    jwt.verify(token, SECRET, function(err, decoded) 
-    {
-        if (!decoded) 
-        {
-            cb(null);
-            return;
-        }
-        User.findOne({username: decoded.username},function(err,user) 
-        {
-		    if (err) 
-		    {
-				cb(null);
-		    } 
-		    else 
-		    {
-				cb(user);
-		    }
-		});
-    });
-};*/
-
 // add findOrCreate
 userSchema.plugin(findOrCreate);
 
