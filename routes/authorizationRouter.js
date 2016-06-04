@@ -51,7 +51,7 @@ var User = mongoose.model('User');
     });
 });*/
 
-router.post('/login', passport.authenticate('local-register'), function(req, res)
+router.post('/register', passport.authenticate('local-register'), function(req, res)
 {
 	res.sendStatus(200);
 });
