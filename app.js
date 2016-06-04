@@ -43,26 +43,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*app.use(function(req, res, next) 
-{
-    if (req.session.user == null && req.path.indexOf('/dnd') === 0)
-    {
-// if user is not logged-in redirect back to login page //
-        console.log('User not logged in');
-        res.redirect('/login.html');
-    }   
-    else
-    {
-        next();
-    }
-});*/
-
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/api', api);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req, res, next) 
+{
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
