@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-blogApp.controller('blogControl', function($scope, $window, $http, Credentials) 
+clientApp.controller('blogControl', function($scope, $window, $http, Credentials) 
 {
   posts = [];
 
