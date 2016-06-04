@@ -13,12 +13,12 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 //
 
 // get all items for the user
-router.get('/user', passport.authenticate('local'), function (req,res) 
+router.get('/user', function (req,res) 
 {
     console.log("---!!! In api/user and authenticated !!!---");
     console.log(req.user);
     res.send(req.user);
-    
+
     
 });
 
