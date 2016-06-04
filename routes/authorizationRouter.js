@@ -51,7 +51,7 @@ router.post('/register', function (req, res)
     });
 });
 
-app.post('/login',
+router.post('/login',
   passport.authenticate('local', { successRedirect: '/',
                                    failureRedirect: '/login' }));
 
