@@ -18,7 +18,45 @@ passport.deserializeUser(function(id, done)
     });
 });
 
-passport.use('local-signup', new LocalStrategy(function(req, email, password, done) 
+passport.use('local-register', new LocalStrategy(function(username, password, done)
+{
+	console.log("attempting to register a new user");
+    
+    if(!username || !password)
+	{
+		return res.status(400).json({ message: 'Please fill out all fields' });
+	}
+
+	// find or create the user with the given username
+    User.findOrCreate({username: username}, function(err, user, created) 
+    {
+        if (created) 
+        {
+        	console.log("User was created");
+            // if this username is not taken, then create a user record
+            user.username = username;
+            user.setPassword(password);
+            user.save(function(err) 
+            {
+				if (err) 
+				{
+					console.log("There was an error while saving the user");
+				    return done(err);
+				}
+		        
+		        return done(null, user);
+		    });
+		} 
+		else 
+		{
+		    // return an error if the username is taken
+		    console.log("Username already exists");
+		    return done(null, false, { message: 'User not created' });
+		}
+    });
+}));
+
+/*passport.use('local-signup', new LocalStrategy(function(req, username, password, done) 
 {
     // asynchronous
     // User.findOne wont fire unless data is sent back
@@ -60,7 +98,7 @@ passport.use('local-signup', new LocalStrategy(function(req, email, password, do
 	    });    
     });
 }));
-
+*/
 
 passport.use('local', new LocalStrategy(function (username, password, done)
 {

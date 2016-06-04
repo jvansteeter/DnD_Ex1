@@ -9,7 +9,7 @@ var User = mongoose.model('User');
 //
 
 // register a user
-router.post('/register', function (req, res) 
+/*router.post('/register', function (req, res) 
 {
 	console.log("attempting to register a new user");
     
@@ -49,6 +49,11 @@ router.post('/register', function (req, res)
 		    res.sendStatus("403");
 		}
     });
+});*/
+
+router.post('/login', passport.authenticate('local-register'), function(req, res)
+{
+	res.sendStatus(200);
 });
 
 router.post('/login',passport.authenticate('local'), function(req, res)

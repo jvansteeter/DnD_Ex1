@@ -30,7 +30,7 @@ userSchema.methods.checkPassword = function(password)
 };
 
 // Generate a token for a client
-userSchema.statics.generateToken = function(user) 
+/*userSchema.statics.generateToken = function(user) 
 {
 	var today = new Date();
 	var exp = new Date(today);
@@ -41,10 +41,10 @@ userSchema.statics.generateToken = function(user)
     	username: user,
     	exp: parseInt(exp.getTime() / 1000) 
     }, SECRET);
-};
+};*/
 
 // Verify the token from a client. Call the callback with a user object if successful or null otherwise.
-userSchema.statics.verifyToken = function(token,cb) 
+/*userSchema.statics.verifyToken = function(token,cb) 
 {
     if (!token) 
     {
@@ -71,7 +71,7 @@ userSchema.statics.verifyToken = function(token,cb)
 		    }
 		});
     });
-};
+};*/
 
 // add findOrCreate
 userSchema.plugin(findOrCreate);
