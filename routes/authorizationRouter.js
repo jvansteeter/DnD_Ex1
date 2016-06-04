@@ -51,11 +51,15 @@ router.post('/register', function (req, res)
     });
 });
 
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login' }));
+
 // login a local user using passport
-router.post('/login', passport.authenticate('local'), function (req, res)
+/*router.post('/login', passport.authenticate('local'), function (req, res)
 {
 	console.log("Here: " + req);
 	res.redirect('/home.html');
-});
+});*/
 
 module.exports = router;
