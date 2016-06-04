@@ -15,30 +15,14 @@ clientApp.controller('homeController', function($scope, $window, $http)
 	      "blogs",
 	      "cats"
 	    ]
-  };
-  // var url = "getAllPosts?u=" + Credentials.getUsername() + "&p=" + Credentials.getPassword();
-  // console.log(url);
-  /*$http.get(url).success(function(data)
-  {
-    console.log(data);
-    for(var k = 0; k < data.length; k++)
-    {
-      var author = data[k]["_id"];
-      var entries = data[k]['entry'];
-      for(var i = 0; i < entries.length; i++)
-      {
-        var post = {
-          "author" : author,
-          "title" : entries[i]['title'],
-          "date" : entries[i]['data'],
-          "tags" : entries[i]['tags'],
-          "body" : entries[i]['body']
-        };
-        posts.push(post);
-      }
-    }
-  });*/
-  //$scope.posts.reverse();
-  posts.push(post1);
-  $scope.posts = posts;
+	};
+	var url = "api/user";
+	console.log(url);
+	$http.get(url).success(function(data)
+	{
+		console.log(data);
+	});
+	//$scope.posts.reverse();
+	posts.push(post1);
+	$scope.posts = posts;
 });
