@@ -63,11 +63,10 @@ var userNames = (function ()
 module.exports = function (socket) 
 {
   	var name = userNames.getGuestName();
-
+  	console.log('Connection has been intialized');
   	// send the new user their name and a list of users
   	socket.emit('init', 
   	{
-  		console.log('Connection has been intialized');
     	test: 'test';
   	});
 
