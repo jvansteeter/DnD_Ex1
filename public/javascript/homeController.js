@@ -7,7 +7,7 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 	console.log("---!!! In home controller !!!---");
   	var posts = [];
 
-	socket.on('init', function (data) 
+	/*socket.on('init', function (data) 
   	{
   		console.log("Initializing socket io " + data);
     	var post1 = 
@@ -25,7 +25,7 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 		};
 		posts.push(post1);
 		$scope.posts = posts;
-  	});
+  	});*/
 
 	var url = "api/user";
 	console.log(url);
