@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.factory('socket', function($rootScope)
 {
-	/*var socket = io.connect();
+	var socket = io.connect();
   	return 
   	{
     	on: function (eventName, callback) 
@@ -32,5 +32,5 @@ clientApp.factory('socket', function($rootScope)
         		});
       		})
     	}
-  	};*/
+  	};
 });
