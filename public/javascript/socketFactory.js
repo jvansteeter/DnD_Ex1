@@ -1,7 +1,4 @@
-'use strict';
-
 var clientApp = angular.module('clientApp');
-var io = require('socket.io');
 
 clientApp.factory('socket', function($rootScope)
 {
