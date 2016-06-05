@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('homeController', function($scope, $window, $http, socket) 
+clientApp.controller('homeController', function($scope, $window, $http, Credentials) 
 {
 	console.log("---!!! In home controller !!!---");
   	var posts = [];
