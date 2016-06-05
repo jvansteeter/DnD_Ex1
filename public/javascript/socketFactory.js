@@ -1,4 +1,3 @@
-'use strict';
 
 var clientApp = angular.module('clientApp');
 
