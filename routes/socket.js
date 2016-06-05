@@ -67,7 +67,7 @@ module.exports = function (socket)
   	// send the new user their name and a list of users
   	socket.emit('init', 
   	{
-    	test: 'test';
+    	test: 'test'
   	});
 
   	// notify other clients that a new user has joined
