@@ -1,1 +1,1 @@
-angular.module('clientApp', ['ngAnimate', 'ui.bootstrap']);
+angular.module('clientApp', ['ngAnimate', 'ui.bootstrap', 'mgcrea.ngStrap']);
