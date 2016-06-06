@@ -10,7 +10,7 @@ clientApp.controller('encounterModalController', function ($scope, $uibModal, $l
     	var modalInstance = $uibModal.open(
     	{
       		animation: $scope.animationsEnabled,
-      		templateUrl: 'myModalContent.html',
+      		templateUrl: 'newEncounterModal.html',
       		controller: 'encounterModalInstanceController',
       		size: size,
       		resolve: 
