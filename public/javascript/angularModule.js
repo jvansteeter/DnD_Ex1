@@ -1,1 +1,1 @@
-angular.module('clientApp', []);
+angular.module('clientApp', ['ngAnimate', 'ui.bootstrap']);
