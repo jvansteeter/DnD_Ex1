@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) 
+clientApp.controller('encounterModalController', function ($scope, $uibModal, $log) 
 {
   	$scope.items = ['item1', 'item2', 'item3'];
   	$scope.animationsEnabled = true;
@@ -11,7 +11,7 @@ clientApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log)
     	{
       		animation: $scope.animationsEnabled,
       		templateUrl: 'myModalContent.html',
-      		controller: 'ModalInstanceCtrl',
+      		controller: 'encounterModalInstanceController',
       		size: size,
       		resolve: 
       		{
@@ -41,7 +41,7 @@ clientApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log)
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-clientApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) 
+clientApp.controller('encounterModalInstanceController', function ($scope, $uibModalInstance, items) 
 {
   	$scope.items = items;
   	$scope.selected = 

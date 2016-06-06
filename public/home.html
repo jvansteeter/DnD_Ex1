@@ -19,29 +19,12 @@
     <script src="javascript/socketFactory.js"></script>
     <script src="javascript/homeController.js"></script>
     <script src="javascript/headerController.js"></script>
-    <script src="javascript/dialogController.js"></script>
+    <script src="javascript/modalController.js"></script>
 		<title>{{ title }}</title>
 	</head>
 	<body>
-    <!--script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-    </script-->
     <nav class="navbar navbar-static">
-        <div class="container" ng-controller="ModalDemoCtrl">
+        <div class="container" ng-controller="encounterModalController">
           <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
             <span class="fa fa-chevron-down"></span>
           </a>
@@ -49,7 +32,7 @@
             <ul class="nav navbar-nav">
               <li><a href="home.html">Home</a></li>
               <li><a href="myPosts.html">My Posts</a></li>
-              <li><a ng-click="open('sm')">Create New Encounter</a></li>
+              <li><a href="#" ng-click="open()">Create New Encounter</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
               <li class="dropdown">
