@@ -9,7 +9,7 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 
 	socket.on('init', function (data) 
   	{
-  		console.log("Initializing socket io " + data);
+  		console.log(data);
     	var post1 = 
     	{ // TODO get this info from database
 		    title: "Welcome to the CS201R Blog",

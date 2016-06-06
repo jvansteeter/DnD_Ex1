@@ -1,4 +1,4 @@
-module.exports = function (io) {
+/*module.exports = function (io) {
   'use strict';
   io.on('connection', function (socket) {
     socket.broadcast.emit('user connected');
@@ -16,4 +16,4 @@ module.exports = function (io) {
       console.log('broadcast complete');
     });
   });
-};
+};*/
