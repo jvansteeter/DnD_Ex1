@@ -20,7 +20,7 @@
     <script src="javascript/dialogController.js"></script>
 		<title>{{ title }}</title>
 	</head>
-	<body ng-controller="ModalDemoCtrl">
+	<body>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">I'm a modal!</h3>
@@ -39,7 +39,7 @@
         </div>
     </script>
     <nav class="navbar navbar-static">
-        <div class="container">
+        <div class="container" ng-controller="ModalDemoCtrl">
           <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
             <span class="fa fa-chevron-down"></span>
           </a>
