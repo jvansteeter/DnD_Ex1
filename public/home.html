@@ -23,7 +23,7 @@
 		<title>{{ title }}</title>
 	</head>
 	<body>
-    <script type="text/ng-template" id="myModalContent.html">
+    <!--script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">I'm a modal!</h3>
         </div>
@@ -39,7 +39,7 @@
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
-    </script>
+    </script-->
     <nav class="navbar navbar-static">
         <div class="container" ng-controller="ModalDemoCtrl">
           <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -49,7 +49,7 @@
             <ul class="nav navbar-nav">
               <li><a href="home.html">Home</a></li>
               <li><a href="myPosts.html">My Posts</a></li>
-              <li><button class="btn btn-primary" type="button" ng-click="open()">Create New Post</button></li>
+              <li><button type="button" ng-click="open()">Create New Post</button></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
               <li class="dropdown">
