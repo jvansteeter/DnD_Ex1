@@ -32,7 +32,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
             user.username = req.body.username;
             user.first_name = req.body.firstname;
             user.last_name = req.body.lastname;
-            user.setPassword(password);
+            user.setPassword(req.body.password);
             user.save(function(err) 
             {
 				if (err) 
