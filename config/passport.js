@@ -18,15 +18,19 @@ passport.deserializeUser(function(id, done)
     });
 });
 
-passport.use('local-register', new LocalStrategy(function(username, password, done)
+passport.use('local-register', new LocalStrategy(function(req, done)
 {
-	console.log("attempting to register a new user");
+	console.log("---!!! attempting to register a new user !!!---");
+	console.log(req);
     
     if(!username || !password)
 	{
 		return res.status(400).json({ message: 'Please fill out all fields' });
 	}
 
+	done(null, false, { message: 'User not created' });
+	return;
+	
 	// find or create the user with the given username
     User.findOrCreate({username: username}, function(err, user, created) 
     {
