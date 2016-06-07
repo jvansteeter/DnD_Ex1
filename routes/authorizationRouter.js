@@ -14,8 +14,8 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 
 	// console.log("---!!! username: " + req.username + " password: " + req.password + " firstname: " req.firstname + " lastname: " + req.lastname + " code: " + req.authCode + " !!!---");
 
-	console.log("---!!! username: " + req.username + " !!!---");
-	res.send(req);
+	console.log("---!!! username: " + req.body.username + " !!!---");
+	res.send(req.body);
 	return;
 
 	// find or create the user with the given username
