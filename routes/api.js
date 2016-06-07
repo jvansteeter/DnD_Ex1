@@ -12,7 +12,7 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 // API
 //
 
-router.get('/encounter/create', isLoggedIn, function(req, res)
+router.post('/encounter/create', isLoggedIn, function(req, res)
 {
     console.log("---!!! In api/user and authenticated !!!---");
     console.log(req.user);
