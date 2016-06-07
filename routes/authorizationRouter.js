@@ -18,7 +18,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 
 	if (req.body.authCode !== 'testtest')
 	{
-		res.sendStatus(401);
+		res.status(401);
 		res.send("Invalid Authorization Code");
 		return;
 	}
