@@ -8,7 +8,7 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('ModalDemoCtrl', function($scope, $modal) 
+clientApp.controller('modalController', function($scope, $modal) 
 {
   	$scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
 
