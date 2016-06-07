@@ -8,7 +8,7 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('modalController', function($scope, $modal, $http) 
+clientApp.controller('modalController', function($scope, $modal, $http, $window) 
 {
   	$scope.modal = {title: 'Title'};//, content: 'Hello Modal<br />This is a multiline message!'};
 
@@ -60,6 +60,7 @@ clientApp.controller('modalController', function($scope, $modal, $http)
           	{
               	$scope.info = "User created";
               	myModal.$promise.then(myModal.hide);
+              	window.location = 'home.html';
           	}
           	else
           	{

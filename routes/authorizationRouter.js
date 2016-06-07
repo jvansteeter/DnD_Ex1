@@ -11,7 +11,46 @@ var User = mongoose.model('User');
 router.post('/register', function(req, res) //passport.authenticate('local-register'), function(req, res)
 {
 	console.log("---!!! Attempting to register a new user !!!---");
+
+	if(!username || !password)
+	{
+		return res.status(400).json({ message: 'Please fill out all fields' });
+	}
+
+	console.log("---!!! username: " + req.username + " password: " + req.password + " firstname: " req.firstname + " lastname: " + req.lastname + " code: " + req.authCode);
+
 	res.sendStatus(200);
+	return;
+
+	// find or create the user with the given username
+    User.findOrCreate({username: username}, function(err, user, created) 
+    {
+        if (created) 
+        {
+        	console.log("User was created");
+            // if this username is not taken, then create a user record
+            user.username = username;
+            user.setPassword(password);
+            user.save(function(err) 
+            {
+				if (err) 
+				{
+					console.log("There was an error while saving the user");
+				    return done(err);
+				}
+		        
+		        return done(null, user);
+		    });
+		} 
+		else 
+		{
+		    // return an error if the username is taken
+		    console.log("Username already exists");
+		    return done(null, false, { message: 'User not created' });
+		}
+    });
+
+	
 });
 
 router.post('/login',passport.authenticate('local'), function(req, res)

@@ -7,13 +7,14 @@ var bcrypt = require('bcrypt');
 var SALT = bcrypt.genSaltSync();
 
 // setup json web token
-var jwt = require('jsonwebtoken');
-var SECRET = '\x1f\x1e1\x8a\x8djO\x9e\xe4\xcb\x9d`\x13\x02\xfb+\xbb\x89q"F\x8a\xe0a';
+//var jwt = require('jsonwebtoken');
+//var SECRET = '\x1f\x1e1\x8a\x8djO\x9e\xe4\xcb\x9d`\x13\x02\xfb+\xbb\x89q"F\x8a\xe0a';
 
 var userSchema = new mongoose.Schema(
 {
     username: {type: String, index: true, unique: true},
-    name: String,
+    first_name: String,
+    last_name: String,
     password_hash: String
 });
 

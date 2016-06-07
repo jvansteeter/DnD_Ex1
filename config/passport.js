@@ -21,7 +21,6 @@ passport.deserializeUser(function(id, done)
 passport.use('local-register', new LocalStrategy(function(username, password, done)
 {
 	console.log("---!!! attempting to register a new user !!!---");
-	console.log(req);
     
     if(!username || !password)
 	{
