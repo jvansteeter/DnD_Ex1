@@ -49,7 +49,7 @@ clientApp.controller('modalController', function($scope, $modal, $http, $window)
       	var url = "auth/register";
       	var data = {
           	"username" : $scope.usernameInput,
-          	"password" : $scope.passwordInput,
+          	"password" : $scope.firstPasswordInput,
           	"firstname" : $scope.firstNameInput,
           	"lastname" : $scope.lastNameInput,
           	"authCode" : $scope.authCode

@@ -12,12 +12,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 {
 	console.log("---!!! Attempting to register a new user !!!---");
 
-	if(!username || !password)
-	{
-		return res.status(400).json({ message: 'Please fill out all fields' });
-	}
-
-	// console.log("---!!! username: " + req.username + " password: " + req.password + " firstname: " req.firstname + " lastname: " + req.lastname + " code: " + req.authCode + " !!!---");
+	console.log("---!!! username: " + req.username + " password: " + req.password + " firstname: " req.firstname + " lastname: " + req.lastname + " code: " + req.authCode + " !!!---");
 
 	res.send(req);
 	return;
