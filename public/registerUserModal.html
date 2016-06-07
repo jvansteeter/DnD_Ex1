@@ -1,3 +1,9 @@
+<style>
+  .form-control
+  {
+    margin-top: 10px;
+  }
+</style>
 <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" ng-controller="modalController">
     <div class="modal-content">
@@ -8,17 +14,11 @@
       <div class="modal-body">
         <form>
           <input type='text' name='username' class='form-control' ng-model="usernameInput" placeholder='Username' required autofocus> 
-          <br />
           <input type='password' name='password' class='form-control' ng-model="firstpasswordInput" placeholder='Password' required> 
-          <br />
           <input type='password' name='passwordAgain' class='form-control' ng-model="secondpasswordInput" placeholder='Confirm Password' required> 
-          <br />
           <input type='text' name='firstName' class='form-control' ng-model="firstNameInput" placeholder='First Name' required> 
-          <br />
           <input type='text' name='lastName' class='form-control' ng-model="lastNameInput" placeholder='Last Name' required> 
-          <br />
           <input type='text' name='authCode' class='form-control' ng-model="authCode" placeholder='Authorization Code' required> 
-          <br />
         </form>
       </div>
 
