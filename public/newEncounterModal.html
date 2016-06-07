@@ -1,17 +1,21 @@
-<script type="text/ng-template" id="newEncounterModal.html">
-    <div class="modal-header">
-        <h3 class="modal-title">New Encounter</h3>
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-animation="am-fade-and-slide-top">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus>
+          <textarea name="Post Body" class="form-control" ng-model="newEncounterDescription" placeholder='Encounter Description' rows="4" cols="150"></textarea>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+      </div>
     </div>
-    <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    </div>
-</script>   
+  </div>
+</div>

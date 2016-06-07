@@ -16,15 +16,17 @@ clientApp.controller('ModalDemoCtrl', function($scope, $modal)
   	//
   	function MyModalController($scope) 
   	{
-    	$scope.title = 'Some Title';
-    	$scope.content = 'Hello Modal<br />This is a multiline message from a controller!';
+    	$scope.title = 'New Encounter';
   	}
+  	
   	MyModalController.$inject = ['$scope'];
-  	var myModal = $modal({controller: MyModalController, templateUrl: 'angularModal.html', show: false});
+  	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
+
   	$scope.showModal = function() 
   	{
     	myModal.$promise.then(myModal.show);
   	};
+
   	$scope.hideModal = function() 
   	{
     	myModal.$promise.then(myModal.hide);
