@@ -15,11 +15,20 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 	// console.log("---!!! username: " + req.username + " password: " + req.password + " firstname: " req.firstname + " lastname: " + req.lastname + " code: " + req.authCode + " !!!---");
 
 	console.log("---!!! username: " + req.body.username + " !!!---");
-	res.send(req.body);
-	return;
+
+	if (req.body.authCode !== 'testtest')
+	{
+		res.sendStatus(401);
+		res.send("Invalid Authorization Code");
+		return;
+	}
 
 	// find or create the user with the given username
-    /*User.findOrCreate({username: username}, function(err, user, created) 
+    /*User.findOrCreate(
+    	{
+    		username: username,
+
+    	}, function(err, user, created) 
     {
         if (created) 
         {
@@ -46,7 +55,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 		}
     });*/
 
-	
+	res.send("OK");
 });
 
 router.post('/login',passport.authenticate('local'), function(req, res)
