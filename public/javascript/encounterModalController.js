@@ -49,8 +49,8 @@ clientApp.controller('modalController', function($scope, $modal, $http)
 		{
 			console.log("Create new encounter was successful");
 			console.log(data);
+  			myModal.$promise.then(myModal.hide);
 		});
-  		myModal.$promise.then(myModal.hide);
   	};
 
   	$scope.showModal = function() 
