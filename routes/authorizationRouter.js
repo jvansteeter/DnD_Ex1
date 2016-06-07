@@ -48,7 +48,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 		{
 		    // return an error if the username is taken
 		    console.log("Username already exists");
-		    return done(null, false, { message: 'Username is already in use' });
+		    return res.send("Username is already in use");
 		}
     });
 
