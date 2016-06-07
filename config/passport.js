@@ -58,7 +58,8 @@ passport.use('local-register', new LocalStrategy(function(username, password, do
 
 passport.use('local', new LocalStrategy(function (username, password, done)
 {
-	console.log("Authenticating user locally");
+	console.log("---!!! Authenticating user locally !!!---");
+	console.log("Username: " + username + " Password: " + password);
 	User.findOne({ username: username }, function (error, user)
 	{
 		console.log("User successfully authenticated");
