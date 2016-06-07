@@ -9,6 +9,10 @@ router.get('/', function(req, res)
 // if user is not logged-in redirect back to login page //
         console.log('---!!! User not logged in !!!---');
         res.sendStatus(401);
+    }
+    else
+    {
+    	res.redirect('/login.html');
     }   
 });
 

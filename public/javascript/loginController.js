@@ -41,7 +41,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location)
       	if ($scope.usernameInput === "")
       	{
         	$scope.loginInfo = "Username is blank";
-       	 return;
+       	 	return;
       	}
       	if ($scope.passwordInput === "")
       	{
@@ -64,6 +64,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location)
           	{
               	$scope.loginInfo = data;
           	}
-      });
-    } 
+      	});
+    }
 });
