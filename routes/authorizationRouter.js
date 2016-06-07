@@ -18,8 +18,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 
 	if (req.body.authCode !== 'testtest')
 	{
-		res.send("Invalid Authorization Code");
-		res.status(401);
+		res.status(401).send("Invalid Authorization Code");
 		return;
 	}
 
@@ -48,11 +47,10 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 		{
 		    // return an error if the username is taken
 		    console.log("Username already exists");
-		    return res.send("Username is already in use");
+		    return res.status(401).send("Username is already in use");
 		}
     });
 
-	res.send("OK");
 });
 
 router.post('/login',passport.authenticate('local'), function(req, res)
