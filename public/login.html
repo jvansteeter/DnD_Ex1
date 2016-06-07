@@ -23,6 +23,16 @@
 		<script src="javascript/angularModule.js"></script>
 		<script src="javascript/loginController.js"></script>
 		<script src="javascript/registerModalController.js"></script>
+		<style>
+			.form-control
+			{
+				margin-top: 10px;
+			}
+			.new-account
+			{
+				margin-top: 10px;
+			}
+		</style>
 
 	</head>
 	<body ng-controller="loginControl">
@@ -40,8 +50,8 @@
   					<div class="account-wall">
     					<img class='profile-img' src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120'>
 						<form class='form-signin'>
-  							<input type='text' name='username' class='form-control' ng-model="usernameInput" placeholder='Username' required autofocus><br>
-  							<input type='password' name='password' class='form-control' ng-model="passwordInput" placeholder='Password' required><br><br>
+  							<input type='text' name='username' class='form-control' ng-model="usernameInput" placeholder='Username' required autofocus>
+  							<input type='password' name='password' class='form-control' ng-model="passwordInput" placeholder='Password' required><br>
   							<button class='btn btn-lg btn-primary btn-block' ng-click="login()">Sign in</button>
   							<span class='clearfix'><a href='#', class='text-center new-account' data-animation="am-fade-and-slide-top" data-template-url="registerUserModal.html" bs-modal="modal">Create an account</a></span>
 							</form>

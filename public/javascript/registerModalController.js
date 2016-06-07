@@ -16,6 +16,7 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   	//
   	function MyModalController($scope) 
   	{
+  		$scope.title = 'Register New User';
     	$scope.info = '';
   	}
 
