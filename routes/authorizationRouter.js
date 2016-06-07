@@ -38,19 +38,17 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 				if (err) 
 				{
 					console.log("\tThere was an error while saving the user");
-				    return done(err);
+				    return res.send(err);
 				}
-		        return done(null, user);
+		        return res.send("OK");
 		    });
 		} 
 		else 
 		{
 		    // return an error if the username is taken
-		    console.log("Username already exists");
 		    return res.send("Username is already in use");
 		}
     });
-
 });
 
 router.post('/login',passport.authenticate('local'), function(req, res)

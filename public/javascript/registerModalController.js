@@ -59,8 +59,10 @@ clientApp.controller('modalController', function($scope, $modal, $http, $window)
           	if(data === "OK")
           	{
               	$scope.info = "User created";
-              	myModal.$promise.then(myModal.hide);
-              	window.location = 'home.html';
+              	$http.post('auth/login', {username: usernameInput, password: firstPasswordInput}).success(function(data)
+              	{
+              		window.location = 'home.html';
+              	});
           	}
           	else
           	{
