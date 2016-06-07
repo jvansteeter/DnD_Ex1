@@ -8,8 +8,9 @@ var User = mongoose.model('User');
 // API for user authentication
 //
 
-router.post('/register', passport.authenticate('local-register'), function(req, res)
+router.post('/register', function(req, res) //passport.authenticate('local-register'), function(req, res)
 {
+	console.log("---!!! Attempting to register a new user !!!---");
 	res.sendStatus(200);
 });
 

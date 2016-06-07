@@ -18,7 +18,7 @@ passport.deserializeUser(function(id, done)
     });
 });
 
-passport.use('local-register', new LocalStrategy(function(req, done)
+passport.use('local-register', new LocalStrategy(function(username, password, done)
 {
 	console.log("---!!! attempting to register a new user !!!---");
 	console.log(req);
@@ -30,7 +30,7 @@ passport.use('local-register', new LocalStrategy(function(req, done)
 
 	done(null, false, { message: 'User not created' });
 	return;
-	
+
 	// find or create the user with the given username
     User.findOrCreate({username: username}, function(err, user, created) 
     {
