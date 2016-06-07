@@ -25,6 +25,8 @@ clientApp.controller('ModalDemoCtrl', function($scope, $modal)
 
   	$scope.createNewEncounter = function()
   	{
+  		console.log("---!!! Attempting to create new encounter !!!---");
+
   		if ($scope.newEncounterTitle === "")
   		{
   			$scope.info = "Title is blank";
