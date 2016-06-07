@@ -3,9 +3,9 @@
     <div class="modal-content">
       <div class="modal-header" ng-show="title">
         <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" ng-bind="title"></h4>
       </div>
       <div class="modal-body">
+        <h4 class="modal-title" ng-bind="title"></h4>
         <form>
           <input type='text' name='username' class='form-control' ng-model="usernameInput" placeholder='Username' required autofocus> 
           <input type='password' name='password' class='form-control' ng-model="firstpasswordInput" placeholder='Password' required> 
