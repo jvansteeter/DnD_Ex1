@@ -6,7 +6,7 @@ clientApp.config(function($modalProvider)
   	{
     	html: true
   	});
-});
+})
 
 clientApp.controller('ModalDemoCtrl', function($scope, $modal) 
 {
