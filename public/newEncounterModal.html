@@ -7,13 +7,15 @@
       </div>
       <div class="modal-body">
         <form>
-          <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus>
+          <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus> 
+          <br />
           <textarea name="Post Body" class="form-control" ng-model="newEncounterDescription" placeholder='Encounter Description' rows="4" cols="150"></textarea>
         </form>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Create</button>
+        <p style="color : red">{{ info }}</p>
+        <button type="button" class="btn btn-primary" ng-click="createNewEncounter()">Create</button>
         <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
       </div>
     </div>

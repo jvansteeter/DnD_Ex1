@@ -12,8 +12,7 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 // API
 //
 
-// get all items for the user
-router.get('/user', isLoggedIn, function (req,res) 
+router.get('/encounter/create', isLoggedIn, function(req, res)
 {
     console.log("---!!! In api/user and authenticated !!!---");
     console.log(req.user);
