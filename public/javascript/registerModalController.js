@@ -51,7 +51,8 @@ clientApp.controller('modalController', function($scope, $modal, $http)
           	"username" : $scope.usernameInput,
           	"password" : $scope.passwordInput,
           	"firstname" : $scope.firstNameInput,
-          	"lastname" : $scope.lastNameInput
+          	"lastname" : $scope.lastNameInput,
+          	"authCode" : $scope.authCode
       	};
       	$http.post(url, data).success(function(data)
       	{
