@@ -64,7 +64,7 @@ clientApp.controller('modalController', function($scope, $modal, $http, $window)
           	}
           	else
           	{
-              	$scope.info = data;
+              	$scope.info = data.body;
           	}
       	});
     }
