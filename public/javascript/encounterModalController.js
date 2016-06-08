@@ -19,7 +19,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
   	MyModalController.$inject = ['$scope'];
   	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
 
-  	$scope.createNewEncounter = function()
+  	$scope.createNewEncounter = function(socket)
   	{
   		if ($scope.newEncounterTitle === "")
   		{
@@ -44,10 +44,10 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 		{
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
-			/*socket.emit('new:encounter',
+			socket.emit('new:encounter',
 			{
 				id : data.id
-			});*/
+			});
 		});
   	};
 
