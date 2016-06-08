@@ -1,5 +1,5 @@
 // Keep track of which names are used so that there are no duplicates
-var userNames = (function () 
+/*var userNames = (function () 
 {
     var names = {};
 
@@ -57,7 +57,10 @@ var userNames = (function ()
     	get: get,
     	getGuestName: getGuestName
   	};
-}());
+}());*/
+
+var mongoose = require('mongoose');
+var Encounter = mongoose.model('Encounter');
 
 // export function for listening to the socket
 module.exports = function (socket) 
@@ -69,6 +72,21 @@ module.exports = function (socket)
   	{
     	test: 'test'
   	});
+
+    socket.on('new:encounter', function(data)
+    {
+        Encounter.findOne({ id : data.id}, function(error, encounter)
+        {
+            socket.broadcast.emit('new:encounter', 
+            {
+                title : encounter.title,
+                description : encounter.description,
+                host : encounter.host,
+                players : encounter.players,
+                active : encounter.active
+            });
+        });
+    });
 
   	// notify other clients that a new user has joined
   	socket.broadcast.emit('user:join', 

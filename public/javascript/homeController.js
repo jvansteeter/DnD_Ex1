@@ -4,7 +4,6 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('homeController', function($scope, $window, $http, socket) 
 {
-	console.log("---!!! In home controller !!!---");
   	var posts = [];
 
 	socket.on('init', function (data) 
@@ -27,11 +26,11 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 		$scope.posts = posts;
   	});
 
-	var url = "api/user";
+	/*var url = "api/user";
 	console.log(url);
 	$http.get(url).success(function(data)
 	{
 		console.log(data);
-	});
+	});*/
 	//$scope.posts.reverse();
 });

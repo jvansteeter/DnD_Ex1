@@ -32,7 +32,7 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
             return;
         }
         console.log("---!!! Successfully created encounter !!!---");
-        res.send("OK");
+        res.send(encounter);
     });
 });
 

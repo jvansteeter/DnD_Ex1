@@ -8,20 +8,11 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('modalController', function($scope, $modal, $http) 
+clientApp.controller('modalController', function($scope, $modal, $http, socket) 
 {
-  	/*$scope.modal = 
-  	{
-  		title: '', 
-  		info: '',
-  		newEncounterTitle: '',
-  		newEncounterDescription: ''
-  	};*/
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
 
-  	// Controller usage example
-  	//
   	function MyModalController($scope) 
   	{}
 
@@ -30,10 +21,6 @@ clientApp.controller('modalController', function($scope, $modal, $http)
 
   	$scope.createNewEncounter = function()
   	{
-  		console.log("---!!! Attempting to create new encounter !!!---");
-  		console.log("Title : " + $scope.newEncounterTitle);
-  		console.log("Description : " + $scope.newEncounterDescription);
-
   		if ($scope.newEncounterTitle === "")
   		{
   			$scope.info = "Title is blank";
@@ -57,7 +44,10 @@ clientApp.controller('modalController', function($scope, $modal, $http)
 		{
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
-  			return $scope.hideModal();
+			socket.emit('new:encounter',
+			{
+				id : data.id;
+			});
 		});
   	};
 
