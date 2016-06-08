@@ -8,7 +8,7 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', function($scope, $modal, $http, socket) 
+clientApp.controller('modalController', ['$scope', '$modal', '$http', function($scope, $modal, $http) 
 {
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
