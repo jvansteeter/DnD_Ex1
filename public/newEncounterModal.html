@@ -5,21 +5,21 @@
         <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" ng-bind="title"></h4>
       </div>
-      <div class="modal-body">
-        <form>
-          <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus> 
-          <br />
-          <textarea style="resize: none" name="Post Body" class="form-control" ng-model="newEncounterDescription" placeholder='Description' rows="4" cols="150"></textarea>
-        </form>
-      </div>
+      <form ng-submit="$hide()">
+        <div class="modal-body">
+          <form>
+            <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus> 
+            <br />
+            <textarea style="resize: none" name="Post Body" class="form-control" ng-model="newEncounterDescription" placeholder='Description' rows="4" cols="150" required></textarea>
+          </form>
+        </div>
 
-      <div class="modal-footer">
-        <p style="color : red">{{ info }}</p>
-        <form>
-          <button type="button" class="btn btn-primary" ng-click="createNewEncounter()">Create</button>
+        <div class="modal-footer">
+          <p style="color : red">{{ info }}</p>
+          <button type="submit" class="btn btn-primary" ng-click="createNewEncounter()">Create</button>
           <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
