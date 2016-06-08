@@ -44,13 +44,14 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 		{
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
-			socket.emit('new:encounter',
-			{
-				id : data.id
-			}, function(result)
-			{
-				console.log("---!!! Actually emitted !!!---");
-			});
+		});
+		
+		socket.emit('new:encounter',
+		{
+			id : data.id
+		}, function(result)
+		{
+			console.log("---!!! Actually emitted !!!---");
 		});
 
 		console.log("So I am out of the post");
