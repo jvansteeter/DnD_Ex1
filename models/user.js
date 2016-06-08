@@ -21,8 +21,6 @@ var userSchema = new mongoose.Schema(
 // hash the password
 userSchema.methods.setPassword = function(password) 
 {
-	console.log("---!!! Password: " + password + " !!!---");
-	console.log("---!!! Salt: " + SALT + " !!!---");
     this.password_hash = bcrypt.hashSync(password, SALT);
 };
 
