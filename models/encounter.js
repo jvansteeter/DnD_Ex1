@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var encounterSchema = new mongoose.Schema(
 {
     title: String,
-    timestamp: Timestamp,
+    timestamp: new Timestamp(),
     description: String,
     host: String,
     players: [],
