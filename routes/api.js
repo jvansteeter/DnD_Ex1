@@ -38,7 +38,7 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
 router.get('/encounter/all', isLoggedIn, function(req, res)
 {
     console.log("---!!! api/encounter/all call !!!---");
-    Encounter.find({ active : true }, function(error, encounters)
+    Encounter.find({ active : true }).sort([['createdAt', 'descending']]).all(function(error, encounters)
     {
         if (error)
         {
