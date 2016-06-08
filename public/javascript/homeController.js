@@ -34,7 +34,7 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 		$http.get(url, data).success(function(data)
 		{
 			console.log(data);
-			$scope.encounters = data.encounters;
+			$scope.encounters = data.encounters.reverse();
 		});
   	});
 
@@ -52,7 +52,7 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 		$http.get(url, data).success(function(data)
 		{
 			console.log(data);
-			$scope.encounters = data.encounters;
+			$scope.encounters = data.encounters.reverse();
 		});
   	});
 
