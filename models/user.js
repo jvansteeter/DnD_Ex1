@@ -4,7 +4,6 @@ var findOrCreate = require('mongoose-findorcreate');
 
 // setup bcrypt
 var bcrypt = require('bcrypt');
-var SALT = bcrypt.genSaltSync();
 
 // setup json web token
 var jwt = require('jsonwebtoken');
@@ -21,6 +20,7 @@ var userSchema = new mongoose.Schema(
 // hash the password
 userSchema.methods.setPassword = function(password) 
 {
+	var SALT = bcrypt.genSaltSync();
     this.password_hash = bcrypt.hashSync(password, SALT);
 };
 
