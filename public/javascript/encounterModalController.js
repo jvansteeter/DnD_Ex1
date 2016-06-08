@@ -50,17 +50,17 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 
 		socket.emit('new:encounter',
 		{
-			id : data._id
+			//id : data._id
 		}, function () 
   		{
-    		var args = arguments;
+    		/*var args = arguments;
     		$rootScope.$apply(function () 
     		{
       			if (callback) 
       			{
         			callback.apply(socket, args);
       			}
-    		});
+    		});*/
   		});
 
 		console.log("So I am out of the post");
