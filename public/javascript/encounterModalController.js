@@ -8,7 +8,7 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('modalController', function($scope, $modal, $http, socket) 
+clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', function($scope, $modal, $http, socket) 
 {
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
@@ -60,4 +60,4 @@ clientApp.controller('modalController', function($scope, $modal, $http, socket)
   	{
     	myModal.$promise.then(myModal.hide);
   	};
-});
+}]);
