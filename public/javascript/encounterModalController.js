@@ -47,6 +47,9 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 			socket.emit('new:encounter',
 			{
 				id : data.id
+			}, function(result)
+			{
+				console.log("---!!! Actually emitted !!!---");
 			});
 		});
   	};
