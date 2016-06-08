@@ -10,16 +10,22 @@ clientApp.config(function($modalProvider)
 
 clientApp.controller('modalController', function($scope, $modal, $http) 
 {
-  	$scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
+  	$scope.modal = 
+  	{
+  		title: '', 
+  		info: '',
+  		newEncounterTitle: '',
+  		newEncounterDescription: ''
+  	};
 
   	// Controller usage example
   	//
   	function MyModalController($scope) 
   	{
     	$scope.title = 'New Encounter';
-    	$scope.info = '';
-    	$scope.newEncounterTitle = '';
-    	$scope.newEncounterDescription = '';
+		$scope.info = '';
+		$scope.newEncounterTitle = '';
+		$scope.newEncounterDescription = '';
   	}
 
   	MyModalController.$inject = ['$scope'];
