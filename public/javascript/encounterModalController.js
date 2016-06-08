@@ -48,7 +48,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 			{
 				id : data.id
 			});
-		}.bind(this));
+		});
   	};
 
   	$scope.showModal = function() 
