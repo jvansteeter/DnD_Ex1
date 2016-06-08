@@ -26,6 +26,8 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   	$scope.createNewEncounter = function()
   	{
   		console.log("---!!! Attempting to create new encounter !!!---");
+  		console.log("Title : " + $scope.newEncounterTitle);
+  		console.log("Description : " + $scope.newEncounterDescription);
 
   		if ($scope.newEncounterTitle === "")
   		{
