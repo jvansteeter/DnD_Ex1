@@ -18,7 +18,7 @@ passport.deserializeUser(function(id, done)
     });
 });
 
-passport.use('local-register', new LocalStrategy(function(username, password, done)
+/*passport.use('local-register', new LocalStrategy(function(username, password, done)
 {
 	console.log("---!!! attempting to register a new user !!!---");
     
@@ -57,7 +57,7 @@ passport.use('local-register', new LocalStrategy(function(username, password, do
 		    return done(null, false, { message: 'User not created' });
 		}
     });
-}));
+}));*/
 
 passport.use('local', new LocalStrategy(function (username, password, done)
 {
