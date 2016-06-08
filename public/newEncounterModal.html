@@ -7,11 +7,9 @@
       </div>
       <form ng-submit="$hide()">
         <div class="modal-body">
-          <form>
-            <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus> 
-            <br />
-            <textarea style="resize: none" name="Post Body" class="form-control" ng-model="newEncounterDescription" placeholder='Description' rows="4" cols="150" required></textarea>
-          </form>
+          <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus> 
+          <br />
+          <textarea type='text' style="resize: none" name="Description" class="form-control" ng-model="newEncounterDescription" placeholder='Description' rows="4" cols="150" required></textarea>
         </div>
 
         <div class="modal-footer">
