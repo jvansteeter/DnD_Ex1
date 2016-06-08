@@ -15,8 +15,10 @@
 
       <div class="modal-footer">
         <p style="color : red">{{ info }}</p>
-        <button type="button" class="btn btn-primary" ng-click="createNewEncounter()">Create</button>
-        <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+        <form ng-submit="$hide()">
+          <button type="submit" class="btn btn-primary" ng-click="createNewEncounter()">Create</button>
+          <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+        </form>
       </div>
     </div>
   </div>
