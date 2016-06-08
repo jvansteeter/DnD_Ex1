@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 var encounterSchema = new mongoose.Schema(
 {
     title: String,
-    timestamp: new Timestamp(),
     description: String,
     host: String,
     players: [],
     active: Boolean
+},
+{
+	timestamps : true
 });
 
 // hash the password

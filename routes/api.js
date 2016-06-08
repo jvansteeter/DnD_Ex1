@@ -31,6 +31,7 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
             res.sendStatus(403);
             return;
         }
+        console.log("---!!! Successfully created encounter !!!---");
         res.send("OK");
     });
 });
