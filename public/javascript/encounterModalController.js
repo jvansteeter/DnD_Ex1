@@ -17,19 +17,13 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   		newEncounterTitle: '',
   		newEncounterDescription: ''
   	};
-  	$scope.title="New Encounter";
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
 
   	// Controller usage example
   	//
   	function MyModalController($scope) 
-  	{
-    	$scope.title = 'New Encounter';
-		$scope.info = '';
-		$scope.newEncounterTitle = '';
-		$scope.newEncounterDescription = '';
-  	}
+  	{}
 
   	MyModalController.$inject = ['$scope'];
   	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
