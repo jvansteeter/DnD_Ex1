@@ -10,6 +10,12 @@ clientApp.config(function($modalProvider)
 
 clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', function($scope, $modal, $http, socket) 
 {
+	socket.on('init', function (data) 
+  	{
+  		console.log(data);
+    	console.log("Modal socket initialized");
+  	});
+
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
 
@@ -45,7 +51,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
 		});
-		
+
 		socket.emit('new:encounter',
 		{
 			id : data.id
