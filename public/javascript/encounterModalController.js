@@ -10,13 +10,13 @@ clientApp.config(function($modalProvider)
 
 clientApp.controller('modalController', function($scope, $modal, $http) 
 {
-  	$scope.modal = 
+  	/*$scope.modal = 
   	{
   		title: '', 
   		info: '',
   		newEncounterTitle: '',
   		newEncounterDescription: ''
-  	};
+  	};*/
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
 
