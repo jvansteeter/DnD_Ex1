@@ -18,6 +18,8 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   	{
     	$scope.title = 'New Encounter';
     	$scope.info = '';
+    	$scope.newEncounterTitle = '';
+    	$scope.newEncounterDescription = '';
   	}
 
   	MyModalController.$inject = ['$scope'];
