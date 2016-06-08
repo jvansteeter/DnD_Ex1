@@ -20,7 +20,7 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
     Encounter.create(
     {
         title : req.body.title,
-        date : now(),
+        date : new Timestamp(),
         description : req.body.description,
         host : req.user.username,
         active : true
