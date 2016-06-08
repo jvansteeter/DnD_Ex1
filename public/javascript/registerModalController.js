@@ -30,7 +30,7 @@ clientApp.controller('modalController', function($scope, $modal, $http, $window)
         	$scope.info = "Username is blank";
        	 	return;
       	}
-      	if ($scope.firstPasswordInput === "" || $scope.secondPasswordInput)
+      	if ($scope.firstPasswordInput === "" || $scope.secondPasswordInput === "")
       	{
         	$scope.info = "Password is blank";
         	return;
@@ -54,6 +54,7 @@ clientApp.controller('modalController', function($scope, $modal, $http, $window)
           	"lastname" : $scope.lastNameInput,
           	"authCode" : $scope.authCode
       	};
+        console.log(data);
       	$http.post(url, data).success(function(data)
       	{
           	if(data === "OK")
