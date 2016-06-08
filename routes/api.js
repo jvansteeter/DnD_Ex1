@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Encounter = mongoose.model('Encounter');
 var jwt = require('express-jwt');
 var passport = require('passport');
 
@@ -15,8 +16,23 @@ var auth = jwt({secret: SECRET, userProperty: 'payload'});
 router.post('/encounter/create', isLoggedIn, function(req, res)
 {
     console.log("---!!! In api/user and authenticated !!!---");
-    console.log(req.user);
-    res.send(req.user);
+    
+    Encounter.create(
+    {
+        title : req.body.title,
+        date : now(),
+        description : req.body.description,
+        host : req.user.username,
+        active : true
+    }, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+        res.send("OK");
+    });
 });
 
 // get all items for the user
