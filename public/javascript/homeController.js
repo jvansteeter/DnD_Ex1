@@ -22,13 +22,38 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 		      "cats"
 		    ]
 		};
-		posts.push(post1);
-		$scope.posts = posts;
+		// posts.push(post1);
+		// $scope.posts = posts;
+		var url = "api/encounter/all";
+		var data =  
+		{
+          	"username" : $scope.usernameInput,
+          	"password" : $scope.passwordInput
+        };
+
+		$http.get(url, data).success(function(data)
+		{
+			console.log(data);
+			$scope.encounters = data.encounters;
+		});
   	});
 
   	socket.on('new:encounter', function()
   	{
   		console.log("Received order to update list of encounters");
+
+  		var url = "api/encounter/all";
+		var data =  
+		{
+          	"username" : $scope.usernameInput,
+          	"password" : $scope.passwordInput
+        };
+
+		$http.get(url, data).success(function(data)
+		{
+			console.log(data);
+			$scope.encounters = data.encounters;
+		});
   	});
 
 	/*var url = "api/user";
