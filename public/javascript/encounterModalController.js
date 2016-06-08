@@ -52,6 +52,8 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 				console.log("---!!! Actually emitted !!!---");
 			});
 		});
+
+		console.log("So I am out of the post");
   	};
 
   	$scope.showModal = function() 
