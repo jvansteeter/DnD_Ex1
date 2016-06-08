@@ -8,14 +8,8 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', function($scope, $modal, $http, socket) 
+clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScope', function($scope, $modal, $http, $rootScope) 
 {
-	socket.on('init', function (data) 
-  	{
-  		console.log(data);
-    	console.log("Modal socket initialized");
-  	});
-
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
 
@@ -25,7 +19,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
   	MyModalController.$inject = ['$scope'];
   	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
 
-  	$scope.createNewEncounter = function(socket)
+  	$scope.createNewEncounter = function()
   	{
   		if ($scope.newEncounterTitle === "")
   		{
@@ -38,6 +32,8 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
   			$scope.info = "Description is blank";
   			return;
   		}
+
+  		var socket = io.connect();
 
   		var url = "api/encounter/create";
 		var data =  
@@ -55,10 +51,17 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', 'socket', 
 		socket.emit('new:encounter',
 		{
 			id : data.id
-		}, function(result)
-		{
-			console.log("---!!! Actually emitted !!!---");
-		});
+		}, function () 
+  		{
+    		var args = arguments;
+    		$rootScope.$apply(function () 
+    		{
+      			if (callback) 
+      			{
+        			callback.apply(socket, args);
+      			}
+    		});
+  		});
 
 		console.log("So I am out of the post");
   	};
