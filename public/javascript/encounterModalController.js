@@ -10,7 +10,7 @@ clientApp.config(function($modalProvider)
 
 clientApp.controller('modalController', function($scope, $modal, $http) 
 {
-  	$scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
+  	/*$scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
 
   	// Controller usage example
   	//
@@ -23,9 +23,9 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   	}
 
   	MyModalController.$inject = ['$scope'];
-  	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
+  	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});*/
 
-  	$scope.createNewEncounter = function($scope)
+  	$scope.createNewEncounter = function()
   	{
   		console.log("---!!! Attempting to create new encounter !!!---");
   		console.log("Title : " + $scope.newEncounterTitle);

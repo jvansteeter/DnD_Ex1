@@ -31,7 +31,7 @@
 	</head>
 	<body>
     <nav class="navbar navbar-static">
-        <div class="container" ng-controller='modalController'>
+        <div class="container">
           <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
             <span class="fa fa-chevron-down"></span>
           </a>
@@ -40,7 +40,7 @@
             <ul class="nav navbar-nav">
               <li><a href="home.html">Home</a></li>
               <li><a href="myPosts.html">My Posts</a></li>
-              <li><a href="#" data-animation="am-fade-and-slide-top" ng-click="showModal()">Create New Encounter</a></li>
+              <li><a href="#" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a></li>
             </ul>
 
             <ul class="nav navbar-right navbar-nav">
