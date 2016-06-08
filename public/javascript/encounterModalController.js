@@ -50,7 +50,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 
 		socket.emit('new:encounter',
 		{
-			id : data.id
+			id : data._id
 		}, function () 
   		{
     		var args = arguments;
