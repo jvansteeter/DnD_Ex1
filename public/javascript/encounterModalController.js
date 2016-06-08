@@ -42,14 +42,15 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   		var url = "api/encounter/create";
 		var data =  
 			{
-	          	"test" : "test"
+	          	title : $scope.newEncounterTitle,
+	          	description : $scope.newEncounterDescription
         	};
 
 		$http.post(url, data).success(function(data)
 		{
 			console.log("Create new encounter was successful");
 			console.log(data);
-  			myModal.$promise.then(myModal.hide);
+  			$scope.hideModal();
 		});
   	};
 
