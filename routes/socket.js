@@ -75,6 +75,7 @@ module.exports = function (socket)
 
     socket.on('new:encounter', function(data)
     {
+        console.log("---!!! RECEIVED MESSAGE ABOUT NEW ENCOUNTER !!!---");
         Encounter.findOne({ id : data.id}, function(error, encounter)
         {
             socket.broadcast.emit('new:encounter', 
