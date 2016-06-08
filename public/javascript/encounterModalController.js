@@ -23,7 +23,7 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   	MyModalController.$inject = ['$scope'];
   	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
 
-  	$scope.createNewEncounter = function()
+  	$scope.createNewEncounter = function(done)
   	{
   		console.log("---!!! Attempting to create new encounter !!!---");
 
@@ -48,9 +48,9 @@ clientApp.controller('modalController', function($scope, $modal, $http)
 
 		$http.post(url, data).success(function(data)
 		{
-			console.log("Create new encounter was successful");
+			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
-  			$scope.hideModal();
+  			return done();
 		});
   	};
 
