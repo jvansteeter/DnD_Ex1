@@ -8,7 +8,7 @@ clientApp.config(function($modalProvider)
   	});
 })
 
-clientApp.controller('modalController', function($scope, $modal, $http) 
+clientApp.controller('modalController', function($scope, $modal, $http, socket) 
 {
   	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
@@ -44,10 +44,10 @@ clientApp.controller('modalController', function($scope, $modal, $http)
 		{
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
-			/*socket.emit('new:encounter',
+			socket.emit('new:encounter',
 			{
 				id : data.id;
-			});*/
+			});
 		});
   	};
 
