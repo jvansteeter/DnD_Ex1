@@ -6,8 +6,8 @@ var Encounter = mongoose.model('Encounter');
 var jwt = require('express-jwt');
 var passport = require('passport');
 
-var SECRET = '\x1f\x1e1\x8a\x8djO\x9e\xe4\xcb\x9d`\x13\x02\xfb+\xbb\x89q"F\x8a\xe0a';
-var auth = jwt({secret: SECRET, userProperty: 'payload'});
+//var SECRET = '\x1f\x1e1\x8a\x8djO\x9e\xe4\xcb\x9d`\x13\x02\xfb+\xbb\x89q"F\x8a\xe0a';
+//var auth = jwt({secret: SECRET, userProperty: 'payload'});
 
 //
 // API
@@ -20,7 +20,6 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
     Encounter.create(
     {
         title : req.body.title,
-        //date : new Timestamp(),
         description : req.body.description,
         host : req.user.username,
         active : true
@@ -32,7 +31,22 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
             return;
         }
         console.log("---!!! Successfully created encounter !!!---");
-        res.send(encounter);
+        res.send("OK");
+    });
+});
+
+router.get('/encounter/all', isLoggedIn, function(req, res)
+{
+    console.log("---!!! api/encounter/all call !!!---");
+    Encounter.find({ active : true }, function(error, encounters)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        res.json({ encounters : encounters });
     });
 });
 

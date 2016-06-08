@@ -26,6 +26,11 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 		$scope.posts = posts;
   	});
 
+  	socket.on('new:encounter', function()
+  	{
+  		console.log("Received order to update list of encounters");
+  	});
+
 	/*var url = "api/user";
 	console.log(url);
 	$http.get(url).success(function(data)

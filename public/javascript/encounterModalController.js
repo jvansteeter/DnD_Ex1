@@ -46,9 +46,8 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 		{
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
-		socket.emit('new:encounter', {}, function (){});
+			socket.emit('new:encounter', {}, function (){});
 		});
-
   	};
 
   	$scope.showModal = function() 

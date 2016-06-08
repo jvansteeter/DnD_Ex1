@@ -76,18 +76,7 @@ module.exports = function (socket)
     socket.on('new:encounter', function(data)
     {
         console.log("---!!! RECEIVED MESSAGE ABOUT NEW ENCOUNTER !!!---");
-        console.log(data);
-        Encounter.findOne({ id : data.id}, function(error, encounter)
-        {
-            socket.broadcast.emit('new:encounter', 
-            {
-                title : encounter.title,
-                description : encounter.description,
-                host : encounter.host,
-                players : encounter.players,
-                active : encounter.active
-            });
-        });
+        socket.broadcast.emit('new:encounter');
     });
 
   	// notify other clients that a new user has joined
