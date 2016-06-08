@@ -17,6 +17,8 @@ clientApp.controller('modalController', function($scope, $modal, $http)
   		newEncounterTitle: '',
   		newEncounterDescription: ''
   	};
+  	$scope.newEncounterTitle = '';
+	$scope.newEncounterDescription = '';
 
   	// Controller usage example
   	//
