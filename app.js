@@ -28,6 +28,7 @@ app.use(passport.session());
 
 // setup models and configurations
 require('./models/user');
+require('./models/encounter');
 require('./config/passport');
 
 // setup routes
