@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$location', '$http', 'socket', function($scope, $location, $http, socket) 
+clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $location, $http, socket, Profile) 
 {
     var path = $location.search();
   	console.log("Encounter: ");
@@ -12,4 +12,5 @@ clientApp.controller('encounterController', ['$scope', '$location', '$http', 'so
   	{
   		console.log(data);
   	});
-}] );
+
+}]);
