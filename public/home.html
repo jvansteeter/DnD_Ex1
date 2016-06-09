@@ -17,6 +17,7 @@
 		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="bower_components/angular-route/antular-route.min.js"></script>
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
     <script src="/socket.io/socket.io.js"></script>
@@ -102,7 +103,7 @@
               	<h2>{{ encounter.title }}</h2>
                 <h6> Hosted by: {{ encounter.host }}</h6>
                 <p>{{ encounter.description }}</p>
-								<button class="btn btn-default" ng-click="join({ encounter._id })"><a href="encounter.html">Join Encounter</a></button>
+								<button class="btn btn-default"><a href="encounter?id={{ encounter._id }}">Join Encounter</a></button>
 
               	<hr>
              	</div>
