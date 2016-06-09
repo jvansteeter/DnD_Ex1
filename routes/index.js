@@ -3,21 +3,6 @@ var router = express.Router();
 
 /* GET home page. */
 
-router.get('/login', function(req, res)
-{
-    res.sendFile('public/login.html');
-});
-
-router.get('/home', function(req, res)
-{
-    res.sendFile('public/home.html');
-});
-
-router.get('/encounter', function(req, res)
-{
-    res.sendFile('public/encounter.html');
-});
-
 router.get('/', function(req, res) 
 {
   	if (req.path === '/')
