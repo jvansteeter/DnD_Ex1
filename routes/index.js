@@ -7,7 +7,7 @@ router.get('/', function(req, res)
 {
   	if (req.path === '/')
   	{
-  		res.redirect('/login');
+  		res.redirect('/login.html');
   	}
   	else if (req.session.user == null)
     {
