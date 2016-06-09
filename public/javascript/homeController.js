@@ -39,4 +39,9 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 			$scope.encounters = data.encounters.reverse();
 		});
   	});
+
+  	$scope.join = function ()
+  	{
+  		console.log("Encounter: " + $scope.encounter.title);
+  	}
 });
