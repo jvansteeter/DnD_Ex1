@@ -2,9 +2,15 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
+
+router.get('/encounter', function(req, res)
+{
+    res.sendfile('public/encounter.html');
+});
+
 router.get('/', function(req, res) 
 {
-  	if (req.path === '/' || req.path === '/login.html')
+  	if (req.path === '/')
   	{
   		res.redirect('/login.html');
   	}

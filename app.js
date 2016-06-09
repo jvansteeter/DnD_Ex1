@@ -44,10 +44,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/encounter', function(req, res)
-{
-    res.sendfile('public/encounter.html');
-});
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/api', api);
