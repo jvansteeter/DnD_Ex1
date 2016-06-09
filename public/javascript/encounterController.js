@@ -9,7 +9,7 @@ clientApp.config(function($locationProvider)
 
 clientApp.controller('encounterController', ['$scope', '$location', '$http', 'socket', function($scope, $location, $http, socket) 
 {
-    var path = $location.absUrl();
+    var path = window.location;
   	console.log("Encounter: ");
     console.log(path);
 
