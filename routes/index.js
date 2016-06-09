@@ -20,4 +20,9 @@ router.get('/', function(req, res)
     }   
 });
 
+router.get('/encounter', function(req, res)
+{
+    res.sendfile('../public/encounter.html');
+});
+
 module.exports = router;
