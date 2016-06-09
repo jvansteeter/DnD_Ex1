@@ -5,17 +5,17 @@ var router = express.Router();
 
 router.get('/login', function(req, res)
 {
-    res.sendfile('public/login.html');
+    res.sendFile('public/login.html');
 });
 
 router.get('/home', function(req, res)
 {
-    res.sendfile('public/home.html');
+    res.sendFile('public/home.html');
 });
 
 router.get('/encounter', function(req, res)
 {
-    res.sendfile('public/encounter.html');
+    res.sendFile('public/encounter.html');
 });
 
 router.get('/', function(req, res) 
