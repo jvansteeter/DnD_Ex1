@@ -9,13 +9,14 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
 	socket.on('init', function (data) 
   	{
   		console.log(data);
-  	});
-
-    var url = "api/encounter/" + encounterID;
-    $http.get(url, data).success(function(data)
-    {
-        console.log(data);
-        $scope.encounter = data.encounter;
+        var url = "api/encounter/" + encounterID;
+        console.log("---!!! About to call for encounter ID !!!---");
+        $http.get(url, data).success(function(data)
+        {
+            console.log(data);
+            $scope.encounter = data.encounter;
+        });
     });
+
 
 }]);
