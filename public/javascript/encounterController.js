@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('encounterController', ['$scope', '$location', '$http', 'socket', function($scope, $location, $http, socket) 
 {
-    var path = $location.absfUrl();
+    var path = $location.absUrl();
   	console.log("Encounter: ");
     console.log(path);
 
