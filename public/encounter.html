@@ -22,9 +22,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="javascript/angularModule.js"></script>
     <script src="javascript/socketFactory.js"></script>
-    <script src="javascript/homeController.js"></script>
-    <script src="javascript/headerController.js"></script>
-    <script src="javascript/encounterModalController.js"></script>
+    <script src="javascript/encounterController.js"></script>
 
 		<title>{{ title }}</title>
 	</head>
@@ -38,8 +36,6 @@
 
             <ul class="nav navbar-nav">
               <li><a href="home.html">Home</a></li>
-              <li><a href="myPosts.html">My Posts</a></li>
-              <li><a href="#" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a></li>
             </ul>
 
             <ul class="nav navbar-right navbar-nav">
@@ -71,7 +67,7 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-<div class="container" ng-controller="homeController">
+<div class="container" ng-controller="encounterController">
 	<div class="row">
   			<div class="col col-sm-3">
               	<div id="sidebar">

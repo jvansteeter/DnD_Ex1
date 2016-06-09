@@ -2,9 +2,9 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('homeController', function($scope, $window, $http, socket) 
+clientApp.controller('encounterController', function($scope, $location, $http, socket) 
 {
-  	var posts = [];
+  	console.log("Encounter: " + $location.path());
 
 	socket.on('init', function (data) 
   	{
@@ -39,4 +39,9 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 			$scope.encounters = data.encounters.reverse();
 		});
   	});
+
+  	$scope.join = function ()
+  	{
+  		console.log("Encounter: " + $scope.encounter.title);
+  	}
 });
