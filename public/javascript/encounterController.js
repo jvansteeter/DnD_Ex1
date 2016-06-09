@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('encounterController', ['$scope', '$http', 'socket', function($scope, $http, socket) 
 {
-    var path = window.location.search;
+    var path = window.location.search.replace('?', '');
   	console.log("Encounter: ");
     console.log(path);
 

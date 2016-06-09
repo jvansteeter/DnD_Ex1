@@ -17,7 +17,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location)
 
 		if ($scope.passwordInput === "")
 		{
-			$scope.loginInfo = "Password is blank";
+		    $scope.loginInfo = "Password is blank";
 			return;
 		}
 
@@ -56,14 +56,14 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location)
       	};
       	$http.post(url, data).success(function(data)
       	{
-          	if(data === "OK")
-          	{
-              	$scope.loginInfo = "User created";
-          	}
-          	else
-          	{
-              	$scope.loginInfo = data;
-          	}
+            if(data === "OK")
+            {
+            	$scope.loginInfo = "User created";
+            }
+            else
+            {
+            	$scope.loginInfo = data;
+            }
       	});
     }
 });
