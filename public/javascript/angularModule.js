@@ -1,1 +1,1 @@
-angular.module('clientApp', ['ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'ngSanitize']);
+angular.module('clientApp', ['ngAnimate', 'mgcrea.ngStrap', 'ngSanitize']);
