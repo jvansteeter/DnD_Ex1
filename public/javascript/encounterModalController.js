@@ -10,14 +10,14 @@ clientApp.config(function($modalProvider)
 
 clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScope', function($scope, $modal, $http, $rootScope) 
 {
-  	$scope.newEncounterTitle = '';
-	$scope.newEncounterDescription = '';
+    $scope.newEncounterTitle = '';
+    $scope.newEncounterDescription = '';
 
-  	function MyModalController($scope) 
-  	{}
+    function MyModalController($scope) 
+    {}
 
-  	MyModalController.$inject = ['$scope'];
-  	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
+    MyModalController.$inject = ['$scope'];
+    var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
 
   	$scope.createNewEncounter = function()
   	{
@@ -50,13 +50,13 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 		});
   	};
 
-  	$scope.showModal = function() 
-  	{
-    	myModal.$promise.then(myModal.show);
-  	};
+    $scope.showModal = function() 
+    {
+        myModal.$promise.then(myModal.show);
+    };
 
-  	$scope.hideModal = function() 
-  	{
-    	myModal.$promise.then(myModal.hide);
-  	};
+    $scope.hideModal = function() 
+    {
+        myModal.$promise.then(myModal.hide);
+    };
 }]);

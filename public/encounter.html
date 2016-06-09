@@ -26,7 +26,7 @@
 
 		<title>Dungeon Map</title>
 	</head>
-	<body ng-controller="encounterController">
+	<body>
     <nav class="navbar navbar-static">
         <div class="container">
           <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -67,7 +67,7 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-<div class="container">
+<div class="container" ng-controller="encounterController">
 	<div class="row">
   			<div class="col col-sm-3">
               	<div id="sidebar">
@@ -93,15 +93,15 @@
                </div>
       		</div>
       		<div class="col col-sm-9">
-              <h1>Open Encounters:</h1>
-              <div class="panel" ng-repeat="encounter in encounters">
+              <h1>{{ encounter.title }}</h1>
+              <!--div class="panel" ng-repeat="encounter in encounters">
               	<h2>{{ encounter.title }}</h2>
                 <h6> Hosted by: {{ encounter.host }}</h6>
                 <p>{{ encounter.description }}</p>
 								<button class="btn btn-default"><a href="encounter.html?{{ encounter._id }}">Join Encounter</a></button>
 
               	<hr>
-             	</div>
+             	</div-->
       	</div>
   	</div>
 </div>

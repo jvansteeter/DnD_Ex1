@@ -46,8 +46,22 @@ router.get('/encounter/all', isLoggedIn, function(req, res)
             return;
         }
 
-        encounters.sort({createdAt: -1});
         res.json({ encounters : encounters });
+    });
+});
+
+router.get('/encounter/:encounter_id', isLoggedIn, function(req, res)
+{
+    console.log("---!!! api/encounter/:encounter_id call !!!---");
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        res.json({ encounter : encounter });
     });
 });
 
@@ -98,25 +112,33 @@ router.post('/api/items', function (req,res) {
 });
 
 // get an item
-router.get('/api/items/:item_id', function (req,res) {
+router.get('/api/items/:item_id', function (req,res) 
+{
     // validate the supplied token
-    user = User.verifyToken(req.headers.authorization, function(user) {
-        if (user) {
+    user = User.verifyToken(req.headers.authorization, function(user) 
+    {
+        if (user) 
+        {
             // if the token is valid, then find the requested item
-            Item.findById(req.params.item_id, function(err, item) {
-		if (err) {
-		    res.sendStatus(403);
-		    return;
-		}
+            Item.findById(req.params.item_id, function(err, item) 
+            {
+            	if (err) 
+                {
+            	    res.sendStatus(403);
+            	    return;
+            	}
                 // get the item if it belongs to the user, otherwise return an error
-                if (item.user != user) {
+                if (item.user != user) 
+                {
                     res.sendStatus(403);
-		    return;
+            	    return;
                 }
                 // return value is the item as JSON
                 res.json({item:item});
             });
-        } else {
+        } 
+        else 
+        {
             res.sendStatus(403);
         }
     });
@@ -180,7 +202,7 @@ function isLoggedIn(req, res, next)
     if (req.isAuthenticated())
         return next();
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.sendStatus(401);
 }
 
 module.exports = router;
