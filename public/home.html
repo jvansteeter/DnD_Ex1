@@ -114,7 +114,7 @@
               	<h2>{{ encounter.title }}</h2>
                 <h6> Hosted by: {{ encounter.host }}</h6>
                 <p>{{ encounter.description }}</p>
-								<button class="btn btn-default" ng-click="join()">Join Encounter</button>
+								<button class="btn btn-default"><a href="encounter.html?"+{{ encounter._id }}>Join Encounter</a></button>
 
               	<hr>
              	</div>
