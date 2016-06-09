@@ -3,6 +3,16 @@ var router = express.Router();
 
 /* GET home page. */
 
+router.get('/login', function(req, res)
+{
+    res.sendfile('public/login.html');
+});
+
+router.get('/home', function(req, res)
+{
+    res.sendfile('public/home.html');
+});
+
 router.get('/encounter', function(req, res)
 {
     res.sendfile('public/encounter.html');
@@ -12,7 +22,7 @@ router.get('/', function(req, res)
 {
   	if (req.path === '/')
   	{
-  		res.redirect('/login.html');
+  		res.redirect('/login');
   	}
   	else if (req.session.user == null)
     {
@@ -24,11 +34,6 @@ router.get('/', function(req, res)
     {
     	res.redirect('/home.html');
     }   
-});
-
-router.get('/encounter', function(req, res)
-{
-    res.sendfile('../public/encounter.html');
 });
 
 module.exports = router;
