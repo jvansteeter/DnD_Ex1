@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('encounterController', ['$scope', '$routeParams', '$http', 'socket', function($scope, $routeParams, $http, socket) 
 {
-    var path = $routeParams.id;
+    var path = $routeParams;
   	console.log("Encounter: ");
     console.log(path);
 
