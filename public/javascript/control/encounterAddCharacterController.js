@@ -27,7 +27,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
             $scope.newCharacter.armorClass = '';
             $scope.newCharacter.hitPoints = '';
             console.log("Player successfully added");
-            socket.emit('new:encounter', 
+            socket.emit('new:encounterPlayer', 
             	{
             		encounterID : encounterID
             	}, function (){});
