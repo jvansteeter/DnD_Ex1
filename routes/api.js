@@ -16,8 +16,6 @@ var passport = require('passport');
 
 router.post('/encounter/create', isLoggedIn, function(req, res)
 {
-    console.log("---!!! In api/user and authenticated !!!---");
-    
     Encounter.create(
     {
         title : req.body.title,
@@ -31,14 +29,13 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
             res.sendStatus(403);
             return;
         }
-        console.log("---!!! Successfully created encounter !!!---");
+        
         res.send("OK");
     });
 });
 
 router.get('/encounter/all', isLoggedIn, function(req, res)
 {
-    console.log("---!!! api/encounter/all call !!!---");
     Encounter.find({ active : true }, function(error, encounters)
     {
         if (error)
@@ -53,7 +50,6 @@ router.get('/encounter/all', isLoggedIn, function(req, res)
 
 router.get('/encounter/:encounter_id', isLoggedIn, function(req, res)
 {
-    console.log("---!!! api/encounter/:encounter_id call !!!---");
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
         if (error)
@@ -72,7 +68,6 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
     {
         if (error)
         {
-            console.log("---!!! Error finding the encounter " + req.params.encounter_id + " !!!---");
             res.sendStatus(403);
             return;
         }
@@ -93,7 +88,6 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
                 res.sendStatus(403);
                 return;
             }
-            console.log("---!!! Player Added !!!---");
             res.send("OK");
         });
     });
