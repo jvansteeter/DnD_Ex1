@@ -6,6 +6,26 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 
 	$scope.addCharacter = function()
     {
+    	if ($scope.newCharacter.name === '')
+    	{
+    		return;
+    	}
+
+    	if ($scope.newCharacter.initiative === '' || $scope.newCharacter.initiative < 0 || $scope.newCharacter.initiative > 50)
+    	{
+    		return;
+    	}
+
+    	if ($scope.newCharacter.armorClass === '' || $scope.newCharacter.armorClass < 1 || $scope.newCharacter.armorClass > 50)
+    	{
+    		return;
+    	}
+
+    	if ($scope.newCharacter.hitPoints === '' || $scope.newCharacter.hitPoints < 0 || $scope.newCharacter.hitPoints > 1000)
+    	{
+    		return;
+    	}
+
         var socket = io.connect();
         var encounterID = Profile.getEncounter();
 
