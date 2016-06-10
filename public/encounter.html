@@ -105,11 +105,12 @@
       	</div>
         <div class="col col-sm-2">
           <ul class="nav nav-stacked">
-            <li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li>
+            <!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
             <li>
               <div class="initiative box">
                 <ul ng-model="players" class="list-group">
-                  <li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item">{{ player.name }} <i class="fa fa-bolt"></i> {{ player.initiative }}</li>
+                  <li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
+                  <li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item">{{ player.name }} <span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
                 </ul>
               </div>
             </li>
