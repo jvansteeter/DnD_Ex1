@@ -108,8 +108,8 @@
             <li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li>
             <li>
               <div class="initiative box">
-                <ul ui-sortable ng-model="players">
-                <li ng-repeat="player in players">{{ player.name }}</li>
+                <ul ui-sortable ng-model="players" class="list ng-pristing ng-untouched ng-valid ng-isolate-scope ui-sortable">
+                  <li ng-repeat="player in players" class="item ng-binding ng-scope ui-sortable-handle">{{ player.name }}  {{ player.initiative }}</li>
                 </ul>
               </div>
             </li>
