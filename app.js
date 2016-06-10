@@ -29,6 +29,7 @@ app.use(passport.session());
 // setup models and configurations
 require('./models/user');
 require('./models/encounter');
+require('./models/encounterPlayer')
 require('./config/passport');
 
 // setup routes

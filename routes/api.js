@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
+var EncounterPlayer = mongoose.model('EncounterPlayer');
 var jwt = require('express-jwt');
 var passport = require('passport');
 
@@ -62,6 +63,31 @@ router.get('/encounter/:encounter_id', isLoggedIn, function(req, res)
         }
 
         res.json({ encounter : encounter });
+    });
+});
+
+router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        EncounterPlayer.create(
+        {
+            name : req.body.name,
+            initiative : req.body.initiative,
+            armorClass : req.body.armorClass,
+            maxHitPoints : req.body.maxHitPoints,
+            hitPoints : req.body.hitPoints
+        }, function(error, encounterPlayer)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+            encounter.addPlayer(encounterPlayer._id);
+            console.log("---!!! Player Added !!!---");
+            res.send("OK");
+        });
     });
 });
 

@@ -11,6 +11,16 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', functi
 		console.log($scope.character.armorClass);
 		console.log($scope.character.hitPoints);
 
+		var data =
+		{
+			name : $scope.character.name,
+			initiative : $scope.character.initiative,
+			armorClass : $scope.character.armorClass,
+			maxHitPoints : $scope.character.hitPoints,
+			hitPoints : $scope.character.hitPoints
+		};
+		url = 'api/encounter/addplayer/' +
+
 		/*var socket = io.connect();
 
 		var url = "api/encounter/create";
