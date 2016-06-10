@@ -15,6 +15,7 @@ var encounterSchema = new mongoose.Schema(
 encounterSchema.methods.addPlayer = function(player) 
 {
     this.players.push(player);
+    this.save();
 };
 
 mongoose.model('Encounter', encounterSchema);
