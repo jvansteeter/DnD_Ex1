@@ -17,7 +17,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         {
             console.log(data);
             $scope.encounter = data.encounter;
-            Profile.setEncounter = data.encounter;
+            Profile.setEncounter(data.encounter);
         });
     });
 
