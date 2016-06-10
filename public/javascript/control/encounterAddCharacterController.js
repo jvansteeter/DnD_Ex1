@@ -4,7 +4,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', functi
 {
 	$scope.characterName = '';
 	$scope.initiative = 0;
-	$scope.armorClass = 0;
+	
 
 	$scope.addCharacter = function()
 	{
