@@ -2,16 +2,14 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('modalController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) 
 {
-	$scope.characterName = '';
-	$scope.initiative = 0;
-	
+	$scope.character = {};
 
 	$scope.addCharacter = function()
 	{
-		console.log($scope.characterName);
-		console.log($scope.initiative);
-		console.log($scope.armorClass);
-		console.log($scope.hitPoints);
+		console.log($scope.character.name);
+		console.log($scope.character.initiative);
+		console.log($scope.character.armorClass);
+		console.log($scope.character.hitPoints);
 
 		/*var socket = io.connect();
 
