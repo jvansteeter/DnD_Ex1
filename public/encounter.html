@@ -109,7 +109,7 @@
             <li>
               <div class="initiative box">
                 <ul ng-model="players" class="">
-                  <li ng-repeat="player in players | orderBy:'initiative'" class="">{{ player.name }}  {{ player.initiative }}</li>
+                  <li ng-repeat="player in players | orderBy:'-initiative'" class="">{{ player.name }}  {{ player.initiative }}</li>
                 </ul>
               </div>
             </li>
