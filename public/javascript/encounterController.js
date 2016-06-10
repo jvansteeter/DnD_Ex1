@@ -36,6 +36,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
             maxHitPoints : $scope.newCharacter.hitPoints,
             hitPoints : $scope.newCharacter.hitPoints
         };
+        console.log($scope.encounter);
         var url = 'api/encounter/addplayer/' + $scope.encounter._id;
         $http.post(url, data).success(function(data)
         {
