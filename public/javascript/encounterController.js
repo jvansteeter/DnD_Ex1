@@ -6,10 +6,11 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
 {
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
+    $scope.newCharacter = {};
 
-	socket.on('init', function (data) 
-  	{
-  		console.log(data);
+    socket.on('init', function (data) 
+    {
+        console.log(data);
         var url = "api/encounter/" + encounterID;
         console.log("---!!! About to call for encounter ID !!!---");
         $http.get(url).success(function(data)
@@ -19,7 +20,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
         });
     });
 
-    $scope.newCharacter = {};
 
     $scope.addCharacter = function()
     {
@@ -36,8 +36,8 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
             maxHitPoints : $scope.newCharacter.hitPoints,
             hitPoints : $scope.newCharacter.hitPoints
         };
-        url = 'api/encounter/addplayer/' + $scope.encounter._id;
-        /*$http.post(url, data).success(function(data)
+        var url = 'api/encounter/addplayer/' + $scope.encounter._id;
+        $http.post(url, data).success(function(data)
         {
             console.log(data);
             $scope.character.name = '';
@@ -45,7 +45,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
             $scope.character.armorClass = '';
             $scope.character.hitPoints = '';
             console.log("Player successfully added");
-        });*/
+        });
 
         /*var socket = io.connect();
 
