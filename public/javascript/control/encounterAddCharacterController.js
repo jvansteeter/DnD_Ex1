@@ -14,15 +14,15 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
     	{
     		return;
     	}
-    	else if ($scope.initiative === '' || $scope.initiative < 0 || $scope.initiative > 50)
+    	else if ($scope.initiative === '' || $scope.initiative < 0 || $scope.initiative > 50 || isNaN($scope.initiative))
     	{
     		return;
     	}
-    	else if ($scope.armorClass === '' || $scope.armorClass < 1 || $scope.armorClass > 50)
+    	else if ($scope.armorClass === '' || $scope.armorClass < 1 || $scope.armorClass > 50 || isNaN($scope.armorClass))
     	{
     		return;
     	}
-    	else if ($scope.hitPoints === '' || $scope.hitPoints < 0 || $scope.hitPoints > 1000)
+    	else if ($scope.hitPoints === '' || $scope.hitPoints < 0 || $scope.hitPoints > 1000 || isNaN($scope.hitPoints))
     	{
     		return;
     	}
