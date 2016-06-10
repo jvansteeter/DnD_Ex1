@@ -24,10 +24,10 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
         $http.post(url, data).success(function(data)
         {
             console.log(data);
-            $scope.character.name = '';
-            $scope.character.initiative = '';
-            $scope.character.armorClass = '';
-            $scope.character.hitPoints = '';
+            $scope.newCharacter.name = '';
+            $scope.newCharacter.initiative = '';
+            $scope.newCharacter.armorClass = '';
+            $scope.newCharacter.hitPoints = '';
             console.log("Player successfully added");
         });
 
