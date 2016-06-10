@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <!--script src="bower_components/jquery-ui/jquery-ui.min.js"></script-->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <link href="stylesheet/styles.css" rel="stylesheet">
 
@@ -108,8 +108,8 @@
             <li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li>
             <li>
               <div class="initiative box">
-                <ul ng-model="players" class="">
-                  <li ng-repeat="player in players | orderBy:'-initiative'" class="">{{ player.name }} <i class="fa fa-bolt"></i> {{ player.initiative }}</li>
+                <ul ng-model="players" class="list-group">
+                  <li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item">{{ player.name }} <i class="fa fa-bolt"></i> {{ player.initiative }}</li>
                 </ul>
               </div>
             </li>
