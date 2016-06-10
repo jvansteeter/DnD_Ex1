@@ -26,10 +26,10 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
             $scope.newCharacter.armorClass = '';
             $scope.newCharacter.hitPoints = '';
             console.log("Player successfully added");
-            socket.emit('new:encounterPlayer', 
-        	{
-        		encounterID : Profile.getEncounter();
-        	}, function(){});
+            socket.emit('new:encounter', 
+            	{
+            		encounterID : Profile.getEncounter();
+            	}, function (){});
         });
     };
 }]);
