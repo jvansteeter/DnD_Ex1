@@ -30,11 +30,11 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
 
         var data =
         {
-            name : $scope.character.name,
-            initiative : $scope.character.initiative,
-            armorClass : $scope.character.armorClass,
-            maxHitPoints : $scope.character.hitPoints,
-            hitPoints : $scope.character.hitPoints
+            name : $scope.newCharacter.name,
+            initiative : $scope.newCharacter.initiative,
+            armorClass : $scope.newCharacter.armorClass,
+            maxHitPoints : $scope.newCharacter.hitPoints,
+            hitPoints : $scope.newCharacter.hitPoints
         };
         url = 'api/encounter/addplayer/' + $scope.encounter._id;
         /*$http.post(url, data).success(function(data)
