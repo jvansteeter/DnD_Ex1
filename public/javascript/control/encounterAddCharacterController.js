@@ -7,8 +7,9 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	$scope.addCharacter = function()
     {
         var socket = io.connect();
+        var encounterID = Profile.getEncounter();
 
-        var url = 'api/encounter/addplayer/' + Profile.getEncounter();
+        var url = 'api/encounter/addplayer/' + encounterID;
         var data =
         {
             name : $scope.newCharacter.name,
@@ -28,7 +29,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
             console.log("Player successfully added");
             socket.emit('new:encounter', 
             	{
-            		encounterID : Profile.getEncounter();
+            		encounterID : encounterID
             	}, function (){});
         });
     };
