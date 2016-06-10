@@ -16,11 +16,12 @@ var passport = require('passport');
 
 router.post('/encounter/create', isLoggedIn, function(req, res)
 {
-    /*Encounter.create(
+    var name = req.user.first_name + " " + req.user.last_name;
+    Encounter.create(
     {
         title : req.body.title,
         description : req.body.description,
-        host : req.user.username,
+        host : name,
         active : true
     }, function(error, encounter)
     {
@@ -31,8 +32,7 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
         }
         
         res.send("OK");
-    });*/
-    res.send(req.user);
+    });
 });
 
 router.get('/encounter/all', isLoggedIn, function(req, res)
