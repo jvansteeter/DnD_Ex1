@@ -6,7 +6,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 {
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
-    $scope.newCharacter = {};
+    $scope.players = [];
 
     socket.on('init', function (data) 
     {
@@ -18,6 +18,14 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
             console.log(data);
             $scope.encounter = data.encounter;
             Profile.setEncounter(data.encounter._id);
+
+            var url = 'api/encounter/players/' + encounterID;
+            $http.get(url).success(function(data)
+            {
+                console.log("Receiving information about this encounters players");
+                console.log(data);
+                $scope.players = data;
+            });
         });
     });
 
@@ -31,12 +39,8 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
             {
                 console.log("Receiving information about this encounters players");
                 console.log(data);
+                $scope.players = data;
             });
         }
     });
-
-
-
-
-
 }]);
