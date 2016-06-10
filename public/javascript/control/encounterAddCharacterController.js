@@ -6,11 +6,9 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 
 	$scope.addCharacter = function()
     {
-        console.log($scope.newCharacter.name);
-        console.log($scope.newCharacter.initiative);
-        console.log($scope.newCharacter.armorClass);
-        console.log($scope.newCharacter.hitPoints);
+        var socket = io.connect();
 
+        var url = 'api/encounter/addplayer/' + Profile.getEncounter();
         var data =
         {
             name : $scope.newCharacter.name,
@@ -19,8 +17,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
             maxHitPoints : $scope.newCharacter.hitPoints,
             hitPoints : $scope.newCharacter.hitPoints
         };
-        console.log(Profile.getEncounter());
-        var url = 'api/encounter/addplayer/' + Profile.getEncounter();
+
         $http.post(url, data).success(function(data)
         {
             console.log(data);
@@ -29,22 +26,10 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
             $scope.newCharacter.armorClass = '';
             $scope.newCharacter.hitPoints = '';
             console.log("Player successfully added");
+            socket.emit('new:encounterPlayer', 
+        	{
+        		encounterID : Profile.getEncounter();
+        	});
         });
-
-        /*var socket = io.connect();
-
-        var url = "api/encounter/create";
-        var data =  
-        {
-            title : $scope.newEncounterTitle,
-            description : $scope.newEncounterDescription
-        };
-
-        $http.post(url, data).success(function(data)
-        {
-            console.log("---!!! Create new encounter was successful !!!---");
-            console.log(data);
-            socket.emit('new:encounter');
-        });*/
     };
 }]);

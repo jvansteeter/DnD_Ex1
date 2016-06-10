@@ -4,66 +4,71 @@ var Encounter = mongoose.model('Encounter');
 // export function for listening to the socket
 module.exports = function (socket) 
 {
-  	console.log('---!!! Connection has been intialized !!!---');
-  	// send the new user their name and a list of users
-  	socket.emit('init', 
-  	{
-    	connection: 'success'
-  	});
+	console.log('---!!! Connection has been intialized !!!---');
+	// send the new user their name and a list of users
+	socket.emit('init', 
+	{
+		connection: 'success'
+	});
 
-    socket.on('new:encounter', function(data)
-    {
-        console.log("---!!! RECEIVED MESSAGE ABOUT NEW ENCOUNTER !!!---");
-        socket.broadcast.emit('new:encounter');
-    });
+	socket.on('new:encounter', function(data)
+	{
+		console.log("---!!! RECEIVED MESSAGE ABOUT NEW ENCOUNTER !!!---");
+		socket.broadcast.emit('new:encounter');
+	});
 
-  	// notify other clients that a new user has joined
-  	/*socket.broadcast.emit('user:join', 
-  	{
-    	name: name
-  	});
+	socket.on('new:encounterPlayer', function(data)
+	{
+		console.log("---!!! RECEIVED MESSAGE ABOUT NEW PLAYER !!!---");
+	});
 
-  	// broadcast a user's message to other users
-  	socket.on('send:message', function (data) 
-  	{
-    	socket.broadcast.emit('send:message', 
-    	{
-      		user: name,
-      		text: data.message
-    	});
-  	});
+	// notify other clients that a new user has joined
+	/*socket.broadcast.emit('user:join', 
+	{
+		name: name
+	});
 
-  	// validate a user's name change, and broadcast it on success
-  	socket.on('change:name', function (data, fn) 
-  	{
-    	if (userNames.claim(data.name)) 
-    	{
-      		var oldName = name;
-      		userNames.free(oldName);
+	// broadcast a user's message to other users
+	socket.on('send:message', function (data) 
+	{
+		socket.broadcast.emit('send:message', 
+		{
+			user: name,
+			text: data.message
+		});
+	});
 
-      		name = data.name;
-      
-      		socket.broadcast.emit('change:name', 
-      		{
-        		oldName: oldName,
-        		newName: name
-      		});
+	// validate a user's name change, and broadcast it on success
+	socket.on('change:name', function (data, fn) 
+	{
+		if (userNames.claim(data.name)) 
+		{
+			var oldName = name;
+			userNames.free(oldName);
 
-      		fn(true);
-    	} 
-    	else 
-    	{
-    		fn(false);
-    	}
-  	});
+			name = data.name;
+	  
+			socket.broadcast.emit('change:name', 
+			{
+				oldName: oldName,
+				newName: name
+			});
 
-  	// clean up when a user leaves, and broadcast it to other users
-  	socket.on('disconnect', function () 
-  	{
-    	socket.broadcast.emit('user:left', 
-    	{
-      		name: name
-    	});
-    	userNames.free(name);
-  	});*/
+			fn(true);
+		} 
+		else 
+		{
+			fn(false);
+		}
+	});
+
+	// clean up when a user leaves, and broadcast it to other users
+	socket.on('disconnect', function () 
+	{
+		socket.broadcast.emit('user:left', 
+		{
+			name: name
+		});
+		userNames.free(name);
+	});*/
 };
