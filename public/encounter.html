@@ -92,7 +92,7 @@
          	</div>
          </div>
     		</div>
-    		<div class="col col-sm-7">
+    		<div class="col col-sm-8">
           <h1>{{ encounter.title }}</h1>
           <!--div class="panel" ng-repeat="encounter in encounters">
           	<h2>{{ encounter.title }}</h2>
@@ -103,13 +103,13 @@
           	<hr>
          	</div-->
       	</div>
-        <div class="col col-sm-3">
+        <div class="col col-sm-2">
           <ul class="nav nav-stacked">
             <li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li>
             <li>
               <div class="initiative box">
                 <ul ng-model="players" class="">
-                  <li ng-repeat="player in players | orderBy:'-initiative'" class="">{{ player.name }}  {{ player.initiative }}</li>
+                  <li ng-repeat="player in players | orderBy:'-initiative'" class="">{{ player.name }} <i class="fa fa-bolt"></i> {{ player.initiative }}</li>
                 </ul>
               </div>
             </li>
