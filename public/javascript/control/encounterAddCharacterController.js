@@ -2,23 +2,26 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profile', function($scope, $http, $rootScope, Profile) 
 {
-	$scope.newCharacter = {};
+	$scope.name = '';
+	$scope.initiative = '';
+	$scope.armorClass = '';
+	$scope.hitPoints = '';
 
 	$scope.addCharacter = function()
     {
-    	if ($scope.newCharacter.name === '')
+    	if ($scope.name === '')
     	{
     		return;
     	}
-    	else if ($scope.newCharacter.initiative === '' || $scope.newCharacter.initiative < 0 || $scope.newCharacter.initiative > 50)
+    	else if ($scope.initiative === '' || $scope.initiative < 0 || $scope.initiative > 50)
     	{
     		return;
     	}
-    	else if ($scope.newCharacter.armorClass === '' || $scope.newCharacter.armorClass < 1 || $scope.newCharacter.armorClass > 50)
+    	else if ($scope.armorClass === '' || $scope.armorClass < 1 || $scope.armorClass > 50)
     	{
     		return;
     	}
-    	else if ($scope.newCharacter.hitPoints === '' || $scope.newCharacter.hitPoints < 0 || $scope.newCharacter.hitPoints > 1000)
+    	else if ($scope.hitPoints === '' || $scope.hitPoints < 0 || $scope.hitPoints > 1000)
     	{
     		return;
     	}
@@ -30,20 +33,20 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	        var url = 'api/encounter/addplayer/' + encounterID;
 	        var data =
 	        {
-	            name : $scope.newCharacter.name,
-	            initiative : $scope.newCharacter.initiative,
-	            armorClass : $scope.newCharacter.armorClass,
-	            maxHitPoints : $scope.newCharacter.hitPoints,
-	            hitPoints : $scope.newCharacter.hitPoints
+	            name : $scope.name,
+	            initiative : $scope.initiative,
+	            armorClass : $scope.armorClass,
+	            maxHitPoints : $scope.hitPoints,
+	            hitPoints : $scope.hitPoints
 	        };
 
 	        $http.post(url, data).success(function(data)
 	        {
 	            console.log(data);
-	            $scope.newCharacter.name = '';
-	            $scope.newCharacter.initiative = '';
-	            $scope.newCharacter.armorClass = '';
-	            $scope.newCharacter.hitPoints = '';
+	            $scope.name = '';
+	            $scope.initiative = '';
+	            $scope.armorClass = '';
+	            $scope.hitPoints = '';
 	            console.log("Player successfully added");
 	            socket.emit('new:encounterPlayer', 
 	            	{
