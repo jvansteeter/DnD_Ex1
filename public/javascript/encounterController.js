@@ -5,6 +5,7 @@ var clientApp = angular.module('clientApp');
 clientApp.controller('encounterController', ['$scope', '$http', 'socket', function($scope, $http, socket) 
 {
     var encounterID = window.location.search.replace('?', '');
+    $scope.encounter = {};
 
 	socket.on('init', function (data) 
   	{
