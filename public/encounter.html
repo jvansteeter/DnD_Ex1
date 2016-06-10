@@ -17,6 +17,7 @@
 		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
     <script src="/socket.io/socket.io.js"></script>
@@ -64,43 +65,55 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-<div class="container" ng-controller="encounterController">
-	<div class="row">
-  			<div class="col col-sm-2">
-              	<div id="sidebar">
-            			<ul class="nav nav-stacked">
-                          <li><h3 class="highlight">Channels <i class="fa fa-dashboard pull-right"></i></h3></li>
-                        	<li><a href="#">Link</a></li>
-                			<!--li><a href="#">Link</a></li-->
-      				    </ul>
-                <div class="accordion" id="accordion2">
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                              Side Menu
-                          </a>
-                      </div>
-                      <div id="collapseOne" class="accordion-body collapse">
-                          <div class="accordion-inner">
-                            <p>More Content under Development</p>
-                          </div>
-                      </div>
-                  </div>
-               	</div>
-               </div>
-      		</div>
-      		<div class="col col-sm-9">
-              <h1>{{ encounter.title }}</h1>
-              <!--div class="panel" ng-repeat="encounter in encounters">
-              	<h2>{{ encounter.title }}</h2>
-                <h6> Hosted by: {{ encounter.host }}</h6>
-                <p>{{ encounter.description }}</p>
-								<button class="btn btn-default"><a href="encounter.html?{{ encounter._id }}">Join Encounter</a></button>
+    <div class="container" ng-controller="encounterController">
+    	<div class="row">
+    		<div class="col col-sm-2">
+        	<div id="sidebar">
+      			<ul class="nav nav-stacked">
+              <li><h3 class="highlight">Channels <i class="fa fa-dashboard pull-right"></i></h3></li>
+            	<li><a href="#">Link</a></li>
+          			<!--li><a href="#">Link</a></li-->
+    		    </ul>
+          <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                  Side Menu
+                </a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse">
+                <div class="accordion-inner">
+                  <p>More Content under Development</p>
+                </div>
+              </div>
+            </div>
+         	</div>
+         </div>
+    		</div>
+    		<div class="col col-sm-7">
+          <h1>{{ encounter.title }}</h1>
+          <!--div class="panel" ng-repeat="encounter in encounters">
+          	<h2>{{ encounter.title }}</h2>
+            <h6> Hosted by: {{ encounter.host }}</h6>
+            <p>{{ encounter.description }}</p>
+  					<button class="btn btn-default"><a href="encounter.html?{{ encounter._id }}">Join Encounter</a></button>
 
-              	<hr>
-             	</div-->
+          	<hr>
+         	</div-->
       	</div>
-  	</div>
-</div>
-	</body>
+        <div class="col col-sm-3">
+          <ul class="nav nav-stacked">
+            <li><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
+            <li>
+              <div class="initiative box">
+                <ul ui-sortable ng-model="players">
+                <li ng-repeat="player in players">Test</li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+    	</div>
+    </div>
+  </body>
 </html>
