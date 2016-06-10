@@ -2,45 +2,45 @@ var clientApp = angular.module('clientApp');
 
 clientApp.config(function($modalProvider) 
 {
-  	angular.extend($modalProvider.defaults, 
-  	{
-    	html: true
-  	});
+	angular.extend($modalProvider.defaults, 
+	{
+		html: true
+	});
 })
 
 clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScope', function($scope, $modal, $http, $rootScope) 
 {
-    $scope.newEncounterTitle = '';
-    $scope.newEncounterDescription = '';
+	$scope.newEncounterTitle = '';
+	$scope.newEncounterDescription = '';
 
-    function MyModalController($scope) 
-    {}
+	function MyModalController($scope) 
+	{}
 
-    MyModalController.$inject = ['$scope'];
-    var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
+	MyModalController.$inject = ['$scope'];
+	var myModal = $modal({controller: MyModalController, templateUrl: 'newEncounterModal.html', show: false});
 
-  	$scope.createNewEncounter = function()
-  	{
-  		if ($scope.newEncounterTitle === "")
-  		{
-  			$scope.info = "Title is blank";
-  			return;
-  		}
+	$scope.createNewEncounter = function()
+	{
+		if ($scope.newEncounterTitle === "")
+		{
+			$scope.info = "Title is blank";
+			return;
+		}
 
-  		if ($scope.newEncounterDescription === "")
-  		{
-  			$scope.info = "Description is blank";
-  			return;
-  		}
+		if ($scope.newEncounterDescription === "")
+		{
+			$scope.info = "Description is blank";
+			return;
+		}
 
-  		var socket = io.connect();
+		var socket = io.connect();
 
-  		var url = "api/encounter/create";
+		var url = "api/encounter/create";
 		var data =  
 			{
-	          	title : $scope.newEncounterTitle,
-	          	description : $scope.newEncounterDescription
-        	};
+				title : $scope.newEncounterTitle,
+				description : $scope.newEncounterDescription
+			};
 
 		$http.post(url, data).success(function(data)
 		{
@@ -48,15 +48,15 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 			console.log(data);
 			socket.emit('new:encounter', {}, function (){});
 		});
-  	};
+	};
 
-    $scope.showModal = function() 
-    {
-        myModal.$promise.then(myModal.show);
-    };
+	$scope.showModal = function() 
+	{
+		myModal.$promise.then(myModal.show);
+	};
 
-    $scope.hideModal = function() 
-    {
-        myModal.$promise.then(myModal.hide);
-    };
+	$scope.hideModal = function() 
+	{
+		myModal.$promise.then(myModal.hide);
+	};
 }]);
