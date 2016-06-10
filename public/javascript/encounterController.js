@@ -36,7 +36,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
             hitPoints : $scope.character.hitPoints
         };
         url = 'api/encounter/addplayer/' + $scope.encounter._id;
-        $http.post(url, data).success(function(data)
+        /*$http.post(url, data).success(function(data)
         {
             console.log(data);
             $scope.character.name = '';
@@ -44,7 +44,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
             $scope.character.armorClass = '';
             $scope.character.hitPoints = '';
             console.log("Player successfully added");
-        });
+        });*/
 
         /*var socket = io.connect();
 
