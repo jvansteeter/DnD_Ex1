@@ -72,6 +72,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
     {
         if (error)
         {
+            console.log("---!!! Error finding the encounter " + req.params.encounter_id + " !!!---");
             res.sendStatus(403);
             return;
         }
