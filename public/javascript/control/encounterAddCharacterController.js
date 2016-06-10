@@ -20,7 +20,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
             hitPoints : $scope.newCharacter.hitPoints
         };
         console.log(Profile.getEncounter());
-        var url = 'api/encounter/addplayer/' + Profile.getEncounter()._id;
+        var url = 'api/encounter/addplayer/' + Profile.getEncounter();
         $http.post(url, data).success(function(data)
         {
             console.log(data);
