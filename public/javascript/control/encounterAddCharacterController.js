@@ -9,6 +9,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 
 	$scope.addCharacter = function()
     {
+    	console.log("Attempting to add character");
     	if ($scope.name === '')
     	{
     		return;
