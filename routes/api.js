@@ -85,7 +85,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
             hitPoints : req.body.hitPoints
         });
         res.json(encounterPlayer);
-        encounter.addPlayer(encounterPlayer._id);
+        /*encounter.addPlayer(encounterPlayer._id);
         encounterPlayer.save(function(error)
         {
             if (error)
@@ -95,7 +95,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
             }
             console.log("---!!! Player Added !!!---");
             res.send("OK");
-        });
+        });*/
     });
 });
 
