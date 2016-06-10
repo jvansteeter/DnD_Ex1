@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$http', 'socket', function($scope, $http, socket) 
+clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile) 
 {
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
@@ -17,53 +17,12 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', functi
         {
             console.log(data);
             $scope.encounter = data.encounter;
+            Profile.setEncounter = data.encounter;
         });
     });
 
 
-    $scope.addCharacter = function()
-    {
-        console.log($scope.newCharacter.name);
-        console.log($scope.newCharacter.initiative);
-        console.log($scope.newCharacter.armorClass);
-        console.log($scope.newCharacter.hitPoints);
 
-        var data =
-        {
-            name : $scope.newCharacter.name,
-            initiative : $scope.newCharacter.initiative,
-            armorClass : $scope.newCharacter.armorClass,
-            maxHitPoints : $scope.newCharacter.hitPoints,
-            hitPoints : $scope.newCharacter.hitPoints
-        };
-        console.log($scope.encounter);
-        var url = 'api/encounter/addplayer/' + $scope.encounter._id;
-        $http.post(url, data).success(function(data)
-        {
-            console.log(data);
-            $scope.character.name = '';
-            $scope.character.initiative = '';
-            $scope.character.armorClass = '';
-            $scope.character.hitPoints = '';
-            console.log("Player successfully added");
-        });
-
-        /*var socket = io.connect();
-
-        var url = "api/encounter/create";
-        var data =  
-        {
-            title : $scope.newEncounterTitle,
-            description : $scope.newEncounterDescription
-        };
-
-        $http.post(url, data).success(function(data)
-        {
-            console.log("---!!! Create new encounter was successful !!!---");
-            console.log(data);
-            socket.emit('new:encounter');
-        });*/
-    };
 
 
 }]);
