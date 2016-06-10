@@ -21,6 +21,20 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         });
     });
 
+    socket.on('new:encounterPlayer', function(data)
+    {
+        console.log(data);
+        if (data.encounterID === encounterID)
+        {
+            var url = 'api/encounter/players/' + encounterID;
+            $http.get(url).success(function(data)
+            {
+                console.log("Receiving information about this encounters players");
+                console.log(data);
+            });
+        }
+    });
+
 
 
 

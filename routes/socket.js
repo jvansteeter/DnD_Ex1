@@ -20,6 +20,10 @@ module.exports = function (socket)
 	socket.on('new:encounterPlayer', function(data)
 	{
 		console.log("---!!! RECEIVED MESSAGE ABOUT NEW PLAYER !!!---");
+		socket.broadcast.emit('new:encounterPlayer',
+		{
+			encounterID : data.encounterID
+		});
 	});
 
 	// notify other clients that a new user has joined

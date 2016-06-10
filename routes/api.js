@@ -99,6 +99,29 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
+router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        EncounterPlayer.find({_id : {$in : encounter.players }}, function(error, players)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            res.json(players);
+        });
+    });
+});
+
 // get all items for the user
 router.get('/api/items', function (req,res) {
     // validate the supplied token
