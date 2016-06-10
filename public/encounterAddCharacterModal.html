@@ -9,12 +9,12 @@
         <div class="modal-body">
           <input type='text' name='username' class='form-control' ng-model="newEncounterTitle" placeholder='Title' required autofocus> 
           <br />
-          <textarea type='text' style="resize: none" name="Description" class="form-control" ng-model="newEncounterDescription" placeholder='Description' rows="4" cols="150" required></textarea>
+          <textarea type='text' style="resize: none" name="Description" class="form-control" placeholder='Description' rows="4" cols="150" required></textarea>
         </div>
 
         <div class="modal-footer">
           <p style="color : red">{{ info }}</p>
-          <button type="submit" class="btn btn-primary" ng-click="createNewEncounter()">Create</button>
+          <button type="submit" class="btn btn-primary">Create</button>
           <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
         </div>
       </form>
