@@ -3,6 +3,8 @@ var clientApp = angular.module('clientApp');
 clientApp.controller('modalController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) 
 {
 	$scope.characterName = '';
+	$scope.initiative;
+	$scope.armorClass;
 
 	$scope.addCharacter = function()
 	{
