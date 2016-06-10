@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/app/encounterApp.js"></script>
     <script src="javascript/socketFactory.js"></script>
     <script src="javascript/encounterController.js"></script>
     <script src="javascript/encounterAddCharacterController.js"></script>
@@ -37,7 +37,7 @@
 
             <ul class="nav navbar-nav">
               <li><a href="home.html">Home</a></li>
-              <li><a href="#" data-template-url="modal/encounterAddCharacterModal.html" bs-modal="modal">Add Character</a></li>
+              <li><a href="#" data-template-url="modal/encounterAddCharacterModal.html" controller="modalController" placement="center" bs-modal="modal">Add Character</a></li>
             </ul>
 
             <ul class="nav navbar-right navbar-nav">

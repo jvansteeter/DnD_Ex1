@@ -2,24 +2,16 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('modalController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) 
 {
-	$scope.newEncounterTitle = '';
-	$scope.newEncounterDescription = '';
+	$scope.characterName = '';
 
-	$scope.addNewCharacter = function()
+	$scope.addCharacter = function()
 	{
-		if ($scope.newEncounterTitle === "")
-		{
-			$scope.info = "Title is blank";
-			return;
-		}
+		console.log($scope.characterName);
+		console.log($scope.initiative);
+		console.log($scope.armorClass);
+		console.log($scope.hitPoints);
 
-		if ($scope.newEncounterDescription === "")
-		{
-			$scope.info = "Description is blank";
-			return;
-		}
-
-		var socket = io.connect();
+		/*var socket = io.connect();
 
 		var url = "api/encounter/create";
 		var data =  
@@ -33,6 +25,6 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', functi
 			console.log("---!!! Create new encounter was successful !!!---");
 			console.log(data);
 			socket.emit('new:encounter');
-		});
+		});*/
 	};
 }]);
