@@ -16,7 +16,7 @@ var passport = require('passport');
 
 router.post('/encounter/create', isLoggedIn, function(req, res)
 {
-    Encounter.create(
+    /*Encounter.create(
     {
         title : req.body.title,
         description : req.body.description,
@@ -31,7 +31,8 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
         }
         
         res.send("OK");
-    });
+    });*/
+    res.send(req.user);
 });
 
 router.get('/encounter/all', isLoggedIn, function(req, res)
