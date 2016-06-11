@@ -14,13 +14,22 @@
           <br>
           <div class="row">
             <div class="col-md-4">
-              <input type='number' class='form-control' ng-model="initiative" style="font-size: 26px" placeholder="INITIATIVE" min="0" max="50" required>
+              <div class="input-group">
+                <span class="input-group-addon" id="init-addon"><i class="fa fa-bolt"></i></span>
+                <input type='number' class='form-control' ng-model="initiative" style="font-size: 26px" placeholder="INITIATIVE" aria-describedby="init-addon" min="0" max="50" required>
+              </div>
             </div>
             <div class="col-md-4">
-              <input type='number' class='form-control' ng-model="armorClass" style="font-size: 26px" placeholder="AC" min="1" max="50" required>
+              <div class="input-group">
+                <span class="input-group-addon" id="armor-addon"><i class="fa fa-shield"></i></span>
+                <input type='number' class='form-control' ng-model="armorClass" style="font-size: 26px" placeholder="AC" aria-describedby="armor-addon" min="1" max="50" required>
+              </div>
             </div>
             <div class="col-md-4">
-              <input type='number' class='form-control' ng-model="hitPoints" style="font-size: 26px" placeholder="HP" min="1" max="1000" required>
+              <div class="input-group">
+                <span class="input-group-addon" id="hitpoint-addon"><i class="fa fa-heart"></i></span>
+                <input type='number' class='form-control' ng-model="hitPoints" style="font-size: 26px" placeholder="HP" aria-describedby="hitpoint-addon" min="1" max="1000" required>
+              </div>
             </div>
           </div>
         </div>
