@@ -7,7 +7,10 @@
       </div>
       <form ng-submit="$hide()">
         <div class="modal-body container-fluid">
-          <input type='text' name='username' class='form-control' ng-model="name" placeholder='Character Name' required autofocus> 
+          <div class="input-group">
+            <span class="input-group-addon" id="user-addon"><i class="fa fa-user"></i></span>
+            <input type='text' name='username' class='form-control' ng-model="name" placeholder='Character Name' aria-describedby="user-addon" required autofocus> 
+          </div>
           <br>
           <div class="row">
             <div class="col-md-4">
