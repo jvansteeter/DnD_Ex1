@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!--script src="bower_components/jquery-ui/jquery-ui.min.js"></script-->
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--link href="stylesheet/styles.css" rel="stylesheet"-->
+    <link href="stylesheet/style.css" rel="stylesheet">
 
     <script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -96,8 +96,8 @@
           <h1>{{ encounter.title }}</h1>
           <div class ="container-fluid">
             <div class="row">
-              <div class="col-md-4 character-box" ng-repeat="player in players">
-                <div class="panel panel-default">
+              <div class="col-md-4 character-box" ng-model="players">
+                <div class="panel panel-default" ng-repeat="player in players">
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
                     <h4>{{ player.name }}</h3>
                   </div>
@@ -121,6 +121,7 @@
          	</div-->
       	</div>
         <div class="col col-sm-3">
+        <br>
           <ul class="nav nav-stacked">
             <!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
             <li>
