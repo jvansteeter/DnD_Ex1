@@ -77,8 +77,8 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
             name : req.body.name,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
-            maxHitPoints : req.body.maxHitPoints,
-            hitPoints : req.body.hitPoints
+            hitPoints : req.body.hitPoints,
+            maxHitPoints : req.body.maxHitPoints
         });
         //res.json(encounterPlayer);
         encounter.addPlayer(encounterPlayer._id);

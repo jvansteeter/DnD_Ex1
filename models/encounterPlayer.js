@@ -7,7 +7,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     initiative: Number,
     armorClass: Number,
     hitPoints: Number,
-    encounter_id: String
+    maxHitPoints: Number
 });
 
 mongoose.model('EncounterPlayer', encounterPlayerSchema);
