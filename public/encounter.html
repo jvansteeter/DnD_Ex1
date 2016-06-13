@@ -56,12 +56,13 @@
 <!-- Begin Body -->
     <div class="container" ng-controller="encounterController">
     	<div class="row">
-    		<div class="col col-sm-2">
+    		<div class="col col-sm-3">
         	<div class="well">
+            <hr>
             <button type="button" class="btn btn-default" data-template-url="modal/encounterAddCharacerModal.html" data-placement="center" bs-modal="modal">Add Character</button>
           </div>
     		</div>
-    		<div class="col col-sm-7">
+    		<div class="col col-sm-6">
           <h1>{{ encounter.title }}</h1>
           <div class ="container-fluid">
             <div class="row" ui-sortable ng-model="players">
