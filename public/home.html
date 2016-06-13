@@ -3,111 +3,113 @@
 	<head ng-controller="headerControl">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-    <meta name="generator" content="Bootply" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--link href="stylesheet/styles.css" rel="stylesheet"-->
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!--link href="stylesheet/styles.css" rel="stylesheet"-->
 
-    <script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.js"></script>
 		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+		<link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="javascript/angularModule.js"></script>
-    <script src="javascript/socketFactory.js"></script>
-    <script src="javascript/homeController.js"></script>
-    <script src="javascript/headerController.js"></script>
-    <script src="javascript/encounterModalController.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="javascript/angularModule.js"></script>
+		<script src="javascript/socketFactory.js"></script>
+		<script src="javascript/homeController.js"></script>
+		<script src="javascript/headerController.js"></script>
+		<script src="javascript/encounterModalController.js"></script>
 
 		<title>{{ title }}</title>
 	</head>
 	<body>
-    <nav class="navbar navbar-static navbar-inverse">
-        <div class="container">
-          <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="fa fa-chevron-down"></span>
-          </a>
-          <div class="nav-collapse collase">
+		<nav class="navbar navbar-static navbar-inverse">
+				<div class="container">
+					<a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="fa fa-chevron-down"></span>
+					</a>
+					<div class="nav-collapse collase">
 
-            <ul class="nav navbar-nav">
-              <li><a href="home.html">Home</a></li>
-              <li><a href="myPosts.html">My Posts</a></li>
-              <li><a href="#" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a></li>
-            </ul>
+						<ul class="nav navbar-nav">
+							<li><a href="home.html">Home</a></li>
+							<li><a href="#" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a></li>
+						</ul>
 
-            <ul class="nav navbar-right navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
-                <ul class="dropdown-menu" style="padding:12px;">
-                    <form class="form-inline">
-                       <div class="input-group">
-                         <input type="text" class="form-control" placeholder="Search">
-                         <div class="input-group-btn">
-         			       <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                         </div>
-                      </div>
-                    </form>
-                  </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
-                <ul class="dropdown-menu">
-                  <li><a href="login.html">Logout</a></li>
-                  <li><a href="#">Profile</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">About</a></li>
-                 </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-    </nav><!-- /.navbar -->
+						<ul class="nav navbar-right navbar-nav">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
+								<ul class="dropdown-menu" style="padding:12px;">
+										<form class="form-inline">
+											 <div class="input-group">
+												 <input type="text" class="form-control" placeholder="Search">
+												 <div class="input-group-btn">
+										 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+												 </div>
+											</div>
+										</form>
+									</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+								<ul class="dropdown-menu">
+									<li><a href="login.html">Logout</a></li>
+									<li><a href="#">Profile</a></li>
+									<li class="divider"></li>
+									<li><a href="#">About</a></li>
+								 </ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+		</nav><!-- /.navbar -->
 
 <!-- Begin Body -->
 <div class="container" ng-controller="homeController">
 	<div class="row">
-  			<div class="col col-sm-3">
-              	<div id="sidebar">
-            			<ul class="nav nav-stacked">
-                          <li><h3 class="highlight">Channels <i class="fa fa-dashboard pull-right"></i></h3></li>
-                        	<li><a href="#">Link</a></li>
-                			<!--li><a href="#">Link</a></li-->
-      				    </ul>
-                <div class="accordion" id="accordion2">
-                  <div class="accordion-group">
-                      <div class="accordion-heading">
-                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                              Side Menu
-                          </a>
-                      </div>
-                      <div id="collapseOne" class="accordion-body collapse">
-                          <div class="accordion-inner">
-                            <p>More Content under Development</p>
-                          </div>
-                      </div>
-                  </div>
-               	</div>
-               </div>
-      		</div>
-      		<div class="col col-sm-9">
-              <h1>Open Encounters:</h1>
-              <div class="panel" ng-repeat="encounter in encounters">
-              	<h2>{{ encounter.title }}</h2>
-                <h6> Hosted by: {{ encounter.host }}</h6>
-                <p>{{ encounter.description }}</p>
-								<a href="encounter.html?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
-
-              	<hr>
-             	</div>
-      	</div>
-  	</div>
+				<div class="col col-sm-3">
+								<div id="sidebar">
+									<ul class="nav nav-stacked">
+													<li><h3 class="highlight">Channels <i class="fa fa-dashboard pull-right"></i></h3></li>
+													<li><a href="#">Link</a></li>
+											<!--li><a href="#">Link</a></li-->
+									</ul>
+								<div class="accordion" id="accordion2">
+									<div class="accordion-group">
+											<div class="accordion-heading">
+													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+															Side Menu
+													</a>
+											</div>
+											<div id="collapseOne" class="accordion-body collapse">
+													<div class="accordion-inner">
+														<p>More Content under Development</p>
+													</div>
+											</div>
+									</div>
+								</div>
+							 </div>
+					</div>
+					<div class="col col-sm-9">
+							<h1>Open Encounters:</h1>
+							<div class="panel panel-default" ng-repeat="encounter in encounters">
+								<div class="panel-heading">
+									<h2>{{ encounter.title }}</h2>
+								</div>
+								<div class="panel-body">
+									<h6> Hosted by: {{ encounter.host }}</h6>
+									<p>{{ encounter.description }}</p>
+									<a href="encounter.html?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
+									<hr>
+								</div>
+							</div>
+				</div>
+		</div>
 </div>
 	</body>
 </html>
