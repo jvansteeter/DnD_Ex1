@@ -72,13 +72,15 @@
 <!-- Begin Body -->
 <div class="container" ng-controller="homeController">
 	<div class="row">
-		<div class="col col-sm-2">
+		<div class="col col-sm-3">
 			<hr>
-        <div class="list-group">
-          <a href="#" class="list-group-item" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a>
+				<div class="well well-sm">
+	        <div class="list-group">
+	          <a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a>
+	        </div>
         </div>
 		</div>
-		<div class="col col-sm-10">
+		<div class="col col-sm-9">
 			<h1>Open Encounters:</h1>
 			<div class="panel panel-default" ng-repeat="encounter in encounters">
 				<div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
