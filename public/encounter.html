@@ -95,8 +95,8 @@
     		<div class="col col-sm-7">
           <h1>{{ encounter.title }}</h1>
           <div class ="container-fluid">
-            <div class="row">
-              <div class="col-md-4 character-box" ng-repeat="player in players">
+            <div class="row ui-sortable">
+              <div class="col-md-4 character-box ui-widget ui-widget-content" ng-repeat="player in players">
                 <div class="panel panel-default">
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
                     <h4>{{ player.name }}</h3>
