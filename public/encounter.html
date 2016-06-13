@@ -96,23 +96,19 @@
           <h1>{{ encounter.title }}</h1>
           <div class ="container-fluid">
             <div class="row">
-              <ul ui-sortable="{ 'ui-floating': true }" ng-model="players">
-                <li  ng-repeat="player in players">
-                  <div class="col-md-4 character-box">
-                    <div class="panel panel-default">
-                      <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
-                        <h4>{{ player.name }}</h3>
-                      </div>
-                      <div class="panel-body" style="padding-top: 5px; padding-bottom: 0px">
-                        <ul class="fa-ul">
-                          <li><i class="fa-li fa fa-heart"></i>{{ player.hitPoints }} / {{ player.maxHitPoints }}</li>
-                          <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
-                        </ul>
-                      </div>
-                    </div>
+              <div class="col-md-4 character-box" ng-repeat="player in players">
+                <div class="panel panel-default">
+                  <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
+                    <h4>{{ player.name }}</h3>
                   </div>
-                </li>
-              </ul>
+                  <div class="panel-body" style="padding-top: 5px; padding-bottom: 0px">
+                    <ul class="fa-ul">
+                      <li><i class="fa-li fa fa-heart"></i>{{ player.hitPoints }} / {{ player.maxHitPoints }}</li>
+                      <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <!--div class="panel" ng-repeat="encounter in encounters">
