@@ -57,27 +57,9 @@
     <div class="container" ng-controller="encounterController">
     	<div class="row">
     		<div class="col col-sm-2">
-        	<div id="sidebar">
-      			<ul class="nav nav-stacked">
-              <li><h3 class="highlight">Channels <i class="fa fa-dashboard pull-right"></i></h3></li>
-            	<li><a href="#">Link</a></li>
-          			<!--li><a href="#">Link</a></li-->
-    		    </ul>
-          <div class="accordion" id="accordion2">
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                  Side Menu
-                </a>
-              </div>
-              <div id="collapseOne" class="accordion-body collapse">
-                <div class="accordion-inner">
-                  <p>More Content under Development</p>
-                </div>
-              </div>
-            </div>
-         	</div>
-         </div>
+        	<div class="well center-block">
+            <button type="button" class="btn btn-default" data-template-url="modal/encounterAddCharacerModal.html" data-placement="center" bs-modal="modal">Add Character</button>
+          </div>
     		</div>
     		<div class="col col-sm-7">
           <h1>{{ encounter.title }}</h1>
