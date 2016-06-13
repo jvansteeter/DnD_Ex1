@@ -72,45 +72,28 @@
 <!-- Begin Body -->
 <div class="container" ng-controller="homeController">
 	<div class="row">
-				<div class="col col-sm-3">
-								<div id="sidebar">
-									<ul class="nav nav-stacked">
-													<li><h3 class="highlight">Channels <i class="fa fa-dashboard pull-right"></i></h3></li>
-													<li><a href="#">Link</a></li>
-											<!--li><a href="#">Link</a></li-->
-									</ul>
-								<div class="accordion" id="accordion2">
-									<div class="accordion-group">
-											<div class="accordion-heading">
-													<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-															Side Menu
-													</a>
-											</div>
-											<div id="collapseOne" class="accordion-body collapse">
-													<div class="accordion-inner">
-														<p>More Content under Development</p>
-													</div>
-											</div>
-									</div>
-								</div>
-							 </div>
-					</div>
-					<div class="col col-sm-9">
-							<h1>Open Encounters:</h1>
-							<div class="panel panel-default" ng-repeat="encounter in encounters">
-								<div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
-									<h2 style="margin-top: 5px">{{ encounter.title }}</h2>
-								</div>
-								<div class="panel-body">
-									<h6> Hosted by: {{ encounter.host }}</h6>
-									<p>{{ encounter.description }}</p>
-									<br>
-									<a href="encounter.html?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
-									<hr>
-								</div>
-							</div>
-				</div>
+		<div class="col col-sm-2">
+			<hr>
+        <div class="list-group">
+          <a href="#" class="list-group-item" data-animation="am-fade-and-slide-top" data-template-url="newEncounterModal.html" bs-modal="modal">Create New Encounter</a>
+        </div>
 		</div>
+		<div class="col col-sm-10">
+			<h1>Open Encounters:</h1>
+			<div class="panel panel-default" ng-repeat="encounter in encounters">
+				<div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
+					<h2 style="margin-top: 5px">{{ encounter.title }}</h2>
+				</div>
+				<div class="panel-body">
+					<h6> Hosted by: {{ encounter.host }}</h6>
+					<p>{{ encounter.description }}</p>
+					<br>
+					<a href="encounter.html?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 	</body>
 </html>
