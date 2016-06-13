@@ -99,12 +99,12 @@
               <div class="col-md-4 character-box" ng-repeat="player in players">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3>{{ player.name }}</h3>
+                    <h4>{{ player.name }}</h3>
                   </div>
                   <div class="panel-body">
-                    <ul>
-                      <li><i class="fa fa-heart"></i>{{ player.hitPoints }} / {{ player.maxHitPoints }}</li>
-                      <li><i class="fa fa-shield"></i>{{ player.armorClass }}</li>
+                    <ul class="list-group">
+                      <li><i class="fa fa-heart fa-fw" aria-hidden="true"></i>{{ player.hitPoints }} / {{ player.maxHitPoints }}</li>
+                      <li><i class="fa fa-shield fa-fw"></i>{{ player.armorClass }}</li>
                     </ul>
                   </div>
                 </div>
