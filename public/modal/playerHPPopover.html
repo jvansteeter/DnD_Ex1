@@ -3,10 +3,12 @@
 	<!--h3 class="popover-title"></h3-->
 	<div class="popover-content">
 		<div class="input-group">
-			<input type="number" class="form-control" autofocus required>
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="button" ng-click="$hide()"><i class="fa fa-check"></i></button>
-			</span>
+			<form ng-submit="$hide()">
+				<input type="number" class="form-control" autofocus required>
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit" ng-click="$hide()"><i class="fa fa-check"></i></button>
+				</span>
+			</form>
 		</div>
 	</div>
 </div>
