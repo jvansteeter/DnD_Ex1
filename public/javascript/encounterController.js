@@ -48,12 +48,12 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         $scope.multiple = multiple;
     }
 
-    $scope.damagePlayer = function()
+    $scope.damagePlayer = function(hit)
     {
         console.log("Attempting to damage player " + $scope.selectedPlayer + " m: " + $scope.multiple);
 
-        var hit = $scope.hit * $scope.multiple;
-        console.log("Hit: " + $scope.hit);
+        //var hit = $scope.hit * $scope.multiple;
+        console.log("Hit: " + hit);
         var data = 
         {
             playerID : $scope.players[$scope.selectedPlayer]._id,
