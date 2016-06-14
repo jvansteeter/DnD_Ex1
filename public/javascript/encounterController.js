@@ -94,5 +94,31 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
     $scope.removePlayer = function(index)
     {
         console.log("Removing player " + index);
+
+        var url = 'api/encounter/removeplayer/' + encounterID;
+        var data =
+        {
+            playerID : $scope.players[index]._id
+        };
+
+        $http.post(url, data).success(function(data)
+        {
+            console.log(data);
+            $scope.name = '';
+            $scope.initiative = '';
+            $scope.armorClass = '';
+            $scope.hitPoints = '';
+            console.log("Player successfully added");
+            socket.emit('update:encounter', 
+                {
+                    encounterID : encounterID
+                });
+
+            var url = 'api/encounter/players/' + encounterID;
+            $http.get(url).success(function(data)
+            {
+                $scope.players = data;
+            });
+        });
     };
 }]);

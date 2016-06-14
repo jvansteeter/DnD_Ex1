@@ -127,6 +127,30 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/encounter/removeplayer/:encounter_id', isLoggedIn, function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        //res.json(encounterPlayer);
+        encounter.removePlayer(req.body.playerID);
+        EncounterPlayer.remove({_id: req.body.playerID }, function(error)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+            res.send("OK");
+        });
+    });
+});
+
 router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)

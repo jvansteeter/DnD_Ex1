@@ -19,4 +19,10 @@ encounterSchema.methods.addPlayer = function(player)
     this.save();
 };
 
+encounterSchema.methods.removePlayer = function(player)
+{
+	this.players.splice(this.players.indexOf(player), 1);
+	this.save();
+};
+
 mongoose.model('Encounter', encounterSchema);

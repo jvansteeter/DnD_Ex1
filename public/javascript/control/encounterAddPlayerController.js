@@ -7,7 +7,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	$scope.armorClass = '';
 	$scope.hitPoints = '';
 
-	$scope.addCharacter = function()
+	$scope.addPlayer = function()
     {
     	console.log("Attempting to add character");
     	if ($scope.name === '')
