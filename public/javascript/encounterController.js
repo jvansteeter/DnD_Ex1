@@ -91,53 +91,8 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         });
     };
 
-    /*$scope.addNPC = function()
+    $scope.removePlayer = function(index)
     {
-        console.log("Attempting to add character");
-        if ($scope.name === '')
-        {
-            return;
-        }
-        else if ($scope.initiative === '' || $scope.initiative < 0 || $scope.initiative > 50 || isNaN($scope.initiative))
-        {
-            return;
-        }
-        else if ($scope.hitPoints === '' || $scope.hitPoints < 0 || $scope.hitPoints > 1000 || isNaN($scope.hitPoints))
-        {
-            return;
-        }
-        else
-        {
-            var socket = io.connect();
-            var encounterID = Profile.getEncounter();
-
-            var url = 'api/encounter/addnpc/' + encounterID;
-            var data =
-            {
-                name : $scope.NPCname,
-                initiative : $scope.NPCinitiative,
-                maxHitPoints : $scope.NPChitPoints,
-                hitPoints : $scope.NPChitPoints
-            };
-
-            $http.post(url, data).success(function(data)
-            {
-                console.log(data);
-                $scope.NPCname = '';
-                $scope.NPCinitiative = '';
-                $scope.NPChitPoints = '';
-                console.log("Player successfully added");
-                socket.emit('update:encounter', 
-                    {
-                        encounterID : encounterID
-                    });
-
-                var url = 'api/encounter/players/' + encounterID;
-                $http.get(url).success(function(data)
-                {
-                    $scope.players = data;
-                });
-            });
-        }
-    }; */ 
+        console.log("Removing player " + index);
+    };
 }]);

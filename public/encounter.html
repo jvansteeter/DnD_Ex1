@@ -72,8 +72,8 @@
               <div class="col-md-4" ng-repeat="player in players track by $index">
                 <div class="panel panel-default">
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
-                    <h4>{{ player.name }}<strong style="float: right; color: red;">{{ player.status }}</strong>
-                    <i class="fa fa-close" style="float: right"></i></h4>
+                    <h4>{{ player.name }}<a href="#" ng-click="removePlayer($index)" ng-show="isHost()"><i class="fa fa-close" style="float: right"></i></a><strong style="float: right; color: red;">{{ player.status }}</strong>
+                    </h4>
                   </div>
                   <div class="panel-body" ng-show="!isNPC($index)" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
