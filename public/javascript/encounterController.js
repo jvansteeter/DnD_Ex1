@@ -104,21 +104,12 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         $http.post(url, data).success(function(data)
         {
             console.log(data);
-            $scope.name = '';
-            $scope.initiative = '';
-            $scope.armorClass = '';
-            $scope.hitPoints = '';
-            console.log("Player successfully added");
             socket.emit('update:encounter', 
-                {
-                    encounterID : encounterID
-                });
-
-            var url = 'api/encounter/players/' + encounterID;
-            $http.get(url).success(function(data)
             {
-                $scope.players = data;
+                encounterID : encounterID
             });
+
+            $scope.players.splice(index, 1);
         });
     };
 }]);
