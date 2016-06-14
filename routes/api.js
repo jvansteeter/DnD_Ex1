@@ -119,10 +119,12 @@ router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
 
 router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
 {
+    console.log("---!!! Attempting to hit a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
         {
+            console.log("Error finding the player");
             res.sendStatus(403);
             return;
         }
@@ -132,6 +134,7 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
         {
             if (error)
             {
+                console.log("Error saving the player");
                 res.sendStatus(403);
                 return;
             }
