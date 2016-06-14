@@ -2,11 +2,9 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('homeController', function($scope, $window, $http, socket, Profile) 
+clientApp.controller('homeController', function($scope, $window, $http, socket) 
 {
 	var posts = [];
-
-	console.log("Firstname: " + Profile.getFirstName());
 
 	socket.on('init', function (data) 
 	{
