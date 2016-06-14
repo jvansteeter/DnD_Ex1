@@ -82,7 +82,12 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
             {
                 encounterID : encounterID
             });
-            $scope.players[$scope.selectedPlayer].hitPoints += hit;
+            
+            var url = 'api/encounter/players/' + encounterID;
+            $http.get(url).success(function(data)
+            {
+                $scope.players = data;
+            });
         });
     };
 
