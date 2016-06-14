@@ -77,11 +77,11 @@
                       <li>
                         <i class="fa-li fa fa-heart"></i>{{ player.hitPoints }} / {{ player.maxHitPoints }}
                         <span style="float: right">
-                        <a href="#" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
+                        <a href="{{ player._id }}" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
                         <i class="fa fa-minus" style="color: red;"></i>
                         </span>
                       </li>
-                      <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}<span style="float: right"><i class="fa fa-plus" style="color: green;"></i> <i class="fa fa-minus" style="color: red;"></i></span></li>
+                      <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
                     </ul>
                   </div>
                 </div>
