@@ -17,19 +17,15 @@ module.exports = function (socket)
 		socket.broadcast.emit('new:encounter');
 	});
 
-	socket.on('new:encounterPlayer', function(data)
+	socket.on('update:encounter', function(data)
 	{
-		console.log("---!!! RECEIVED MESSAGE ABOUT NEW PLAYER !!!---");
+		console.log("---!!! RECEIVED MESSAGE TO UPDATE ENCOUNTER !!!---");
 		socket.broadcast.emit('new:encounterPlayer',
 		{
 			encounterID : data.encounterID
 		});
 	});
 
-	socket.on('update:encounter', function(data)
-	{
-		console.log("---!!! RECEIVED ORDER TO UPDATE ENCOUNTER !!!---");
-	});
 
 	// notify other clients that a new user has joined
 	/*socket.broadcast.emit('user:join', 

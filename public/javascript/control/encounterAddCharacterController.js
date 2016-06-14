@@ -49,7 +49,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	            $scope.armorClass = '';
 	            $scope.hitPoints = '';
 	            console.log("Player successfully added");
-	            socket.emit('new:encounterPlayer', 
+	            socket.emit('update:encounter', 
 	            	{
 	            		encounterID : encounterID
 	            	}, function (){});
