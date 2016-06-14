@@ -76,14 +76,7 @@
                     <ul class="fa-ul">
                       <li>
                         <i class="fa-li fa fa-heart"></i>
-                          <div ng-switch on="player.hitPoints">
-                            <div ng-switch-when="player.hitPoints < 1">
-                              <span style="color: red">{{ player.hitPoints }}</span> / {{ player.maxHitPoints }}
-                            </div>
-                            <div ng-switch-when="player.hitPoints > player.maxHitPoints">
-                              <span style="color: green">{{ player.hitPoints }}</span> / {{ player.maxHitPoints }}
-                            </div>
-                          </div>
+                        <span ng-if="player.hitPoints < 1" style="color: red">{{ player.hitPoints }}</span> / {{ player.maxHitPoints }}
                         <span style="float: right">
                         <a href="#" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
                         <a href="#" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
