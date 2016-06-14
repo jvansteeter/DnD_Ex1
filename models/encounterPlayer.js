@@ -8,6 +8,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     armorClass: Number,
     hitPoints: Number,
     maxHitPoints: Number,
+    status: String,
     npc: Boolean
 });
 
