@@ -32,7 +32,9 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			console.log("Login was successful");
 			console.log(data);
 
-			Profile.setUsername($scope.usernameInput);
+			Profile.setUsername(data.username);
+			Profile.setFirstName(data.first_name);
+			Profile.setLastName(data.last_name);
 			window.location = 'home.html';
 		});
 	};

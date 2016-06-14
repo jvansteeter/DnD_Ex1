@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('headerControl', function($scope) 
+clientApp.controller('headerController', function($scope, Profile) 
 {
-  	$scope.title = "This is supposed to be a title";
+  	$scope.name = Profile.getFirstName;
 });
