@@ -7,7 +7,8 @@ var encounterPlayerSchema = new mongoose.Schema(
     initiative: Number,
     armorClass: Number,
     hitPoints: Number,
-    maxHitPoints: Number
+    maxHitPoints: Number,
+    npc: Boolean
 });
 
 encounterPlayerSchema.methods.hit = function(hit)
