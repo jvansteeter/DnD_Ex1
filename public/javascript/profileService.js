@@ -12,6 +12,7 @@ clientApp.service('Profile', function($window)
     profile.getFirstName = function()
     {
         var data = $window.sessionStorage.getItem("firstName");
+        return data;
     };
 
     profile.setLastName = function(name)
@@ -22,6 +23,7 @@ clientApp.service('Profile', function($window)
     profile.getLastName = function()
     {
         var data = $window.sessionStorage.getItem("lastName");
+        return data;
     };
 
     profile.setUsername = function(name)
@@ -32,6 +34,7 @@ clientApp.service('Profile', function($window)
     profile.getUsername = function()
     {
         var data = $window.sessionStorage.getItem("username");
+        return data;
     };
 
     profile.getEncounter = function()
