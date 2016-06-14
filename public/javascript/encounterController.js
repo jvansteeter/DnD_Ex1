@@ -40,6 +40,11 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 
     $scope.damagePlayer = function()
     {
-        console.log("Attempting to damage player" + $scope.selectedPlayer);
+        console.log("Attempting to damage player " + $scope.selectedPlayer);
+    };
+
+    $scope.setPlayer = function(index)
+    {
+        $scope.selectedPlayer = index;
     };
 }]);
