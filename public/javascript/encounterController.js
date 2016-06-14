@@ -52,6 +52,11 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
     {
         console.log("Attempting to damage player " + $scope.selectedPlayer + " m: " + $scope.multiple);
 
+        if (hit < 1 || isNaN(hit))
+        {
+            return;
+        }
+
         var hit = hit * $scope.multiple;
         console.log("Hit: " + hit);
         var data = 
