@@ -54,7 +54,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         var hit = $scope.hit * $scope.multiple;
         var data = 
         {
-            player : $scope.players[$scope.selectedPlayer]._id,
+            playerID : $scope.players[$scope.selectedPlayer]._id,
             hit : $scope.hit
         };
         var url = 'api/encounter/hitplayer';

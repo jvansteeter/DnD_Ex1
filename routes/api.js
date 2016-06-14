@@ -119,7 +119,7 @@ router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
 
 router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
 {
-    EncounterPlayer.findById(req.body.encounterID, function(error, player)
+    EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
         {
