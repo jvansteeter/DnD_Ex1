@@ -165,15 +165,15 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
         console.log("found player " + player._id + " " + player.name + " " + req.body.hit);
 
         player.hitPoints += req.body.hit;
-        if (!player.npc && (player.hitPoints - player.maxHitPoints) < -9)
+        if (!player.npc && player.hitPoints < -9)
         {
             player.status = "DEAD";
         }
-        else if (player.npc && (player.hitPoints - player.maxHitPoints) < 0)
+        else if (player.npc && player.hitPoints < 0)
         {
             player.status = "DEAD"
         }
-        
+
         player.save(function(error)
         {
             if (error)
