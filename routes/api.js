@@ -21,7 +21,8 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
     {
         title : req.body.title,
         description : req.body.description,
-        host : name,
+        host : req.user.username,
+        hostName : name,
         active : true
     }, function(error, encounter)
     {
