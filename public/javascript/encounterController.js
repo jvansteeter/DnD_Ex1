@@ -7,7 +7,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
     $scope.players = [];
-    $scope.hit = 0;
 
     socket.on('init', function (data) 
     {
@@ -48,16 +47,16 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         $scope.multiple = multiple;
     }
 
-    $scope.damagePlayer = function(hit)
+    $scope.hitPlayer = function(hit)
     {
         console.log("Attempting to damage player " + $scope.selectedPlayer + " m: " + $scope.multiple);
 
-        //var hit = $scope.hit * $scope.multiple;
+        var hit = hit * $scope.multiple;
         console.log("Hit: " + hit);
         var data = 
         {
             playerID : $scope.players[$scope.selectedPlayer]._id,
-            hit : $scope.hit
+            hit : hit
         };
         var url = 'api/encounter/hitplayer';
         $http.post(url, data).success(function(data)
