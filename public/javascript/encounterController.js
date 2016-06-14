@@ -48,6 +48,15 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         $scope.multiple = multiple;
     }
 
+    $scope.isHost = function()
+    {
+        if (Profile.getUsername() === $scope.encounter.host)
+        {
+            return true;
+        }
+        return false;
+    };
+
     $scope.hitPlayer = function(hit)
     {
         if (hit < 1 || isNaN(hit))
