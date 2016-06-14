@@ -66,6 +66,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
             {
                 encounterID : encounterID
             });
+            $scope.players[$scope.selectedPlayer].hitPoints += hit;
         });
     };
 }]);
