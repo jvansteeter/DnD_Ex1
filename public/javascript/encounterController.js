@@ -15,7 +15,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         $http.get(url).success(function(data)
         {
             $scope.encounter = data.encounter;
-            //Profile.setEncounter(data.encounter._id);
+            Profile.setEncounter(data.encounter._id);
 
             var url = 'api/encounter/players/' + encounterID;
             $http.get(url).success(function(data)
