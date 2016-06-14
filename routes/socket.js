@@ -20,7 +20,7 @@ module.exports = function (socket)
 	socket.on('update:encounter', function(data)
 	{
 		console.log("---!!! RECEIVED MESSAGE TO UPDATE ENCOUNTER !!!---");
-		socket.broadcast.emit('new:encounterPlayer',
+		socket.broadcast.emit('update:encounter',
 		{
 			encounterID : data.encounterID
 		});

@@ -25,8 +25,9 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         });
     });
 
-    socket.on('new:encounterPlayer', function(data)
+    socket.on('update:encounter', function(data)
     {
+        console.log("Updating encounter");
         if (data.encounterID === encounterID)
         {
             var url = 'api/encounter/players/' + encounterID;
