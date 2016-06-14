@@ -96,7 +96,7 @@
                         <i class="fa-li fa fa-heart"></i>???  
                         <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  {{ player.hitPoints - player.maxHitPoints }}</span>
                         <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }}</span>
-                        <span ng-if="(player.hitPoints - player.maxHitPoints) = 0"></span>
+                        <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"></span>
                         <span style="float: right">
                         <a href="#" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
                         <a href="#" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
