@@ -53,7 +53,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
 
 router.post('/login',passport.authenticate('local'), function(req, res)
 {
-	res.sendStatus(200);	
+	res.json(req);	
 });
 
 module.exports = router;
