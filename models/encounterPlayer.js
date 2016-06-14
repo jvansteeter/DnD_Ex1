@@ -10,4 +10,9 @@ var encounterPlayerSchema = new mongoose.Schema(
     maxHitPoints: Number
 });
 
+encounterPlayerSchema.methods.hit = function(hit)
+{
+	this.hitPoints = this.hitPoints + hit;
+};
+
 mongoose.model('EncounterPlayer', encounterPlayerSchema);
