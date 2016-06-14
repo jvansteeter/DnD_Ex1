@@ -6,7 +6,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 {
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
-    $scope.selectedPlayer = '';
     $scope.players = [];
 
     socket.on('init', function (data) 
@@ -38,13 +37,32 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         }
     });
 
-    $scope.damagePlayer = function()
-    {
-        console.log("Attempting to damage player " + $scope.selectedPlayer);
-    };
-
     $scope.setPlayer = function(index)
     {
         $scope.selectedPlayer = index;
+    };
+
+    $scope.setMultiplier = function(multiple)
+    {
+        $scope.multiple = multiple;
+    }
+
+    $scope.damagePlayer = function()
+    {
+        console.log("Attempting to damage player " + $scope.selectedPlayer);
+
+        var data = 
+        {
+            player : $scope.players[$scope.selectedPlayer]._id,
+            hit : $scope.hit
+        };
+        var url = 'api/encounter/hitplayer';
+        $http.post(url, data).success(function(data)
+        {
+            socket.emit('update:encounter',
+            {
+                encounter : encounterID
+            });
+        });
     };
 }]);
