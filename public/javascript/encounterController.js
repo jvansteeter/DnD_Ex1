@@ -6,6 +6,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 {
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
+    $scope.selectedPlayer = {};
     $scope.players = [];
 
     socket.on('init', function (data) 
@@ -39,6 +40,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 
     $scope.damagePlayer = function()
     {
-        console.log("Attempting to damage player" + $scope.player.name);
+        console.log("Attempting to damage player" + $scope.selectedPlayer.name);
     };
 }]);
