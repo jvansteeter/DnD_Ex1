@@ -26,6 +26,11 @@ module.exports = function (socket)
 		});
 	});
 
+	socket.on('update:encounter', function(data)
+	{
+		console.log("---!!! RECEIVED ORDER TO UPDATE ENCOUNTER !!!---");
+	});
+
 	// notify other clients that a new user has joined
 	/*socket.broadcast.emit('user:join', 
 	{

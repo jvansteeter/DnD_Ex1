@@ -51,6 +51,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
     {
         console.log("Attempting to damage player " + $scope.selectedPlayer + " m: " + $scope.multiple);
 
+        var hit = $scope.hit * $scope.multiple;
         var data = 
         {
             player : $scope.players[$scope.selectedPlayer]._id,
@@ -61,7 +62,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         {
             socket.emit('update:encounter',
             {
-                encounter : encounterID
+                encounterID : encounterID
             });
         });
     };

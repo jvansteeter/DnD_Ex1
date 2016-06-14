@@ -117,6 +117,31 @@ router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
+{
+    EncounterPlayer.findById(req.body.encounterID, function(error, player)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        player.hitPoints += req.body.hit;
+        player.save(function(error)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            res.send("OK");
+        });
+    });
+});
+
+/*
 // get all items for the user
 router.get('/api/items', function (req,res) {
     // validate the supplied token
@@ -247,6 +272,8 @@ router.delete('/api/items/:item_id', function (req,res) {
         }
     });
 });
+
+*/
 
 function isLoggedIn(req, res, next) 
 {
