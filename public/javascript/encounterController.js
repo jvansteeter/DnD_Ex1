@@ -62,11 +62,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         return $scope.players[index].npc;
     };
 
-    $scope.damageTaken = function(index)
-    {
-        return $scope.players[index].hitPoints - $scope.palyers[index].maxHitPoints;
-    };
-
     $scope.hitPlayer = function(hit)
     {
         if (hit < 1 || isNaN(hit))
