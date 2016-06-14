@@ -129,6 +129,8 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
             return;
         }
 
+        console.log("found player " + player._id + " " + player.name);
+
         player.hitPoints += req.body.hit;
         player.save(function(error)
         {
