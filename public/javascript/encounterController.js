@@ -81,7 +81,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
         });
     };
 
-    $scope.addNPC = function()
+    /*$scope.addNPC = function()
     {
         console.log("Attempting to add character");
         if ($scope.name === '')
@@ -121,7 +121,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
                     {
                         encounterID : encounterID
                     });
-                
+
                 var url = 'api/encounter/players/' + encounterID;
                 $http.get(url).success(function(data)
                 {
@@ -129,5 +129,5 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
                 });
             });
         }
-    };  
+    }; */ 
 }]);

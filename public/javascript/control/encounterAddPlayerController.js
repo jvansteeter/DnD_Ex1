@@ -56,4 +56,48 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	        });
     	}
     };
+
+    $scope.addNPC = function()
+    {
+    	console.log("Attempting to add NPC");
+    	if ($scope.name === '')
+    	{
+    		return;
+    	}
+    	else if ($scope.initiative === '' || $scope.initiative < 0 || $scope.initiative > 50 || isNaN($scope.initiative))
+    	{
+    		return;
+    	}
+    	else if ($scope.hitPoints === '' || $scope.hitPoints < 0 || $scope.hitPoints > 1000 || isNaN($scope.hitPoints))
+    	{
+    		return;
+    	}
+    	else
+    	{
+	        var socket = io.connect();
+	        var encounterID = Profile.getEncounter();
+
+	        var url = 'api/encounter/addnpc/' + encounterID;
+	        var data =
+	        {
+	            name : $scope.name,
+	            initiative : $scope.initiative,
+	            maxHitPoints : $scope.hitPoints,
+	            hitPoints : $scope.hitPoints
+	        };
+
+	        $http.post(url, data).success(function(data)
+	        {
+	            console.log(data);
+	            $scope.name = '';
+	            $scope.initiative = '';
+	            $scope.hitPoints = '';
+	            console.log("Player successfully added");
+	            socket.emit('update:encounter', 
+	            	{
+	            		encounterID : encounterID
+	            	}, function (){});
+	        });
+    	}
+    };
 }]);
