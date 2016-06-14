@@ -93,7 +93,7 @@
                   <div class="panel-body" ng-show="isNPC($index)" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
                       <li>
-                        <i class="fa-li fa fa-heart"></i>???  {{ damageTaken($index) }}
+                        <i class="fa-li fa fa-heart"></i>??? {{ player.hitPoints - player.maxHitPoints }}
                         <span style="float: right">
                         <a href="#" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
                         <a href="#" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
