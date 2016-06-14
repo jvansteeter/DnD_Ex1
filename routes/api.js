@@ -169,7 +169,7 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
         {
             player.status = "DEAD";
         }
-        else if (player.npc && player.hitPoints < 0)
+        else if (player.npc && player.hitPoints < 1)
         {
             player.status = "DEAD"
         }
