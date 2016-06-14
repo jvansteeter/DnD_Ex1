@@ -7,6 +7,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
     var encounterID = window.location.search.replace('?', '');
     $scope.encounter = {};
     $scope.players = [];
+    $scope.hit = 0;
 
     socket.on('init', function (data) 
     {
