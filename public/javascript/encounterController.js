@@ -36,4 +36,9 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
             });
         }
     });
+
+    $scope.damagePlayer = function()
+    {
+        console.log("Attempting to damage player");
+    };
 }]);
