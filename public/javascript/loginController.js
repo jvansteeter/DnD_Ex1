@@ -32,6 +32,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			console.log("Login was successful");
 			console.log(data);
 
+			Profile.setUsername($scope.usernameInput);
 			window.location = 'home.html';
 		});
 	};
