@@ -38,7 +38,7 @@ var authRouter = require("./routes/authorizationRouter");
 var api = require('./routes/api');
 
 // uncomment after placing your favicon in /public
-app.use(favicon('public/favicon.ico'));
+app.use(favicon('public/image/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
