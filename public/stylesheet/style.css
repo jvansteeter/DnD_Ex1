@@ -1,8 +1,8 @@
 @font-face 
 {
     font-family: 'breathe_fireregular';
-    src: url('breathe_fire-webfont.woff2') format('woff2'),
-         url('breathe_fire-webfont.woff') format('woff');
+    src: url('font/chequered-ink_breathe-fire/breathe_fire-webfont.woff2') format('woff2'),
+         url('font/chequered-ink_breathe-fire/breathe_fire-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
