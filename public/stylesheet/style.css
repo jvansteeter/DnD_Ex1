@@ -1,4 +1,17 @@
+@font-face 
+{
+    font-family: 'Breath Fire';
+    src: url('font/Breathe Fire.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body 
 {
-  background-color:#eee;
+	background-color:#eee;
+}
+
+h1
+{
+	font-family: 'Breath Fire', sans-serif;
 }
