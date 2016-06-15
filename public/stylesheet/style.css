@@ -1,10 +1,147 @@
 @font-face 
 {
-    font-family: 'breathe_fireregular';
-    src: url('font/chequered-ink_breathe-fire/breathe_fire-webfont.woff2') format('woff2'),
-         url('font/chequered-ink_breathe-fire/breathe_fire-webfont.woff') format('woff');
+    font-family: 'breathe_fire';
+    src: url('font/breathe-fire/breathe_fire-webfont.woff2') format('woff2'),
+         url('font/breathe-fire/breathe_fire-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+    font-family: 'barazhad';
+    src: url('font/barazhad/barazhad_bold_italic-webfont.woff2') format('woff2'),
+         url('font/barazhad/barazhad_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'barazhad';
+    src: url('font/barazhad/barazhad_bold-webfont.woff2') format('woff2'),
+         url('font/barazhad/barazhad_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'barazhad';
+    src: url('font/barazhad/barazhad_italic-webfont.woff2') format('woff2'),
+         url('font/barazhad/barazhad_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'barazhad';
+    src: url('font/barazhad/barazhad-webfont.woff2') format('woff2'),
+         url('font/barazhad/barazhad-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'dalelands';
+    src: url('font/dalelands/dalelands_uncial_bold_italic-webfont.woff2') format('woff2'),
+         url('font/dalelands/dalelands_uncial_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'dalelands';
+    src: url('font/dalelands/dalelands_uncial_bold-webfont.woff2') format('woff2'),
+         url('font/dalelands/dalelands_uncial_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'dalelands';
+    src: url('font/dalelands/dalelands_uncial_italic-webfont.woff2') format('woff2'),
+         url('font/dalelands/dalelands_uncial_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'dalelands';
+    src: url('font/dalelands/dalelands_uncial-webfont.woff2') format('woff2'),
+         url('font/dalelands/dalelands_uncial-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'davek';
+    src: url('font/davek/davek_bold_italic-webfont.woff2') format('woff2'),
+         url('font/davek/davek_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'davek';
+    src: url('font/davek/davek_bold-webfont.woff2') format('woff2'),
+         url('font/davek/davek_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'davek';
+    src: url('font/davek/davek_italic-webfont.woff2') format('woff2'),
+         url('font/davek/davek_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'davek';
+    src: url('font/davek/davek-webfont.woff2') format('woff2'),
+         url('font/davek/davek-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'dungeon';
+	src: url('font/dungeon_sn/DUNGRG.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family: 'vecna';
+    src: url('vecna-webfont.woff2') format('woff2'),
+         url('vecna-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'vecna';
+    src: url('vecna_italic-webfont.woff2') format('woff2'),
+         url('vecna_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'vecna';
+    src: url('vecna_bold-webfont.woff2') format('woff2'),
+         url('vecna_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'vecna';
+    src: url('vecna_bold_italic-webfont.woff2') format('woff2'),
+         url('vecna_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
 }
 
 body 
@@ -14,5 +151,5 @@ body
 
 h1
 {
-	font-family: 'breathe_fireregular', sans-serif;
+	font-family: 'breathe_fire', sans-serif;
 }
