@@ -75,7 +75,7 @@
                     <h4>{{ player.name }}<a href="#" ng-click="removePlayer($index)" ng-show="isHost()" style="color: black;"><i class="fa fa-close" style="float: right"></i></a><strong style="float: right; color: red;">{{ player.status }} </strong>
                     </h4>
                   </div>
-                  <div class="panel-body" ng-show="!isNPC($index)" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
+                  <div class="panel-body" ng-show="!isNPC($index) || isHost()" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
                       <li>
                         <i class="fa-li fa fa-heart"></i>
@@ -91,7 +91,7 @@
                       <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
                     </ul>
                   </div>
-                  <div class="panel-body" ng-show="isNPC($index)" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
+                  <div class="panel-body" ng-show="isNPC($index) && !isHost()" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
                       <li>
                         <i class="fa-li fa fa-heart"></i>???  

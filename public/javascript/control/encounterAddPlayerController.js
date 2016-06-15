@@ -68,6 +68,10 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
     	{
     		return;
     	}
+    	else if ($scope.armorClass === '' || $scope.armorClass < 1 || $scope.armorClass > 50 || isNaN($scope.armorClass))
+    	{
+    		return;
+    	}
     	else if ($scope.hitPoints === '' || $scope.hitPoints < 0 || $scope.hitPoints > 1000 || isNaN($scope.hitPoints))
     	{
     		return;
@@ -82,6 +86,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	        {
 	            name : $scope.name,
 	            initiative : $scope.initiative,
+	            armorClass : $scope.armorClass,
 	            maxHitPoints : $scope.hitPoints,
 	            hitPoints : $scope.hitPoints
 	        };
@@ -91,6 +96,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	            console.log(data);
 	            $scope.name = '';
 	            $scope.initiative = '';
+	            $scope.armorClass = '';
 	            $scope.hitPoints = '';
 	            console.log("Player successfully added");
 	            socket.emit('update:encounter', 

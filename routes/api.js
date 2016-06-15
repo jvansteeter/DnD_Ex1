@@ -109,6 +109,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
         {
             name : req.body.name,
             initiative : req.body.initiative,
+            armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
             maxHitPoints : req.body.maxHitPoints,
             npc : true
