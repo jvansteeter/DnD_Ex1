@@ -66,13 +66,9 @@ var characterSchema = new mongoose.Schema(
     hitPoints: Number,
     max_hitPoints: Number,
     temp_hitPoints: Number,
+    features: [],
     status: [],
     npc: Boolean
 });
-
-encounterPlayerSchema.methods.hit = function(hit)
-{
-	this.hitPoints = this.hitPoints + hit;
-};
 
 mongoose.model('EncounterPlayer', encounterPlayerSchema);
