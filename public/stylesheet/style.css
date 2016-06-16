@@ -144,6 +144,38 @@
     font-style: italic;
 }
 
+@font-face {
+    font-family: 'drowic';
+    src: url('font/high-drowic/high_drowic_bold_italic-webfont.woff2') format('woff2'),
+         url('font/high-drowic/high_drowic_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'drowic';
+    src: url('font/high-drowic/high_drowic_bold-webfont.woff2') format('woff2'),
+         url('font/high-drowic/high_drowic_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'drowic';
+    src: url('font/high-drowic/high_drowic_italic-webfont.woff2') format('woff2'),
+         url('font/high-drowic/high_drowic_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'drowic';
+    src: url('font/high-drowic/high_drowic-webfont.woff2') format('woff2'),
+         url('font/high-drowic/high_drowic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body 
 {
 	background-color:#eee;
