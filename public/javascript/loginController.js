@@ -41,24 +41,25 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 
 	$scope.register = function()
 	{
+		console.log("Attempting to register")
 		if ($scope.usernameRegister === "")
 		{
-			$scope.info = "Username is blank";
+			$scope.registerInfo = "Username is blank";
 			return;
 		}
 		if ($scope.firstPasswordRegister === "" || $scope.secondPasswordInput === "")
 		{
-			$scope.info = "Password is blank";
+			$scope.registerInfo = "Password is blank";
 			return;
 		}
 		if ($scope.firstPasswordRegister !== $scope.secondPasswordInput)
 		{
-			$scope.info = "Passwords do not match";
+			$scope.registerInfo = "Passwords do not match";
 			return;
 		}
 		if ($scope.firstNameRegister === "" || $scope.lastNameInput === "")
 		{
-			$scope.info = "Please fill out first and last name";
+			$scope.registerInfo = "Please fill out first and last name";
 			return;
 		}
 
@@ -73,9 +74,10 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 		};
 		$http.post(url, data).success(function(data)
 		{
+			console.log(data);
 			if(data === "OK")
 			{
-				$scope.loginInfo = "User created";
+				$scope.registerInfo = "User created";
 				var url = "auth/login";
 				var data =  
 				{
@@ -96,7 +98,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			}
 			else
 			{
-				$scope.loginInfo = data;
+				$scope.registerInfo = data;
 			}
 		});
 	}
