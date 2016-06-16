@@ -53,7 +53,8 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 		}
 
 		var url = "auth/register";
-		var data = {
+		var data = 
+		{
 			"username" : $scope.usernameInput,
 			"password" : $scope.passwordInput
 		};
@@ -62,6 +63,23 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			if(data === "OK")
 			{
 				$scope.loginInfo = "User created";
+				var url = "auth/login";
+				var data =  
+				{
+					"username" : $scope.usernameInput,
+					"password" : $scope.passwordInput
+				};
+
+				$http.post(url, data).success(function(data)
+				{
+					console.log("Login was successful");
+					console.log(data);
+
+					Profile.setUsername(data.username);
+					Profile.setFirstName(data.first_name);
+					Profile.setLastName(data.last_name);
+					window.location = 'home.html';
+				});
 			}
 			else
 			{

@@ -10,12 +10,6 @@ var User = mongoose.model('User');
 
 router.post('/register', function(req, res) //passport.authenticate('local-register'), function(req, res)
 {
-	console.log("---!!! Attempting to register a new user !!!---");
-
-	// console.log("---!!! username: " + req.username + " password: " + req.password + " firstname: " req.firstname + " lastname: " + req.lastname + " code: " + req.authCode + " !!!---");
-
-	console.log("---!!! username: " + req.body.username + " !!!---");
-
 	if (req.body.authCode !== 'testtest')
 	{
 		res.send("Invalid Authorization Code");
