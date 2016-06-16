@@ -72,6 +72,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			"lastname" : $scope.lastNameRegister,
 			"authCode" : $scope.authCodeRegister
 		};
+		console.log(data);
 		$http.post(url, data).success(function(data)
 		{
 			console.log(data);
