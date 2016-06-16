@@ -186,8 +186,8 @@
 
 @font-face {
     font-family: 'iokharic';
-    src: url('iokharic_bold_italic-webfont.woff2') format('woff2'),
-         url('iokharic_bold_italic-webfont.woff') format('woff');
+    src: url('font/iokharic/iokharic_bold_italic-webfont.woff2') format('woff2'),
+         url('font/iokharic/iokharic_bold_italic-webfont.woff') format('woff');
     font-weight: bold;
     font-style: italic;
 
@@ -195,24 +195,24 @@
 
 @font-face {
     font-family: 'iokharic';
-    src: url('iokharic_bold-webfont.woff2') format('woff2'),
-         url('iokharic_bold-webfont.woff') format('woff');
+    src: url('font/iokharic/iokharic_bold-webfont.woff2') format('woff2'),
+         url('font/iokharic/iokharic_bold-webfont.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'iokharic';
-    src: url('iokharic_italic-webfont.woff2') format('woff2'),
-         url('iokharic_italic-webfont.woff') format('woff');
+    src: url('font/iokharic/iokharic_italic-webfont.woff2') format('woff2'),
+         url('font/iokharic/iokharic_italic-webfont.woff') format('woff');
     font-weight: normal;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'iokharic';
-    src: url('iokharic-webfont.woff2') format('woff2'),
-         url('iokharic-webfont.woff') format('woff');
+    src: url('font/iokharic/iokharic-webfont.woff2') format('woff2'),
+         url('font/iokharic/iokharic-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -243,32 +243,32 @@
 
 @font-face {
     font-family: 'rellanic';
-    src: url('rellanic_bold_italic-webfont.woff2') format('woff2'),
-         url('rellanic_bold_italic-webfont.woff') format('woff');
+    src: url('font/rellanic/rellanic_bold_italic-webfont.woff2') format('woff2'),
+         url('font/rellanic/rellanic_bold_italic-webfont.woff') format('woff');
     font-weight: bold;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'rellanic';
-    src: url('rellanic_bold-webfont.woff2') format('woff2'),
-         url('rellanic_bold-webfont.woff') format('woff');
+    src: url('font/rellanic/rellanic_bold-webfont.woff2') format('woff2'),
+         url('font/rellanic/rellanic_bold-webfont.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'rellanic';
-    src: url('rellanic_italic-webfont.woff2') format('woff2'),
-         url('rellanic_italic-webfont.woff') format('woff');
+    src: url('font/rellanic/rellanic_italic-webfont.woff2') format('woff2'),
+         url('font/rellanic/rellanic_italic-webfont.woff') format('woff');
     font-weight: normal;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'rellanic';
-    src: url('rellanic-webfont.woff2') format('woff2'),
-         url('rellanic-webfont.woff') format('woff');
+    src: url('font/rellanic/rellanic-webfont.woff2') format('woff2'),
+         url('font/rellanic/rellanic-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
