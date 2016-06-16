@@ -213,6 +213,21 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        encounter.setActive(false);
+        res.send("OK");
+    });
+});
+
 /*
 // get all items for the user
 router.get('/api/items', function (req,res) {

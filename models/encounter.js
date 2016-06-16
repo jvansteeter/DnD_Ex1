@@ -25,4 +25,10 @@ encounterSchema.methods.removePlayer = function(player)
 	this.save();
 };
 
+encounterSchema.methods.setActive = function(active)
+{
+    this.active = active;
+    this.save();
+}
+
 mongoose.model('Encounter', encounterSchema);

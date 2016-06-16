@@ -26,6 +26,14 @@ module.exports = function (socket)
 		});
 	});
 
+	socket.on('encounter:end', function(data)
+	{
+		socket.broadcast.emit('encounter:end',
+		{
+			encounterID : data.encounterID
+		});
+	});
+
 
 	// notify other clients that a new user has joined
 	/*socket.broadcast.emit('user:join', 
