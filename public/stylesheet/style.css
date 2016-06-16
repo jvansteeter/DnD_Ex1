@@ -176,6 +176,103 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'fourth-edition-dings';
+    src: url('font/fourth-edition-dings/fourth-edition_dings-webfont.woff2') format('woff2'),
+         url('font/fourth-edition-dings/fourth-edition_dings-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'iokharic';
+    src: url('iokharic_bold_italic-webfont.woff2') format('woff2'),
+         url('iokharic_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'iokharic';
+    src: url('iokharic_bold-webfont.woff2') format('woff2'),
+         url('iokharic_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'iokharic';
+    src: url('iokharic_italic-webfont.woff2') format('woff2'),
+         url('iokharic_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'iokharic';
+    src: url('iokharic-webfont.woff2') format('woff2'),
+         url('iokharic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'magi';
+	src: url('font/magi/ALPMAGI.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'planetary';
+	src: url('font/planetary/ar-ciela_compartment.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'pulsian';
+	src: url('font/pulsian/pulsian.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family: 'rellanic';
+    src: url('rellanic_bold_italic-webfont.woff2') format('woff2'),
+         url('rellanic_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'rellanic';
+    src: url('rellanic_bold-webfont.woff2') format('woff2'),
+         url('rellanic_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'rellanic';
+    src: url('rellanic_italic-webfont.woff2') format('woff2'),
+         url('rellanic_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'rellanic';
+    src: url('rellanic-webfont.woff2') format('woff2'),
+         url('rellanic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body 
 {
 	background-color:#eee;
