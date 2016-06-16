@@ -42,7 +42,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			Profile.setUsername(data.username);
 			Profile.setFirstName(data.first_name);
 			Profile.setLastName(data.last_name);
-			window.location = 'home.html';
+			window.location = 'profile.html';
 		});
 	};
 
@@ -101,7 +101,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					Profile.setUsername(data.username);
 					Profile.setFirstName(data.first_name);
 					Profile.setLastName(data.last_name);
-					window.location = 'home.html';
+					window.location = 'profile.html';
 				});
 			}
 			else

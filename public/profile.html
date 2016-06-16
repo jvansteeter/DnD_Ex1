@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="clientApp">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="stylesheet/style.css" rel="stylesheet">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/profileService.js"></script>
+    <script src="javascript/socketFactory.js"></script>
+    <script src="javascript/control/profileController.js"></script>
+    <script src="javascript/headerController.js"></script>
+    <script src="javascript/encounterModalController.js"></script>
+
+    <title>Dungeon Map</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-static navbar-inverse">
+        <div class="container">
+          <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="fa fa-chevron-down"></span>
+          </a>
+          <div class="nav-collapse collase">
+            <ul class="nav navbar-nav">
+              <li><a href="home.html">Home</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
+                 </ul>
+              </li>
+            </ul>
+
+            <ul class="nav navbar-right navbar-nav">
+              <li class="dropdown" ng-controller="headerController">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="login.html">Logout</a></li>
+                  <li><a href="#">Profile</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">About</a></li>
+                 </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav><!-- /.navbar -->
+
+<!-- Begin Body -->
+<div class="container" ng-controller="profileController">
+  <div class="row">
+
+    <div class="col col-sm-3">
+      <hr>
+      <div id="profile pic">
+        <a href="#" class="thumbnail">
+          <img src="" alt="Profile pic">
+        </a>
+      </div>
+      <div class="well well-sm">
+        <div class="list-group" style="margin-bottom: 0px">
+          <a href="newCharacter.html" class="list-group-item btn btn-lg btn-block">New Character</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col col-sm-9">
+      <h1>{{ name }}</h1>
+      
+    </div>
+
+  </div>
+</div>
+  </body>
+</html>
