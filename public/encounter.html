@@ -70,7 +70,7 @@
           <h1>{{ encounter.title }}<span style="color: red; float: right;">{{ status }}</span></h1>
           <div class ="container-fluid">
             <div class="row" ui-sortable ng-model="players">
-              <div class="col-md-6" ng-repeat="player in players track by $index">
+              <div class="col-md-12" ng-repeat="player in players track by $index">
                 <div class="panel panel-default">
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
                     <h4>{{ player.name }}<a href="#" ng-click="removePlayer($index)" ng-show="isHost()" style="color: black;"><i class="fa fa-close" style="float: right"></i></a><strong style="float: right; color: red;">{{ player.status }} </strong>
