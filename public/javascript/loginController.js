@@ -90,7 +90,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 				var data =  
 				{
 					"username" : $scope.usernameRegister,
-					"password" : $scope.passwordRegister
+					"password" : $scope.firstPasswordRegister
 				};
 
 				$http.post(url, data).success(function(data)
