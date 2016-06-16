@@ -41,22 +41,22 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 
 	$scope.register = function()
 	{
-		if ($scope.usernameInput === "")
+		if ($scope.usernameRegister === "")
 		{
 			$scope.info = "Username is blank";
 			return;
 		}
-		if ($scope.firstPasswordInput === "" || $scope.secondPasswordInput === "")
+		if ($scope.firstPasswordRegister === "" || $scope.secondPasswordInput === "")
 		{
 			$scope.info = "Password is blank";
 			return;
 		}
-		if ($scope.firstPasswordInput !== $scope.secondPasswordInput)
+		if ($scope.firstPasswordRegister !== $scope.secondPasswordInput)
 		{
 			$scope.info = "Passwords do not match";
 			return;
 		}
-		if ($scope.firstNameInput === "" || $scope.lastNameInput === "")
+		if ($scope.firstNameRegister === "" || $scope.lastNameInput === "")
 		{
 			$scope.info = "Please fill out first and last name";
 			return;
@@ -65,11 +65,11 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 		var url = "auth/register";
 		var data = 
 		{
-			"username" : $scope.usernameInput,
-			"password" : $scope.firstPasswordInput,
-			"firstname" : $scope.firstNameInput,
-			"lastname" : $scope.lastNameInput,
-			"authCode" : $scope.authCode
+			"username" : $scope.usernameRegister,
+			"password" : $scope.firstPasswordRegister,
+			"firstname" : $scope.firstNameRegister,
+			"lastname" : $scope.lastNameRegister,
+			"authCode" : $scope.authCodeRegister
 		};
 		$http.post(url, data).success(function(data)
 		{
@@ -79,8 +79,8 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 				var url = "auth/login";
 				var data =  
 				{
-					"username" : $scope.usernameInput,
-					"password" : $scope.passwordInput
+					"username" : $scope.usernameRegister,
+					"password" : $scope.passwordRegister
 				};
 
 				$http.post(url, data).success(function(data)
