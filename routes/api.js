@@ -213,7 +213,7 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
+router.get('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
