@@ -5,6 +5,13 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 	$scope.usernameInput = "";
 	$scope.passwordInput = "";
 	$scope.loginInfo;
+
+	$scope.usernameRegister = "";
+	$scope.firstPasswordRegister = "";
+	$scope.secondPasswordRegister = "";
+	$scope.firstNameRegister = "";
+	$scope.lastNameRegister = "";
+	$scope.authCodeRegister = "";
 	
 	$scope.login = function()
 	{
@@ -47,17 +54,17 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			$scope.registerInfo = "Username is blank";
 			return;
 		}
-		if ($scope.firstPasswordRegister === "" || $scope.secondPasswordInput === "")
+		if ($scope.firstPasswordRegister === "" || $scope.secondPasswordRegister === "")
 		{
 			$scope.registerInfo = "Password is blank";
 			return;
 		}
-		if ($scope.firstPasswordRegister !== $scope.secondPasswordInput)
+		if ($scope.firstPasswordRegister !== $scope.secondPasswordRegister)
 		{
 			$scope.registerInfo = "Passwords do not match";
 			return;
 		}
-		if ($scope.firstNameRegister === "" || $scope.lastNameInput === "")
+		if ($scope.firstNameRegister === "" || $scope.lastNameRegister === "")
 		{
 			$scope.registerInfo = "Please fill out first and last name";
 			return;
