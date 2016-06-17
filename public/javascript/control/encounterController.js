@@ -79,6 +79,31 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		return $scope.players[index].npc;
 	};
 
+	$scope.isVisible = function(index)
+	{
+		return $scope.players[index].visible;
+	};
+
+	$scope.toggleVisible = function(index)
+	{
+		var url = 'api/encounter/togglevisible';
+		data =
+		{
+			playerID : $scope.players[index]._id
+		}
+		$http.post(url, data).success(function(data)
+		{
+			if (data === "OK")
+			{
+				socket.emit('update:encounter',
+				{
+					encounterID : encounterID
+				});
+				$scope.players[index].visible = !$scope.players[index].visible;
+			}
+		});
+	};
+
 	$scope.hitPlayer = function(hit)
 	{
 		if (hit < 1 || isNaN(hit))

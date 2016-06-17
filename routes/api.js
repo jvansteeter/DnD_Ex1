@@ -80,6 +80,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
             maxHitPoints : req.body.maxHitPoints,
+            visible : true,
             npc : false
         });
         //res.json(encounterPlayer);
@@ -112,6 +113,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
             maxHitPoints : req.body.maxHitPoints,
+            visible : false,
             npc : true
         });
         //res.json(encounterPlayer);

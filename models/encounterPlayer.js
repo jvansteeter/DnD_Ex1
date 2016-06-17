@@ -9,6 +9,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     hitPoints: Number,
     maxHitPoints: Number,
     status: String,
+    visible: Boolean,
     npc: Boolean
 });
 

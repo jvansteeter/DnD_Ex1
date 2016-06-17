@@ -18,7 +18,7 @@
 		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
 		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-    <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+    <!--script src="bower_components/angular-ui-sortable/sortable.min.js"></script-->
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
     <script src="/socket.io/socket.io.js"></script>
@@ -75,13 +75,18 @@
     		<div class="col col-sm-7">
           <h1>{{ encounter.title }}<span style="color: red; float: right;">{{ status }}</span></h1>
           <div class ="container-fluid">
-            <div class="row" ui-sortable ng-model="players">
+            <div class="row">
               <div class="col-md-12" ng-repeat="player in players track by $index">
                 <div class="panel panel-default">
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
-                    <h4>{{ player.name }}<a href="#" ng-click="removePlayer($index)" ng-show="isHost()" style="color: black;"><i class="fa fa-close" style="float: right"></i></a><strong style="float: right; color: red;">{{ player.status }} </strong>
+                    <h4>{{ player.name }}
+                    <a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close" style="float: right"></i></a>
+                    <a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"><i class="fa fa-eye" style="float: right"></i></a>
+                    <a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"><i class="fa fa-eye-slash" style="float: right"></i></a>
+                    <strong style="float: right; color: red;">{{ player.status }} </strong>
                     </h4>
                   </div>
+
                   <div class="panel-body" ng-show="!isNPC($index) || isHost()" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
                       <li>
@@ -91,8 +96,8 @@
                         <span ng-if="player.hitPoints <= player.maxHitPoints && player.hitPoints > 0">{{ player.hitPoints }}</span>
                          / {{ player.maxHitPoints }}
                         <span style="float: right">
-                        <a href="#" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
-                        <a href="#" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
+                        <a href="#" ng-show="isHost()" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
+                        <a href="#" ng-show="isHost()" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
                         </span>
                       </li>
                       <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
@@ -106,13 +111,14 @@
                         <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }}</span>
                         <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"></span>
                         <span style="float: right">
-                        <a href="#" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
-                        <a href="#" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
+                        <a href="#" ng-show="isHost()" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a> 
+                        <a href="#" ng-show="isHost()" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
                         </span>
                       </li>
                       <li><i class="fa-li fa fa-shield"></i>???</li>
                     </ul>
                   </div>
+
                 </div>
               </div>
             </div>
