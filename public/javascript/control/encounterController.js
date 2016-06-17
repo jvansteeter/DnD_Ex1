@@ -87,7 +87,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	$scope.toggleVisible = function(index)
 	{
 		var url = 'api/encounter/togglevisible';
-		data =
+		var data =
 		{
 			playerID : $scope.players[index]._id
 		}
