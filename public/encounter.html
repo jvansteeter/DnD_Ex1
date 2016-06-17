@@ -81,8 +81,8 @@
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
                     <h4>{{ player.name }}
                     <a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close" style="float: right"></i></a>
-                    <a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"><i class="fa fa-eye" style="float: right"></i></a>
-                    <a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"><i class="fa fa-eye-slash" style="float: right"></i></a>
+                    <a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye" style="float: right"></i></a>
+                    <a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye-slash" style="float: right"></i></a>
                     <strong style="float: right; color: red;">{{ player.status }} </strong>
                     </h4>
                   </div>
@@ -103,7 +103,7 @@
                       <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
                     </ul>
                   </div>
-                  <div class="panel-body" ng-show="isNPC($index) && !isHost()" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
+                  <div class="panel-body" ng-show="isNPC($index) && !isHost() && isVisible($index)" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
                       <li>
                         <i class="fa-li fa fa-heart"></i>???  
