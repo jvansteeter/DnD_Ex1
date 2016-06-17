@@ -77,8 +77,8 @@
           <div class ="container-fluid">
             <div class="row">
               <div class="col-md-12" ng-repeat="player in players track by $index">
-                <div class="panel panel-default">
-                  <div class="panel-heading" ng-hide="!isHost() && !isVisible($index)" style="padding-top: 0px; padding-bottom: 0px;">
+                <div class="panel panel-default" ng-hide="!isHost() && !isVisible($index)">
+                  <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">
                     <h4>{{ player.name }}
                     <a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close" style="float: right"></i></a>
                     <a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye" style="float: right"></i></a>
@@ -103,7 +103,7 @@
                       <li><i class="fa-li fa fa-shield"></i>{{ player.armorClass }}</li>
                     </ul>
                   </div>
-                  <div class="panel-body" ng-show="isNPC($index) && !isHost() && isVisible($index)" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
+                  <div class="panel-body" ng-show="isNPC($index) && !isHost()" style="padding-top: 10px; padding-bottom: 0px; padding-right: 5px">
                     <ul class="fa-ul">
                       <li>
                         <i class="fa-li fa fa-heart"></i>???  
@@ -142,7 +142,7 @@
               <div class="initiative box">
                 <ul ng-model="players" class="list-group">
                   <li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
-                  <li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item">
+                  <li ng-repeat="player in players track by $index | orderBy:'-initiative'" class="list-group-item" ng-hide="!isHost() && !isVisible($index)">
                   <span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
                   <span ng-if="player.hitPoints > 0">{{ player.name }}</span>
                   <span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
