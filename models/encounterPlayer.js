@@ -18,4 +18,10 @@ encounterPlayerSchema.methods.hit = function(hit)
 	this.hitPoints = this.hitPoints + hit;
 };
 
+encounterPlayerSchema.methods.toggleVisible = function()
+{
+	this.visible = !this.visible;
+	this.save();
+};
+
 mongoose.model('EncounterPlayer', encounterPlayerSchema);

@@ -215,6 +215,22 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/encounter/togglevisible', isLoggedIn, function(req, res)
+{
+    console.log("---!!! Attempting to toggle visibility !!!---");
+    EncounterPlayer.findById(req.body.playerID, function(error, player)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        player.toggleVisible();
+        res.send("OK");
+    });
+});
+
 router.get('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
