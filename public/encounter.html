@@ -142,7 +142,7 @@
               <div class="initiative box">
                 <ul ng-model="players" class="list-group">
                   <li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
-                  <li ng-repeat="player in players track by $index | orderBy:'-initiative'" class="list-group-item">
+                  <li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item">
                   <div ng-hide="!isHost() && !isVisible($index)">
                     <span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
                     <span ng-if="player.hitPoints > 0">{{ player.name }}</span>
