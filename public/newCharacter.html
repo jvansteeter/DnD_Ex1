@@ -19,13 +19,10 @@
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
-    <script src="/socket.io/socket.io.js"></script>
     <script src="javascript/angularModule.js"></script>
     <script src="javascript/profileService.js"></script>
-    <script src="javascript/socketFactory.js"></script>
-    <script src="javascript/control/profileController.js"></script>
+    <script src="javascript/control/newCharacterController.js"></script>
     <script src="javascript/headerController.js"></script>
-    <script src="javascript/encounterModalController.js"></script>
 
     <title>Dungeon Map</title>
   </head>
@@ -62,7 +59,7 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-    <div class="container well well-lg" ng-controller="profileController">
+    <div class="container well well-lg" ng-controller="newCharacterController">
       <!--Head of the form-->
       <div class="row well well-sm">
         <div class="col col-md-4">
@@ -201,26 +198,48 @@
         </div>
 
         <!--Middle Column-->
-        <div class="col col-md-4 well well-sm">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
+        <div class="col col-md-4">
+          <div class="well well-sm">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
+                </div>
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
+                </div>
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Speed</h5>
+                </div>
               </div>
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
-              </div>
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Speed</h5>
-              </div>
+            </div>
+            <div class="well well-sm">
+              <input type="text" class="form-control">
+              <h4 style="text-align: center;">Max Hit Points</h4>
             </div>
           </div>
           <div class="well well-sm">
-            <input type="text" class="form-control">
-            <h4>Current Hit Points</h4>
+            <div class="container-fluid">
+              <div class="row" ng-repeat="feature in features track by $index">
+                <input type="text" class="form-control">
+              </div>
+              <br>
+              <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
+              <h4 style="text-align: center">Traits & Features</h4>
+            </div>
+          </div>
+          <div class="well well-sm">
+            <div class="container-fluid">
+              <div class="row" ng-repeat="proficiency in proficiencies track by $index">
+                <input type="text" class="form-control">
+              </div>
+              <br>
+              <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
+              <h4 style="text-align: center">Proficiencies</h4>
+            </div>
           </div>
         </div>
 
