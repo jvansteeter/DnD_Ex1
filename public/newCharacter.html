@@ -231,7 +231,7 @@
             <div class="well well-sm">
               <div class="well well-sm">
                 <div class="container-fluid">
-                  <div class="row" ng-repeat="feature in features track by $index">
+                  <div class="row" ng-repeat="feature in character.features track by $index">
                     <input type="text" class="form-control" ng-model="character.features[$index}">
                   </div>
                   <br>
@@ -242,7 +242,7 @@
               </div>
               <div class="well well-sm">
                 <div class="container-fluid">
-                  <div class="row" ng-repeat="proficiency in proficiencies track by $index">
+                  <div class="row" ng-repeat="proficiency in character.proficiencies track by $index">
                     <input type="text" class="form-control" ng-model="character.proficiencies[$index]">
                   </div>
                   <br>
@@ -253,7 +253,7 @@
               </div>
               <div class="well well-sm" style="margin-bottom: 5px">
                 <div class="container-fluid">
-                  <div class="row" ng-repeat="language in languages track by $index">
+                  <div class="row" ng-repeat="language in character.languages track by $index">
                     <select class="form-control" ng-model="character.languages[$index]">
                       <option value=""></option>
                       <option ng-repeat="dndLanguage in dndLanguages" value="{{ dndLanguage }}">{{ dndLanguage }}</option>
@@ -297,7 +297,7 @@
                   <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Type</div>
                 </div>
                 <hr>
-                <div class="row" ng-repeat="attack in attacks track by $index">
+                <div class="row" ng-repeat="attack in character.attacks track by $index">
                   <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
                   <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control"></div>
                   <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 5px; padding-right: 5px"></div>
