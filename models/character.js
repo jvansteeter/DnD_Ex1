@@ -89,4 +89,4 @@ var characterSchema = new mongoose.Schema(
     npc: Boolean
 });
 
-mongoose.model('EncounterPlayer', encounterPlayerSchema);
+mongoose.model('Character', characterSchema);
