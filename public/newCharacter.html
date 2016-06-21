@@ -198,48 +198,111 @@
         </div>
 
         <!--Middle Column-->
-        <div class="col col-md-4">
+        <div class="col col-md-4 col-sm-4">
           <div class="well well-sm">
             <div class="container-fluid">
               <div class="row">
-                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
                   <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
                   <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
                 </div>
-                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
                   <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
                   <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
                 </div>
-                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
                   <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
                   <h5 style="text-align: center">Speed</h5>
                 </div>
               </div>
             </div>
-            <div class="well well-sm">
+            <div class="well well-sm" style="margin-bottom: 5px">
               <input type="text" class="form-control">
               <h4 style="text-align: center;">Max Hit Points</h4>
             </div>
           </div>
           <div class="well well-sm">
-            <div class="container-fluid">
-              <div class="row" ng-repeat="feature in features track by $index">
-                <input type="text" class="form-control">
+            <div class="well well-sm">
+              <div class="container-fluid">
+                <div class="row" ng-repeat="feature in features track by $index">
+                  <input type="text" class="form-control">
+                </div>
+                <br>
+                <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
+                <button style="float: left" ng-click="removeFeature()"><i class="fa fa-minus"></i></button>
+                <h4 style="text-align: center">Traits & Features</h4>
               </div>
-              <br>
-              <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
-              <h4 style="text-align: center">Traits & Features</h4>
+            </div>
+            <div class="well well-sm">
+              <div class="container-fluid">
+                <div class="row" ng-repeat="proficiency in proficiencies track by $index">
+                  <input type="text" class="form-control">
+                </div>
+                <br>
+                <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
+                <button style="float: left" ng-click="removeProficiency()"><i class="fa fa-minus"></i></button>
+                <h4 style="text-align: center">Proficiencies</h4>
+              </div>
+            </div>
+            <div class="well well-sm" style="margin-bottom: 5px">
+              <div class="container-fluid">
+                <div class="row">
+                  <h5>Common</h5>
+                </div>
+                <div class="row" ng-repeat="language in languages track by $index">
+                  <select class="form-control">
+                    <option value=""></option>
+                    <option ng-repeat="dndLanguage in dndLanguages" value="dndLanguage">{{ dndLanguage }}</option>
+                  </select>
+                </div>
+                <br>
+                <button style="float: left;" ng-click="addLanguage()"><i class="fa fa-plus"></i></button>
+                <button style="float: left" ng-click="removeLanguage()"><i class="fa fa-minus"></i></button>
+                <h4 style="text-align: center">Languages</h4>
+              </div>
             </div>
           </div>
           <div class="well well-sm">
-            <div class="container-fluid">
-              <div class="row" ng-repeat="proficiency in proficiencies track by $index">
-                <input type="text" class="form-control">
-              </div>
-              <br>
-              <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
-              <h4 style="text-align: center">Proficiencies</h4>
+            <div class="well well-sm">
+              <textarea class="form-control" style="resize: none" rows="4"></textarea>
+              <h4 style="text-align: center">Personality Traits</h4>
             </div>
+            <div class="well well-sm">
+              <textarea class="form-control" style="resize: none" rows="3"></textarea>
+              <h4 style="text-align: center">Ideals</h4>
+            </div>
+            <div class="well well-sm">
+              <textarea class="form-control" style="resize: none" rows="3"></textarea>
+              <h4 style="text-align: center">Bonds</h4>
+            </div>
+            <div class="well well-sm" style="margin-bottom: 5px">
+              <textarea class="form-control" style="resize: none" rows="3"></textarea>
+              <h4 style="text-align: center">Flaws</h4>
+            </div>
+          </div>
+        </div>
+
+        <!--Right Column-->
+        <div class="col col-md-4 col-sm-4">
+          <div class="well well-sm">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Name</div>
+                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
+                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">Damage</div>
+                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Type</div>
+              </div>
+              <hr>
+              <div class="row" ng-repeat="attack in attacks">
+                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
+                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control"></div>
+                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 5px; padding-right: 5px"></div>
+                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
+              </div>
+            </div>
+            <button style="float: left;" ng-click="addAttack()"><i class="fa fa-plus"></i></button>
+            <button style="float: left" ng-click="removeAttack()"><i class="fa fa-minus"></i></button>
+            <h4 style="text-align: center">Attacks</h4>
           </div>
         </div>
 
