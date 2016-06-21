@@ -22,7 +22,7 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     
     $http.get('api/class/all').success(function(error, data)
     {
-        $scope.classes(data);
+        $scope.classes = data;
     });
 
     $scope.addFeature = function()
