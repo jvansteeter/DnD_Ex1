@@ -22,6 +22,8 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     
     $http.get('api/class/all').success(function(error, data)
     {
+        console.log("Getting all available classes");
+        console.log(data);
         $scope.classes = data;
     });
 
