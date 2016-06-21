@@ -67,6 +67,24 @@ var characterSchema = new mongoose.Schema(
     max_hitPoints: Number,
     temp_hitPoints: Number,
     features: [],
+	proficiencies: [],
+	languages: [],
+	personality: String,
+	ideals: String,
+	bonds: String,
+	flaws: String,
+	attacks: [],
+	money: {
+		copper: Number,
+		silver: Number,
+		electrum: Number,
+		gold: Number,
+		platinum: Number
+	},
+	equipment: [{
+		item: String,
+		quantity: Number
+	}],
     status: [],
     npc: Boolean
 });

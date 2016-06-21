@@ -4,6 +4,10 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('newCharacterController', function($scope, $window, $http, Profile)
 {
+    $scope.character = {};
+    
+    $scope.classes = [];
+
     $scope.features = [];
     $scope.proficiencies = [];
     $scope.languages = [];
@@ -15,6 +19,11 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
             'Common', 'Dwarvish', 'Elvish', 'Giant', 'Gnomish', 'Goblin', 'Halfling', 'Orc',
             'Abyssal', 'Celestial', 'Draconic', 'Deep Speech', 'Infernal', 'Primordial', 'Sylvan', 'Undercommon'
         ];
+    
+    $http.get('api/class/all').success(function(error, data)
+    {
+        $scope.classes(data);
+    });
 
     $scope.addFeature = function()
     {
@@ -65,4 +74,5 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     {
         $scope.equipment.splice(-1, 1);
     }
+    
 });

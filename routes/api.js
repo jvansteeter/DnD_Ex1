@@ -246,6 +246,25 @@ router.get('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
+router.get('/class/all', isLoggedIn, function (req, res)
+{
+    var classes = [
+        'Barbarian',
+        'Bard',
+        'Cleric',
+        'Druid',
+        'Fighter',
+        'Monk',
+        'Paladin',
+        'Ranger',
+        'Rogue',
+        'Sorcerer',
+        'Warlock',
+        'Wizard'
+    ];
+    res.json(classes);
+})
+
 /*
 // get all items for the user
 router.get('/api/items', function (req,res) {

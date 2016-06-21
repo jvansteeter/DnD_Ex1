@@ -30,6 +30,7 @@ app.use(passport.session());
 require('./models/user');
 require('./models/encounter');
 require('./models/encounterPlayer');
+require('./models/character');
 require('./config/passport');
 
 // setup routes

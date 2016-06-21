@@ -72,16 +72,16 @@
         <div class="row well well-sm">
           <div class="col col-md-4">
             <h1>Character Name</h1>
-            <input type="text" class='form-control'>
+            <input type="text" class='form-control' ng-model="character.name">
           </div>
           <div class="col col-md-8">
             <div class="container-fluid">
               <div class="row">
                 <div class="col col-md-3">
                   <h4>Class</h4>
-                  <select class='form-control'>
+                  <select class='form-control' ng-model="character.class">
                     <option value=""></option>
-                    <option value="Sorcerer">Sorcerer</option>
+                    <option ng-repeat="class in classes" value="{{ class }}">{{ class }}</option>
                   </select>
                 </div>
                 <div class="col col-md-2">
