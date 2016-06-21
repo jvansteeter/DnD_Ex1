@@ -62,7 +62,7 @@
     <div class="container" ng-controller="newCharacterController">
       <!--Button Bar-->
       <div class="row" style="float: right;">
-        <button class="btn btn-primary">Save</button>
+        <button class="btn btn-primary" ng-click="save()">Save</button>
         <button class="btn btn-default">Cancel</button>
       </div>
       <br>
@@ -86,32 +86,31 @@
                 </div>
                 <div class="col col-md-2">
                   <h4>Level</h4>
-                  <select class='form-control'>
-                    <option value="1">1</option>
-                    <option>2</option>
+                  <select class='form-control' ng-model="character.level">
+                    <option ng-repeat="level in levels" value="{{ level }}">{{ level }}</option>
                   </select>
                 </div>
                 <div class="col col-md-3">
                   <h4>Background</h4>
-                  <input type="text" class='form-control'>
+                  <input type="text" class='form-control' ng-model="character.background">
                 </div>
                 <div class="col col-md-4">
                   <h4>Player name</h4>
-                  <input type="text" class='form-control'>
+                  <input type="text" class='form-control' ng-model="character.player_name">
                 </div>
               </div>
               <div class="row">
                 <div class="col col-md-4">
                   <h4>Race</h4>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" ng-model="character.race">
                 </div>
                 <div class="col col-md-4">
                   <h4>Alignment</h4>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" ng-model="character.alignment">
                 </div>
                 <div class="col col-md-4">
                   <h4>Experience Points</h4>
-                  <input type="number" class="form-control">
+                  <input type="number" class="form-control" ng-model="character.exp">
                 </div>
               </div>
             </div>
@@ -124,7 +123,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col col-md-3">
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" ng-model="character.proficiency_bonus">
                 </div>
                 <div class="col col-md-9">
                   <h4>Proficiency Bonus</h4>
@@ -132,11 +131,11 @@
               </div>
               <div class="row well well-sm">
                 <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.strength.score">
                   <h5 style="text-align: center">Strength</h5>
                 </div>
                 <div class="col col-md-8">
-                  <input type="checkbox"> Saving Throw<br>
+                  <input type="checkbox" ng-model="character.strength.save"> Saving Throw<br>
                   <input type="checkbox"> Athletics
                 </div>
               </div>

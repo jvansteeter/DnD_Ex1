@@ -5,15 +5,14 @@ var clientApp = angular.module('clientApp');
 clientApp.controller('newCharacterController', function($scope, $window, $http, Profile)
 {
     $scope.character = {};
+    $scope.character.features = [];
+    $scope.character.proficiencies = [];
+    $scope.character.languages = [];
+    $scope.character.attacks = [];
+    $scope.character.equipment = [];
     
     $scope.classes = [];
-
-    $scope.features = [];
-    $scope.proficiencies = [];
-    $scope.languages = [];
-    $scope.attacks = [];
-    $scope.equipment = [];
-
+    $scope.levels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
     $scope.dndLanguages = 
         [
             'Common', 'Dwarvish', 'Elvish', 'Giant', 'Gnomish', 'Goblin', 'Halfling', 'Orc',
@@ -22,59 +21,63 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     
     $http.get('api/class/all').success(function(data)
     {
-        console.log("Getting all available classes");
-        console.log(data);
         $scope.classes = data.classes;
     });
 
+    $scope.save = function ()
+    {
+        console.log("Saving");
+        console.log($scope.character);
+    }
+
     $scope.addFeature = function()
     {
-        $scope.features.push("");
+        $scope.character.features.push("");
     }
 
     $scope.removeFeature = function()
     {
-        $scope.features.splice(-1, 1);
+        $scope.character.features.splice(-1, 1);
     }
 
     $scope.addProficiency = function()
     {
-        $scope.proficiencies.push("");
+        $scope.character.proficiencies.push("");
     }
 
     $scope.removeProficiency = function()
     {
-        $scope.proficiencies.splice(-1, 1);
+        $scope.character.proficiencies.splice(-1, 1);
     }
 
     $scope.addLanguage = function()
     {
-        $scope.languages.push("");
+        $scope.character.languages.push("");
     }
 
     $scope.removeLanguage = function()
     {
-        $scope.languages.splice(-1, 1);
+        $scope.character.languages.splice(-1, 1);
     }
 
     $scope.addAttack = function()
     {
-        $scope.attacks.push("");
+        $scope.character.attacks.push("");
     }
     
     $scope.removeAttack = function()
     {
-        $scope.attacks.splice(-1, 1);
+        $scope.character.attacks.splice(-1, 1);
     }
 
     $scope.addEquipment = function()
     {
-        $scope.equipment.push("");
+        $scope.character.equipment.push("");
     }
 
     $scope.removeEquipment = function()
     {
-        $scope.equipment.splice(-1, 1);
+        $scope.character.equipment.splice(-1, 1);
     }
     
 });
