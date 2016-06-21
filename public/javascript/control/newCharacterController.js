@@ -8,9 +8,11 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     $scope.proficiencies = [];
     $scope.languages = [];
     $scope.attacks = [];
+    $scope.equipment = [];
+
     $scope.dndLanguages = 
         [
-            'Dwarvish', 'Elvish', 'Giant', 'Gnomish', 'Goblin', 'Halfling', 'Orc',
+            'Common', 'Dwarvish', 'Elvish', 'Giant', 'Gnomish', 'Goblin', 'Halfling', 'Orc',
             'Abyssal', 'Celestial', 'Draconic', 'Deep Speech', 'Infernal', 'Primordial', 'Sylvan', 'Undercommon'
         ];
 
@@ -41,7 +43,7 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
 
     $scope.removeLanguage = function()
     {
-        $scope.languages.slice(-1, 1);
+        $scope.languages.splice(-1, 1);
     }
 
     $scope.addAttack = function()
@@ -52,5 +54,15 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     $scope.removeAttack = function()
     {
         $scope.attacks.splice(-1, 1);
+    }
+
+    $scope.addEquipment = function()
+    {
+        $scope.equipment.push("");
+    }
+
+    $scope.removeEquipment = function()
+    {
+        $scope.equipment.splice(-1, 1);
     }
 });

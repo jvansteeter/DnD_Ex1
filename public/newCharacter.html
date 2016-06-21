@@ -59,253 +59,328 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-    <div class="container well well-lg" ng-controller="newCharacterController">
-      <!--Head of the form-->
-      <div class="row well well-sm">
-        <div class="col col-md-4">
-          <h1>Character Name</h1>
-          <input type="text" class='form-control'>
-        </div>
-        <div class="col col-md-8">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col col-md-3">
-                <h4>Class</h4>
-                <select class='form-control'>
-                  <option value=""></option>
-                  <option value="Sorcerer">Sorcerer</option>
-                </select>
-              </div>
-              <div class="col col-md-2">
-                <h4>Level</h4>
-                <select class='form-control'>
-                  <option value="1">1</option>
-                  <option>2</option>
-                </select>
-              </div>
-              <div class="col col-md-3">
-                <h4>Background</h4>
-                <input type="text" class='form-control'>
-              </div>
-              <div class="col col-md-4">
-                <h4>Player name</h4>
-                <input type="text" class='form-control'>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col col-md-4">
-                <h4>Race</h4>
-                <input type="text" class="form-control">
-              </div>
-              <div class="col col-md-4">
-                <h4>Alignment</h4>
-                <input type="text" class="form-control">
-              </div>
-              <div class="col col-md-4">
-                <h4>Experience Points</h4>
-                <input type="number" class="form-control">
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="container" ng-controller="newCharacterController">
+      <!--Button Bar-->
+      <div class="row" style="float: right;">
+        <button class="btn btn-primary">Save</button>
+        <button class="btn btn-default">Cancel</button>
       </div>
-      <!--Body of the form-->
-      <div class="row">
-        <!--Ability column-->
-        <div class="col col-md-4 well well-sm">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col col-md-3">
-                <input type="text" class="form-control">
-              </div>
-              <div class="col col-md-9">
-                <h4>Proficiency Bonus</h4>
-              </div>
-            </div>
-            <div class="row well well-sm">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Strength</h5>
-              </div>
-              <div class="col col-md-8">
-                <input type="checkbox"> Saving Throw<br>
-                <input type="checkbox"> Athletics
-              </div>
-            </div>
-            <div class="row well well-sm">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Dexterity</h5>
-              </div>
-              <div class="col col-md-8">
-                <input type="checkbox"> Saving Throw<br>
-                <input type="checkbox"> Acrobatics<br>
-                <input type="checkbox"> Sleight of Hand<br>
-                <input type="checkbox"> Stealth<br>
-              </div>
-            </div>
-            <div class="row well well-sm">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Constitution</h5>
-              </div>
-              <div class="col col-md-8">
-                <input type="checkbox"> Saving Throw<br>
-              </div>
-            </div>
-            <div class="row well well-sm">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Intelligence</h5>
-              </div>
-              <div class="col col-md-8">
-                <input type="checkbox"> Saving Throw<br>
-                <input type="checkbox"> Arcana<br>
-                <input type="checkbox"> History<br>
-                <input type="checkbox"> Investigation<br>
-                <input type="checkbox"> Nature<br>
-                <input type="checkbox"> Religion<br>
-              </div>
-            </div>
-            <div class="row well well-sm">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Wisdom</h5>
-              </div>
-              <div class="col col-md-8">
-                <input type="checkbox"> Saving Throw<br>
-                <input type="checkbox"> Animal Handling<br>
-                <input type="checkbox"> Insight<br>
-                <input type="checkbox"> Medicine<br>
-                <input type="checkbox"> Perception<br>
-                <input type="checkbox"> Survival<br>
-              </div>
-            </div>
-            <div class="row well well-sm">
-              <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                <h5 style="text-align: center">Charisma</h5>
-              </div>
-              <div class="col col-md-8">
-                <input type="checkbox"> Saving Throw<br>
-                <input type="checkbox"> Deception<br>
-                <input type="checkbox"> Intimidation<br>
-                <input type="checkbox"> Performance<br>
-                <input type="checkbox"> Persuasion<br>
-              </div>
-            </div>
+      <br>
+      <br>
+      <!--Head of the form-->
+      <div class="well well-lg">
+        <div class="row well well-sm">
+          <div class="col col-md-4">
+            <h1>Character Name</h1>
+            <input type="text" class='form-control'>
           </div>
-        </div>
-
-        <!--Middle Column-->
-        <div class="col col-md-4 col-sm-4">
-          <div class="well well-sm">
+          <div class="col col-md-8">
             <div class="container-fluid">
               <div class="row">
-                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                  <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
-                </div>
-                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                  <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
-                </div>
-                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
-                  <h5 style="text-align: center">Speed</h5>
-                </div>
-              </div>
-            </div>
-            <div class="well well-sm" style="margin-bottom: 5px">
-              <input type="text" class="form-control">
-              <h4 style="text-align: center;">Max Hit Points</h4>
-            </div>
-          </div>
-          <div class="well well-sm">
-            <div class="well well-sm">
-              <div class="container-fluid">
-                <div class="row" ng-repeat="feature in features track by $index">
-                  <input type="text" class="form-control">
-                </div>
-                <br>
-                <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
-                <button style="float: left" ng-click="removeFeature()"><i class="fa fa-minus"></i></button>
-                <h4 style="text-align: center">Traits & Features</h4>
-              </div>
-            </div>
-            <div class="well well-sm">
-              <div class="container-fluid">
-                <div class="row" ng-repeat="proficiency in proficiencies track by $index">
-                  <input type="text" class="form-control">
-                </div>
-                <br>
-                <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
-                <button style="float: left" ng-click="removeProficiency()"><i class="fa fa-minus"></i></button>
-                <h4 style="text-align: center">Proficiencies</h4>
-              </div>
-            </div>
-            <div class="well well-sm" style="margin-bottom: 5px">
-              <div class="container-fluid">
-                <div class="row">
-                  <h5>Common</h5>
-                </div>
-                <div class="row" ng-repeat="language in languages track by $index">
-                  <select class="form-control">
+                <div class="col col-md-3">
+                  <h4>Class</h4>
+                  <select class='form-control'>
                     <option value=""></option>
-                    <option ng-repeat="dndLanguage in dndLanguages" value="dndLanguage">{{ dndLanguage }}</option>
+                    <option value="Sorcerer">Sorcerer</option>
                   </select>
                 </div>
-                <br>
-                <button style="float: left;" ng-click="addLanguage()"><i class="fa fa-plus"></i></button>
-                <button style="float: left" ng-click="removeLanguage()"><i class="fa fa-minus"></i></button>
-                <h4 style="text-align: center">Languages</h4>
+                <div class="col col-md-2">
+                  <h4>Level</h4>
+                  <select class='form-control'>
+                    <option value="1">1</option>
+                    <option>2</option>
+                  </select>
+                </div>
+                <div class="col col-md-3">
+                  <h4>Background</h4>
+                  <input type="text" class='form-control'>
+                </div>
+                <div class="col col-md-4">
+                  <h4>Player name</h4>
+                  <input type="text" class='form-control'>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-md-4">
+                  <h4>Race</h4>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="col col-md-4">
+                  <h4>Alignment</h4>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="col col-md-4">
+                  <h4>Experience Points</h4>
+                  <input type="number" class="form-control">
+                </div>
               </div>
             </div>
           </div>
-          <div class="well well-sm">
-            <div class="well well-sm">
-              <textarea class="form-control" style="resize: none" rows="4"></textarea>
-              <h4 style="text-align: center">Personality Traits</h4>
-            </div>
-            <div class="well well-sm">
-              <textarea class="form-control" style="resize: none" rows="3"></textarea>
-              <h4 style="text-align: center">Ideals</h4>
-            </div>
-            <div class="well well-sm">
-              <textarea class="form-control" style="resize: none" rows="3"></textarea>
-              <h4 style="text-align: center">Bonds</h4>
-            </div>
-            <div class="well well-sm" style="margin-bottom: 5px">
-              <textarea class="form-control" style="resize: none" rows="3"></textarea>
-              <h4 style="text-align: center">Flaws</h4>
-            </div>
-          </div>
         </div>
-
-        <!--Right Column-->
-        <div class="col col-md-4 col-sm-4">
-          <div class="well well-sm">
+        <!--Body of the form-->
+        <div class="row">
+          <!--Ability column-->
+          <div class="col col-md-4 well well-sm">
             <div class="container-fluid">
               <div class="row">
-                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Name</div>
-                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
-                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">Damage</div>
-                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Type</div>
+                <div class="col col-md-3">
+                  <input type="text" class="form-control">
+                </div>
+                <div class="col col-md-9">
+                  <h4>Proficiency Bonus</h4>
+                </div>
               </div>
-              <hr>
-              <div class="row" ng-repeat="attack in attacks">
-                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
-                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control"></div>
-                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 5px; padding-right: 5px"></div>
-                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
+              <div class="row well well-sm">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Strength</h5>
+                </div>
+                <div class="col col-md-8">
+                  <input type="checkbox"> Saving Throw<br>
+                  <input type="checkbox"> Athletics
+                </div>
+              </div>
+              <div class="row well well-sm">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Dexterity</h5>
+                </div>
+                <div class="col col-md-8">
+                  <input type="checkbox"> Saving Throw<br>
+                  <input type="checkbox"> Acrobatics<br>
+                  <input type="checkbox"> Sleight of Hand<br>
+                  <input type="checkbox"> Stealth<br>
+                </div>
+              </div>
+              <div class="row well well-sm">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Constitution</h5>
+                </div>
+                <div class="col col-md-8">
+                  <input type="checkbox"> Saving Throw<br>
+                </div>
+              </div>
+              <div class="row well well-sm">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Intelligence</h5>
+                </div>
+                <div class="col col-md-8">
+                  <input type="checkbox"> Saving Throw<br>
+                  <input type="checkbox"> Arcana<br>
+                  <input type="checkbox"> History<br>
+                  <input type="checkbox"> Investigation<br>
+                  <input type="checkbox"> Nature<br>
+                  <input type="checkbox"> Religion<br>
+                </div>
+              </div>
+              <div class="row well well-sm">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Wisdom</h5>
+                </div>
+                <div class="col col-md-8">
+                  <input type="checkbox"> Saving Throw<br>
+                  <input type="checkbox"> Animal Handling<br>
+                  <input type="checkbox"> Insight<br>
+                  <input type="checkbox"> Medicine<br>
+                  <input type="checkbox"> Perception<br>
+                  <input type="checkbox"> Survival<br>
+                </div>
+              </div>
+              <div class="row well well-sm">
+                <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                  <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                  <h5 style="text-align: center">Charisma</h5>
+                </div>
+                <div class="col col-md-8">
+                  <input type="checkbox"> Saving Throw<br>
+                  <input type="checkbox"> Deception<br>
+                  <input type="checkbox"> Intimidation<br>
+                  <input type="checkbox"> Performance<br>
+                  <input type="checkbox"> Persuasion<br>
+                </div>
               </div>
             </div>
-            <button style="float: left;" ng-click="addAttack()"><i class="fa fa-plus"></i></button>
-            <button style="float: left" ng-click="removeAttack()"><i class="fa fa-minus"></i></button>
-            <h4 style="text-align: center">Attacks</h4>
           </div>
-        </div>
 
+          <!--Middle Column-->
+          <div class="col col-md-4 col-sm-4">
+            <div class="well well-sm">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                    <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
+                  </div>
+                  <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                    <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
+                  </div>
+                  <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="text" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                    <h5 style="text-align: center">Speed</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="well well-sm" style="margin-bottom: 5px">
+                <input type="text" class="form-control">
+                <h4 style="text-align: center;">Max Hit Points</h4>
+              </div>
+            </div>
+            <div class="well well-sm">
+              <div class="well well-sm">
+                <div class="container-fluid">
+                  <div class="row" ng-repeat="feature in features track by $index">
+                    <input type="text" class="form-control">
+                  </div>
+                  <br>
+                  <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
+                  <button style="float: left" ng-click="removeFeature()"><i class="fa fa-minus"></i></button>
+                  <h4 style="text-align: center">Traits & Features</h4>
+                </div>
+              </div>
+              <div class="well well-sm">
+                <div class="container-fluid">
+                  <div class="row" ng-repeat="proficiency in proficiencies track by $index">
+                    <input type="text" class="form-control">
+                  </div>
+                  <br>
+                  <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
+                  <button style="float: left" ng-click="removeProficiency()"><i class="fa fa-minus"></i></button>
+                  <h4 style="text-align: center">Proficiencies</h4>
+                </div>
+              </div>
+              <div class="well well-sm" style="margin-bottom: 5px">
+                <div class="container-fluid">
+                  <div class="row" ng-repeat="language in languages track by $index">
+                    <select class="form-control">
+                      <option value=""></option>
+                      <option ng-repeat="dndLanguage in dndLanguages" value="dndLanguage">{{ dndLanguage }}</option>
+                    </select>
+                  </div>
+                  <br>
+                  <button style="float: left;" ng-click="addLanguage()"><i class="fa fa-plus"></i></button>
+                  <button style="float: left" ng-click="removeLanguage()"><i class="fa fa-minus"></i></button>
+                  <h4 style="text-align: center">Languages</h4>
+                </div>
+              </div>
+            </div>
+            <div class="well well-sm">
+              <div class="well well-sm">
+                <textarea class="form-control" style="resize: none" rows="4"></textarea>
+                <h4 style="text-align: center">Personality Traits</h4>
+              </div>
+              <div class="well well-sm">
+                <textarea class="form-control" style="resize: none" rows="3"></textarea>
+                <h4 style="text-align: center">Ideals</h4>
+              </div>
+              <div class="well well-sm">
+                <textarea class="form-control" style="resize: none" rows="3"></textarea>
+                <h4 style="text-align: center">Bonds</h4>
+              </div>
+              <div class="well well-sm" style="margin-bottom: 5px">
+                <textarea class="form-control" style="resize: none" rows="3"></textarea>
+                <h4 style="text-align: center">Flaws</h4>
+              </div>
+            </div>
+          </div>
+
+          <!--Right Column-->
+          <div class="col col-md-4 col-sm-4">
+            <div class="well well-sm">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Name</div>
+                  <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
+                  <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Damage</div>
+                  <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Type</div>
+                </div>
+                <hr>
+                <div class="row" ng-repeat="attack in attacks track by $index">
+                  <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
+                  <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control"></div>
+                  <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 5px; padding-right: 5px"></div>
+                  <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px"><input class="form-control" style="padding-left: 1px; padding-right: 1px"></div>
+                </div>
+              </div>
+              <button style="float: left;" ng-click="addAttack()"><i class="fa fa-plus"></i></button>
+              <button style="float: left" ng-click="removeAttack()"><i class="fa fa-minus"></i></button>
+              <h4 style="text-align: center">Attacks</h4>
+            </div>
+            <div class="well well-sm">
+              <div class="container-fluid">
+                <div class="row">
+                  <h4 style="text-align: center">Money</h4>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col col-md-7">
+                    <h5>Copper</h5>
+                  </div>
+                  <div class="col col-md-5">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-md-7">
+                    <h5>Silver</h5>
+                  </div>
+                  <div class="col col-md-5">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-md-7">
+                    <h5>Electrum</h5>
+                  </div>
+                  <div class="col col-md-5">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-md-7">
+                    <h5>Gold</h5>
+                  </div>
+                  <div class="col col-md-5">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-md-7">
+                    <h5>Platinum</h5>
+                  </div>
+                  <div class="col col-md-5">
+                    <input type="number" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col col-md-9">
+                  <h4>Item</h4>
+                </div>
+                <div class="col col-md-3">
+                  <h4>Qty</h4>
+                </div>
+              </div>
+              <br>
+              <div ng-repeat="item in equipment track by $index" class="row">
+                <div class="col col-md-8">
+                  <input type="number" class="form-control">
+                </div>
+                <div class="col col-md-4">
+                  <input type="number" class="form-control" value="1">
+                </div>
+              </div>
+              <button style="float: left;" ng-click="addEquipment()"><i class="fa fa-plus"></i></button>
+              <button style="float: left" ng-click="removeEquipment()"><i class="fa fa-minus"></i></button>
+              <h4 style="text-align: center">Equipment</h4>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </body>
