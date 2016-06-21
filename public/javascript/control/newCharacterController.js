@@ -20,11 +20,11 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
             'Abyssal', 'Celestial', 'Draconic', 'Deep Speech', 'Infernal', 'Primordial', 'Sylvan', 'Undercommon'
         ];
     
-    $http.get('api/class/all').success(function(error, data)
+    $http.get('api/class/all').success(function(data)
     {
         console.log("Getting all available classes");
-        console.log(data.body);
-        $scope.classes = data.body.classes;
+        console.log(data);
+        $scope.classes = data.classes;
     });
 
     $scope.addFeature = function()
