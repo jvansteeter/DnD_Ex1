@@ -262,7 +262,7 @@ router.get('/class/all', isLoggedIn, function (req, res)
         'Warlock',
         'Wizard'
     ];
-    res.json(classes);
+    res.json({classes: classes});
 })
 
 /*
