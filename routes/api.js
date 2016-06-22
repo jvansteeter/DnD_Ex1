@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
+var Character = mongoose.model('Character');
 var jwt = require('express-jwt');
 var passport = require('passport');
 
@@ -263,7 +264,13 @@ router.get('/class/all', isLoggedIn, function (req, res)
         'Wizard'
     ];
     res.json({classes: classes});
-})
+});
+
+router.post('/character/create', isLoggedIn, function(req, res)
+{
+    Character.create(req.user._id, req.body.character);
+    res.send("OK");
+});
 
 /*
 // get all items for the user

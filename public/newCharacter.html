@@ -263,7 +263,7 @@
                   <div class="container-fluid">
                     <div class="row" ng-repeat="language in character.languages track by $index">
                       <select class="form-control" ng-model="character.languages[$index]">
-                        <option value=""></option>
+                        <option value="" selected disabled></option>
                         <option ng-repeat="dndLanguage in dndLanguages" value="{{ dndLanguage }}">{{ dndLanguage }}</option>
                       </select>
                     </div>
@@ -382,7 +382,7 @@
                 <br>
                 <div ng-repeat="item in character.equipment track by $index" class="row">
                   <div class="col col-md-8">
-                    <input type="number" class="form-control" ng-model="character.equipment[$index].item">
+                    <input type="text" class="form-control" ng-model="character.equipment[$index].item">
                   </div>
                   <div class="col col-md-4">
                     <input type="number" class="form-control" value="1" ng-model="character.equipment[$index].quantity">

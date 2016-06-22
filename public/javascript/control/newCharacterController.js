@@ -28,56 +28,66 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
     {
         console.log("Saving");
         console.log($scope.character);
-    }
+
+        var url = 'api/character/create';
+        var data =
+        {
+            character: $scope.character
+        };
+        $http.post(url, data).success(function(data)
+        {
+
+        });
+    };
 
     $scope.addFeature = function()
     {
         $scope.character.features.push("");
-    }
+    };
 
     $scope.removeFeature = function()
     {
         $scope.character.features.splice(-1, 1);
-    }
+    };
 
     $scope.addProficiency = function()
     {
         $scope.character.proficiencies.push("");
-    }
+    };
 
     $scope.removeProficiency = function()
     {
         $scope.character.proficiencies.splice(-1, 1);
-    }
+    };
 
     $scope.addLanguage = function()
     {
         $scope.character.languages.push("");
-    }
+    };
 
     $scope.removeLanguage = function()
     {
         $scope.character.languages.splice(-1, 1);
-    }
+    };
 
     $scope.addAttack = function()
     {
         $scope.character.attacks.push("");
-    }
+    };
     
     $scope.removeAttack = function()
     {
         $scope.character.attacks.splice(-1, 1);
-    }
+    };
 
     $scope.addEquipment = function()
     {
         $scope.character.equipment.push("");
-    }
+    };
 
     $scope.removeEquipment = function()
     {
         $scope.character.equipment.splice(-1, 1);
-    }
+    };
     
 });
