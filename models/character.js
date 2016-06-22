@@ -161,7 +161,7 @@ characterSchema.methods.create = function(user_id, character)
 	this.money = character.money;
 	this.equipment = character.equipment;
 
-	this.save();
+	//this.save();
 };
 
 var calculateMod = function(score)

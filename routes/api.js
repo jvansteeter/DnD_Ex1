@@ -269,7 +269,7 @@ router.get('/class/all', isLoggedIn, function (req, res)
 router.post('/character/create', isLoggedIn, function(req, res)
 {
     Character.create(req.user._id, req.body.character);
-    res.send("OK");
+    res.send(req.body.character);
 });
 
 /*
