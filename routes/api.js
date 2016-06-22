@@ -268,7 +268,10 @@ router.get('/class/all', isLoggedIn, function (req, res)
 
 router.post('/character/create', isLoggedIn, function(req, res)
 {
-    Character.create(req.user._id, req.body.character);
+    Character.create(function(error, character)
+    {
+        character.createNewCharacter(req.user._id, req.body.character);
+    });
     res.send(req.body.character);
 });
 
