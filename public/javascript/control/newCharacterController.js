@@ -36,7 +36,8 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
         };
         $http.post(url, data).success(function(data)
         {
-
+            console.log("Response");
+            console.log(data);
         });
     };
 
