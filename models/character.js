@@ -97,7 +97,7 @@ var characterSchema = new mongoose.Schema(
 
 characterSchema.methods.createNewCharacter = function(character)
 {
-	this.name = character.name;
+	/*this.name = character.name;
 	this.class = character.class;
 	this.level = character.level;
 	this.background = character.background;
@@ -158,7 +158,23 @@ characterSchema.methods.createNewCharacter = function(character)
 	this.flaws = character.flaws;
 	this.attacks = character.attacks;
 	this.money = character.money;
-	this.equipment = character.equipment;
+	this.equipment = character.equipment;*/
+	
+	this.strength.modifier = calculateMod(this.strength.score);
+	this.dexterity.modifier = calculateMod(this.dexterity.score);
+	this.constitution.modifier = calculateMod(this.constitution.score);
+	this.intelligence.modifier = calculateMod(this.intelligence.score);
+	this.wisdom.modifier = calculateMod(this.wisdom.score);
+	this.charisma.modifier = calculateMod(this.charisma.score);
+	
+	if (this.wisdom.perception)
+	{
+		this.passive_perception = 10 + this.wisdom.modifier + this.proficiency_bonus;
+	}
+	else 
+	{
+		this.passive_perception = 10 + this.wisdom.modifier;
+	}
 
 	//this.save();
 };
