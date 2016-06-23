@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('newCharacterController', function($scope, $window, $http, Profile)
+clientApp.controller('newCharacterController', function($scope, $window, $http, $alert)
 {
     $scope.character = {};
     $scope.character.features = [];
@@ -38,7 +38,20 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
         {
             console.log("Response");
             console.log(data);
+            if (data === "OK")
+            {
+                window.location = 'profile.html';
+            }
+            else
+            {
+                $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info', keyboard: true, show: false});
+            }
         });
+    };
+
+    $scope.cancel = function()
+    {
+        $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info', keyboard: true, show: false});
     };
 
     $scope.addFeature = function()

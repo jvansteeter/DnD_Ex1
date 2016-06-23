@@ -304,13 +304,12 @@ router.post('/character/create', isLoggedIn, function(req, res)
     {
         if (error)
         {
-            console.log(error);
             res.sendStatus(403);
             return;
         }
 
         character.createNewCharacter();
-        res.send(character);
+        res.send("OK");
     });
 });
 
