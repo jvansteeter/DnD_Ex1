@@ -276,7 +276,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
             return;
         }
 
-        //character.createNewCharacter(req.user._id, req.body.character);
+        character.createNewCharacter(req.user._id, req.body.character);
     });
     res.send(req.body.character);
 });
