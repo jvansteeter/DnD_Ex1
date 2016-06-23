@@ -66,12 +66,17 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
+    <div class="alert alert-error collapse" role="alert" id="errorAlert">
+      <span>
+        <p>Looks like the passwords you entered don't match!</p>
+      </span>
+    </div>
     <div class="container" ng-controller="newCharacterController">
       <form>
         <!--Button Bar-->
         <div class="row" style="float: right;">
           <button class="btn btn-primary" type="submit" ng-click="save()">Save</button>
-          <button class="btn btn-default">Cancel</button>
+          <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
         <br>
         <br>

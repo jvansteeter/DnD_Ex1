@@ -51,8 +51,10 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
 
     $scope.cancel = function()
     {
-        var alert = $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info', keyboard: true, show: false});
-        alert.show();
+        console.log("Cancelling");
+        $('#errorAlert').show();
+        // var alert = $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info', keyboard: true, show: false});
+        // alert.show();
     };
 
     $scope.addFeature = function()
