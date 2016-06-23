@@ -190,7 +190,7 @@ var calculateMod = function(score)
 	{
 		mod = (score - 11) / 2;
 	}
-	return mod;
+	return Math.floor(mod);
 };
 
 mongoose.model('Character', characterSchema);
