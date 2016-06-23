@@ -78,7 +78,7 @@ var characterSchema = new mongoose.Schema(
 		name: String,
 		bonus: Number,
 		damage: String,
-		type: String
+		damage_type: String
 	}],
 	money: {
 		copper: Number,
