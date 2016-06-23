@@ -95,9 +95,8 @@ var characterSchema = new mongoose.Schema(
     npc: {type: Boolean, required: true, default: false}
 });
 
-characterSchema.methods.createNewPlayer = function(user_id, character)
+characterSchema.methods.createNewPlayer = function(character)
 {
-	this.user_id = user_id;
 	this.name = character.name;
 	this.class = character.class;
 	this.level = character.level;
