@@ -268,7 +268,16 @@ router.get('/class/all', isLoggedIn, function (req, res)
 
 router.post('/character/create', isLoggedIn, function(req, res)
 {
-    Character.create({ user_id: req.user._id }, function(error, character)
+    Character.create(
+    {
+        user_id: req.user._id,
+        strength: req.body.character.strength,
+        dexterity: req.body.character.dexterity,
+        constitution: req.body.character.constitution,
+        intelligence: req.body.character.intelligence,
+        wisdom: req.body.character.wisdom,
+        charisma: req.body.character.charisma
+    }, function(error, character)
     {
         if (error)
         {
@@ -276,9 +285,9 @@ router.post('/character/create', isLoggedIn, function(req, res)
             return;
         }
 
-        character.createNewCharacter(req.user._id, req.body.character);
+        // character.createNewCharacter(req.user._id, req.body.character);
+        res.send(character);
     });
-    res.send(req.body.character);
 });
 
 /*
