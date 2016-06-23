@@ -44,17 +44,15 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
             }
             else
             {
-                $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info', keyboard: true, show: false});
+                $scope.errorMessage = data;
+                $('#errorAlert').fadeIn();
             }
         });
     };
 
     $scope.cancel = function()
     {
-        console.log("Cancelling");
-        $('#errorAlert').show();
-        // var alert = $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info', keyboard: true, show: false});
-        // alert.show();
+        window.location = 'profile.html';
     };
 
     $scope.addFeature = function()

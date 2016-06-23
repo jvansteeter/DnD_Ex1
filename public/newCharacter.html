@@ -66,10 +66,8 @@
     </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-    <div class="alert alert-error collapse" role="alert" id="errorAlert">
-      <span>
-        <p>Looks like the passwords you entered don't match!</p>
-      </span>
+    <div class="alert alert-danger collapse" role="alert" id="errorAlert">
+      <a href="#" class="alert-link">{{ alertMessage }}</a>
     </div>
     <div class="container" ng-controller="newCharacterController">
       <form>
