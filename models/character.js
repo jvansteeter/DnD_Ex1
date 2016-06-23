@@ -176,7 +176,7 @@ characterSchema.methods.createNewCharacter = function(character)
 		this.passive_perception = 10 + this.wisdom.modifier;
 	}
 
-	//this.save();
+	this.save();
 };
 
 var calculateMod = function(score)
