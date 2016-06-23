@@ -271,6 +271,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
     Character.create(
     {
         user_id: req.user._id,
+        player_name: req.body.character.player_name,
         strength: req.body.character.strength,
         dexterity: req.body.character.dexterity,
         constitution: req.body.character.constitution,

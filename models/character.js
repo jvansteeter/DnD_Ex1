@@ -56,7 +56,7 @@ var characterSchema = new mongoose.Schema(
     	score: Number,
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
-    	intimidate: {type: Boolean, required: true, default: false},
+    	intimidation: {type: Boolean, required: true, default: false},
     	persuasion: {type: Boolean, required: true, default: false},
     	performance: {type: Boolean, required: true, default: false},
     	deception: {type: Boolean, required: true, default: false}
