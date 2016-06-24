@@ -48,8 +48,11 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			console.log("Login was unsuccessful");
 			console.log(data);
 
-			$scope.alertMessage = data;
-			$('#errorAlert').fadeIn();
+			if (data.status === 401)
+			{
+				$scope.alertMessage = "Invalid Username or Password";
+				$('#errorAlert').fadeIn();
+			}
 		});
 	};
 
