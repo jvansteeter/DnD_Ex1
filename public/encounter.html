@@ -79,7 +79,7 @@
 							<div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
 								<div class="panel panel-default" ng-repeat="player in players track by $index">
 									<div class="panel-heading" role="tab">
-										<div class="container-fluid">
+										<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
 											<div class="row">
 												<div class="col col-md-4">
 													<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse">{{ player.name }} </a></h4>
@@ -91,6 +91,15 @@
 														<span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }} </span>
 														<span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
 													</span>
+													<span ng-if="isHost() || !isNPC($index)">
+														<span ng-if="player.hitPoints < 1" style="color: dimgrey">{{ player.hitPoints }}</span>
+														<span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green">{{ player.hitPoints }}</span>
+														<span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0" style="color: red">{{ player.hitPoints }}</span>
+														 / {{ player.maxHitPoints }}
+													</span>
+													<i class="fa fa-shield"></i>
+													<span ng-if="!isHost() && isNPC($index)">??? </span>
+													<span ng-if="isHost() || !isNPC($index)">{{ player.armorClass }} </span>
 												</div>
 												<div class="col col-md-4">
 													<span style="float: right;">
@@ -146,14 +155,6 @@
 							</div>
 						</div>
 					</div>
-					<!--div class="panel" ng-repeat="encounter in encounters">
-						<h2>{{ encounter.title }}</h2>
-						<h6> Hosted by: {{ encounter.host }}</h6>
-						<p>{{ encounter.description }}</p>
-						<button class="btn btn-default"><a href="encounter.html?{{ encounter._id }}">Join Encounter</a></button>
-
-						<hr>
-					</div-->
 				</div>
 				<div class="col col-sm-3">
 				<br>
