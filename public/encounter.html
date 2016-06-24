@@ -81,16 +81,18 @@
 									<div class="panel-heading" role="tab">
 										<h4 class="panel-title">
 											<a bs-collapse-toggle data-toggle="collapse">{{ player.name }} </a>
-											<i class="fa fa-heart"></i>
-											<span ng-if="!isHost() && isNPC($index)">???
-												<span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  {{ player.hitPoints - player.maxHitPoints }}</span>
-												<span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }}</span>
-												<span ng-if="(player.hitPoints - player.maxHitPoints) === 0"></span>
+											<span style="float: right;">
+												<i class="fa fa-heart"></i>
+												<span ng-if="!isHost() && isNPC($index)">???
+													<span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  {{ player.hitPoints - player.maxHitPoints }}</span>
+													<span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }}</span>
+													<span ng-if="(player.hitPoints - player.maxHitPoints) === 0"></span>
+												</span>
+												<a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close"></i></a>
+												<a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye"></i></a>
+												<a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye-slash"></i></a>
+												<strong style="float: right; color: red;">{{ player.status }} </strong>
 											</span>
-											<a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close" style="float: right"></i></a>
-											<a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye" style="float: right"></i></a>
-											<a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye-slash" style="float: right"></i></a>
-											<strong style="float: right; color: red;">{{ player.status }} </strong>
 										</h4>
 									</div>
 									<div class="panel-collapse" role="tabpanel" bs-collapse-target>
