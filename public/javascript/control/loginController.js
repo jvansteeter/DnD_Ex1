@@ -34,21 +34,21 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					"password" : $scope.passwordInput
 				};
 
-		$http.post(url, data).then(function(data)
+		$http.post(url, data).then(function(response)
 		{
 			console.log("Login was successful");
-			console.log(data);
+			console.log(response);
 
-			Profile.setUsername(data.username);
-			Profile.setFirstName(data.first_name);
-			Profile.setLastName(data.last_name);
+			Profile.setUsername(response.data.username);
+			Profile.setFirstName(response.data.first_name);
+			Profile.setLastName(response.data.last_name);
 			window.location = 'profile.html';
-		}, function(data)
+		}, function(response)
 		{
 			console.log("Login was unsuccessful");
-			console.log(data);
+			console.log(response);
 
-			if (data.status === 401)
+			if (response.status === 401)
 			{
 				$scope.alertMessage = "Invalid Username or Password";
 				$('#errorAlert').fadeIn();
