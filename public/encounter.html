@@ -3,33 +3,33 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-    <meta name="generator" content="Bootply" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <link href="stylesheet/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link href="stylesheet/style.css" rel="stylesheet">
 
-    <script src="bower_components/angular/angular.js"></script>
-		<script src="bower_components/angular-animate/angular-animate.js"></script>
-		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-    <!--script src="bower_components/angular-ui-sortable/sortable.min.js"></script-->
-    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+        <!--script src="bower_components/angular-ui-sortable/sortable.min.js"></script-->
+        <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="javascript/app/encounterApp.js"></script>
-    <script src="javascript/profileService.js"></script>
-    <script src="javascript/control/headerController.js"></script>
-    <script src="javascript/socketFactory.js"></script>
-    <script src="javascript/control/encounterController.js"></script>
-    <script src="javascript/control/encounterAddPlayerController.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="javascript/app/encounterApp.js"></script>
+        <script src="javascript/profileService.js"></script>
+        <script src="javascript/control/headerController.js"></script>
+        <script src="javascript/socketFactory.js"></script>
+        <script src="javascript/control/encounterController.js"></script>
+        <script src="javascript/control/encounterAddPlayerController.js"></script>
 
-		<title>Dungeon Map</title>
+        <title>Dungeon Map</title>
 	</head>
 	<body>
     <nav class="navbar navbar-static navbar-inverse">
@@ -75,7 +75,7 @@
     		<div class="col col-sm-7">
           <h1>{{ encounter.title }}<span style="color: red; float: right;">{{ status }}</span></h1>
           <div class ="container-fluid">
-            <div class="row">
+            <div class="row panel-group" ng-model="players" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
               <div class="col-md-12" ng-repeat="player in players track by $index">
                 <div class="panel panel-default" ng-hide="!isHost() && !isVisible($index)">
                   <div class="panel-heading" style="padding-top: 0px; padding-bottom: 0px;">

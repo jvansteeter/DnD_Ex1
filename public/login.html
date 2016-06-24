@@ -38,9 +38,7 @@
 	<body ng-controller="loginControl">
 		<nav class="navbar navbar-static navbar-inverse">
 		</nav><!-- /.navbar -->
-		<div class="alert alert-danger collapse" role="alert" id="errorAlert">
-			<a href="#" class="alert-link">{{ alertMessage }}</a>
-		</div>
+
 		<!-- Begin Body -->
 		<div class="container">
 			<div class="row row-centered">
@@ -59,6 +57,10 @@
 					</div>
 		        </div>
 		    </div>
+			<br>
+			<div class="alert alert-danger collapse" role="alert" id="errorAlert">
+				<span class="alert-link">{{ alertMessage }}</span>
+			</div>
 		</div>
 	</body>
 </html>
