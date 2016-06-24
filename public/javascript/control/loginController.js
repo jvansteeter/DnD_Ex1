@@ -34,7 +34,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					"password" : $scope.passwordInput
 				};
 
-		$http.post(url, data).success(function(data)
+		$http.post(url, data).then(function(data)
 		{
 			console.log("Login was successful");
 			console.log(data);
@@ -43,6 +43,13 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			Profile.setFirstName(data.first_name);
 			Profile.setLastName(data.last_name);
 			window.location = 'profile.html';
+		}, function(data)
+		{
+			console.log("Login was unsuccessful");
+			console.log(data);
+
+			$scope.alertMessage = data;
+			$('#errorAlert').fadeIn();
 		});
 	};
 

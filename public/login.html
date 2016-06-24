@@ -22,7 +22,7 @@
     	
 		<script src="javascript/angularModule.js"></script>
 		<script src="javascript/profileService.js"></script>
-		<script src="javascript/loginController.js"></script>
+		<script src="javascript/control/loginController.js"></script>
 		<style>
 			.form-control
 			{
@@ -36,10 +36,10 @@
 
 	</head>
 	<body ng-controller="loginControl">
+		<div class="alert alert-danger collapse" role="alert" id="errorAlert">
+			<a href="#" class="alert-link">{{ alertMessage }}</a>
+		</div>
 		<nav class="navbar navbar-static navbar-inverse">
-		    <div class="container">
-		      
-		    </div>
 		</nav><!-- /.navbar -->
 
 		<!-- Begin Body -->
