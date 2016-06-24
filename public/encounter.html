@@ -82,9 +82,8 @@
 										<div class="container-fluid">
 											<div class="row">
 												<div class="col col-md-4">
-													<h4 class="panel-title"></h4>
+													<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse">{{ player.name }} </a></h4>
 												</div>
-												<a bs-collapse-toggle data-toggle="collapse">{{ player.name }} </a>
 												<div class="col col-md-4">
 													<i class="fa fa-heart"></i>
 													<span ng-if="!isHost() && isNPC($index)">???
