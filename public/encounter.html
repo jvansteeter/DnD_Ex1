@@ -72,14 +72,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="col col-sm-7">
+				<div class="col col-md-7">
 					<h1>{{ encounter.title }}<span style="color: red; float: right;">{{ status }}</span></h1>
 					<div class ="container-fluid">
 						<div class="row">
 							<div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
 								<div class="panel panel-default" ng-repeat="player in players track by $index">
 									<div class="panel-heading" role="tab"><!-- style="padding-top: 0px; padding-bottom: 0px;"-->
-										<h4 class="panel-title"><a bs-collapse-toggle>{{ player.name }}</a>
+										<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse">{{ player.name }}</a>
 										<a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close" style="float: right"></i></a>
 										<a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye" style="float: right"></i></a>
 										<a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye-slash" style="float: right"></i></a>
