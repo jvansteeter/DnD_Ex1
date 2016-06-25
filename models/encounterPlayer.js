@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+//var Schema = mongoose.Schema;
 
 var encounterPlayerSchema = new mongoose.Schema(
 {
     name: String,
+    user: String,
     initiative: Number,
     armorClass: Number,
     hitPoints: Number,

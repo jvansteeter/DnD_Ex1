@@ -5,11 +5,7 @@ var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
-var jwt = require('express-jwt');
 var passport = require('passport');
-
-//var SECRET = '\x1f\x1e1\x8a\x8djO\x9e\xe4\xcb\x9d`\x13\x02\xfb+\xbb\x89q"F\x8a\xe0a';
-//var auth = jwt({secret: SECRET, userProperty: 'payload'});
 
 //
 // API
@@ -77,6 +73,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
         var encounterPlayer = new EncounterPlayer(
         {
             name : req.body.name,
+            user: req.user.username,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
@@ -110,6 +107,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
         var encounterPlayer = new EncounterPlayer(
         {
             name : req.body.name,
+            user: req.user.username,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
