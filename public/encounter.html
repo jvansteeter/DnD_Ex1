@@ -91,6 +91,10 @@
 														<span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }} </span>
 														<span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
 													</span>
+													<span style="float: right;">
+														<a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a>
+														<a href="#" ng-if="isHost() || isMyCharacter($index)" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
+													</span>
 													<span ng-if="isHost() || !isNPC($index)">
 														<span ng-if="player.hitPoints < 1" style="color: dimgrey">{{ player.hitPoints }}</span>
 														<span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green">{{ player.hitPoints }}</span>
