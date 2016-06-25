@@ -105,10 +105,12 @@
 													<i class="fa fa-shield"></i>
 													<span ng-if="!isHost() && isNPC($index)">??? </span>
 													<span ng-if="isHost() || !isNPC($index)">{{ player.armorClass }} </span>
+													<i class="fa fa-low-vision"></i>
+													<span>???</span>
 												</div>
 												<div class="col col-md-4">
 													<span style="float: right;">
-														<strong style="float: right; color: red;">{{ player.status }} </strong>
+														<strong style="color: red;">{{ player.status }} </strong>
 														<a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye"></i></a>
 														<a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye-slash"></i></a>
 														<a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close"></i></a>
