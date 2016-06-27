@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var characterSchema = new mongoose.Schema(
 {
-	user_id: String,
+	userID: String,
     name: String,
     class: String,
     level: Number,

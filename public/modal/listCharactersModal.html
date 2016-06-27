@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" ng-controller="loginControl">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header" ng-show="title">
+                    <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" ng-init="getCharacters()">
+                    <h4 class="modal-title" ng-bind="title"></h4>
+                    <div class="list-group">
+                        <a ng-repeat="character in characters" href="#" class="list-group-item">{{ character.name }} {{ character.class }} {{ character.level }}</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="register()">Register</button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
