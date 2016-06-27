@@ -6,7 +6,7 @@ var characterSchema = new mongoose.Schema(
 	userID: String,
     name: String,
     class: String,
-    level: Number,
+    level: String,
     background: String,
     player_name: String,
     race: String,
