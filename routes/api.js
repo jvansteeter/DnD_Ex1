@@ -311,6 +311,55 @@ router.post('/character/create', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/character/update', isLoggedIn, function(req, res)
+{
+    console.log(req.body.character._id);
+    res.send("OK");
+    /*Character.create(
+        {
+            userID: req.user._id,
+            name: req.body.character.name,
+            class: req.body.character.class,
+            level: req.body.character.level,
+            background: req.body.character.background,
+            player_name: req.body.character.player_name,
+            race: req.body.character.race,
+            alignment: req.body.character.alignment,
+            exp: req.body.character.exp,
+            proficiency_bonus: req.body.character.proficiency_bonus,
+            strength: req.body.character.strength,
+            dexterity: req.body.character.dexterity,
+            constitution: req.body.character.constitution,
+            intelligence: req.body.character.intelligence,
+            wisdom: req.body.character.wisdom,
+            charisma: req.body.character.charisma,
+            armor_class: req.body.character.armor_class,
+            speed: req.body.character.speed,
+            hitPoints: req.body.character.max_hitPoints,
+            max_hitPoints: req.body.character.max_hitPoints,
+            features: req.body.character.features,
+            proficiencies: req.body.character.proficiencies,
+            languages: req.body.character.languages,
+            personality: req.body.character.personality,
+            ideals: req.body.character.ideals,
+            bonds: req.body.character.bonds,
+            flaws: req.body.character.flaws,
+            attacks: req.body.character.attacks,
+            money: req.body.character.money,
+            equipment: req.body.character.equipment
+        }, function(error, character)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            character.createNewCharacter();
+            res.send("OK");
+        });*/
+});
+
 router.get('/character/all', isLoggedIn, function(req, res)
 {
     var userID = req.user._id;

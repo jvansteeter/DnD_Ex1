@@ -35,7 +35,7 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
         console.log("Saving");
         console.log($scope.character);
 
-        var url = 'api/character/create';
+        var url = 'api/character/update';
         var data =
         {
             character: $scope.character
