@@ -160,7 +160,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		});
 	};
 
-	$scope.endEncounter = function()
+	$scope.submit = function()
 	{
 		console.log("Ending encounter");
 
