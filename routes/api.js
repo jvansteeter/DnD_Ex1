@@ -326,7 +326,7 @@ router.get('/character/all', isLoggedIn, function(req, res)
         var list = [];
         for (var i = 0; i < characters.length; i++)
         {
-            list[i].name = charcters[i].name;
+            list[i].name = characters[i].name;
             list[i].class = characters[i].class;
             list[i].level = characters[i].level;
         }
