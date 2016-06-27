@@ -323,15 +323,15 @@ router.get('/character/all', isLoggedIn, function(req, res)
             return;
         }
 
-        var list = [];
+        /*var list = [];
         for (var i = 0; i < characters.length; i++)
         {
             list[i].name = characters[i].name;
             list[i].class = characters[i].class;
             list[i].level = characters[i].level;
-        }
+        }*/
         
-        res.json({characters: list});
+        res.json({characters: characters});
     });
 });
 
