@@ -306,7 +306,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
             return;
         }
 
-        character.createNewCharacter();
+        character.generateCharacter();
         res.send("OK");
     });
 });
