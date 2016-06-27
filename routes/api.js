@@ -314,50 +314,48 @@ router.post('/character/create', isLoggedIn, function(req, res)
 router.post('/character/update', isLoggedIn, function(req, res)
 {
     console.log(req.body.character._id);
-    res.send("OK");
-    /*Character.create(
+    Character.findById(req.body.character._id, function(error, character)
+    {
+        if (error)
         {
-            userID: req.user._id,
-            name: req.body.character.name,
-            class: req.body.character.class,
-            level: req.body.character.level,
-            background: req.body.character.background,
-            player_name: req.body.character.player_name,
-            race: req.body.character.race,
-            alignment: req.body.character.alignment,
-            exp: req.body.character.exp,
-            proficiency_bonus: req.body.character.proficiency_bonus,
-            strength: req.body.character.strength,
-            dexterity: req.body.character.dexterity,
-            constitution: req.body.character.constitution,
-            intelligence: req.body.character.intelligence,
-            wisdom: req.body.character.wisdom,
-            charisma: req.body.character.charisma,
-            armor_class: req.body.character.armor_class,
-            speed: req.body.character.speed,
-            hitPoints: req.body.character.max_hitPoints,
-            max_hitPoints: req.body.character.max_hitPoints,
-            features: req.body.character.features,
-            proficiencies: req.body.character.proficiencies,
-            languages: req.body.character.languages,
-            personality: req.body.character.personality,
-            ideals: req.body.character.ideals,
-            bonds: req.body.character.bonds,
-            flaws: req.body.character.flaws,
-            attacks: req.body.character.attacks,
-            money: req.body.character.money,
-            equipment: req.body.character.equipment
-        }, function(error, character)
-        {
-            if (error)
-            {
-                res.sendStatus(403);
-                return;
-            }
+            res.sendStatus(403);
+            return;
+        }
 
-            character.createNewCharacter();
-            res.send("OK");
-        });*/
+        character.userID = req.user._id;
+        character.name = req.body.character.name;
+        character.class = req.body.character.class;
+        character.level = req.body.character.level;
+        character.background = req.body.character.background;
+        character.player_name = req.body.character.player_name;
+        character.race = req.body.character.race;
+        character.alignment = req.body.character.alignment;
+        character.exp = req.body.character.exp;
+        character.proficiency_bonus = req.body.character.proficiency_bonus;
+        character.strength = req.body.character.strength;
+        character.dexterity = req.body.character.dexterity;
+        character.constitution = req.body.character.constitution;
+        character.intelligence = req.body.character.intelligence;
+        character.wisdom = req.body.character.wisdom;
+        character. charisma = req.body.character.charisma;
+        character. armor_class = req.body.character.armor_class;
+        character.speed = req.body.character.speed;
+        character.hitPoints = req.body.character.max_hitPoints;
+        character.max_hitPoints = req.body.character.max_hitPoints;
+        character.features = req.body.character.features;
+        character.proficiencies = req.body.character.proficiencies;
+        character.languages = req.body.character.languages;
+        character.personality = req.body.character.personality;
+        character.ideals = req.body.character.ideals;
+        character.bonds = req.body.character.bonds;
+        character.flaws = req.body.character.flaws;
+        character.attacks = req.body.character.attacks;
+        character.money = req.body.character.money;
+        character.equipment = req.body.character.equipment;
+
+        character.generateCharacter();
+        res.send("OK");
+    });
 });
 
 router.get('/character/all', isLoggedIn, function(req, res)
