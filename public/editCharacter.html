@@ -97,7 +97,7 @@
                             </div>
                             <div class="col col-md-2">
                                 <h4>Level</h4>
-                                <select class='form-control' ng-model="character.level">
+                                <select class='form-control' ng-model="character.level" value="{{ character.level }}">
                                     <option value="" selected disabled></option>
                                     <option ng-repeat="numLevel in levels" value="{{ numLevel }}">{{ numLevel }}</option>
                                 </select>
