@@ -336,7 +336,7 @@ router.get('/character/all', isLoggedIn, function(req, res)
             list.push(character);
         }
         
-        res.json({characters: characters});
+        res.json({characters: list});
     });
 });
 
