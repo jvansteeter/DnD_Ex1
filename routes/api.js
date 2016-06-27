@@ -340,6 +340,20 @@ router.get('/character/all', isLoggedIn, function(req, res)
     });
 });
 
+router.get('/character/:character_id', isLoggedIn, function(req, res)
+{
+    Character.findById(req.params.character_id, function(error, character)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+        
+        res.json({character: character});
+    });
+});
+
 function isLoggedIn(req, res, next) 
 {
     // if user is authenticated in the session, carry on 

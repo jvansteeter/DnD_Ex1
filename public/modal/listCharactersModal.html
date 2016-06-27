@@ -8,12 +8,12 @@
                 <div class="modal-body" ng-init="getCharacters()">
                     <h4 class="modal-title" ng-bind="title"></h4>
                     <div class="list-group">
-                        <a ng-repeat="character in characters" href="#" class="list-group-item">{{ character.name }} {{ character.class }} {{ character.level }}</a>
+                        <a ng-repeat="character in characters" href="editCharacter.html?{{ character._id }}" class="list-group-item"><h4>{{ character.name }} {{ character.class }} {{ character.level }}</h4></a>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="register()">Register</button>
-                    <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+                    <!--button type="button" class="btn btn-primary" ng-click="register()">Register</button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Close</button-->
                 </div>
             </form>
         </div>
