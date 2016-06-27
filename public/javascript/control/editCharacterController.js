@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('newCharacterController', function($scope, $window, $http, $alert)
+clientApp.controller('editCharacterController', function($scope, $window, $http, $alert)
 {
     $scope.character = {};
     $scope.character.features = [];
@@ -111,4 +111,8 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
         $scope.character.equipment.splice(-1, 1);
     };
 
+    $scope.submit = function()
+    {
+        console.log("Attempting to delete character");
+    };
 });
