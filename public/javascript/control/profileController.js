@@ -21,8 +21,8 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 		});
 	};
 	
-	$scope.selectCharacter = function(characterID)
+	$scope.selectCharacter = function(index)
 	{
-		window.location = 'editCharacter.html?' + characterID;	
+		window.location = 'editCharacter.html?' + $scope.characters[index]._id;
 	};
 });
