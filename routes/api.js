@@ -401,6 +401,27 @@ router.get('/character/:character_id', isLoggedIn, function(req, res)
     });
 });
 
+router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
+{
+    Character.findById(req.params.character_id, function(error, character)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        if (character.userID !== req.user._id)
+        {
+            res.sendStatus(401);
+            return;
+        }
+
+        character.remove();
+        res.send("OK");
+    });
+});
+
 function isLoggedIn(req, res, next) 
 {
     // if user is authenticated in the session, carry on 

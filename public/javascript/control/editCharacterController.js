@@ -114,5 +114,18 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
     $scope.submit = function()
     {
         console.log("Attempting to delete character");
+
+        var url = 'api/character/delete/' + characterID;
+        $http.get(url).success(function(data)
+        {
+            if (data === "OK")
+            {
+                window.location = 'profile.html';
+            }
+            else
+            {
+                console.log(data);
+            }
+        });
     };
 });
