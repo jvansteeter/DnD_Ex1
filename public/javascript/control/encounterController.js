@@ -26,11 +26,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 				$scope.status = 'ENDED';
 			}
 
-			var url = 'api/encounter/players/' + encounterID;
-			$http.get(url).success(function(data)
-			{
-				$scope.players = data;
-			});
+			$scope.updatePlayers();
 		});
 	});
 
@@ -39,11 +35,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		console.log("Updating encounter");
 		if (data.encounterID === encounterID)
 		{
-			var url = 'api/encounter/players/' + encounterID;
-			$http.get(url).success(function(data)
-			{
-				$scope.players = data;
-			});
+			$scope.updatePlayers();
 		}
 	});
 
@@ -54,6 +46,15 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			$scope.status = 'ENDED'
 		}
 	});
+
+	$scope.updatePlayers = function()
+	{
+		var url = 'api/encounter/players/' + encounterID;
+		$http.get(url).success(function(data)
+		{
+			$scope.players = data;
+		});
+	};
 
 	$scope.setPlayer = function(index)
 	{
@@ -95,7 +96,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		var data =
 		{
 			playerID : $scope.players[index]._id
-		}
+		};
 		$http.post(url, data).success(function(data)
 		{
 			if (data === "OK")
@@ -116,7 +117,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			return;
 		}
 
-		var hit = hit * $scope.multiple;
+		hit = hit * $scope.multiple;
 		var data = 
 		{
 			playerID : $scope.players[$scope.selectedPlayer]._id,
@@ -129,12 +130,8 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			{
 				encounterID : encounterID
 			});
-			
-			var url = 'api/encounter/players/' + encounterID;
-			$http.get(url).success(function(data)
-			{
-				$scope.players = data;
-			});
+
+			$scope.updatePlayers();
 		});
 	};
 
@@ -157,6 +154,36 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			});
 
 			$scope.players.splice(index, 1);
+		});
+	};
+
+	$scope.listModalgetCharacters = function()
+	{
+		var url = 'api/character/all';
+		$http.get(url).success(function(data)
+		{
+			console.log(data);
+			$scope.characters = data.characters;
+		});
+	};
+
+	$scope.listModalselectCharacter = function(index)
+	{
+		var encounterID = Profile.getEncounter();
+
+		var url = 'api/encounter/addcharacter/' + encounterID;
+		var data =
+		{
+			characterID: $scope.characters[index]._id
+		};
+		$http.post(url, data).success(function(data)
+		{
+			console.log(data);
+			console.log("Character successfully added");
+			socket.emit('update:encounter',
+				{
+					encounterID : encounterID
+				});
 		});
 	};
 

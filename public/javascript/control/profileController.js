@@ -11,7 +11,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 		console.log(data);
 	});
 
-	$scope.getCharacters = function()
+	$scope.listModalgetCharacters = function()
 	{
 		var url = 'api/character/all';
 		$http.get(url).success(function(data)
@@ -21,7 +21,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 		});
 	};
 	
-	$scope.selectCharacter = function(index)
+	$scope.listModalselectCharacter = function(index)
 	{
 		window.location = 'editCharacter.html?' + $scope.characters[index]._id;
 	};
