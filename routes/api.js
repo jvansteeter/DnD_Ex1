@@ -410,8 +410,7 @@ router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
             res.sendStatus(403);
             return;
         }
-        console.log(character.userID);
-        console.log(req.user._id);
+
         if (character.userID != req.user._id)
         {
             res.sendStatus(401);
