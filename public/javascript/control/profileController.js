@@ -20,4 +20,9 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 			$scope.characters = data.characters;
 		});
 	};
+	
+	$scope.selectCharacter = function(characterID)
+	{
+		window.location = 'editCharacter.html?' + characterID;	
+	};
 });

@@ -8,7 +8,7 @@
                 <div class="modal-body" ng-init="getCharacters()">
                     <h4 class="modal-title" ng-bind="title"></h4>
                     <div class="list-group">
-                        <a ng-repeat="character in characters" href="editCharacter.html?{{ character._id }}" class="list-group-item"><h4>{{ character.name }} {{ character.class }} {{ character.level }}</h4></a>
+                        <a ng-repeat="character in characters" href="#" ng-click="selectCharacter({{ character._id }})" class="list-group-item"><h4>{{ character.name }} {{ character.class }} {{ character.level }}</h4></a>
                     </div>
                 </div>
                 <div class="modal-footer">
