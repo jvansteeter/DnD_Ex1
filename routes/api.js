@@ -73,7 +73,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
         var encounterPlayer = new EncounterPlayer(
         {
             name : req.body.name,
-            user: req.user.username,
+            userID: req.user._id,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
@@ -107,7 +107,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
         var encounterPlayer = new EncounterPlayer(
         {
             name : req.body.name,
-            user: req.user.username,
+            userID: req.user._id,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
@@ -115,6 +115,41 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
             visible : false,
             npc : true
         });
+        //res.json(encounterPlayer);
+        encounter.addPlayer(encounterPlayer._id);
+        encounterPlayer.save(function(error)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+            res.send("OK");
+        });
+    });
+});
+
+router.post('/encounter/addcharacter/:encounter_id', isLoggedIn, function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+        
+        var encounterPlayer = new EncounterPlayer(
+            {
+                name : req.body.name,
+                user: req.user.username,
+                initiative : req.body.initiative,
+                armorClass : req.body.armorClass,
+                hitPoints : req.body.hitPoints,
+                maxHitPoints : req.body.maxHitPoints,
+                visible : false,
+                npc : true
+            });
         //res.json(encounterPlayer);
         encounter.addPlayer(encounterPlayer._id);
         encounterPlayer.save(function(error)

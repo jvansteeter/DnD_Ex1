@@ -82,7 +82,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	
 	$scope.isMyCharacter = function(index)
 	{
-		return (Profile.getUsername() === $scope.players[index].user);
+		return (Profile.getUserID() === $scope.players[index].userID);
 	};
 
 	$scope.isVisible = function(index)
