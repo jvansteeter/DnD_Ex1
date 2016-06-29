@@ -176,6 +176,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		{
 			characterID: $scope.characters[index]._id
 		};
+		
 		$http.post(url, data).success(function(data)
 		{
 			console.log(data);

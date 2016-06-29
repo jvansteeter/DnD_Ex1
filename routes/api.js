@@ -138,28 +138,37 @@ router.post('/encounter/addcharacter/:encounter_id', isLoggedIn, function(req, r
             res.sendStatus(403);
             return;
         }
-        
-        var encounterPlayer = new EncounterPlayer(
-            {
-                name : req.body.name,
-                user: req.user.username,
-                initiative : req.body.initiative,
-                armorClass : req.body.armorClass,
-                hitPoints : req.body.hitPoints,
-                maxHitPoints : req.body.maxHitPoints,
-                visible : false,
-                npc : true
-            });
-        //res.json(encounterPlayer);
-        encounter.addPlayer(encounterPlayer._id);
-        encounterPlayer.save(function(error)
+
+        var characterID = req.body.characterID;
+        Character.findById(characterID, function(error, character)
         {
             if (error)
             {
                 res.sendStatus(403);
                 return;
             }
-            res.send("OK");
+
+            var encounterPlayer = new EncounterPlayer(
+                {
+                    name : character.name,
+                    userID: character.userID,
+                    armorClass : character.armorClass,
+                    hitPoints : character.maxHitPoints,
+                    maxHitPoints : character.maxHitPoints,
+                    visible : true,
+                    npc : false
+                });
+            
+            encounter.addPlayer(encounterPlayer._id);
+            encounterPlayer.save(function(error)
+            {
+                if (error)
+                {
+                    res.sendStatus(403);
+                    return;
+                }
+                res.send("OK");
+            });
         });
     });
 });
