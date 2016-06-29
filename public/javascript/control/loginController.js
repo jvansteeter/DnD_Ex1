@@ -40,7 +40,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			console.log(response);
 
 			Profile.setUsername(response.data.username);
-			Profile.setUserID(data._id);
+			Profile.setUserID(response.data._id);
 			Profile.setFirstName(response.data.first_name);
 			Profile.setLastName(response.data.last_name);
 			window.location = 'profile.html';
@@ -110,7 +110,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					console.log(data);
 
 					Profile.setUsername(data.username);
-					Profile.setUserID(data._id);
+					Profile.setUserID(response.data._id);
 					Profile.setFirstName(data.first_name);
 					Profile.setLastName(data.last_name);
 					window.location = 'profile.html';
