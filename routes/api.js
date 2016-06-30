@@ -342,7 +342,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
 {
     Character.create(
     {
-        userID: req.user._id,
+        userID: req.body.userID,
         name: req.body.character.name,
         class: req.body.character.class,
         level: req.body.character.level,
@@ -397,7 +397,6 @@ router.post('/character/update', isLoggedIn, function(req, res)
             return;
         }
 
-        character.userID = req.user._id;
         character.name = req.body.character.name;
         character.class = req.body.character.class;
         character.level = req.body.character.level;
