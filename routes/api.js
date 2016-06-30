@@ -317,21 +317,21 @@ router.post('/character/create', isLoggedIn, function(req, res)
         class: req.body.character.class,
         level: req.body.character.level,
         background: req.body.character.background,
-        playerName: req.body.character.player_name,
+        playerName: req.body.character.playerName,
         race: req.body.character.race,
         alignment: req.body.character.alignment,
         exp: req.body.character.exp,
-        proficiencyBonus: req.body.character.proficiency_bonus,
+        proficiencyBonus: req.body.character.proficiencyBonus,
         strength: req.body.character.strength,
         dexterity: req.body.character.dexterity,
         constitution: req.body.character.constitution,
         intelligence: req.body.character.intelligence,
         wisdom: req.body.character.wisdom,
         charisma: req.body.character.charisma,
-        armorClass: req.body.character.armor_class,
+        armorClass: req.body.character.armorClass,
         speed: req.body.character.speed,
-        hitPoints: req.body.character.max_hitPoints,
-        maxHitPoints: req.body.character.max_hitPoints,
+        hitPoints: req.body.character.maxHitPoints,
+        maxHitPoints: req.body.character.maxHitPoints,
         features: req.body.character.features,
         proficiencies: req.body.character.proficiencies,
         languages: req.body.character.languages,
@@ -371,21 +371,21 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.class = req.body.character.class;
         character.level = req.body.character.level;
         character.background = req.body.character.background;
-        character.player_name = req.body.character.player_name;
+        character.playerName = req.body.character.playerName;
         character.race = req.body.character.race;
         character.alignment = req.body.character.alignment;
         character.exp = req.body.character.exp;
-        character.proficiency_bonus = req.body.character.proficiency_bonus;
+        character.proficiencyBonus = req.body.character.proficiencyBonus;
         character.strength = req.body.character.strength;
         character.dexterity = req.body.character.dexterity;
         character.constitution = req.body.character.constitution;
         character.intelligence = req.body.character.intelligence;
         character.wisdom = req.body.character.wisdom;
-        character. charisma = req.body.character.charisma;
-        character. armor_class = req.body.character.armor_class;
+        character.charisma = req.body.character.charisma;
+        character.armorClass = req.body.character.armorClass;
         character.speed = req.body.character.speed;
-        character.hitPoints = req.body.character.max_hitPoints;
-        character.max_hitPoints = req.body.character.max_hitPoints;
+        character.hitPoints = req.body.character.maxHitPoints;
+        character.maxHitPoints = req.body.character.maxHitPoints;
         character.features = req.body.character.features;
         character.proficiencies = req.body.character.proficiencies;
         character.languages = req.body.character.languages;
