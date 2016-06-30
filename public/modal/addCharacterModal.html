@@ -1,0 +1,22 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="addCharacterModalTitle">
+                <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <form>
+                <div class="modal-body" ng-init="getCharacters()">
+                    <h4 class="modal-title" ng-bind="addCharacterModalTitle"></h4>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item" ng-repeat="character in characters track by $index" ng-click="selectCharacter($index)"></a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p style="color : red">{{ registerInfo }}</p>
+                    <button type="submit" class="btn btn-primary" ng-click="addCharacter()">Add Character</button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

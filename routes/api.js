@@ -115,7 +115,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
             visible : false,
             npc : true
         });
-        //res.json(encounterPlayer);
+
         encounter.addPlayer(encounterPlayer._id);
         encounterPlayer.save(function(error)
         {
