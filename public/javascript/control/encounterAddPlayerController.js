@@ -34,6 +34,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	        var url = 'api/encounter/addplayer/' + encounterID;
 	        var data =
 	        {
+				userID : Profile.getUserID(),
 	            name : $scope.name,
 	            initiative : $scope.initiative,
 	            armorClass : $scope.armorClass,
@@ -84,6 +85,7 @@ clientApp.controller('modalController', ['$scope', '$http', '$rootScope', 'Profi
 	        var url = 'api/encounter/addnpc/' + encounterID;
 	        var data =
 	        {
+				userID : Profile.getUserID(),
 	            name : $scope.name,
 	            initiative : $scope.initiative,
 	            armorClass : $scope.armorClass,

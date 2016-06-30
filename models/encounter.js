@@ -5,7 +5,7 @@ var encounterSchema = new mongoose.Schema(
 {
     title: String,
     description: String,
-    host: String,
+    hostID: String,
     hostName: String,
     players: [],
     createdAt: {type: Number, required: true, default: Date.now},

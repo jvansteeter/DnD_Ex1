@@ -13,23 +13,32 @@ var passport = require('passport');
 
 router.post('/encounter/create', isLoggedIn, function(req, res)
 {
-    var name = req.user.first_name + " " + req.user.last_name;
-    Encounter.create(
-    {
-        title : req.body.title,
-        description : req.body.description,
-        host : req.body.username,
-        hostName : name,
-        active : true
-    }, function(error, encounter)
+    User.findById(req.body.userID, function(error, user)
     {
         if (error)
         {
             res.sendStatus(403);
             return;
         }
-        
-        res.send("OK");
+
+        var name = user.first_name + " " + user.last_name;
+        Encounter.create(
+            {
+                title : req.body.title,
+                description : req.body.description,
+                hostID : req.body.userID,
+                hostName : name,
+                active : true
+            }, function(error, encounter)
+            {
+                if (error)
+                {
+                    res.sendStatus(403);
+                    return;
+                }
+
+                res.send("OK");
+            });
     });
 });
 
@@ -73,7 +82,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
         var encounterPlayer = new EncounterPlayer(
         {
             name : req.body.name,
-            userID: req.user._id,
+            userID: req.body.userID,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
@@ -107,7 +116,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
         var encounterPlayer = new EncounterPlayer(
         {
             name : req.body.name,
-            userID: req.user._id,
+            userID: req.body.userID,
             initiative : req.body.initiative,
             armorClass : req.body.armorClass,
             hitPoints : req.body.hitPoints,
@@ -481,12 +490,6 @@ router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
         if (error)
         {
             res.sendStatus(403);
-            return;
-        }
-
-        if (character.userID != req.user._id)
-        {
-            res.sendStatus(401);
             return;
         }
 

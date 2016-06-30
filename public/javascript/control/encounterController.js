@@ -68,7 +68,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 
 	$scope.isHost = function()
 	{
-		if (Profile.getUsername() === $scope.encounter.host)
+		if (Profile.getUserID() === $scope.encounter.hostID)
 		{
 			return true;
 		}

@@ -39,7 +39,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 		var data =  
 			{
 				title : $scope.newEncounterTitle,
-				username : Profile.getUsername(),
+				userID : Profile.getUserID(),
 				description : $scope.newEncounterDescription
 			};
 
