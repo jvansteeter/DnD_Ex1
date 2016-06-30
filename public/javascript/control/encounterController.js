@@ -137,7 +137,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 
 	$scope.setInitiative = function(initiative)
 	{
-		if (hit < 1 || isNaN(hit))
+		if (initiative < 1 || isNaN(initiative))
 		{
 			return;
 		}
