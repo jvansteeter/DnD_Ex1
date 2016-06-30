@@ -329,6 +329,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
         wisdom: req.body.character.wisdom,
         charisma: req.body.character.charisma,
         armorClass: req.body.character.armorClass,
+        initiative: req.body.character.initiative,
         speed: req.body.character.speed,
         hitPoints: req.body.character.maxHitPoints,
         maxHitPoints: req.body.character.maxHitPoints,
@@ -383,6 +384,7 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.wisdom = req.body.character.wisdom;
         character.charisma = req.body.character.charisma;
         character.armorClass = req.body.character.armorClass;
+        character.initiative = req.body.character.initiative;
         character.speed = req.body.character.speed;
         character.hitPoints = req.body.character.maxHitPoints;
         character.maxHitPoints = req.body.character.maxHitPoints;

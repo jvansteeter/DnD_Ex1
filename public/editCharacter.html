@@ -110,7 +110,7 @@
                             </div>
                             <div class="col col-md-4">
                                 <h4>Player name</h4>
-                                <input type="text" class='form-control' ng-model="character.player_name">
+                                <input type="text" class='form-control' ng-model="character.playerName">
                             </div>
                         </div>
                         <div class="row">
@@ -137,7 +137,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col col-md-3">
-                                <input type="number" min="1" max="6" class="form-control" ng-model="character.proficiency_bonus">
+                                <input type="number" min="1" max="6" class="form-control" ng-model="character.proficiencyBonus">
                             </div>
                             <div class="col col-md-9">
                                 <h4>Proficiency Bonus</h4>
@@ -224,11 +224,11 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.armor_class">
+                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.armorClass">
                                     <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
                                 </div>
                                 <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;">
+                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.initiative">
                                     <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
                                 </div>
                                 <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
@@ -238,7 +238,7 @@
                             </div>
                         </div>
                         <div class="well well-sm" style="margin-bottom: 5px">
-                            <input type="number" class="form-control" ng-model="character.max_hitPoints">
+                            <input type="number" class="form-control" ng-model="character.maxHitPoints">
                             <h4 style="text-align: center;">Max Hit Points</h4>
                         </div>
                     </div>
@@ -322,7 +322,7 @@
                                     <input class="form-control" style="padding-left: 5px; padding-right: 5px" ng-model="character.attacks[$index].damage">
                                 </div>
                                 <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
-                                    <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].damage_type">
+                                    <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].damageType">
                                 </div>
                             </div>
                         </div>
