@@ -186,6 +186,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 					encounterID : encounterID
 				});
 			$scope.updatePlayers();
+			console.log($scope.characters);
 		});
 	};
 
