@@ -8,7 +8,7 @@ clientApp.config(function($modalProvider)
 	});
 })
 
-clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScope', function($scope, $modal, $http, $rootScope) 
+clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScope', 'Profile', function($scope, $modal, $http, $rootScope, Profile)
 {
 	$scope.newEncounterTitle = '';
 	$scope.newEncounterDescription = '';
@@ -39,6 +39,7 @@ clientApp.controller('modalController', ['$scope', '$modal', '$http', '$rootScop
 		var data =  
 			{
 				title : $scope.newEncounterTitle,
+				username : Profile.getUsername(),
 				description : $scope.newEncounterDescription
 			};
 
