@@ -31,6 +31,7 @@ require('./models/user');
 require('./models/encounter');
 require('./models/encounterPlayer');
 require('./models/character');
+require('./models/npc');
 require('./config/passport');
 
 // setup routes

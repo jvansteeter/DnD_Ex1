@@ -5,6 +5,7 @@ var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
+var NPC = mongoose.model('NPC');
 var passport = require('passport');
 
 //
@@ -393,6 +394,42 @@ router.post('/character/create', isLoggedIn, function(req, res)
         character.generateCharacter();
         res.send("OK");
     });
+});
+
+router.post('/npc/create', isLoggedIn, function(req, res)
+{
+    NPC.create(
+        {
+            userID: req.body.userID,
+            name: req.body.npc.name,
+            descriptors: req.body.npc.descriptors,
+            description: req.body.npc.description,
+            strength: req.body.npc.strength,
+            dexterity: req.body.npc.dexterity,
+            constitution: req.body.npc.constitution,
+            intelligence: req.body.npc.intelligence,
+            wisdom: req.body.npc.wisdom,
+            charisma: req.body.npc.charisma,
+            armorClass: req.body.npc.armorClass,
+            hitPoints: req.body.npc.maxHitPoints,
+            speed: req.body.npc.speed,
+            features: req.body.npc.features,
+            specials: req.body.npc.specials,
+            money: req.body.npc.money,
+            equipment: req.body.npc.equipment,
+            attacks: req.body.npc.attacks,
+            actions: req.body.npc.actions
+        }, function(error, npc)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            npc.generateNPC();
+            res.send("OK");
+        });
 });
 
 router.post('/character/update', isLoggedIn, function(req, res)

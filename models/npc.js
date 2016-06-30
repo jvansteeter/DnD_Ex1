@@ -70,7 +70,7 @@ var npcSchema = new mongoose.Schema(
         npc: {type: Boolean, required: true, default: true}
     });
 
-npcSchema.methods.generateCharacter = function()
+npcSchema.methods.generateNPC = function()
 {
     this.strength.modifier = calculateMod(this.strength.score);
     this.dexterity.modifier = calculateMod(this.dexterity.score);
