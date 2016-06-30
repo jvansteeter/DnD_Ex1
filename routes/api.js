@@ -259,6 +259,35 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/encounter/setinitiative', isLoggedIn, function(req, res)
+{
+    console.log("---!!! Attempting to set the initiative of a player !!!---");
+    EncounterPlayer.findById(req.body.playerID, function(error, player)
+    {
+        if (error)
+        {
+            console.log("Error finding the player");
+            res.sendStatus(403);
+            return;
+        }
+
+        console.log("found player " + player._id + " " + player.name + " " + req.body.hit);
+
+        player.initiative = req.body.initiative;
+        player.save(function(error)
+        {
+            if (error)
+            {
+                console.log("Error saving the player");
+                res.sendStatus(403);
+                return;
+            }
+
+            res.send("OK");
+        });
+    });
+});
+
 router.post('/encounter/togglevisible', isLoggedIn, function(req, res)
 {
     console.log("---!!! Attempting to toggle visibility !!!---");

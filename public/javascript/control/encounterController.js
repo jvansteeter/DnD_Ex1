@@ -135,6 +135,30 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		});
 	};
 
+	$scope.setInitiative = function(initiative)
+	{
+		if (hit < 1 || isNaN(hit))
+		{
+			return;
+		}
+
+		var url = 'api/encounter/setinitiative';
+		var data =
+		{
+			playerID : $scope.players[$scope.selectedPlayer]._id,
+			initiative : initiative
+		};
+		$http.post(url, data).success(function(data)
+		{
+			socket.emit('update:encounter',
+			{
+				encounterID : encounterID
+			});
+
+			$scope.updatePlayers();
+		});
+	};
+
 	$scope.removePlayer = function(index)
 	{
 		console.log("Removing player " + index);
