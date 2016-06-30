@@ -21,7 +21,7 @@
 
     <script src="javascript/angularModule.js"></script>
     <script src="javascript/profileService.js"></script>
-    <script src="javascript/control/newCharacterController.js"></script>
+    <script src="javascript/control/newNPCController.js"></script>
     <script src="javascript/control/headerController.js"></script>
 
     <title>Dungeon Map</title>
@@ -30,6 +30,10 @@
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
+        }
+        .text-center
+        {
+            text-align: center;
         }
     </style>
 </head>
@@ -111,66 +115,66 @@
                         <div class="row well well-sm">
                             <h4>Strength</h4>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.strength.score">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.strength.score">
                                 <h5>Score</h5>
                             </div>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.strength.save">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.strength.save">
                                 <h5>Save</h5>
                             </div>
                         </div>
                         <div class="row well well-sm">
                             <h4>Dexterity</h4>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.dexterity.score">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.dexterity.score">
                                 <h5>Score</h5>
                             </div>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.dexterity.save">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.dexterity.save">
                                 <h5>Save</h5>
                             </div>
                         </div>
                         <div class="row well well-sm">
                             <h4>Constitution</h4>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.constitution.score">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.constitution.score">
                                 <h5>Score</h5>
                             </div>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.constitution.save">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.constitution.save">
                                 <h5>Save</h5>
                             </div>
                         </div>
                         <div class="row well well-sm">
                             <h4>Intelligence</h4>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.intelligence.score">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.intelligence.score">
                                 <h5>Score</h5>
                             </div>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.intelligence.save">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.intelligence.save">
                                 <h5>Save</h5>
                             </div>
                         </div>
                         <div class="row well well-sm">
                             <h4>Wisdom</h4>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.wisdom.score">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.wisdom.score">
                                 <h5>Score</h5>
                             </div>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.wisdom.save">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.wisdom.save">
                                 <h5>Save</h5>
                             </div>
                         </div>
                         <div class="row well well-sm">
                             <h4>Charisma</h4>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.charisma.score">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.charisma.score">
                                 <h5>Score</h5>
                             </div>
                             <div class="col col-md-6 well well-sm" style="margin-bottom: 0px; text-align: center">
-                                <input type="number" min="1" class="form-control" style="height: 50px; font-size: 30px;" ng-model="npc.charisma.save">
+                                <input type="number" min="1" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="npc.charisma.save">
                                 <h5>Save</h5>
                             </div>
                         </div>
@@ -182,80 +186,122 @@
                     <div class="well well-sm">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.armorClass">
-                                    <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
+                                <div class="col col-md-6 col-sm-6" style="margin-bottom: 0px;">
+                                    <strong style="text-align: center">Armor Class <i class="fa fa-shield"></i></strong>
                                 </div>
-                                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.initiative">
-                                    <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
-                                </div>
-                                <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
-                                    <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.speed">
-                                    <h5 style="text-align: center">Speed</h5>
+                                <div class="col col-md-6 col-sm-6">
+                                    <input type="number" class="form-control text-center" size="2" ng-model="npc.armorClass">
                                 </div>
                             </div>
-                        </div>
-                        <div class="well well-sm" style="margin-bottom: 5px">
-                            <input type="number" class="form-control" ng-model="character.maxHitPoints">
-                            <h4 style="text-align: center;">Max Hit Points</h4>
-                        </div>
-                    </div>
-                    <div class="well well-sm">
-                        <div class="well well-sm">
-                            <div class="container-fluid">
-                                <div class="row" ng-repeat="feature in character.features track by $index">
-                                    <input type="text" class="form-control" ng-model="character.features[$index]">
+                            <div class="row">
+                                <div class="col col-md-6 col-sm-6" style="margin-bottom: 0px;">
+                                    <strong style="text-align: center">Hit Points <i class="fa fa-heart"></i></strong>
                                 </div>
-                                <br>
-                                <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
-                                <button style="float: left" ng-click="removeFeature()"><i class="fa fa-minus"></i></button>
-                                <h4 style="text-align: center">Traits & Features</h4>
+                                <div class="col col-md-6 col-sm-6">
+                                    <input type="number" class="form-control text-center" size="2" ng-model="npc.hitPoints">
+                                </div>
                             </div>
-                        </div>
-                        <div class="well well-sm">
-                            <div class="container-fluid">
-                                <div class="row" ng-repeat="proficiency in character.proficiencies track by $index">
-                                    <input type="text" class="form-control" ng-model="character.proficiencies[$index]">
+                            <div class="row">
+                                <div class="col col-md-4 col-sm-4" style="margin-bottom: 0px;">
+                                    <strong style="text-align: center">Speed </strong>
                                 </div>
-                                <br>
-                                <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
-                                <button style="float: left" ng-click="removeProficiency()"><i class="fa fa-minus"></i></button>
-                                <h4 style="text-align: center">Proficiencies</h4>
-                            </div>
-                        </div>
-                        <div class="well well-sm" style="margin-bottom: 5px">
-                            <div class="container-fluid">
-                                <div class="row" ng-repeat="language in character.languages track by $index">
-                                    <select class="form-control" ng-model="character.languages[$index]">
-                                        <option value="" selected disabled></option>
-                                        <option ng-repeat="dndLanguage in dndLanguages" value="{{ dndLanguage }}">{{ dndLanguage }}</option>
-                                    </select>
+                                <div class="col col-md-8 col-sm-8">
+                                    <input type="text" class="form-control text-center" size="2" ng-model="npc.speed">
                                 </div>
-                                <br>
-                                <button style="float: left;" ng-click="addLanguage()"><i class="fa fa-plus"></i></button>
-                                <button style="float: left" ng-click="removeLanguage()"><i class="fa fa-minus"></i></button>
-                                <h4 style="text-align: center">Languages</h4>
                             </div>
                         </div>
                     </div>
                     <div class="well well-sm">
-                        <div class="well well-sm">
-                            <textarea class="form-control" style="resize: none" rows="4" ng-model="character.personality"></textarea>
-                            <h4 style="text-align: center">Personality Traits</h4>
+                        <div class="container-fluid">
+                            <div class="row" ng-repeat="feature in npc.features track by $index">
+                                <input type="text" class="form-control" ng-model="npc.features[$index]">
+                            </div>
+                            <br>
+                            <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
+                            <button style="float: left" ng-click="removeFeature()"><i class="fa fa-minus"></i></button>
+                            <h4 style="text-align: center">Traits & Features</h4>
                         </div>
-                        <div class="well well-sm">
-                            <textarea class="form-control" style="resize: none" rows="3" ng-model="character.ideals"></textarea>
-                            <h4 style="text-align: center">Ideals</h4>
+                    </div>
+                    <div class="well well-sm">
+                        <div class="container-fluid">
+                            <div class="row" ng-repeat="special in npc.specials track by $index" style="margin-bottom: 10px">
+                                <input type="text" class="form-control" ng-model="npc.specials[$index].name" placeholder="Name" style="font-weight: bold">
+                                <textarea type='text' style="resize: none" name="Description" class="form-control" rows="3" ng-model="npc.specials[$index].description" placeholder="Description"></textarea>
+                            </div>
+                            <br>
+                            <button style="float: left;" ng-click="addSpecial()"><i class="fa fa-plus"></i></button>
+                            <button style="float: left" ng-click="removeSpecial()"><i class="fa fa-minus"></i></button>
+                            <h4 style="text-align: center">Special Abilities</h4>
                         </div>
-                        <div class="well well-sm">
-                            <textarea class="form-control" style="resize: none" rows="3" ng-model="character.bonds"></textarea>
-                            <h4 style="text-align: center">Bonds</h4>
+                    </div>
+                    <div class="well well-sm">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <h4 style="text-align: center">Money</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-7">
+                                    <h5>Copper</h5>
+                                </div>
+                                <div class="col col-md-5">
+                                    <input type="number" class="form-control text-center" ng-model="npc.money.copper">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-7">
+                                    <h5>Silver</h5>
+                                </div>
+                                <div class="col col-md-5">
+                                    <input type="number" class="form-control text-center" ng-model="npc.money.silver">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-7">
+                                    <h5>Electrum</h5>
+                                </div>
+                                <div class="col col-md-5">
+                                    <input type="number" class="form-control text-center" ng-model="npc.money.electrum">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-7">
+                                    <h5>Gold</h5>
+                                </div>
+                                <div class="col col-md-5">
+                                    <input type="number" class="form-control text-center" ng-model="npc.money.gold">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-7">
+                                    <h5>Platinum</h5>
+                                </div>
+                                <div class="col col-md-5">
+                                    <input type="number" class="form-control text-center" ng-model="npc.money.platinum">
+                                </div>
+                            </div>
                         </div>
-                        <div class="well well-sm" style="margin-bottom: 5px">
-                            <textarea class="form-control" style="resize: none" rows="3" ng-model="character.flaws"></textarea>
-                            <h4 style="text-align: center">Flaws</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col col-md-9">
+                                <h4>Item</h4>
+                            </div>
+                            <div class="col col-md-3">
+                                <h4>Qty</h4>
+                            </div>
                         </div>
+                        <br>
+                        <div ng-repeat="item in npc.equipment track by $index" class="row">
+                            <div class="col col-md-8">
+                                <input type="text" class="form-control" ng-model="npc.equipment[$index].item">
+                            </div>
+                            <div class="col col-md-4">
+                                <input type="number" class="form-control text-center" value="1" ng-model="npc.equipment[$index].quantity">
+                            </div>
+                        </div>
+                        <br>
+                        <button style="float: left;" ng-click="addEquipment()"><i class="fa fa-plus"></i></button>
+                        <button style="float: left" ng-click="removeEquipment()"><i class="fa fa-minus"></i></button>
+                        <h4 style="text-align: center">Equipment</h4>
                     </div>
                 </div>
 
@@ -270,97 +316,39 @@
                                 <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Type</div>
                             </div>
                             <hr>
-                            <div class="row" ng-repeat="attack in character.attacks track by $index">
+                            <div class="row" ng-repeat="attack in npc.attacks track by $index">
                                 <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
-                                    <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].name">
+                                    <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="npc.attacks[$index].name">
                                 </div>
                                 <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">
-                                    <input type="number" class="form-control" ng-model="character.attacks[$index].bonus">
+                                    <input type="number" class="form-control text-center" ng-model="npc.attacks[$index].bonus">
                                 </div>
-                                <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">
-                                    <input class="form-control" style="padding-left: 5px; padding-right: 5px" ng-model="character.attacks[$index].damage">
+                                <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">
+                                    <input class="form-control text-center" style="padding-left: 5px; padding-right: 5px" ng-model="npc.attacks[$index].damage">
                                 </div>
-                                <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
-                                    <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].damageType">
+                                <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">
+                                    <input class="form-control text-center" style="padding-left: 1px; padding-right: 1px" ng-model="npc.attacks[$index].damageType">
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <button style="float: left;" ng-click="addAttack()"><i class="fa fa-plus"></i></button>
                         <button style="float: left" ng-click="removeAttack()"><i class="fa fa-minus"></i></button>
-                        <br>
                         <h4 style="text-align: center">Attacks</h4>
                     </div>
                     <div class="well well-sm">
                         <div class="container-fluid">
-                            <div class="row">
-                                <h4 style="text-align: center">Money</h4>
+                            <div class="row" ng-repeat="action in npc.actions track by $index" style="margin-bottom: 10px">
+                                <input type="text" class="form-control" ng-model="npc.specials[$index].name" placeholder="Name" style="font-weight: bold">
+                                <textarea type='text' style="resize: none" name="Description" class="form-control" rows="3" ng-model="npc.specials[$index].description" placeholder="Description"></textarea>
                             </div>
-                            <div class="row">
-                                <div class="col col-md-7">
-                                    <h5>Copper</h5>
-                                </div>
-                                <div class="col col-md-5">
-                                    <input type="number" class="form-control" ng-model="character.money.copper">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col col-md-7">
-                                    <h5>Silver</h5>
-                                </div>
-                                <div class="col col-md-5">
-                                    <input type="number" class="form-control" ng-model="character.money.silver">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col col-md-7">
-                                    <h5>Electrum</h5>
-                                </div>
-                                <div class="col col-md-5">
-                                    <input type="number" class="form-control" ng-model="character.money.electrum">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col col-md-7">
-                                    <h5>Gold</h5>
-                                </div>
-                                <div class="col col-md-5">
-                                    <input type="number" class="form-control" ng-model="character.money.gold">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col col-md-7">
-                                    <h5>Platinum</h5>
-                                </div>
-                                <div class="col col-md-5">
-                                    <input type="number" class="form-control" ng-model="character.money.platinum">
-                                </div>
-                            </div>
+                            <br>
+                            <button style="float: left;" ng-click="addAction()"><i class="fa fa-plus"></i></button>
+                            <button style="float: left" ng-click="removeAction()"><i class="fa fa-minus"></i></button>
+                            <h4 style="text-align: center">Actions</h4>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col col-md-9">
-                                <h4>Item</h4>
-                            </div>
-                            <div class="col col-md-3">
-                                <h4>Qty</h4>
-                            </div>
-                        </div>
-                        <br>
-                        <div ng-repeat="item in character.equipment track by $index" class="row">
-                            <div class="col col-md-8">
-                                <input type="text" class="form-control" ng-model="character.equipment[$index].item">
-                            </div>
-                            <div class="col col-md-4">
-                                <input type="number" class="form-control" value="1" ng-model="character.equipment[$index].quantity">
-                            </div>
-                        </div>
-                        <br>
-                        <button style="float: left;" ng-click="addEquipment()"><i class="fa fa-plus"></i></button>
-                        <button style="float: left" ng-click="removeEquipment()"><i class="fa fa-minus"></i></button>
-                        <h4 style="text-align: center">Equipment</h4>
                     </div>
                 </div>
-
             </div>
         </div>
     </form>

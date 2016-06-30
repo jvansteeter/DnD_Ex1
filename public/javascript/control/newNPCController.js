@@ -2,38 +2,25 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('newCharacterController', function($scope, $window, $http, $alert, Profile)
+clientApp.controller('newNPCController', function($scope, $window, $http, Profile)
 {
-    $scope.character = {};
-    $scope.character.features = [];
-    $scope.character.proficiencies = [];
-    $scope.character.languages = [];
-    $scope.character.attacks = [];
-    $scope.character.equipment = [];
-
-    $scope.classes = [];
-    $scope.levels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
-    $scope.dndLanguages =
-        [
-            'Common', 'Dwarvish', 'Elvish', 'Giant', 'Gnomish', 'Goblin', 'Halfling', 'Orc',
-            'Abyssal', 'Celestial', 'Draconic', 'Deep Speech', 'Infernal', 'Primordial', 'Sylvan', 'Undercommon'
-        ];
-
-    $http.get('api/class/all').success(function(data)
-    {
-        $scope.classes = data.classes;
-    });
+    $scope.npc = {};
+    $scope.npc.features = [];
+    $scope.npc.specials = [];
+    $scope.npc.attacks = [];
+    $scope.npc.equipment = [];
+    $scope.npc.actions = [];
 
     $scope.save = function ()
     {
         console.log("Saving");
-        console.log($scope.character);
+        console.log($scope.npc);
 
-        var url = 'api/character/create';
+        var url = 'api/npc/create';
         var data =
         {
             userID: Profile.getUserID(),
-            character: $scope.character
+            npc: $scope.npc
         };
         $http.post(url, data).success(function(data)
         {
@@ -58,52 +45,51 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
 
     $scope.addFeature = function()
     {
-        $scope.character.features.push("");
+        $scope.npc.features.push("");
     };
 
     $scope.removeFeature = function()
     {
-        $scope.character.features.splice(-1, 1);
+        $scope.npc.features.splice(-1, 1);
     };
 
-    $scope.addProficiency = function()
+    $scope.addSpecial = function()
     {
-        $scope.character.proficiencies.push("");
+        $scope.npc.specials.push("");
     };
 
-    $scope.removeProficiency = function()
+    $scope.removeSpecial = function()
     {
-        $scope.character.proficiencies.splice(-1, 1);
-    };
-
-    $scope.addLanguage = function()
-    {
-        $scope.character.languages.push("");
-    };
-
-    $scope.removeLanguage = function()
-    {
-        $scope.character.languages.splice(-1, 1);
+        $scope.npc.specials.splice(-1, 1);
     };
 
     $scope.addAttack = function()
     {
-        $scope.character.attacks.push("");
+        $scope.npc.attacks.push("");
     };
 
     $scope.removeAttack = function()
     {
-        $scope.character.attacks.splice(-1, 1);
+        $scope.npc.attacks.splice(-1, 1);
     };
 
     $scope.addEquipment = function()
     {
-        $scope.character.equipment.push("");
+        $scope.npc.equipment.push("");
     };
 
     $scope.removeEquipment = function()
     {
-        $scope.character.equipment.splice(-1, 1);
+        $scope.npc.equipment.splice(-1, 1);
     };
 
+    $scope.addAction = function()
+    {
+        $scope.npc.actions.push("");
+    };
+
+    $scope.removeAction = function()
+    {
+        $scope.npc.actions.splice(-1, 1);
+    };
 });
