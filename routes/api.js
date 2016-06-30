@@ -155,6 +155,7 @@ router.post('/encounter/addcharacter/:encounter_id', isLoggedIn, function(req, r
                     armorClass : character.armorClass,
                     hitPoints : character.maxHitPoints,
                     maxHitPoints : character.maxHitPoints,
+                    passivePerception : character.passivePerception,
                     visible : true,
                     npc : false
                 });

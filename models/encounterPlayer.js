@@ -9,6 +9,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     armorClass: Number,
     hitPoints: Number,
     maxHitPoints: Number,
+    passivePerception: Number,
     status: String,
     visible: Boolean,
     npc: Boolean

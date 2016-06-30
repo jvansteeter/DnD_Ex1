@@ -107,8 +107,9 @@
 													<i class="fa fa-shield"></i>
 													<span ng-if="!isHost() && isNPC($index)">??? </span>
 													<span ng-if="isHost() || !isNPC($index)">{{ player.armorClass }} </span>
-													<i class="fa fa-low-vision"></i>
-													<span>???</span>
+													<i class="fa fa-eye"></i>
+													<span ng-if="!player.passivePerception">???</span>
+													<span ng-if="player.passivePerception">{{ player.passivePerception }}</span>
 												</div>
 												<div class="col col-md-3">
 													<span style="float: right;">
