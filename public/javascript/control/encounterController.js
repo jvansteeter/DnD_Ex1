@@ -183,7 +183,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 
 	$scope.listModalgetCharacters = function()
 	{
-		var url = 'api/character/all';
+		var url = 'api/character/all/' + Profile.getUserID();
 		$http.get(url).success(function(data)
 		{
 			console.log(data);

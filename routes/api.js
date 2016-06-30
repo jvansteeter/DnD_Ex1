@@ -434,11 +434,9 @@ router.post('/character/update', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/character/all', isLoggedIn, function(req, res)
+router.get('/character/all/:user_id', isLoggedIn, function(req, res)
 {
-    var userID = req.user._id;
-
-    Character.find({userID: userID}, function(error, characters)
+    Character.find({userID: req.params.user_id}, function(error, characters)
     {
         if (error)
         {

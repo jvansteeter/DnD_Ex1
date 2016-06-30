@@ -13,7 +13,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 
 	$scope.listModalgetCharacters = function()
 	{
-		var url = 'api/character/all';
+		var url = 'api/character/all/' + Profile.getUserID();;
 		$http.get(url).success(function(data)
 		{
 			console.log(data);
