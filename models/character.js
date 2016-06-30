@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
 
 var characterSchema = new mongoose.Schema(
 {
@@ -12,7 +11,7 @@ var characterSchema = new mongoose.Schema(
     race: String,
     alignment: String,
     exp: Number,
-    proficiency_bonus: Number,
+    proficiencyBonus: Number,
     strength: {
     	score: Number,
     	modifier: Number,
@@ -24,7 +23,7 @@ var characterSchema = new mongoose.Schema(
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
     	acrobatics: {type: Boolean, required: true, default: false},
-    	sleight_of_hand: {type: Boolean, required: true, default: false},
+    	sleightOfHand: {type: Boolean, required: true, default: false},
     	stealth: {type: Boolean, required: true, default: false}
     },
     constitution: {
@@ -46,7 +45,7 @@ var characterSchema = new mongoose.Schema(
     	score: Number,
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
-    	animal_handling: {type: Boolean, required: true, default: false},
+    	animalHandling: {type: Boolean, required: true, default: false},
     	insight: {type: Boolean, required: true, default: false},
     	medicine: {type: Boolean, required: true, default: false},
     	perception: {type: Boolean, required: true, default: false},
@@ -79,7 +78,7 @@ var characterSchema = new mongoose.Schema(
 		name: String,
 		bonus: Number,
 		damage: String,
-		damage_type: String
+		damageType: String
 	}],
 	money: {
 		copper: Number,
@@ -107,7 +106,7 @@ characterSchema.methods.generateCharacter = function()
 	
 	if (this.wisdom.perception)
 	{
-		this.passivePerception = 10 + this.wisdom.modifier + this.proficiency_bonus;
+		this.passivePerception = 10 + this.wisdom.modifier + this.proficiencyBonus;
 	}
 	else 
 	{
