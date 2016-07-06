@@ -11,6 +11,12 @@ clientApp.controller('editNPCController', function($scope, $window, $http, Profi
     $scope.npc.equipment = [];
     $scope.npc.actions = [];
 
+    var npcID = window.location.search.replace('?', '');
+    $http.get('api/npc/' + npcID).success(function(data)
+    {
+        $scope.npc = data.npc;
+    });
+
     $scope.save = function ()
     {
         console.log("Saving");
@@ -96,7 +102,7 @@ clientApp.controller('editNPCController', function($scope, $window, $http, Profi
     {
         console.log("Attempting to delete character");
 
-        var url = 'api/npc/delete/' + characterID;
+        var url = 'api/npc/delete/' + npcID;
         $http.get(url).success(function(data)
         {
             if (data === "OK")

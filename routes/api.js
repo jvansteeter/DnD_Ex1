@@ -581,6 +581,20 @@ router.get('/character/:character_id', isLoggedIn, function(req, res)
     });
 });
 
+router.get('/npc/:npc_id', isLoggedIn, function(req, res)
+{
+    NPC.findById(req.params.npc_id, function(error, npc)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        res.json({npc: npc});
+    });
+});
+
 router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
 {
     Character.findById(req.params.character_id, function(error, character)
