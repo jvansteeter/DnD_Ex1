@@ -610,6 +610,21 @@ router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
     });
 });
 
+router.get('/npc/delete/:npc_id', isLoggedIn, function(req, res)
+{
+    NPC.findById(req.params.npc_id, function(error, npc)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        npc.remove();
+        res.send("OK");
+    });
+});
+
 function isLoggedIn(req, res, next) 
 {
     // if user is authenticated in the session, carry on 
