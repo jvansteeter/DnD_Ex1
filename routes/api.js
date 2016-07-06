@@ -399,6 +399,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
 router.post('/character/update', isLoggedIn, function(req, res)
 {
     console.log("---!!! Updating Character !!!---");
+    console.log(req.body.character.maxHitPoints);
     console.log(req.body.character._id);
     Character.findById(req.body.character._id, function(error, character)
     {
