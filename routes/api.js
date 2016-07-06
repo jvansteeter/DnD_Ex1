@@ -439,12 +439,18 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.attacks = req.body.character.attacks;
         character.money = req.body.character.money;
         character.equipment = req.body.character.equipment;
-        character.save();
+        character.save(function(error)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+            }
 
-        console.log(character.maxHitPoints);
+            console.log(character.maxHitPoints);
 
-        character.generateCharacter();
-        res.send("OK");
+            character.generateCharacter();
+            res.send("OK");
+        });
     });
 });
 
