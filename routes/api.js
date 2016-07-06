@@ -437,6 +437,7 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.attacks = req.body.character.attacks;
         character.money = req.body.character.money;
         character.equipment = req.body.character.equipment;
+        character.save();
 
         character.generateCharacter();
         res.send("OK");
