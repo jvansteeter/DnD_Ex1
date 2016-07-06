@@ -396,42 +396,6 @@ router.post('/character/create', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/npc/create', isLoggedIn, function(req, res)
-{
-    NPC.create(
-        {
-            userID: req.body.userID,
-            name: req.body.npc.name,
-            descriptors: req.body.npc.descriptors,
-            description: req.body.npc.description,
-            strength: req.body.npc.strength,
-            dexterity: req.body.npc.dexterity,
-            constitution: req.body.npc.constitution,
-            intelligence: req.body.npc.intelligence,
-            wisdom: req.body.npc.wisdom,
-            charisma: req.body.npc.charisma,
-            armorClass: req.body.npc.armorClass,
-            hitPoints: req.body.npc.maxHitPoints,
-            speed: req.body.npc.speed,
-            features: req.body.npc.features,
-            specials: req.body.npc.specials,
-            money: req.body.npc.money,
-            equipment: req.body.npc.equipment,
-            attacks: req.body.npc.attacks,
-            actions: req.body.npc.actions
-        }, function(error, npc)
-        {
-            if (error)
-            {
-                res.sendStatus(403);
-                return;
-            }
-
-            npc.generateNPC();
-            res.send("OK");
-        });
-});
-
 router.post('/character/update', isLoggedIn, function(req, res)
 {
     console.log(req.body.character._id);
@@ -479,6 +443,77 @@ router.post('/character/update', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/npc/create', isLoggedIn, function(req, res)
+{
+    NPC.create(
+        {
+            userID: req.body.userID,
+            name: req.body.npc.name,
+            descriptors: req.body.npc.descriptors,
+            description: req.body.npc.description,
+            strength: req.body.npc.strength,
+            dexterity: req.body.npc.dexterity,
+            constitution: req.body.npc.constitution,
+            intelligence: req.body.npc.intelligence,
+            wisdom: req.body.npc.wisdom,
+            charisma: req.body.npc.charisma,
+            armorClass: req.body.npc.armorClass,
+            hitPoints: req.body.npc.hitPoints,
+            speed: req.body.npc.speed,
+            features: req.body.npc.features,
+            specials: req.body.npc.specials,
+            money: req.body.npc.money,
+            equipment: req.body.npc.equipment,
+            attacks: req.body.npc.attacks,
+            actions: req.body.npc.actions
+        }, function(error, npc)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            npc.generateNPC();
+            res.send("OK");
+        });
+});
+
+router.post('/npc/update', isLoggedIn, function(req, res)
+{
+    console.log(req.body.npc._id);
+    NPC.findById(req.body.npc._id, function(error, npc)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        npc.name = req.body.npc.name;
+        npc.descriptors = req.body.npc.descriptors;
+        npc.description = req.body.description;
+        npc.strength = req.body.npc.strength;
+        npc.dexterity = req.body.npc.dexterity;
+        npc.constitution = req.body.npc.constitution;
+        npc.intelligence = req.body.npc.intelligence;
+        npc.wisdom = req.body.npc.wisdom;
+        npc.charisma = req.body.npc.charisma;
+        npc.armorClass = req.body.npc.armorClass;
+        npc.speed = req.body.npc.speed;
+        npc.hitPoints = req.body.npc.hitPoints;
+        npc.features = req.body.npc.features;
+        npc.specials = req.body.npc.specials;
+        npc.money = req.body.npc.money;
+        npc.equipment = req.body.npc.equipment;
+        npc.attacks = req.body.npc.attacks;
+        npc.actions = req.body.npc.actions;
+
+        npc.generateNPC();
+        res.send("OK");
+    });
+});
+
 router.get('/character/all/:user_id', isLoggedIn, function(req, res)
 {
     Character.find({userID: req.params.user_id}, function(error, characters)
@@ -503,6 +538,32 @@ router.get('/character/all/:user_id', isLoggedIn, function(req, res)
         }
         
         res.json({characters: list});
+    });
+});
+
+router.get('/npc/all/:user_id', isLoggedIn, function(req, res)
+{
+    NPC.find({userID: req.params.user_id}, function(error, npcs)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        var list = [];
+        for (var i = 0; i < npcs.length; i++)
+        {
+            var character =
+            {
+                _id: npcs[i]._id,
+                name: npcs[i].name,
+                descriptors: npcs[i].descriptors
+            };
+            list.push(character);
+        }
+
+        res.json({npcs: list});
     });
 });
 

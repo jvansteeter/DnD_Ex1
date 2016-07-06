@@ -25,4 +25,19 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 	{
 		window.location = 'editCharacter.html?' + $scope.characters[index]._id;
 	};
+
+	$scope.listModalgetNPCs = function()
+	{
+		var url = 'api/npc/all/' + Profile.getUserID();;
+		$http.get(url).success(function(data)
+		{
+			console.log(data);
+			$scope.characters = data.characters;
+		});
+	};
+
+	$scope.listModalselectNPC = function(index)
+	{
+		window.location = 'editCharacter.html?' + $scope.characters[index]._id;
+	};
 });
