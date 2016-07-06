@@ -213,6 +213,38 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		});
 	};
 
+	$scope.listModalgetNPCs = function()
+	{
+		var url = 'api/npc/all/' + Profile.getUserID();;
+		$http.get(url).success(function(data)
+		{
+			console.log(data);
+			$scope.npcs = data.npcs;
+		});
+	};
+
+	$scope.listModalselectNPC = function(index)
+	{
+		var encounterID = Profile.getEncounter();
+
+		var url = 'api/encounter/addnpc2/' + encounterID;
+		var data =
+		{
+			npcID: $scope.npcs[index]._id
+		};
+
+		$http.post(url, data).success(function(data)
+		{
+			console.log(data);
+			console.log("NPC successfully added");
+			socket.emit('update:encounter',
+				{
+					encounterID : encounterID
+				});
+			$scope.updatePlayers();
+		});
+	};
+
 	$scope.submit = function()
 	{
 		console.log("Ending encounter");

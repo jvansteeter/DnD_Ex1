@@ -139,6 +139,51 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
+router.post('/encounter/addnpc2/:encounter_id', isLoggedIn, function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.sendStatus(403);
+            return;
+        }
+
+        var npcID = req.body.npcID;
+        NPC.findById(npcID, function(error, npc)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            var encounterPlayer = new EncounterPlayer(
+                {
+                    name : npc.name,
+                    userID: npc.userID,
+                    armorClass : npc.armorClass,
+                    hitPoints : npc.maxHitPoints,
+                    maxHitPoints : npc.maxHitPoints,
+                    passivePerception : npc.passivePerception,
+                    visible : false,
+                    npc : true
+                });
+
+            encounter.addPlayer(encounterPlayer._id);
+            encounterPlayer.save(function(error)
+            {
+                if (error)
+                {
+                    res.sendStatus(403);
+                    return;
+                }
+                res.send("OK");
+            });
+        });
+    });
+});
+
 router.post('/encounter/addcharacter/:encounter_id', isLoggedIn, function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
