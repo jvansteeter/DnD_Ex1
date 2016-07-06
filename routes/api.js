@@ -428,7 +428,7 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.initiative = req.body.character.initiative;
         character.speed = req.body.character.speed;
         character.hitPoints = req.body.character.maxHitPoints;
-        character.set('maxHitPoints', req.body.character.maxHitPoints);
+        character.maxHitPoints = req.body.character.maxHitPoints;
         character.features = req.body.character.features;
         character.proficiencies = req.body.character.proficiencies;
         character.languages = req.body.character.languages;
@@ -440,6 +440,8 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.money = req.body.character.money;
         character.equipment = req.body.character.equipment;
         character.save();
+
+        console.log(character.maxHitPoints);
 
         character.generateCharacter();
         res.send("OK");
