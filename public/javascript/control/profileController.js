@@ -32,12 +32,12 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 		$http.get(url).success(function(data)
 		{
 			console.log(data);
-			$scope.characters = data.characters;
+			$scope.npcs = data.npcs;
 		});
 	};
 
 	$scope.listModalselectNPC = function(index)
 	{
-		window.location = 'editCharacter.html?' + $scope.characters[index]._id;
+		window.location = 'editNPC.html?' + $scope.npcs[index]._id;
 	};
 });
