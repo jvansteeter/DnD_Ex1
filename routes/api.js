@@ -163,8 +163,8 @@ router.post('/encounter/addnpc2/:encounter_id', isLoggedIn, function(req, res)
                     name : npc.name,
                     userID: npc.userID,
                     armorClass : npc.armorClass,
-                    hitPoints : npc.maxHitPoints,
-                    maxHitPoints : npc.maxHitPoints,
+                    hitPoints : npc.hitPoints,
+                    maxHitPoints : npc.hitPoints,
                     passivePerception : npc.passivePerception,
                     visible : false,
                     npc : true
