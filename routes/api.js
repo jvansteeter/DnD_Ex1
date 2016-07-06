@@ -407,7 +407,7 @@ router.post('/character/update', isLoggedIn, function(req, res)
             return;
         }
 
-        character.name = req.body.character.name;
+        character.set('name', req.body.character.name);
         character.class = req.body.character.class;
         character.level = req.body.character.level;
         character.background = req.body.character.background;
@@ -426,7 +426,7 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.initiative = req.body.character.initiative;
         character.speed = req.body.character.speed;
         character.hitPoints = req.body.character.maxHitPoints;
-        character.maxHitPoints = req.body.character.maxHitPoints;
+        character.set('maxHitPoints', req.body.character.maxHitPoints);
         character.features = req.body.character.features;
         character.proficiencies = req.body.character.proficiencies;
         character.languages = req.body.character.languages;
