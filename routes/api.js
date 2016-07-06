@@ -398,9 +398,6 @@ router.post('/character/create', isLoggedIn, function(req, res)
 
 router.post('/character/update', isLoggedIn, function(req, res)
 {
-    console.log("---!!! Updating Character !!!---");
-    console.log(req.body.character.maxHitPoints);
-    console.log(req.body.character._id);
     Character.findById(req.body.character._id, function(error, character)
     {
         if (error)
@@ -439,6 +436,8 @@ router.post('/character/update', isLoggedIn, function(req, res)
         character.attacks = req.body.character.attacks;
         character.money = req.body.character.money;
         character.equipment = req.body.character.equipment;
+
+        character.generateCharacter();
         character.save(function(error)
         {
             if (error)
@@ -446,9 +445,6 @@ router.post('/character/update', isLoggedIn, function(req, res)
                 res.sendStatus(403);
             }
 
-            console.log(character.maxHitPoints);
-
-            character.generateCharacter();
             res.send("OK");
         });
     });
@@ -521,7 +517,16 @@ router.post('/npc/update', isLoggedIn, function(req, res)
         npc.actions = req.body.npc.actions;
 
         npc.generateNPC();
-        res.send("OK");
+        npc.save(function(error)
+        {
+            if (error)
+            {
+                res.sendStatus(403);
+                return;
+            }
+
+            res.send("OK");
+        });
     });
 });
 
