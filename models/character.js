@@ -93,7 +93,7 @@ var characterSchema = new mongoose.Schema(
 	}],
     status: [],
     npc: {type: Boolean, required: true, default: false}
-});
+}, {strict: false});
 
 characterSchema.methods.generateCharacter = function()
 {
