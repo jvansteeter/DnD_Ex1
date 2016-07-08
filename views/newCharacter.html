@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="clientApp">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="stylesheet/style.css" rel="stylesheet">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+
+    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/profileService.js"></script>
+    <script src="javascript/control/newCharacterController.js"></script>
+    <script src="javascript/control/headerController.js"></script>
+
+    <title>Dungeon Map</title>
+    <style>
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-static navbar-inverse">
+        <div class="container">
+          <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="fa fa-chevron-down"></span>
+          </a>
+          <div class="nav-collapse collase">
+            <ul class="nav navbar-nav">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="profile.html">Profile</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <ul class="nav navbar-right navbar-nav">
+              <li class="dropdown" ng-controller="headerController">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="login.html">Logout</a></li>
+                  <li><a href="#">Profile</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">About</a></li>
+                 </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav><!-- /.navbar -->
+
+<!-- Begin Body -->
+    <div class="alert alert-danger collapse" role="alert" id="errorAlert">
+      <a href="#" class="alert-link">{{ alertMessage }}</a>
+    </div>
+    <div class="container" ng-controller="newCharacterController">
+      <form>
+        <!--Button Bar-->
+        <div class="row" style="float: right;">
+          <button class="btn btn-primary" type="submit" ng-click="save()">Save</button>
+          <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+        <br>
+        <br>
+        <!--Head of the form-->
+        <div class="well well-lg">
+          <div class="row well well-sm">
+            <div class="col col-md-4">
+              <h1>Character Name</h1>
+              <input type="text" class='form-control' ng-model="character.name">
+            </div>
+            <div class="col col-md-8">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-md-3">
+                    <h4>Class</h4>
+                    <select class='form-control' ng-model="character.class">
+                      <option value=""></option>
+                      <option ng-repeat="class in classes" value="{{ class }}">{{ class }}</option>
+                    </select>
+                  </div>
+                  <div class="col col-md-2">
+                    <h4>Level</h4>
+                    <select class='form-control' ng-model="character.level">
+                      <option ng-repeat="level in levels" value="{{ level }}">{{ level }}</option>
+                    </select>
+                  </div>
+                  <div class="col col-md-3">
+                    <h4>Background</h4>
+                    <input type="text" class='form-control' ng-model="character.background">
+                  </div>
+                  <div class="col col-md-4">
+                    <h4>Player name</h4>
+                    <input type="text" class='form-control' ng-model="character.playerName">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-md-4">
+                    <h4>Race</h4>
+                    <input type="text" class="form-control" ng-model="character.race">
+                  </div>
+                  <div class="col col-md-4">
+                    <h4>Alignment</h4>
+                    <input type="text" class="form-control" ng-model="character.alignment">
+                  </div>
+                  <div class="col col-md-4">
+                    <h4>Experience Points</h4>
+                    <input type="number" class="form-control" ng-model="character.exp">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Body of the form-->
+          <div class="row">
+            <!--Ability column-->
+            <div class="col col-md-4 well well-sm">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-md-3">
+                    <input type="number" min="1" max="6" class="form-control" ng-model="character.proficiencyBonus">
+                  </div>
+                  <div class="col col-md-9">
+                    <h4>Proficiency Bonus</h4>
+                  </div>
+                </div>
+                <div class="row well well-sm">
+                  <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="number" min="1" max="20" class="form-control" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.strength.score">
+                    <h5 style="text-align: center">Strength</h5>
+                  </div>
+                  <div class="col col-md-8">
+                    <input type="checkbox" ng-model="character.strength.save"> Saving Throw<br>
+                    <input type="checkbox" ng-model="character.strength.athletics"> Athletics
+                  </div>
+                </div>
+                <div class="row well well-sm">
+                  <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.dexterity.score">
+                    <h5 style="text-align: center">Dexterity</h5>
+                  </div>
+                  <div class="col col-md-8">
+                    <input type="checkbox" ng-model="character.dexterity.save"> Saving Throw<br>
+                    <input type="checkbox" ng-model="character.dexterity.acrobatics"> Acrobatics<br>
+                    <input type="checkbox" ng-model="character.dexterity.sleightOfHand"> Sleight of Hand<br>
+                    <input type="checkbox" ng-model="character.dexterity.stealth"> Stealth<br>
+                  </div>
+                </div>
+                <div class="row well well-sm">
+                  <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.constitution.score">
+                    <h5 style="text-align: center">Constitution</h5>
+                  </div>
+                  <div class="col col-md-8">
+                    <input type="checkbox" ng-model="character.constitution.save"> Saving Throw<br>
+                  </div>
+                </div>
+                <div class="row well well-sm">
+                  <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.intelligence.score">
+                    <h5 style="text-align: center">Intelligence</h5>
+                  </div>
+                  <div class="col col-md-8">
+                    <input type="checkbox" ng-model="character.intelligence.save"> Saving Throw<br>
+                    <input type="checkbox" ng-model="character.intelligence.arcana"> Arcana<br>
+                    <input type="checkbox" ng-model="character.intelligence.history"> History<br>
+                    <input type="checkbox" ng-model="character.intelligence.investigation"> Investigation<br>
+                    <input type="checkbox" ng-model="character.intelligence.nature"> Nature<br>
+                    <input type="checkbox" ng-model="character.intelligence.religion"> Religion<br>
+                  </div>
+                </div>
+                <div class="row well well-sm">
+                  <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.wisdom.score">
+                    <h5 style="text-align: center">Wisdom</h5>
+                  </div>
+                  <div class="col col-md-8">
+                    <input type="checkbox" ng-model="character.wisdom.save"> Saving Throw<br>
+                    <input type="checkbox" ng-model="character.wisdom.animalHandling"> Animal Handling<br>
+                    <input type="checkbox" ng-model="character.wisdom.insight"> Insight<br>
+                    <input type="checkbox" ng-model="character.wisdom.medicine"> Medicine<br>
+                    <input type="checkbox" ng-model="character.wisdom.perception"> Perception<br>
+                    <input type="checkbox" ng-model="character.wisdom.survival"> Survival<br>
+                  </div>
+                </div>
+                <div class="row well well-sm">
+                  <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
+                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.charisma.score">
+                    <h5 style="text-align: center">Charisma</h5>
+                  </div>
+                  <div class="col col-md-8">
+                    <input type="checkbox" ng-model="character.charisma.save"> Saving Throw<br>
+                    <input type="checkbox" ng-model="character.charisma.deception"> Deception<br>
+                    <input type="checkbox" ng-model="character.charisma.intimidation"> Intimidation<br>
+                    <input type="checkbox" ng-model="character.charisma.performance"> Performance<br>
+                    <input type="checkbox" ng-model="character.charisma.persuasion"> Persuasion<br>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--Middle Column-->
+            <div class="col col-md-4 col-sm-4">
+              <div class="well well-sm">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                      <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.armorClass">
+                      <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
+                    </div>
+                    <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                      <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.initiative">
+                      <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
+                    </div>
+                    <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                      <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.speed">
+                      <h5 style="text-align: center">Speed</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="well well-sm" style="margin-bottom: 5px">
+                  <input type="number" class="form-control" ng-model="character.maxHitPoints">
+                  <h4 style="text-align: center;">Max Hit Points</h4>
+                </div>
+              </div>
+              <div class="well well-sm">
+                <div class="well well-sm">
+                  <div class="container-fluid">
+                    <div class="row" ng-repeat="feature in character.features track by $index">
+                      <input type="text" class="form-control" ng-model="character.features[$index]">
+                    </div>
+                    <br>
+                    <button style="float: left;" ng-click="addFeature()"><i class="fa fa-plus"></i></button>
+                    <button style="float: left" ng-click="removeFeature()"><i class="fa fa-minus"></i></button>
+                    <h4 style="text-align: center">Traits & Features</h4>
+                  </div>
+                </div>
+                <div class="well well-sm">
+                  <div class="container-fluid">
+                    <div class="row" ng-repeat="proficiency in character.proficiencies track by $index">
+                      <input type="text" class="form-control" ng-model="character.proficiencies[$index]">
+                    </div>
+                    <br>
+                    <button style="float: left;" ng-click="addProficiency()"><i class="fa fa-plus"></i></button>
+                    <button style="float: left" ng-click="removeProficiency()"><i class="fa fa-minus"></i></button>
+                    <h4 style="text-align: center">Proficiencies</h4>
+                  </div>
+                </div>
+                <div class="well well-sm" style="margin-bottom: 5px">
+                  <div class="container-fluid">
+                    <div class="row" ng-repeat="language in character.languages track by $index">
+                      <select class="form-control" ng-model="character.languages[$index]">
+                        <option value="" selected disabled></option>
+                        <option ng-repeat="dndLanguage in dndLanguages" value="{{ dndLanguage }}">{{ dndLanguage }}</option>
+                      </select>
+                    </div>
+                    <br>
+                    <button style="float: left;" ng-click="addLanguage()"><i class="fa fa-plus"></i></button>
+                    <button style="float: left" ng-click="removeLanguage()"><i class="fa fa-minus"></i></button>
+                    <h4 style="text-align: center">Languages</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="well well-sm">
+                <div class="well well-sm">
+                  <textarea class="form-control" style="resize: none" rows="4" ng-model="character.personality"></textarea>
+                  <h4 style="text-align: center">Personality Traits</h4>
+                </div>
+                <div class="well well-sm">
+                  <textarea class="form-control" style="resize: none" rows="3" ng-model="character.ideals"></textarea>
+                  <h4 style="text-align: center">Ideals</h4>
+                </div>
+                <div class="well well-sm">
+                  <textarea class="form-control" style="resize: none" rows="3" ng-model="character.bonds"></textarea>
+                  <h4 style="text-align: center">Bonds</h4>
+                </div>
+                <div class="well well-sm" style="margin-bottom: 5px">
+                  <textarea class="form-control" style="resize: none" rows="3" ng-model="character.flaws"></textarea>
+                  <h4 style="text-align: center">Flaws</h4>
+                </div>
+              </div>
+            </div>
+
+            <!--Right Column-->
+            <div class="col col-md-4 col-sm-4">
+              <div class="well well-sm">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Name</div>
+                    <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
+                    <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Damage</div>
+                    <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Type</div>
+                  </div>
+                  <hr>
+                  <div class="row" ng-repeat="attack in character.attacks track by $index">
+                    <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
+                      <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].name">
+                    </div>
+                    <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">
+                      <input type="number" class="form-control" ng-model="character.attacks[$index].bonus">
+                    </div>
+                    <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">
+                      <input class="form-control" style="padding-left: 5px; padding-right: 5px" ng-model="character.attacks[$index].damage">
+                    </div>
+                    <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
+                      <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].damageType">
+                    </div>
+                  </div>
+                </div>
+                <button style="float: left;" ng-click="addAttack()"><i class="fa fa-plus"></i></button>
+                <button style="float: left" ng-click="removeAttack()"><i class="fa fa-minus"></i></button>
+                <br>
+                <h4 style="text-align: center">Attacks</h4>
+              </div>
+              <div class="well well-sm">
+                <div class="container-fluid">
+                  <div class="row">
+                    <h4 style="text-align: center">Money</h4>
+                  </div>
+                  <div class="row">
+                    <div class="col col-md-7">
+                      <h5>Copper</h5>
+                    </div>
+                    <div class="col col-md-5">
+                      <input type="number" class="form-control" ng-model="character.money.copper">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-md-7">
+                      <h5>Silver</h5>
+                    </div>
+                    <div class="col col-md-5">
+                      <input type="number" class="form-control" ng-model="character.money.silver">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-md-7">
+                      <h5>Electrum</h5>
+                    </div>
+                    <div class="col col-md-5">
+                      <input type="number" class="form-control" ng-model="character.money.electrum">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-md-7">
+                      <h5>Gold</h5>
+                    </div>
+                    <div class="col col-md-5">
+                      <input type="number" class="form-control" ng-model="character.money.gold">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-md-7">
+                      <h5>Platinum</h5>
+                    </div>
+                    <div class="col col-md-5">
+                      <input type="number" class="form-control" ng-model="character.money.platinum">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col col-md-9">
+                    <h4>Item</h4>
+                  </div>
+                  <div class="col col-md-3">
+                    <h4>Qty</h4>
+                  </div>
+                </div>
+                <br>
+                <div ng-repeat="item in character.equipment track by $index" class="row">
+                  <div class="col col-md-8">
+                    <input type="text" class="form-control" ng-model="character.equipment[$index].item">
+                  </div>
+                  <div class="col col-md-4">
+                    <input type="number" class="form-control" value="1" ng-model="character.equipment[$index].quantity">
+                  </div>
+                </div>
+                <br>
+                <button style="float: left;" ng-click="addEquipment()"><i class="fa fa-plus"></i></button>
+                <button style="float: left" ng-click="removeEquipment()"><i class="fa fa-minus"></i></button>
+                <h4 style="text-align: center">Equipment</h4>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

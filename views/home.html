@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="clientApp">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<link href="stylesheet/style.css" rel="stylesheet">
+
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
+		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+		<link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="javascript/angularModule.js"></script>
+		<script src="javascript/profileService.js"></script>
+		<script src="javascript/socketFactory.js"></script>
+		<script src="javascript/control/homeController.js"></script>
+		<script src="javascript/control/headerController.js"></script>
+		<script src="javascript/control/encounterModalController.js"></script>
+
+		<title>Dungeon Map</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-static navbar-inverse">
+				<div class="container">
+					<a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="fa fa-chevron-down"></span>
+					</a>
+					<div class="nav-collapse collase">
+						<ul class="nav navbar-nav">
+							<li><a href="home.html">Home</a></li>
+							<li><a href="profile.html">Profile</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
+								<ul class="dropdown-menu">
+									<li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
+								 </ul>
+							</li>
+						</ul>
+						<ul class="nav navbar-right navbar-nav">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
+								<ul class="dropdown-menu" style="padding:12px;">
+										<form class="form-inline">
+											 <div class="input-group">
+												 <input type="text" class="form-control" placeholder="Search">
+												 <div class="input-group-btn">
+													<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+												 </div>
+											</div>
+										</form>
+									</ul>
+							</li>
+							<li class="dropdown" ng-controller="headerController">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+								<ul class="dropdown-menu">
+									<li><a href="login.html">Logout</a></li>
+									<li><a href="#">Profile</a></li>
+									<li class="divider"></li>
+									<li><a href="#">About</a></li>
+								 </ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+		</nav><!-- /.navbar -->
+
+<!-- Begin Body -->
+<div class="container" ng-controller="homeController">
+	<div class="row">
+		<div class="col col-sm-3">
+			<hr>
+				<div class="well well-sm">
+					<div class="list-group" style="margin-bottom: 0px">
+						<a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="modal/newEncounterModal.html" bs-modal="modal">New Encounter</a>
+					</div>
+				</div>
+		</div>
+		<div class="col col-sm-9">
+			<h1>Open Encounters:</h1>
+			<div class="panel panel-default" ng-repeat="encounter in encounters">
+				<div class="panel-heading">
+					<h2 class="panel-title" style="font-size: 20px">{{ encounter.title }}</h2>
+				</div>
+				<div class="panel-body">
+					<h6> Hosted by: {{ encounter.hostName }}</h6>
+					<p>{{ encounter.description }}</p>
+					<br>
+					<a href="encounter.html?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	</body>
+</html>

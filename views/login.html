@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="clientApp">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Login</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+	    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	    <link href="stylesheet/style.css" rel="stylesheet">
+
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
+		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+		<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    	<link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+    	
+		<script src="javascript/angularModule.js"></script>
+		<script src="javascript/profileService.js"></script>
+		<script src="javascript/control/loginController.js"></script>
+		<style>
+			.form-control
+			{
+				margin-top: 10px;
+			}
+			.new-account
+			{
+				margin-top: 10px;
+			}
+		</style>
+
+	</head>
+	<body ng-controller="loginControl">
+		<nav class="navbar navbar-static navbar-inverse">
+		</nav><!-- /.navbar -->
+
+		<!-- Begin Body -->
+		<div class="container">
+			<div class="row row-centered">
+	      		<div class="col-sm-6 col-md-4 col-md-offset-4">
+					<h1 class="text-center login-title" style="font-size: 400%;">Dungeon Map</h1>
+  					<div class="account-wall">
+  						<div style="width: 250px; margin: 0 auto;">
+    						<img class='profile-img img-circle' src='image/die.png'>
+    					</div>
+						<form class='form-signin'>
+  							<input type='text' name='username' class='form-control' ng-model="usernameInput" placeholder='Username' required autofocus>
+  							<input type='password' name='password' class='form-control' ng-model="passwordInput" placeholder='Password' required><br>
+  							<button class='btn btn-lg btn-primary btn-block' ng-click="login()">Sign in</button>
+  							<span class='clearfix'><a href='#', class='text-center new-account' data-animation="am-fade-and-slide-top" data-template-url="modal/registerUserModal.html" bs-modal="modal">Create an account</a></span>
+						</form>
+					</div>
+		        </div>
+		    </div>
+			<br>
+			<div class="alert alert-danger collapse" role="alert" id="errorAlert">
+				<span class="alert-link">{{ alertMessage }}</span>
+			</div>
+		</div>
+	</body>
+</html>
