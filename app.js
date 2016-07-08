@@ -60,7 +60,7 @@ app.use(function(req, res, next)
     else
     {
         console.log("---!!! " + req.user + req.path + " good !!!---");
-        next();
+        res.json({request: req});
     }
 });
 
