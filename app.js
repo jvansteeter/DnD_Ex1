@@ -40,6 +40,14 @@ var indexRouter = require("./routes/index");
 var authRouter = require("./routes/authorizationRouter");
 var api = require('./routes/api');
 
+// uncomment after placing your favicon in /public
+app.use(favicon('public/image/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Redirect if not logged in
 app.use(function(req, res, next)
 {
@@ -55,14 +63,6 @@ app.use(function(req, res, next)
         next();
     }
 });
-
-// uncomment after placing your favicon in /public
-app.use(favicon('public/image/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/login', express.static('views/login.html'));
