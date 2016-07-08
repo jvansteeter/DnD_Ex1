@@ -41,7 +41,7 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
             console.log(data);
             if (data === "OK")
             {
-                window.location = 'profile.html';
+                window.location = 'profile';
             }
             else
             {
@@ -53,7 +53,7 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
 
     $scope.cancel = function()
     {
-        window.location = 'profile.html';
+        window.location = 'profile';
     };
 
     $scope.addFeature = function()

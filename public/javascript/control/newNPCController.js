@@ -28,7 +28,7 @@ clientApp.controller('newNPCController', function($scope, $window, $http, Profil
             console.log(data);
             if (data === "OK")
             {
-                window.location = 'profile.html';
+                window.location = 'profile';
             }
             else
             {
@@ -40,7 +40,7 @@ clientApp.controller('newNPCController', function($scope, $window, $http, Profil
 
     $scope.cancel = function()
     {
-        window.location = 'profile.html';
+        window.location = 'profile';
     };
 
     $scope.addFeature = function()

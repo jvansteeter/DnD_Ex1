@@ -23,7 +23,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 	
 	$scope.listModalselectCharacter = function(index)
 	{
-		window.location = 'editCharacter.html?' + $scope.characters[index]._id;
+		window.location = 'editCharacter?' + $scope.characters[index]._id;
 	};
 
 	$scope.listModalgetNPCs = function()
@@ -38,6 +38,6 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 
 	$scope.listModalselectNPC = function(index)
 	{
-		window.location = 'editNPC.html?' + $scope.npcs[index]._id;
+		window.location = 'editNPC?' + $scope.npcs[index]._id;
 	};
 });
