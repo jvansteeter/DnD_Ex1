@@ -112,6 +112,7 @@ function isLoggedIn(req, res, next)
 function isAuthenticated(req, res, next)
 {
     // if user is authenticated in the session, carry on
+    console.log("---!!! Checking authorization !!!---");
     if (req.isAuthenticated())
     {
         return next();

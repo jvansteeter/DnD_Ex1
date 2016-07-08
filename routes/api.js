@@ -12,7 +12,7 @@ var passport = require('passport');
 // API
 //
 
-router.post('/encounter/create', isLoggedIn, function(req, res)
+router.post('/encounter/create', function(req, res)
 {
     User.findById(req.body.userID, function(error, user)
     {
@@ -43,7 +43,7 @@ router.post('/encounter/create', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/encounter/all', isLoggedIn, function(req, res)
+router.get('/encounter/all', function(req, res)
 {
     Encounter.find({ active : true }, function(error, encounters)
     {
@@ -57,7 +57,7 @@ router.get('/encounter/all', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/encounter/:encounter_id', isLoggedIn, function(req, res)
+router.get('/encounter/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -71,7 +71,7 @@ router.get('/encounter/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
+router.post('/encounter/addplayer/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -105,7 +105,7 @@ router.post('/encounter/addplayer/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
+router.post('/encounter/addnpc/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -139,7 +139,7 @@ router.post('/encounter/addnpc/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/addnpc2/:encounter_id', isLoggedIn, function(req, res)
+router.post('/encounter/addnpc2/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -184,7 +184,7 @@ router.post('/encounter/addnpc2/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/addcharacter/:encounter_id', isLoggedIn, function(req, res)
+router.post('/encounter/addcharacter/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -229,7 +229,7 @@ router.post('/encounter/addcharacter/:encounter_id', isLoggedIn, function(req, r
     });
 });
 
-router.post('/encounter/removeplayer/:encounter_id', isLoggedIn, function(req, res)
+router.post('/encounter/removeplayer/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -253,7 +253,7 @@ router.post('/encounter/removeplayer/:encounter_id', isLoggedIn, function(req, r
     });
 });
 
-router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
+router.get('/encounter/players/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -276,7 +276,7 @@ router.get('/encounter/players/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
+router.post('/encounter/hitplayer', function(req, res)
 {
     console.log("---!!! Attempting to hit a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
@@ -314,7 +314,7 @@ router.post('/encounter/hitplayer', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/setinitiative', isLoggedIn, function(req, res)
+router.post('/encounter/setinitiative', function(req, res)
 {
     console.log("---!!! Attempting to set the initiative of a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
@@ -343,7 +343,7 @@ router.post('/encounter/setinitiative', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/encounter/togglevisible', isLoggedIn, function(req, res)
+router.post('/encounter/togglevisible', function(req, res)
 {
     console.log("---!!! Attempting to toggle visibility !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
@@ -359,7 +359,7 @@ router.post('/encounter/togglevisible', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
+router.get('/encounter/end/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -374,7 +374,7 @@ router.get('/encounter/end/:encounter_id', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/class/all', isLoggedIn, function (req, res)
+router.get('/class/all', function (req, res)
 {
     var classes = [
         'Barbarian',
@@ -393,7 +393,7 @@ router.get('/class/all', isLoggedIn, function (req, res)
     res.json({classes: classes});
 });
 
-router.post('/character/create', isLoggedIn, function(req, res)
+router.post('/character/create', function(req, res)
 {
     Character.create(
     {
@@ -441,7 +441,7 @@ router.post('/character/create', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/character/update', isLoggedIn, function(req, res)
+router.post('/character/update', function(req, res)
 {
     Character.findById(req.body.character._id, function(error, character)
     {
@@ -495,7 +495,7 @@ router.post('/character/update', isLoggedIn, function(req, res)
     });
 });
 
-router.post('/npc/create', isLoggedIn, function(req, res)
+router.post('/npc/create', function(req, res)
 {
     NPC.create(
         {
@@ -531,7 +531,7 @@ router.post('/npc/create', isLoggedIn, function(req, res)
         });
 });
 
-router.post('/npc/update', isLoggedIn, function(req, res)
+router.post('/npc/update', function(req, res)
 {
     console.log(req.body.npc._id);
     NPC.findById(req.body.npc._id, function(error, npc)
@@ -575,7 +575,7 @@ router.post('/npc/update', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/character/all/:user_id', isLoggedIn, function(req, res)
+router.get('/character/all/:user_id', function(req, res)
 {
     Character.find({userID: req.params.user_id}, function(error, characters)
     {
@@ -602,7 +602,7 @@ router.get('/character/all/:user_id', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/npc/all/:user_id', isLoggedIn, function(req, res)
+router.get('/npc/all/:user_id', function(req, res)
 {
     NPC.find({userID: req.params.user_id}, function(error, npcs)
     {
@@ -628,7 +628,7 @@ router.get('/npc/all/:user_id', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/character/:character_id', isLoggedIn, function(req, res)
+router.get('/character/:character_id', function(req, res)
 {
     Character.findById(req.params.character_id, function(error, character)
     {
@@ -642,7 +642,7 @@ router.get('/character/:character_id', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/npc/:npc_id', isLoggedIn, function(req, res)
+router.get('/npc/:npc_id', function(req, res)
 {
     NPC.findById(req.params.npc_id, function(error, npc)
     {
@@ -656,7 +656,7 @@ router.get('/npc/:npc_id', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
+router.get('/character/delete/:character_id', function(req, res)
 {
     Character.findById(req.params.character_id, function(error, character)
     {
@@ -671,7 +671,7 @@ router.get('/character/delete/:character_id', isLoggedIn, function(req, res)
     });
 });
 
-router.get('/npc/delete/:npc_id', isLoggedIn, function(req, res)
+router.get('/npc/delete/:npc_id', function(req, res)
 {
     NPC.findById(req.params.npc_id, function(error, npc)
     {
@@ -686,13 +686,13 @@ router.get('/npc/delete/:npc_id', isLoggedIn, function(req, res)
     });
 });
 
-function isLoggedIn(req, res, next) 
-{
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
-    // if they aren't redirect them to the home page
-    res.sendStatus(401);
-}
+// function isLoggedIn(req, res, next) 
+// {
+//     // if user is authenticated in the session, carry on 
+//     if (req.isAuthenticated())
+//         return next();
+//     // if they aren't redirect them to the home page
+//     res.sendStatus(401);
+// }
 
 module.exports = router;
