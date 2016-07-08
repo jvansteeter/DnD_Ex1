@@ -51,7 +51,7 @@ app.use(cookieParser());
 // Redirect if not logged in
 app.use(function(req, res, next)
 {
-    if (req.session.user == null)
+    if (req.session.user == null && req.path !== '/login')
     {
         res.redirect('/login');
     }
