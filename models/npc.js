@@ -9,32 +9,32 @@ var npcSchema = new mongoose.Schema(
         strength: {
             score: Number,
             modifier: Number,
-            save: {type: Number, required: true, default: 0}
+            save: {type: Number, required: false, default: 0}
         },
         dexterity: {
             score: Number,
             modifier: Number,
-            save: {type: Number, required: true, default: 0}
+            save: {type: Number, required: false, default: 0}
         },
         constitution: {
             score: Number,
             modifier: Number,
-            save: {type: Number, required: true, default: 0}
+            save: {type: Number, required: false, default: 0}
         },
         intelligence: {
             score: Number,
             modifier: Number,
-            save: {type: Number, required: true, default: 0}
+            save: {type: Number, required: false, default: 0}
         },
         wisdom: {
             score: Number,
             modifier: Number,
-            save: {type: Number, required: true, default: 0}
+            save: {type: Number, required: false, default: 0}
         },
         charisma: {
             score: Number,
             modifier: Number,
-            save: {type: Number, required: true, default: 0}
+            save: {type: Number, required: false, default: 0}
         },
         passivePerception: Number,
         armorClass: Number,
