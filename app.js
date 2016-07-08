@@ -48,26 +48,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Redirect if not logged in
-app.use(function(req, res, next)
-{
-    console.log("---!!! Doing the middleware thing !!!---");
-    if (req.user == null && req.path !== '/login')
-    {
-        console.log("---!!! " + req.user + req.path + " null !!!---");
-        res.redirect('/login');
-    }
-    else
-    {
-        console.log("---!!! " + req.user + req.path + " good !!!---");
-        res.json({request: req});
-    }
-});
-
 // Routes
-app.use('/login', express.static('views/login.html'));
-app.use('/profile', express.static('views/profile.html'));
-app.use('/', indexRouter);
+// app.use('/login', express.static('views/login.html'));
+// app.use('/profile', express.static('views/profile.html'));
+app.use(indexRouter);
 app.use('/auth', authRouter);
 app.use('/api', api);
 
@@ -108,5 +92,13 @@ app.use(function(err, req, res, next)
     });
 });
 
+function isLoggedIn(req, res, next)
+{
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+    // if they aren't redirect them to the home page
+    res.sendStatus(401);
+}
 
 module.exports = app;
