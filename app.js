@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', indexRouter);
 app.use('/login', express.static('views/login.html'));
-app.use('/profile', express.static('views/profile.html'));
+app.use('/profile', isLoggedIn, express.static('views/profile.html'));
 app.use('/auth', authRouter);
 app.use('/api', api);
 
@@ -96,9 +96,11 @@ function isLoggedIn(req, res, next)
 {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
+    {
         return next();
+    }
     // if they aren't redirect them to the home page
-    res.sendStatus(401);
+    res.redirect('/login');
 }
 
 module.exports = app;
