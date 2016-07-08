@@ -40,6 +40,22 @@ var indexRouter = require("./routes/index");
 var authRouter = require("./routes/authorizationRouter");
 var api = require('./routes/api');
 
+// Redirect if not logged in
+app.use(function(req, res, next)
+{
+    console.log("---!!! Doing the middleware thing !!!---");
+    if (req.session.user === null && req.path !== '/login')
+    {
+        console.log("---!!! " + req.session.user + " null !!!---");
+        res.redirect('/login');
+    }
+    else
+    {
+        console.log("---!!! " + req.session.user + " good !!!---");
+        next();
+    }
+});
+
 // uncomment after placing your favicon in /public
 app.use(favicon('public/image/favicon.ico'));
 app.use(logger('dev'));
@@ -47,22 +63,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Redirect if not logged in
-app.use(function(req, res, next)
-{
-    console.log("---!!! Doing the middleware thing !!!---");
-    if (req.session.user === null && req.path !== '/login')
-    {
-        console.log("---!!! " + req.session.user + "!!!---");
-        res.redirect('/login');
-    }
-    else
-    {
-        console.log("---!!! " + req.session.user + "!!!---");
-        next();
-    }
-});
 
 // Routes
 app.use('/login', express.static('views/login.html'));
