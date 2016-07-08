@@ -544,7 +544,7 @@ router.post('/npc/update', isLoggedIn, function(req, res)
 
         npc.name = req.body.npc.name;
         npc.descriptors = req.body.npc.descriptors;
-        npc.description = req.body.description;
+        npc.description = req.body.npc.description;
         npc.strength = req.body.npc.strength;
         npc.dexterity = req.body.npc.dexterity;
         npc.constitution = req.body.npc.constitution;
