@@ -44,7 +44,7 @@ var api = require('./routes/api');
 app.use(function(req, res, next)
 {
     console.log("---!!! Doing the middleware thing !!!---");
-    if (req.session.user === null && req.path !== '/login')
+    if (req.session.user == null && req.path !== '/login')
     {
         console.log("---!!! " + req.session.user + " null !!!---");
         res.redirect('/login');
