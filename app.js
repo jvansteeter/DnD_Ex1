@@ -46,12 +46,12 @@ app.use(function(req, res, next)
     console.log("---!!! Doing the middleware thing !!!---");
     if (req.user == null && req.path !== '/login')
     {
-        console.log("---!!! " + req.user + " null !!!---");
+        console.log("---!!! " + req.user + req.path + " null !!!---");
         res.redirect('/login');
     }
     else
     {
-        console.log("---!!! " + req.user + " good !!!---");
+        console.log("---!!! " + req.user + req.path + " good !!!---");
         next();
     }
 });
