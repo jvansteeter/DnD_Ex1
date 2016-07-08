@@ -44,14 +44,14 @@ var api = require('./routes/api');
 app.use(function(req, res, next)
 {
     console.log("---!!! Doing the middleware thing !!!---");
-    if (req.session.user == null && req.path !== '/login')
+    if (req.user == null && req.path !== '/login')
     {
-        console.log("---!!! " + req.session.user + " null !!!---");
+        console.log("---!!! " + req.user + " null !!!---");
         res.redirect('/login');
     }
     else
     {
-        console.log("---!!! " + req.session.user + " good !!!---");
+        console.log("---!!! " + req.user + " good !!!---");
         next();
     }
 });
