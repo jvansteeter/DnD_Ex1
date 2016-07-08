@@ -51,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Redirect if not logged in
 app.use(function(req, res, next)
 {
+    console.log("---!!! Doing the middleware thing !!!---");
     if (req.session.user === null && req.path !== '/login')
     {
         console.log("---!!! " + req.session.user + "!!!---");
@@ -58,6 +59,7 @@ app.use(function(req, res, next)
     }
     else
     {
+        console.log("---!!! " + req.session.user + "!!!---");
         next();
     }
 });
