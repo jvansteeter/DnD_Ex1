@@ -15,9 +15,9 @@ router.get('/', function(req, res)
     }   
 });
 
-router.get('/login', express.static('./views/login.html'));
+router.get('/login', express.static('views/login.html'));
 
-router.get('/profile', isLoggedIn, express.static('./views/profile.html'));
+router.get('/profile', isLoggedIn, express.static('views/profile.html'));
 
 function isLoggedIn(req, res, next)
 {
