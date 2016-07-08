@@ -49,9 +49,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-// app.use('/login', express.static('views/login.html'));
-// app.use('/profile', express.static('views/profile.html'));
 app.use('/', indexRouter);
+app.use('/login', express.static('views/login.html'));
+app.use('/profile', express.static('views/profile.html'));
 app.use('/auth', authRouter);
 app.use('/api', api);
 

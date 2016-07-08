@@ -15,17 +15,4 @@ router.get('/', function(req, res)
     }   
 });
 
-router.get('/login', express.static('views/login.html'));
-
-router.get('/profile', isLoggedIn, express.static('views/profile.html'));
-
-function isLoggedIn(req, res, next)
-{
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated())
-        return next();
-    // if they aren't redirect them to the home page
-    res.sendStatus(401);
-}
-
 module.exports = router;
