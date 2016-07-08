@@ -499,7 +499,7 @@ router.post('/npc/create', function(req, res)
 {
     NPC.create(
         {
-            userID: req.body.userID,
+            userID: req.user._id,
             name: req.body.npc.name,
             descriptors: req.body.npc.descriptors,
             description: req.body.npc.description,
