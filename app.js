@@ -51,8 +51,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Redirect if not logged in
 app.use(function(req, res, next)
 {
-    if (req.session.user == null && req.path !== '/login')
+    if (req.session.user === null && req.path !== '/login')
     {
+        console.log("---!!! " + req.session.user + "!!!---");
         res.redirect('/login');
     }
     else
