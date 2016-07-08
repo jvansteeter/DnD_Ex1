@@ -602,9 +602,9 @@ router.get('/character/all/:user_id', function(req, res)
     });
 });
 
-router.get('/npc/all/:user_id', function(req, res)
+router.get('/npc/all/', function(req, res)
 {
-    NPC.find({userID: req.params.user_id}, function(error, npcs)
+    NPC.find({userID: req.user._id}, function(error, npcs)
     {
         if (error)
         {
