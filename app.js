@@ -63,6 +63,7 @@ app.use(function(req, res, next)
 
 // Routes
 app.use('/login', express.static('views/login.html'));
+app.use('/profile', express.static('views/profile.html'));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/api', api);

@@ -43,7 +43,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			Profile.setUserID(response.data._id);
 			Profile.setFirstName(response.data.first_name);
 			Profile.setLastName(response.data.last_name);
-			window.location = 'profile.html';
+			window.location = 'profile';
 		}, function(response)
 		{
 			console.log("Login was unsuccessful");
@@ -113,7 +113,7 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					Profile.setUserID(response.data._id);
 					Profile.setFirstName(data.first_name);
 					Profile.setLastName(data.last_name);
-					window.location = 'profile.html';
+					window.location = 'profile';
 				});
 			}
 			else
