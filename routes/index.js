@@ -7,7 +7,7 @@ router.get('/', function(req, res)
 {
   	if (req.path === '/')
   	{
-  		res.redirect('/login.html');
+  		res.redirect('/login');
   	}
   	else if (req.session.user == null)
     {
@@ -17,7 +17,7 @@ router.get('/', function(req, res)
     }
     else
     {
-    	res.redirect('/home.html');
+    	res.redirect('/home');
     }   
 });
 
