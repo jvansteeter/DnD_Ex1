@@ -27,9 +27,14 @@
     <title>Dungeon Map</title>
     <style>
       input[type="number"]::-webkit-outer-spin-button,
-      input[type="number"]::-webkit-inner-spin-button {
+      input[type="number"]::-webkit-inner-spin-button
+      {
         -webkit-appearance: none;
         margin: 0;
+      }
+      .text-center
+      {
+        text-align: center;
       }
     </style>
   </head>
@@ -135,7 +140,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col col-md-3">
-                    <input type="number" min="1" max="6" class="form-control" ng-model="character.proficiencyBonus">
+                    <input type="number" min="1" max="6" class="form-control text-center" ng-model="character.proficiencyBonus">
                   </div>
                   <div class="col col-md-9">
                     <h4>Proficiency Bonus</h4>
@@ -143,7 +148,7 @@
                 </div>
                 <div class="row well well-sm">
                   <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                    <input type="number" min="1" max="20" class="form-control" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.strength.score">
+                    <input type="number" min="1" max="20" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="character.strength.score">
                     <h5 style="text-align: center">Strength</h5>
                   </div>
                   <div class="col col-md-8">
@@ -153,7 +158,7 @@
                 </div>
                 <div class="row well well-sm">
                   <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.dexterity.score">
+                    <input type="number" min="1" max="20" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="character.dexterity.score">
                     <h5 style="text-align: center">Dexterity</h5>
                   </div>
                   <div class="col col-md-8">
@@ -165,7 +170,7 @@
                 </div>
                 <div class="row well well-sm">
                   <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.constitution.score">
+                    <input type="number" min="1" max="20" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="character.constitution.score">
                     <h5 style="text-align: center">Constitution</h5>
                   </div>
                   <div class="col col-md-8">
@@ -174,7 +179,7 @@
                 </div>
                 <div class="row well well-sm">
                   <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.intelligence.score">
+                    <input type="number" min="1" max="20" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="character.intelligence.score">
                     <h5 style="text-align: center">Intelligence</h5>
                   </div>
                   <div class="col col-md-8">
@@ -188,7 +193,7 @@
                 </div>
                 <div class="row well well-sm">
                   <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.wisdom.score">
+                    <input type="number" min="1" max="20" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="character.wisdom.score">
                     <h5 style="text-align: center">Wisdom</h5>
                   </div>
                   <div class="col col-md-8">
@@ -202,7 +207,7 @@
                 </div>
                 <div class="row well well-sm">
                   <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
-                    <input type="number" min="1" max="20" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.charisma.score">
+                    <input type="number" min="1" max="20" class="form-control text-center" style="height: 50px; font-size: 30px;" ng-model="character.charisma.score">
                     <h5 style="text-align: center">Charisma</h5>
                   </div>
                   <div class="col col-md-8">
