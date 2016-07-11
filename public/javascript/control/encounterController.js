@@ -241,9 +241,10 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		console.log("Ending encounter");
 
 		var url = 'api/encounter/setactive/' + encounterID;
+		var active = !$scope.encounter.active;
 		var data =
 		{
-			active : !$scope.encounter.active
+			active : active
 		};
 
 		$http.post(url, data).success(function(data)
