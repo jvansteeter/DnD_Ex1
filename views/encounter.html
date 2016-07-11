@@ -76,7 +76,7 @@
 					</div>
 				</div>
 				<div class="col col-md-7">
-					<h1>{{ encounter.title }}<span style="color: red; float: right;">{{ status }}</span></h1>
+					<h1>{{ encounter.title }}<span ng-if="!encounter.active" style="color: red; float: right;">Closed</span></h1>
 					<div class ="container-fluid">
 						<div class="row">
 							<div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>

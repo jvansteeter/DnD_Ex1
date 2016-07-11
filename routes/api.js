@@ -29,7 +29,7 @@ router.post('/encounter/create', function(req, res)
                 description : req.body.description,
                 hostID : req.body.userID,
                 hostName : name,
-                active : true
+                active : false
             }, function(error, encounter)
             {
                 if (error)
@@ -45,7 +45,7 @@ router.post('/encounter/create', function(req, res)
 
 router.get('/encounter/all', function(req, res)
 {
-    Encounter.find({ active : true }, function(error, encounters)
+    Encounter.find({ $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
     {
         if (error)
         {
@@ -359,7 +359,7 @@ router.post('/encounter/togglevisible', function(req, res)
     });
 });
 
-router.get('/encounter/end/:encounter_id', function(req, res)
+router.post('/encounter/setactive/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -369,7 +369,7 @@ router.get('/encounter/end/:encounter_id', function(req, res)
             return;
         }
 
-        encounter.setActive(false);
+        encounter.setActive(req.body.active);
         res.send("OK");
     });
 });

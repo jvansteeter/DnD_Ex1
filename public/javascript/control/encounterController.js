@@ -17,15 +17,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			$scope.encounter = data.encounter;
 			Profile.setEncounter(data.encounter._id);
 
-			if (data.encounter.active === true)
-			{
-				$scope.status = '';
-			}
-			else
-			{
-				$scope.status = 'ENDED';
-			}
-
 			$scope.updatePlayers();
 		});
 	});
@@ -249,9 +240,13 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	{
 		console.log("Ending encounter");
 
-		var url = 'api/encounter/end/' + encounterID;
+		var url = 'api/encounter/setactive/' + encounterID;
+		var data =
+		{
+			active : !$scope.encounter.active
+		};
 
-		$http.get(url).success(function(data)
+		$http.post(url, data).success(function(data)
 		{
 			console.log(data);
 
@@ -261,7 +256,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 				{
 					encounterID : encounterID
 				});
-				$scope.status = "ENDED";
 			}
 		});
 	};
