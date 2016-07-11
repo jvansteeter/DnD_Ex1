@@ -222,19 +222,19 @@
             </div>
 
             <!--Middle Column-->
-            <div class="col col-md-4 col-sm-4">
+            <div class="col col-md-4">
               <div class="well well-sm">
                 <div class="container-fluid">
                   <div class="row">
-                    <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                    <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
                       <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.armorClass">
                       <h5 style="text-align: center">Armor Class <i class="fa fa-shield"></i></h5>
                     </div>
-                    <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                    <div class="col col-md-4 well well-sm" style="margin-bottom: 0px;">
                       <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.initiative">
                       <h5 style="text-align: center">Initiative <i class="fa fa-bolt"></i></h5>
                     </div>
-                    <div class="col col-md-4 col-sm-4 well well-sm" style="margin-bottom: 0px;">
+                    <div class="col col-md-44 well well-sm" style="margin-bottom: 0px;">
                       <input type="number" class="form-control" size="2" style="height: 50px; font-size: 30px; width: 60px; margin-left: 5px;" ng-model="character.speed">
                       <h5 style="text-align: center">Speed</h5>
                     </div>
@@ -308,10 +308,10 @@
               <div class="well well-sm">
                 <div class="container-fluid">
                   <div class="row">
-                    <div class="col col-md-4 col-sm-4 col-xs-4" style="padding-left: 1px; padding-right: 1px">Name</div>
-                    <div class="col col-md-2 col-sm-2 col-xs-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
-                    <div class="col col-md-3 col-sm-3 col-xs-3" style="padding-left: 1px; padding-right: 1px">Damage</div>
-                    <div class="col col-md-3 col-sm-3 col-xs-3" style="padding-left: 1px; padding-right: 1px">Type</div>
+                    <div class="col col-md-4 col-xs-4" style="padding-left: 1px; padding-right: 1px">Name</div>
+                    <div class="col col-md-2 col-xs-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
+                    <div class="col col-md-3 col-xs-3" style="padding-left: 1px; padding-right: 1px">Damage</div>
+                    <div class="col col-md-3 col-xs-3" style="padding-left: 1px; padding-right: 1px">Type</div>
                   </div>
                   <hr>
                   <div class="row" ng-repeat="attack in character.attacks track by $index">
