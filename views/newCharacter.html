@@ -304,27 +304,27 @@
             </div>
 
             <!--Right Column-->
-            <div class="col col-md-4 col-sm-4">
+            <div class="col col-md-4">
               <div class="well well-sm">
                 <div class="container-fluid">
                   <div class="row">
-                    <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">Name</div>
-                    <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
-                    <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Damage</div>
-                    <div class="col col-md-3" style="padding-left: 1px; padding-right: 1px">Type</div>
+                    <div class="col col-md-4 col-xs-4" style="padding-left: 1px; padding-right: 1px">Name</div>
+                    <div class="col col-md-2 col-xs-2" style="padding-left: 1px; padding-right: 1px">ATK Bonus</div>
+                    <div class="col col-md-3 col-xs-3" style="padding-left: 1px; padding-right: 1px">Damage</div>
+                    <div class="col col-md-3 col-xs-3" style="padding-left: 1px; padding-right: 1px">Type</div>
                   </div>
                   <hr>
                   <div class="row" ng-repeat="attack in character.attacks track by $index">
-                    <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
+                    <div class="col col-md-4 col-xs-4" style="padding-left: 1px; padding-right: 1px">
                       <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].name">
                     </div>
-                    <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">
+                    <div class="col col-md-2 col-xs-2" style="padding-left: 1px; padding-right: 1px">
                       <input type="number" class="form-control" ng-model="character.attacks[$index].bonus">
                     </div>
-                    <div class="col col-md-2" style="padding-left: 1px; padding-right: 1px">
+                    <div class="col col-md-2 col-xs-2" style="padding-left: 1px; padding-right: 1px">
                       <input class="form-control" style="padding-left: 5px; padding-right: 5px" ng-model="character.attacks[$index].damage">
                     </div>
-                    <div class="col col-md-4" style="padding-left: 1px; padding-right: 1px">
+                    <div class="col col-md-4 col-xs-2" style="padding-left: 1px; padding-right: 1px">
                       <input class="form-control" style="padding-left: 1px; padding-right: 1px" ng-model="character.attacks[$index].damageType">
                     </div>
                   </div>
