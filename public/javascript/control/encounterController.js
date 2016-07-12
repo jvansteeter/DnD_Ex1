@@ -44,6 +44,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		$http.get(url).success(function(data)
 		{
 			$scope.players = data;
+			console.log(data);
 		});
 	};
 
