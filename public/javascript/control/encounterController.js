@@ -257,6 +257,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 				{
 					encounterID : encounterID
 				});
+				socket.emit('new:encounter', {});
 				$scope.encounter.active = active;
 			}
 		});
