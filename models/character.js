@@ -116,6 +116,44 @@ characterSchema.methods.generateCharacter = function()
 	this.save();
 };
 
+characterSchema.methods.getSaves = function()
+{
+	var saves = {
+		strength : this.strength.modifier,
+		dexterity : this.dexterity.modifier,
+		constitution :  this.constitution.modifier,
+		intelligence : this.intelligence.modifier,
+		wisdom : this.wisdom.modifier,
+		charisma : this.charisma.modifier
+	};
+	if (this.strength.save)
+	{
+		saves.strength += this.proficiencyBonus;
+	}
+	if (this.dexterity.save)
+	{
+		saves.dexterity += this.proficiencyBonus;
+	}
+	if (this.constitution.save)
+	{
+		saves.constitution += this.proficiencyBonus;
+	}
+	if (this.intelligence.save)
+	{
+		saves.intelligence += this.proficiencyBonus;
+	}
+	if (this.wisdom.save)
+	{
+		saves.wisdom += this.proficiencyBonus;
+	}
+	if (this.charisma.save)
+	{
+		saves.charisma += this.proficiencyBonus;
+	}
+	
+	return saves;
+};
+
 var calculateMod = function(score)
 {
 	var mod = 0;

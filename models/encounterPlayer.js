@@ -12,6 +12,14 @@ var encounterPlayerSchema = new mongoose.Schema(
     passivePerception: Number,
     status: String,
     visible: Boolean,
+    saves: {
+        strength: Number,
+        dexterity: Number,
+        constitution: Number,
+        intelligence: Number,
+        wisdom: Number,
+        charisma: Number
+    },
     npc: Boolean
 });
 

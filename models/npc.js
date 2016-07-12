@@ -84,6 +84,20 @@ npcSchema.methods.generateNPC = function()
     this.save();
 };
 
+npcSchema.methods.getSaves = function()
+{
+    var saves = {
+        strength : this.strength.save,
+        dexterity : this.dexterity.save,
+        constitution : this.constitution.save,
+        intelligence : this.intelligence.save,
+        wisdom : this.wisdom.save,
+        charisma : this.charisma.save
+    }
+
+    return saves;
+}
+
 var calculateMod = function(score)
 {
     var mod = 0;

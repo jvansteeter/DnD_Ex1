@@ -167,6 +167,7 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
                     maxHitPoints : npc.hitPoints,
                     passivePerception : npc.passivePerception,
                     visible : false,
+                    saves : npc.getSaves(),
                     npc : true
                 });
 
@@ -212,6 +213,7 @@ router.post('/encounter/addcharacter/:encounter_id', function(req, res)
                     maxHitPoints : character.maxHitPoints,
                     passivePerception : character.passivePerception,
                     visible : true,
+                    saves : character.getSaves(),
                     npc : false
                 });
             
