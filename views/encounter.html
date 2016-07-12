@@ -126,7 +126,7 @@
 										</div>
 									</div>
 									<div class="panel-collapse" role="tabpanel" bs-collapse-target>
-										<div class="panel-body container-fluid">
+										<div class="panel-body container-fluid" ng-if="!isNPC($index) || isHost()">
 											<span style="text-decoration: underline;">Saves</span>
 											<br>
 											<div class="row">
@@ -137,7 +137,7 @@
 												</div>
 												<div class="col col-xs-2">Dex:
 													<span ng-if="player.saves.dexterity > 0" style="color: green">+{{ player.saves.dexterity }}</span>
-													<span ng-if="player.saves.dexterity < 0" style="color: red">-{{ player.saves.dexterity }}</span>
+													<span ng-if="player.saves.dexterity < 0" style="color: red">{{ player.saves.dexterity }}</span>
 													<span ng-if="player.saves.dexterity === 0">{{ player.saves.dexterity }}</span>
 												</div>
 												<div class="col col-xs-2">Con:
