@@ -206,7 +206,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 
 	$scope.listModalgetNPCs = function()
 	{
-		var url = 'api/npc/all/' + Profile.getUserID();;
+		var url = 'api/npc/all/';
 		$http.get(url).success(function(data)
 		{
 			console.log(data);
