@@ -132,7 +132,7 @@
 											<div class="row">
 												<div class="col col-xs-2">Str:
 													<span ng-if="player.saves.strength > 0" style="color: green">+{{ player.saves.strength }}</span>
-													<span ng-if="player.saves.strength < 0" style="color: red">-{{ player.saves.strength }}</span>
+													<span ng-if="player.saves.strength < 0" style="color: red">{{ player.saves.strength }}</span>
 													<span ng-if="player.saves.strength === 0">{{ player.saves.strength }}</span>
 												</div>
 												<div class="col col-xs-2">Dex:
@@ -142,22 +142,22 @@
 												</div>
 												<div class="col col-xs-2">Con:
 													<span ng-if="player.saves.constitution > 0" style="color: green">+{{ player.saves.constitution }}</span>
-													<span ng-if="player.saves.constitution < 0" style="color: red">-{{ player.saves.constitution }}</span>
+													<span ng-if="player.saves.constitution < 0" style="color: red">{{ player.saves.constitution }}</span>
 													<span ng-if="player.saves.constitution === 0">{{ player.saves.constitution }}</span>
 												</div>
 												<div class="col col-xs-2">Int:
 													<span ng-if="player.saves.intelligence > 0" style="color: green">+{{ player.saves.intelligence }}</span>
-													<span ng-if="player.saves.intelligence < 0" style="color: red">-{{ player.saves.intelligence }}</span>
+													<span ng-if="player.saves.intelligence < 0" style="color: red">{{ player.saves.intelligence }}</span>
 													<span ng-if="player.saves.intelligence === 0">{{ player.saves.intelligence }}</span>
 												</div>
 												<div class="col col-xs-2">Wis:
 													<span ng-if="player.saves.wisdom > 0" style="color: green">+{{ player.saves.wisdom }}</span>
-													<span ng-if="player.saves.wisdom < 0" style="color: red">-{{ player.saves.wisdom }}</span>
+													<span ng-if="player.saves.wisdom < 0" style="color: red">{{ player.saves.wisdom }}</span>
 													<span ng-if="player.saves.wisdom === 0">{{ player.saves.wisdom }}</span>
 												</div>
 												<div class="col col-xs-2">Cha:
 													<span ng-if="player.saves.charisma > 0" style="color: green">+{{ player.saves.charisma }}</span>
-													<span ng-if="player.saves.charisma < 0" style="color: red">-{{ player.saves.charisma }}</span>
+													<span ng-if="player.saves.charisma < 0" style="color: red">{{ player.saves.charisma }}</span>
 													<span ng-if="player.saves.charisma === 0">{{ player.saves.charisma }}</span>
 												</div>
 											</div>
