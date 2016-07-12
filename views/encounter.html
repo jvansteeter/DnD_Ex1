@@ -127,6 +127,7 @@
 									</div>
 									<div class="panel-collapse" role="tabpanel" bs-collapse-target>
 										<div class="panel-body container-fluid" ng-if="!isNPC($index) || isHost()">
+											<a href="#" ng-if="isNPC($index)" data-template-url="modal/encounterAddPlayerModal.html" data-placement="center" bs-modal="modal" style="float: right">edit <i class="fa fa-pencil-square-o"></i></a>
 											<span style="text-decoration: underline;">Saves</span>
 											<br>
 											<div class="row">
