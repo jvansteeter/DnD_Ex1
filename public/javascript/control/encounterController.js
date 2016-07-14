@@ -263,4 +263,9 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			}
 		});
 	};
+	
+	$scope.setNPCtoEdit = function(index)
+	{
+		$scope.editNPC = players[index];
+	};
 }]);
