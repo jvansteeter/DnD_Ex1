@@ -37,6 +37,17 @@ clientApp.service('Profile', function($window)
         return data;
     };
 
+    profile.setUserID = function(userID)
+    {
+        $window.sessionStorage.setItem("userID", userID);
+    };
+
+    profile.getUserID = function()
+    {
+        var data = $window.sessionStorage.getItem("userID");
+        return data;
+    };
+
     profile.getEncounter = function()
     {
         var myData = $window.sessionStorage.getItem("encounter");

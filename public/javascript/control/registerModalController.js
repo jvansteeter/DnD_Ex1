@@ -62,7 +62,7 @@ clientApp.controller('modalController', function($scope, $modal, $http, $window)
 				$scope.info = "User created";
 				$http.post('auth/login', {username: $scope.usernameInput, password: $scope.firstPasswordInput}).success(function(data)
 				{
-					window.location = 'home.html';
+					window.location = 'home';
 				});
 			}
 			else

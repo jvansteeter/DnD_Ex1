@@ -5,19 +5,13 @@ var router = express.Router();
 
 router.get('/', function(req, res) 
 {
-  	if (req.path === '/')
+  	if (!req.isAuthenticated())
   	{
-  		res.redirect('/login.html');
+  		res.redirect('/login');
   	}
-  	else if (req.session.user == null)
-    {
-        console.log('---!!! User not logged in !!!---');
-        console.log('Path: ' + req.path);
-        res.sendStatus(401);
-    }
     else
     {
-    	res.redirect('/home.html');
+    	res.redirect('/profile');
     }   
 });
 

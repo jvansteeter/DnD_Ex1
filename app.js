@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var loginPage = require
 
 var app = express();
 
@@ -30,6 +31,8 @@ app.use(passport.session());
 require('./models/user');
 require('./models/encounter');
 require('./models/encounterPlayer');
+require('./models/character');
+require('./models/npc');
 require('./config/passport');
 
 // setup routes
@@ -45,9 +48,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', indexRouter);
+app.use('/login', express.static('views/login.html'));
+app.use('/profile', isLoggedIn, express.static('views/profile.html'));
+app.use('/editCharacter', isLoggedIn, express.static('views/editCharacter.html'));
+app.use('/editNPC', isLoggedIn, express.static('views/editNPC.html'));
+app.use('/encounter', isLoggedIn, express.static('views/encounter.html'));
+app.use('/home', isLoggedIn, express.static('views/home.html'));
+app.use('/newCharacter', isLoggedIn, express.static('views/newCharacter.html'));
+app.use('/newNPC', isLoggedIn, express.static('views/newNPC.html'));
 app.use('/auth', authRouter);
-app.use('/api', api);
+app.use('/api', isAuthenticated, api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) 
@@ -86,5 +98,26 @@ app.use(function(err, req, res, next)
     });
 });
 
+function isLoggedIn(req, res, next)
+{
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+    {
+        return next();
+    }
+    // if they aren't redirect them to the home page
+    res.redirect('/login');
+}
+
+function isAuthenticated(req, res, next)
+{
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+    {
+        return next();
+    }
+    // if they aren't redirect them to the home page
+    res.sendStatus(401);
+}
 
 module.exports = app;

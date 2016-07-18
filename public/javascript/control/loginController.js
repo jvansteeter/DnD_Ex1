@@ -34,21 +34,32 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					"password" : $scope.passwordInput
 				};
 
-		$http.post(url, data).success(function(data)
+		$http.post(url, data).then(function(response)
 		{
 			console.log("Login was successful");
-			console.log(data);
+			console.log(response);
 
-			Profile.setUsername(data.username);
-			Profile.setFirstName(data.first_name);
-			Profile.setLastName(data.last_name);
-			window.location = 'home.html';
+			Profile.setUsername(response.data.username);
+			Profile.setUserID(response.data._id);
+			Profile.setFirstName(response.data.first_name);
+			Profile.setLastName(response.data.last_name);
+			window.location = 'profile';
+		}, function(response)
+		{
+			console.log("Login was unsuccessful");
+			console.log(response);
+
+			if (response.status === 401)
+			{
+				$scope.alertMessage = "Invalid Username or Password";
+				$('#errorAlert').fadeIn();
+			}
 		});
 	};
 
 	$scope.register = function()
 	{
-		console.log("Attempting to register")
+		console.log("Attempting to register");
 		if ($scope.usernameRegister === "")
 		{
 			$scope.registerInfo = "Username is blank";
@@ -99,9 +110,10 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					console.log(data);
 
 					Profile.setUsername(data.username);
+					Profile.setUserID(response.data._id);
 					Profile.setFirstName(data.first_name);
 					Profile.setLastName(data.last_name);
-					window.location = 'home.html';
+					window.location = 'profile';
 				});
 			}
 			else

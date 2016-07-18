@@ -24,8 +24,8 @@
     <script src="javascript/profileService.js"></script>
     <script src="javascript/socketFactory.js"></script>
     <script src="javascript/control/profileController.js"></script>
-    <script src="javascript/headerController.js"></script>
-    <script src="javascript/encounterModalController.js"></script>
+    <script src="javascript/control/headerController.js"></script>
+    <script src="javascript/control/encounterModalController.js"></script>
 
     <title>Dungeon Map</title>
   </head>
@@ -37,7 +37,8 @@
           </a>
           <div class="nav-collapse collase">
             <ul class="nav navbar-nav">
-              <li><a href="home.html">Home</a></li>
+              <li><a href="home">Home</a></li>
+              <li><a href="profile">Profile</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
@@ -50,11 +51,11 @@
               <li class="dropdown" ng-controller="headerController">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
-                  <li><a href="login.html">Logout</a></li>
+                  <li><a href="login">Logout</a></li>
                   <li><a href="#">Profile</a></li>
                   <li class="divider"></li>
                   <li><a href="#">About</a></li>
-                 </ul>
+                </ul>
               </li>
             </ul>
           </div>
@@ -74,7 +75,10 @@
       </div>
       <div class="well well-sm">
         <div class="list-group" style="margin-bottom: 0px">
-          <a href="newCharacter.html" class="list-group-item btn btn-lg btn-block">New Character</a>
+          <a href="newCharacter" class="list-group-item btn btn-lg btn-block">New Character</a>
+          <a href="#" class="list-group-item btn btn-lg btn-block" data-template-url="modal/listCharactersModal.html" bs-modal="modal">Edit Character</a>
+          <a href="newNPC" class="list-group-item btn btn-lg btn-block">New NPC</a>
+          <a href="#" class="list-group-item btn btn-lg btn-block" data-template-url="modal/listNPCModal.html" bs-modal="modal">Edit NPC</a>
         </div>
       </div>
     </div>
