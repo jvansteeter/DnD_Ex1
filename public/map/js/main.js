@@ -26,7 +26,8 @@ require(['lib/DependencyLoader',
         'use strict';
         
         var tileSize = 50;
-        var $body = $('body');
+        // var $body = $('body');
+        var $body = $('#mapDiv');
         var $mapCanvas;
         var $highlightCanvas;
         var $gridCanvas;
