@@ -1,0 +1,16 @@
+body {
+	overflow: hidden;
+}
+canvas {
+}
+.gamecanvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+body, .canvas0 {
+}
+.gamecanvas { z-index: 1; }
+.container canvas {
+	z-index: 2;
+}
