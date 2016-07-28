@@ -5,5 +5,6 @@ console.log("this is a script");
 
 var $mapTag = $('#mapDiv');
 // build the mapCanvas
-$mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="300" height="300" data-index="0"/>');
-$mapTag.append($mapCanvas);
+// $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="300" height="300" data-index="0"/>');
+// $mapTag.append($mapCanvas);
+$mapTag.append("<div style='background-color:red'></div>");
