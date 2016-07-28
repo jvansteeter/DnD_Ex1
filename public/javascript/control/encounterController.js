@@ -19,6 +19,8 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 			$scope.updatePlayers();
 		});
+
+		mapInit.run();
 	});
 
 	socket.on('update:encounter', function(data)
