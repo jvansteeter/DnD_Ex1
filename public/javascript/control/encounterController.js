@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', 'testController', function($scope, $http, socket, Profile, testController)
+clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
@@ -45,8 +45,6 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		{
 			$scope.players = data;
 			console.log(data);
-			testController.setModel($scope.players);
-			testController.doTheThing();
 		});
 	};
 
