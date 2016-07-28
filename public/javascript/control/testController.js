@@ -1,10 +1,22 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('testController', function($scope)
+clientApp.service('testController', function()
 {
-    $scope.init = function()
+    var service = [];
+    var dataModel;
+    
+    service.setModel = function(data)
     {
-        console.log($scope.jtest);
+        dataModel = data;
     };
+    
+    service.doTheThing = function()
+    {
+        dataModel[0].name = "The thing is done";
+        console.log("Result: ");
+        console.log(dataModel);
+    };
+    
+    return service;
 
 });

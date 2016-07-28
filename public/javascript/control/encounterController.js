@@ -2,15 +2,13 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile) 
+clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', 'testController', function($scope, $http, socket, Profile, testController)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 	$scope.players = [];
 
-	$scope.jtest = "hello world2";
-
-	socket.on('init', function (data) 
+	socket.on('init', function (data)
 	{
 		var url = "api/encounter/" + encounterID;
 
@@ -47,6 +45,8 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 		{
 			$scope.players = data;
 			console.log(data);
+			testController.setModel($scope.players);
+			testController.doTheThing();
 		});
 	};
 
