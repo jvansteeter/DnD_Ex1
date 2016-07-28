@@ -8,6 +8,8 @@ clientApp.service('mapInit', function () {
     var $mapTag = $('#mapDiv');
     var count = 0;
 
+    run();
+
     // ******************************
     //      Start up Process
     // ******************************
@@ -18,10 +20,10 @@ clientApp.service('mapInit', function () {
     this.run();
 
 
-    mapInit.run = function(){
+    var run = function () {
         count++;
         console.log(count);
-        this.run();
+        run();
     };
 
     return mapInit;
