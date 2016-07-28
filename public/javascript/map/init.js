@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapInit', function () {
+clientApp.service('mapInit', function ($window) {
     var mapInit = {};
 
     // config variables
@@ -16,7 +16,7 @@ clientApp.service('mapInit', function () {
     mapInit.run = function(){
         count++;
         console.log(count);
-        this.run();
+        $window.requestAnimationFrame(this.run);
     };
 
 
