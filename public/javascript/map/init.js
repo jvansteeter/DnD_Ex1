@@ -15,6 +15,7 @@ clientApp.service('mapInit', function () {
     // build the mapCanvas
     $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="300" height="300" data-index="0"/>');
     $mapTag.append($mapCanvas);
+    run();
 
 
     mapInit.run = function(){
