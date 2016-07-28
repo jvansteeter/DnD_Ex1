@@ -8,8 +8,6 @@ clientApp.service('mapInit', function () {
     var $mapTag = $('#mapDiv');
     var count = 0;
 
-    run();
-
     // ******************************
     //      Start up Process
     // ******************************
@@ -17,8 +15,7 @@ clientApp.service('mapInit', function () {
     // build the mapCanvas
     $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="300" height="300" data-index="0"/>');
     $mapTag.append($mapCanvas);
-    this.run();
-
+    run();
 
     var run = function () {
         count++;
