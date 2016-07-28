@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('Profile', function($window, $scope)
+clientApp.service('Profile', function($window)
 {
     var profile = {};
 
@@ -57,12 +57,6 @@ clientApp.service('Profile', function($window, $scope)
     profile.setEncounter = function(encounter)
     {
         $window.sessionStorage.setItem("encounter", encounter);
-    };
-    
-    profile.test = function()
-    {
-        console.log("---!!! within the profile service !!!---");
-        console.log($scope.players);
     };
     
     return profile;
