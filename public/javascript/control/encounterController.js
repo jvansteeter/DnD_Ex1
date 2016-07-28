@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile) 
+clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapInit)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
@@ -268,4 +268,4 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	{
 		$scope.editNPC = players[index];
 	};
-}]);
+});
