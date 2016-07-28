@@ -16,6 +16,7 @@ clientApp.service('mapInit', function () {
     mapInit.run = function(){
         count++;
         console.log(count);
+        this.run();
     };
 
 
