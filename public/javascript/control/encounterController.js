@@ -56,7 +56,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	$scope.setMultiplier = function(multiple)
 	{
 		$scope.multiple = multiple;
-	}
+	};
 
 	$scope.isHost = function()
 	{
