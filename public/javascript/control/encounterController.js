@@ -8,7 +8,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	$scope.encounter = {};
 	$scope.players = [];
 
-	console.log($scope.jtest);
+	$scope.jtest = "hello world2";
 
 	socket.on('init', function (data) 
 	{
