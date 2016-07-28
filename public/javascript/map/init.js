@@ -16,7 +16,7 @@ clientApp.service('mapInit', function ($window) {
     mapInit.run = function(){
         count++;
         console.log(count);
-        $window.requestAnimationFrame(this.run);
+        $window.requestAnimationFrame(this.run());
     };
 
 
