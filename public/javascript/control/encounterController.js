@@ -8,6 +8,8 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	$scope.encounter = {};
 	$scope.players = [];
 
+	console.log($scope.jtest);
+
 	socket.on('init', function (data) 
 	{
 		var url = "api/encounter/" + encounterID;
