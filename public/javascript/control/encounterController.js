@@ -4,14 +4,6 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile) 
 {
-	console.log("this is a script");
-
-	var $mapTag = $('#mapDiv');
-// build the mapCanvas
-// $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="300" height="300" data-index="0"/>');
-// $mapTag.append($mapCanvas);
-	$mapTag.append("Hello World");
-
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 	$scope.players = [];
