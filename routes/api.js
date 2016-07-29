@@ -453,36 +453,37 @@ router.post('/character/update', function(req, res)
             return;
         }
 
-        character.set('name', req.body.character.name);
-        character.class = req.body.character.class;
-        character.level = req.body.character.level;
-        character.background = req.body.character.background;
-        character.playerName = req.body.character.playerName;
-        character.race = req.body.character.race;
-        character.alignment = req.body.character.alignment;
-        character.exp = req.body.character.exp;
-        character.proficiencyBonus = req.body.character.proficiencyBonus;
-        character.strength = req.body.character.strength;
-        character.dexterity = req.body.character.dexterity;
-        character.constitution = req.body.character.constitution;
-        character.intelligence = req.body.character.intelligence;
-        character.wisdom = req.body.character.wisdom;
-        character.charisma = req.body.character.charisma;
-        character.armorClass = req.body.character.armorClass;
-        character.initiative = req.body.character.initiative;
-        character.speed = req.body.character.speed;
-        character.hitPoints = req.body.character.maxHitPoints;
-        character.maxHitPoints = req.body.character.maxHitPoints;
-        character.features = req.body.character.features;
-        character.proficiencies = req.body.character.proficiencies;
-        character.languages = req.body.character.languages;
-        character.personality = req.body.character.personality;
-        character.ideals = req.body.character.ideals;
-        character.bonds = req.body.character.bonds;
-        character.flaws = req.body.character.flaws;
-        character.attacks = req.body.character.attacks;
-        character.money = req.body.character.money;
-        character.equipment = req.body.character.equipment;
+        // character.set('name', req.body.character.name);
+        // character.class = req.body.character.class;
+        // character.level = req.body.character.level;
+        // character.background = req.body.character.background;
+        // character.playerName = req.body.character.playerName;
+        // character.race = req.body.character.race;
+        // character.alignment = req.body.character.alignment;
+        // character.exp = req.body.character.exp;
+        // character.proficiencyBonus = req.body.character.proficiencyBonus;
+        // character.strength = req.body.character.strength;
+        // character.dexterity = req.body.character.dexterity;
+        // character.constitution = req.body.character.constitution;
+        // character.intelligence = req.body.character.intelligence;
+        // character.wisdom = req.body.character.wisdom;
+        // character.charisma = req.body.character.charisma;
+        // character.armorClass = req.body.character.armorClass;
+        // character.initiative = req.body.character.initiative;
+        // character.speed = req.body.character.speed;
+        // character.hitPoints = req.body.character.maxHitPoints;
+        // character.maxHitPoints = req.body.character.maxHitPoints;
+        // character.features = req.body.character.features;
+        // character.proficiencies = req.body.character.proficiencies;
+        // character.languages = req.body.character.languages;
+        // character.personality = req.body.character.personality;
+        // character.ideals = req.body.character.ideals;
+        // character.bonds = req.body.character.bonds;
+        // character.flaws = req.body.character.flaws;
+        // character.attacks = req.body.character.attacks;
+        // character.money = req.body.character.money;
+        // character.equipment = req.body.character.equipment;
+        character.setCharacter(req.body.character);
 
         character.generateCharacter();
         character.save(function(error)
@@ -490,6 +491,7 @@ router.post('/character/update', function(req, res)
             if (error)
             {
                 res.sendStatus(403);
+                return;
             }
 
             res.send("OK");
