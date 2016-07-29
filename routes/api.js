@@ -688,6 +688,21 @@ router.get('/npc/delete/:npc_id', function(req, res)
     });
 });
 
+router.post('/encounter/updatenpc', function(req, res)
+{
+   EncounterPlayer.findById(req.body.npc._id, function(error, player)
+   {
+       if (error)
+       {
+           res.sendStatus(403);
+           return;
+       }
+       
+       player.setPlayer(req.body.npc);
+       res.send("OK");
+   }) ;
+});
+
 // function isLoggedIn(req, res, next) 
 // {
 //     // if user is authenticated in the session, carry on 

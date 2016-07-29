@@ -273,5 +273,20 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	$scope.editModalSave = function()
 	{
 		console.log($scope.editNPC);
+		var url = "api/encounter/updatenpc";
+		var data =
+		{
+			npc : $scope.editNPC
+		};
+		$http.post(url, data).success(function(data)
+		{
+			if (data === "OK")
+			{
+				socket.emit('update:encounter',
+				{
+					encounterID : encounterID
+				});
+			}
+		});
 	};
 }]);
