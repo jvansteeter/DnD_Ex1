@@ -36,15 +36,6 @@ encounterPlayerSchema.methods.toggleVisible = function()
 
 encounterPlayerSchema.methods.setPlayer = function(player)
 {
-    // this.name = player.name;
-    // this.userID = player.userID;
-    // this.initiative = player.initiative;
-    // this.armorClass = player.armorClass;
-    // this.hitPoints = player.hitPoints;
-    // this.maxHitPoints = player.maxHitPoints;
-    // this.passivePerception = player.passivePerception;
-    // this.status = player.status;
-    // this.visible = player.visible;
     for (var value in player)
     {
         this[value] = player[value];
