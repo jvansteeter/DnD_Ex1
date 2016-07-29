@@ -267,7 +267,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	
 	$scope.setNPCtoEdit = function(index)
 	{
-		$scope.editNPC = players[index];
+		$scope.editNPC = $scope.players[index];
 	};
 
 	$scope.editModalSave = function()
