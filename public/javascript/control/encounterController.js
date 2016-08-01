@@ -18,6 +18,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			Profile.setEncounter(data.encounter._id);
 
 			$scope.updatePlayers();
+			mapInit.setPlayers($scope.players);
 		});
 
 		mapInit.run();
@@ -39,6 +40,11 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			$scope.status = 'ENDED'
 		}
 	});
+	
+	$scope.demostrateTwoWayBinding = function()
+	{
+		mapInit.demostrateTwoWayBinding();	
+	};
 
 	$scope.updatePlayers = function()
 	{

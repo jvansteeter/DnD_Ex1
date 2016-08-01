@@ -2,6 +2,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.service('mapInit', function ($window) {
     var mapInit = {};
+    var players;
 
     // config variables
     var $mapTag = $('#mapDiv');
@@ -19,7 +20,19 @@ clientApp.service('mapInit', function ($window) {
         // $window.requestAnimationFrame(this.run());
     };
 
-
+    mapInit.setPlayers = function(data)
+    {
+        players = data;
+    };
+    
+    mapInit.demostrateTwoWayBinding = function()
+    {
+        for (var i = 0; i < players.length; i++)
+        {
+            players[i].name = "Changes reflect Automatically";
+        }
+    };
+    
 
     return mapInit;
 });
