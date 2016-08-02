@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapInit)
+clientApp.controller('encounterController', function($scope, $http, socket, Profile)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
@@ -41,7 +41,6 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 	$scope.demonstrateTwoWayBinding = function()
 	{
 		console.log("In controller:: attempting 2 way binding");
-		mapInit.demonstrateTwoWayBinding();
 	};
 
 	$scope.updatePlayers = function()
@@ -51,7 +50,6 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		{
 			$scope.players = data;
 			console.log(data);
-			mapInit.setPlayers($scope.players);
 		});
 	};
 
@@ -241,7 +239,6 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 					encounterID : encounterID
 				});
 			$scope.updatePlayers();
-			Profile.test();
 		});
 	};
 
