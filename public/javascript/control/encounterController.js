@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile)
+clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapInit)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
@@ -18,6 +18,7 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			Profile.setEncounter(data.encounter._id);
 
 			$scope.updatePlayers();
+			mapInit.setPlayers($scope.players);
 		});
 	});
 
@@ -37,6 +38,11 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			$scope.status = 'ENDED'
 		}
 	});
+
+	$scope.demonstrateTwoWayBinding = function()
+	{
+		mapInit.demonstrateTwoWayBinding();
+	};
 
 	$scope.updatePlayers = function()
 	{
@@ -290,4 +296,4 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			}
 		});
 	};
-}]);
+});
