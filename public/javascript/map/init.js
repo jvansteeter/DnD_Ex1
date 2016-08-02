@@ -22,11 +22,14 @@ clientApp.service('mapInit', function ($window) {
 
     mapInit.setPlayers = function(data)
     {
+        console.log("---!!! In mapInit setPlayers function !!!---");
         players = data;
+        players[0].name = "Made one change so far";
     };
     
     mapInit.demostrateTwoWayBinding = function()
     {
+        console.log("---!!! In mapInit demostrateTwoWayBinding !!!---");
         for (var i = 0; i < players.length; i++)
         {
             players[i].name = "Changes reflect Automatically";

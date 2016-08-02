@@ -43,6 +43,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 	
 	$scope.demostrateTwoWayBinding = function()
 	{
+		console.log("---!!! In controller demostrateTwoWayBinding !!!---");
 		mapInit.demostrateTwoWayBinding();	
 	};
 
