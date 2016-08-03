@@ -6,7 +6,7 @@ var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
 var NPC = mongoose.model('NPC');
-var passport = require('passport');
+// var passport = require('passport');
 
 //
 // API
@@ -18,7 +18,7 @@ router.post('/encounter/create', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding user");
             return;
         }
 
@@ -34,7 +34,7 @@ router.post('/encounter/create', function(req, res)
             {
                 if (error)
                 {
-                    res.sendStatus(403);
+                    res.status(500).send("Error creating encounter");
                     return;
                 }
 
@@ -49,7 +49,7 @@ router.get('/encounter/all', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounters");
             return;
         }
 
@@ -63,7 +63,7 @@ router.get('/encounter/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
@@ -77,7 +77,7 @@ router.post('/encounter/addplayer/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
         var encounterPlayer = new EncounterPlayer(
@@ -91,15 +91,15 @@ router.post('/encounter/addplayer/:encounter_id', function(req, res)
             visible : true,
             npc : false
         });
-        //res.json(encounterPlayer);
         encounter.addPlayer(encounterPlayer._id);
         encounterPlayer.save(function(error)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error saving encounter player");
                 return;
             }
+            
             res.send("OK");
         });
     });
@@ -111,7 +111,7 @@ router.post('/encounter/addnpc/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
         var encounterPlayer = new EncounterPlayer(
@@ -131,9 +131,10 @@ router.post('/encounter/addnpc/:encounter_id', function(req, res)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error saving encounter player");
                 return;
             }
+            
             res.send("OK");
         });
     });
@@ -145,7 +146,7 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
@@ -154,7 +155,7 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error finding NPC");
                 return;
             }
 
@@ -176,9 +177,10 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
             {
                 if (error)
                 {
-                    res.sendStatus(403);
+                    res.status(500).send("Error saving encounter player");
                     return;
                 }
+                
                 res.send("OK");
             });
         });
@@ -191,7 +193,7 @@ router.post('/encounter/addcharacter/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
@@ -200,7 +202,7 @@ router.post('/encounter/addcharacter/:encounter_id', function(req, res)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error finding character");
                 return;
             }
 
@@ -222,9 +224,10 @@ router.post('/encounter/addcharacter/:encounter_id', function(req, res)
             {
                 if (error)
                 {
-                    res.sendStatus(403);
+                    res.status(500).send("Error saving encounter player");
                     return;
                 }
+                
                 res.send("OK");
             });
         });
@@ -237,7 +240,7 @@ router.post('/encounter/removeplayer/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
@@ -247,7 +250,7 @@ router.post('/encounter/removeplayer/:encounter_id', function(req, res)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error removing encounter player");
                 return;
             }
             res.send("OK");
@@ -261,7 +264,7 @@ router.get('/encounter/players/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
@@ -269,7 +272,7 @@ router.get('/encounter/players/:encounter_id', function(req, res)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error finding encounter players");
                 return;
             }
 
@@ -286,7 +289,7 @@ router.post('/encounter/hitplayer', function(req, res)
         if (error)
         {
             console.log("Error finding the player");
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter player");
             return;
         }
 
@@ -307,7 +310,7 @@ router.post('/encounter/hitplayer', function(req, res)
             if (error)
             {
                 console.log("Error saving the player");
-                res.sendStatus(403);
+                res.status(500).send("Error saving encounter player");
                 return;
             }
 
@@ -324,7 +327,7 @@ router.post('/encounter/setinitiative', function(req, res)
         if (error)
         {
             console.log("Error finding the player");
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter player");
             return;
         }
 
@@ -336,7 +339,7 @@ router.post('/encounter/setinitiative', function(req, res)
             if (error)
             {
                 console.log("Error saving the player");
-                res.sendStatus(403);
+                res.status(500).send("Error saving player");
                 return;
             }
 
@@ -352,12 +355,21 @@ router.post('/encounter/togglevisible', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
         player.toggleVisible();
-        res.send("OK");
+        player.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving player");
+                return;
+            }
+
+            res.send("OK");
+        });
     });
 });
 
@@ -367,12 +379,21 @@ router.post('/encounter/setactive/:encounter_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding encounter");
             return;
         }
 
         encounter.setActive(req.body.active);
-        res.send("OK");
+        encounter.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving encounter");
+                return;
+            }
+            
+            res.send("OK");
+        });
     });
 });
 
@@ -434,12 +455,20 @@ router.post('/character/create', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error creating character");
             return;
         }
 
         character.generateCharacter();
-        res.send("OK");
+        character.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving character");
+            }
+
+            res.send("OK");
+        });
     });
 });
 
@@ -449,47 +478,18 @@ router.post('/character/update', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding character");
             return;
         }
 
-        character.set('name', req.body.character.name);
-        character.class = req.body.character.class;
-        character.level = req.body.character.level;
-        character.background = req.body.character.background;
-        character.playerName = req.body.character.playerName;
-        character.race = req.body.character.race;
-        character.alignment = req.body.character.alignment;
-        character.exp = req.body.character.exp;
-        character.proficiencyBonus = req.body.character.proficiencyBonus;
-        character.strength = req.body.character.strength;
-        character.dexterity = req.body.character.dexterity;
-        character.constitution = req.body.character.constitution;
-        character.intelligence = req.body.character.intelligence;
-        character.wisdom = req.body.character.wisdom;
-        character.charisma = req.body.character.charisma;
-        character.armorClass = req.body.character.armorClass;
-        character.initiative = req.body.character.initiative;
-        character.speed = req.body.character.speed;
-        character.hitPoints = req.body.character.maxHitPoints;
-        character.maxHitPoints = req.body.character.maxHitPoints;
-        character.features = req.body.character.features;
-        character.proficiencies = req.body.character.proficiencies;
-        character.languages = req.body.character.languages;
-        character.personality = req.body.character.personality;
-        character.ideals = req.body.character.ideals;
-        character.bonds = req.body.character.bonds;
-        character.flaws = req.body.character.flaws;
-        character.attacks = req.body.character.attacks;
-        character.money = req.body.character.money;
-        character.equipment = req.body.character.equipment;
-
+        character.setCharacter(req.body.character);
         character.generateCharacter();
         character.save(function(error)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error saving character");
+                return;
             }
 
             res.send("OK");
@@ -524,12 +524,21 @@ router.post('/npc/create', function(req, res)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error creating NPC");
                 return;
             }
 
             npc.generateNPC();
-            res.send("OK");
+            npc.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send("Error saving NPC");
+                    return;
+                }
+                
+                res.send("OK");
+            });
         });
 });
 
@@ -540,35 +549,36 @@ router.post('/npc/update', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding NPC");
             return;
         }
 
-        npc.name = req.body.npc.name;
-        npc.descriptors = req.body.npc.descriptors;
-        npc.description = req.body.npc.description;
-        npc.strength = req.body.npc.strength;
-        npc.dexterity = req.body.npc.dexterity;
-        npc.constitution = req.body.npc.constitution;
-        npc.intelligence = req.body.npc.intelligence;
-        npc.wisdom = req.body.npc.wisdom;
-        npc.charisma = req.body.npc.charisma;
-        npc.armorClass = req.body.npc.armorClass;
-        npc.speed = req.body.npc.speed;
-        npc.hitPoints = req.body.npc.hitPoints;
-        npc.features = req.body.npc.features;
-        npc.specials = req.body.npc.specials;
-        npc.money = req.body.npc.money;
-        npc.equipment = req.body.npc.equipment;
-        npc.attacks = req.body.npc.attacks;
-        npc.actions = req.body.npc.actions;
-
-        npc.generateNPC();
+        // npc.name = req.body.npc.name;
+        // npc.descriptors = req.body.npc.descriptors;
+        // npc.description = req.body.npc.description;
+        // npc.strength = req.body.npc.strength;
+        // npc.dexterity = req.body.npc.dexterity;
+        // npc.constitution = req.body.npc.constitution;
+        // npc.intelligence = req.body.npc.intelligence;
+        // npc.wisdom = req.body.npc.wisdom;
+        // npc.charisma = req.body.npc.charisma;
+        // npc.armorClass = req.body.npc.armorClass;
+        // npc.speed = req.body.npc.speed;
+        // npc.hitPoints = req.body.npc.hitPoints;
+        // npc.features = req.body.npc.features;
+        // npc.specials = req.body.npc.specials;
+        // npc.money = req.body.npc.money;
+        // npc.equipment = req.body.npc.equipment;
+        // npc.attacks = req.body.npc.attacks;
+        // npc.actions = req.body.npc.actions;
+        //
+        // npc.generateNPC();
+        npc.setNPC(req.body.npc);
         npc.save(function(error)
         {
             if (error)
             {
-                res.sendStatus(403);
+                res.status(500).send("Error saving NPC");
                 return;
             }
 
@@ -583,7 +593,7 @@ router.get('/character/all/:user_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding character");
             return;
         }
 
@@ -610,7 +620,7 @@ router.get('/npc/all/', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding NPC");
             return;
         }
 
@@ -636,7 +646,7 @@ router.get('/character/:character_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding character");
             return;
         }
         
@@ -650,7 +660,7 @@ router.get('/npc/:npc_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding NPC");
             return;
         }
 
@@ -664,12 +674,20 @@ router.get('/character/delete/:character_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding character");
             return;
         }
 
-        character.remove();
-        res.send("OK");
+        character.remove(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error removing character");
+                return;
+            }
+
+            res.send("OK");
+        });
     });
 });
 
@@ -679,13 +697,45 @@ router.get('/npc/delete/:npc_id', function(req, res)
     {
         if (error)
         {
-            res.sendStatus(403);
+            res.status(500).send("Error finding NPC");
             return;
         }
 
-        npc.remove();
-        res.send("OK");
+        npc.remove(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error deleting npc");
+                return;
+            }
+
+            res.send("OK");
+        });
     });
+});
+
+router.post('/encounter/updatenpc', function(req, res)
+{
+   EncounterPlayer.findById(req.body.npc._id, function(error, player)
+   {
+       if (error)
+       {
+           res.status(500).send("Error finding encounter player");
+           return;
+       }
+       
+       player.setPlayer(req.body.npc);
+       player.save(function(error)
+       {
+           if (error)
+           {
+               res.status(500).send("Error while saving update to npc");
+               return;
+           }
+
+           res.send("OK");
+       });
+   }) ;
 });
 
 // function isLoggedIn(req, res, next) 

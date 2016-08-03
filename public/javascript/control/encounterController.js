@@ -2,13 +2,13 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profile', function($scope, $http, socket, Profile) 
+clientApp.controller('encounterController', function($scope, $http, socket, Profile)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 	$scope.players = [];
 
-	socket.on('init', function (data) 
+	socket.on('init', function (data)
 	{
 		var url = "api/encounter/" + encounterID;
 
@@ -37,6 +37,11 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 			$scope.status = 'ENDED'
 		}
 	});
+
+	$scope.demonstrateTwoWayBinding = function()
+	{
+		console.log("In controller:: attempting 2 way binding");
+	};
 
 	$scope.updatePlayers = function()
 	{
@@ -266,6 +271,27 @@ clientApp.controller('encounterController', ['$scope', '$http', 'socket', 'Profi
 	
 	$scope.setNPCtoEdit = function(index)
 	{
-		$scope.editNPC = players[index];
+		$scope.editNPC = JSON.parse(JSON.stringify($scope.players[index]));
 	};
-}]);
+
+	$scope.editModalSave = function()
+	{
+		console.log($scope.editNPC);
+		var url = "api/encounter/updatenpc";
+		var data =
+		{
+			npc : $scope.editNPC
+		};
+		$http.post(url, data).success(function(data)
+		{
+			if (data === "OK")
+			{
+				socket.emit('update:encounter',
+				{
+					encounterID : encounterID
+				});
+				$scope.updatePlayers();
+			}
+		});
+	};
+});

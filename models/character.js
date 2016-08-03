@@ -95,6 +95,15 @@ var characterSchema = new mongoose.Schema(
     npc: {type: Boolean, required: true, default: false}
 }, {strict: false});
 
+characterSchema.methods.setCharacter = function(character)
+{
+	for (var value in character)
+	{
+		this[value] = character[value];
+	}
+	this.generateCharacter();
+};
+
 characterSchema.methods.generateCharacter = function()
 {
 	this.strength.modifier = calculateMod(this.strength.score);
@@ -112,8 +121,6 @@ characterSchema.methods.generateCharacter = function()
 	{
 		this.passivePerception = 10 + this.wisdom.modifier;
 	}
-
-	this.save();
 };
 
 characterSchema.methods.getSaves = function()
