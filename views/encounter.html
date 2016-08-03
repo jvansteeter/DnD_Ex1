@@ -93,16 +93,16 @@
 				</div>
 				<div class="col col-md-9">
 					<h1>{{ encounter.title }}<span ng-if="!encounter.active" style="color: red; float: right;">Closed</span></h1>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv"></div>
+                        </div>
+                    </div>
 					<div class ="container-fluid">
 						<div class="row">
 							<div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
 								<div class="panel panel-default" ng-show="isVisible($index) || isHost()" ng-repeat="player in players track by $index">
 									<div class="panel-heading" role="tab">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv"></div>
-                                            </div>
-                                        </div>
                                         <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
 									<div class="panel-heading" role="tab" style="border-left: 15px solid {{ getColor(player) }};">
 										<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
