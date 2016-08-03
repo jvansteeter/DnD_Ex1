@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, socket, Profile)
+clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapInit)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
