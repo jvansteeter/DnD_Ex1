@@ -101,7 +101,7 @@ characterSchema.methods.setCharacter = function(character)
 	{
 		this[value] = character[value];
 	}
-	this.save();
+	this.generateCharacter();
 };
 
 characterSchema.methods.generateCharacter = function()
@@ -121,8 +121,6 @@ characterSchema.methods.generateCharacter = function()
 	{
 		this.passivePerception = 10 + this.wisdom.modifier;
 	}
-
-	this.save();
 };
 
 characterSchema.methods.getSaves = function()

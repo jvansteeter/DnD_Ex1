@@ -70,6 +70,15 @@ var npcSchema = new mongoose.Schema(
         npc: {type: Boolean, required: true, default: true}
     });
 
+npcSchema.methods.setNPC = function(npc)
+{
+    for (var value in npc)
+    {
+        this[value] = npc[value];
+    }
+    this.generateNPC();
+};
+
 npcSchema.methods.generateNPC = function()
 {
     this.strength.modifier = calculateMod(this.strength.score);
@@ -80,8 +89,6 @@ npcSchema.methods.generateNPC = function()
     this.charisma.modifier = calculateMod(this.charisma.score);
 
     this.passivePerception = 10 + this.wisdom.modifier;
-
-    this.save();
 };
 
 npcSchema.methods.getSaves = function()
@@ -93,10 +100,10 @@ npcSchema.methods.getSaves = function()
         intelligence : this.intelligence.save,
         wisdom : this.wisdom.save,
         charisma : this.charisma.save
-    }
+    };
 
     return saves;
-}
+};
 
 var calculateMod = function(score)
 {

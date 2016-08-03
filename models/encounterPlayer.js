@@ -31,7 +31,6 @@ encounterPlayerSchema.methods.hit = function(hit)
 encounterPlayerSchema.methods.toggleVisible = function()
 {
 	this.visible = !this.visible;
-	this.save();
 };
 
 encounterPlayerSchema.methods.setPlayer = function(player)
@@ -40,7 +39,6 @@ encounterPlayerSchema.methods.setPlayer = function(player)
     {
         this[value] = player[value];
     }
-    this.save();
 };
 
 mongoose.model('EncounterPlayer', encounterPlayerSchema);
