@@ -1,8 +1,8 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer) {
+clientApp.service('mapMain', function (mapRenderer) {
     var mapMain = {};
-    var gameState;
+    var players;
 
     // config variables
     var $mapTag = $('#mapDiv');
@@ -11,31 +11,36 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer)
     mapMain.start = function(){
 
         // build the mapCanvas
-        var $mapCanvas = $('#mapCanvas');
-        mapRenderer.init($mapCanvas);
+        var $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="650" height="650" data-index="0"/>');
+        $mapTag.append($mapCanvas);
 
-        // build the gridCanvas
-        var $gridCanvas = $('#gridCanvas');
-        gridRenderer.init($gridCanvas);
-
-        var $tokenCanvas = $('#tokenCanvas');
-        tokenRenderer.init($tokenCanvas, encounterState);
-
+        mapRenderer.init({
+            $el:$mapCanvas
+        });
 
         // run game
         function gameLoop() {
             mapRenderer.draw();
-            tokenRenderer.draw();
             window.requestAnimationFrame(gameLoop);
         }
         gameLoop();
     };
 
 
-    mapMain.setGameState = function(data)
+    mapMain.setPlayers = function(data)
     {
-        console.log("---!!! In mapInit setGameState function !!!---");
-        encounterState = data;
+        console.log("---!!! In mapInit setPlayers function !!!---");
+        players = data;
+        players[0].name = "Made one change so far";
+    };
+
+    mapMain.demostrateTwoWayBinding = function()
+    {
+        console.log("---!!! In mapInit demostrateTwoWayBinding !!!---");
+        for (var i = 0; i < players.length; i++)
+        {
+            players[i].name = "Changes reflect Automatically";
+        }
     };
     
 
