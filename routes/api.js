@@ -323,7 +323,7 @@ router.post('/encounter/removeplayer/:encounter_id', function(req, res)
     });
 });
 
-router.get('/encounter/players/:encounter_id', function(req, res)
+router.get('/encounter/gamestate/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -341,7 +341,8 @@ router.get('/encounter/players/:encounter_id', function(req, res)
                 return;
             }
 
-            res.json(players);
+            encounter.players = players;
+            res.json(encounter);
         });
     });
 });

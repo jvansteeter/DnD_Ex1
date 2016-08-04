@@ -17,7 +17,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			$scope.encounter = data.encounter;
 			Profile.setEncounter(data.encounter._id);
 
-			$scope.updatePlayers();
+			$scope.updateGameState();
             mapMain.start();
 		});
 	});
@@ -27,7 +27,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		console.log("Updating encounter");
 		if (data.encounterID === encounterID)
 		{
-			$scope.updatePlayers();
+			$scope.updateGameState();
 		}
 	});
 
@@ -39,18 +39,14 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		}
 	});
 
-	$scope.demonstrateTwoWayBinding = function()
+	$scope.updateGameState = function()
 	{
-		console.log("In controller:: attempting 2 way binding");
-	};
-
-	$scope.updatePlayers = function()
-	{
-		var url = 'api/encounter/players/' + encounterID;
+		var url = 'api/encounter/gamestate/' + encounterID;
 		$http.get(url).success(function(data)
 		{
-			$scope.players = data;
+			$scope.players = data.players;
 			console.log(data);
+			mapMain.setGameState(data);
 		});
 	};
 
@@ -129,7 +125,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				encounterID : encounterID
 			});
 
-			$scope.updatePlayers();
+			$scope.updateGameState();
 		});
 	};
 
@@ -153,7 +149,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				encounterID : encounterID
 			});
 
-			$scope.updatePlayers();
+			$scope.updateGameState();
 		});
 	};
 
@@ -207,7 +203,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-			$scope.updatePlayers();
+			$scope.updateGameState();
 		});
 	};
 
@@ -239,7 +235,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-			$scope.updatePlayers();
+			$scope.updateGameState();
 		});
 	};
 
@@ -291,7 +287,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-				$scope.updatePlayers();
+				$scope.updateGameState();
 			}
 		});
 	};

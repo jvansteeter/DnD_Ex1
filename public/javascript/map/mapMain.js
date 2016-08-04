@@ -2,7 +2,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.service('mapMain', function (mapRenderer, gridRenderer, inputController) {
     var mapMain = {};
-    var players;
+    var gameState;
 
     // config variables
     var $mapTag = $('#mapDiv');
@@ -34,20 +34,10 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, inputControlle
     };
 
 
-    mapMain.setPlayers = function(data)
+    mapMain.setGameState = function(data)
     {
-        console.log("---!!! In mapInit setPlayers function !!!---");
-        players = data;
-        players[0].name = "Made one change so far";
-    };
-
-    mapMain.demostrateTwoWayBinding = function()
-    {
-        console.log("---!!! In mapInit demostrateTwoWayBinding !!!---");
-        for (var i = 0; i < players.length; i++)
-        {
-            players[i].name = "Changes reflect Automatically";
-        }
+        console.log("---!!! In mapInit setGameState function !!!---");
+        gameState = data;
     };
     
 
