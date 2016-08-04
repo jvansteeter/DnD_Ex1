@@ -1,14 +1,14 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapInit', function (mapRenderer) {
-    var mapInit = {};
+clientApp.service('mapMain', function (mapRenderer) {
+    var mapMain = {};
     var players;
 
     // config variables
     var $mapTag = $('#mapDiv');
     var count = 0;
 
-    mapInit.start = function(){
+    mapMain.start = function(){
 
         // build the mapCanvas
         var $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="650" height="650" data-index="0"/>');
@@ -27,14 +27,14 @@ clientApp.service('mapInit', function (mapRenderer) {
     };
 
 
-    mapInit.setPlayers = function(data)
+    mapMain.setPlayers = function(data)
     {
         console.log("---!!! In mapInit setPlayers function !!!---");
         players = data;
         players[0].name = "Made one change so far";
     };
-    
-    mapInit.demostrateTwoWayBinding = function()
+
+    mapMain.demostrateTwoWayBinding = function()
     {
         console.log("---!!! In mapInit demostrateTwoWayBinding !!!---");
         for (var i = 0; i < players.length; i++)
@@ -44,6 +44,6 @@ clientApp.service('mapInit', function (mapRenderer) {
     };
     
 
-    return mapInit;
+    return mapMain;
 });
 
