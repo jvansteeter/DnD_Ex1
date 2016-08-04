@@ -21,6 +21,7 @@ clientApp.service('mapRenderer', function () {
     };
 
     mapRenderer.draw = function(){
+        socket.emit('draw');
         this.context.drawImage(this.bgImage,0,0);
     };
 
