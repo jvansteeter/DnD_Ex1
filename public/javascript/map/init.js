@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapInit', function (mapRenderer, socket) {
+clientApp.service('mapInit', function (mapRenderer) {
     var mapInit = {};
     var players;
 
