@@ -19,10 +19,14 @@ clientApp.service('mapInit', function ($window) {
     };
 
     mapInit.run = function(){
-        count++;
-        console.log(count);
-        this.run();
-        // $window.requestAnimationFrame(this.run());
+
+        // run game
+        function gameLoop() {
+            count++;
+            console.log(count);
+            window.requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
     };
 
     mapInit.setPlayers = function(data)
