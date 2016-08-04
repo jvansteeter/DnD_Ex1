@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapMain', function (mapRenderer, gridRenderer) {
+clientApp.service('mapMain', function (mapRenderer, gridRenderer, inputController) {
     var mapMain = {};
     var players;
 
@@ -16,9 +16,14 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer) {
         $mapTag.append($mapCanvas);
 
         // build the gridCanvas
-        var $gridCanvas = $('<canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="mapCanvas" width="650" height="650"/>');
+        var $gridCanvas = $('<canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="gridCanvas" width="650" height="650"/>');
         gridRenderer.init($gridCanvas);
         $mapTag.append($gridCanvas);
+
+        // build the inputController
+        var $inputCanvas = $('<canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="inputCanvas" width="650" height="650"/>');
+        inputController.init($inputCanvas);
+        $mapTag.append(inputController);
 
         // run game
         function gameLoop() {
