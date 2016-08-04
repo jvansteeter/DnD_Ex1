@@ -39,6 +39,10 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		}
 	});
 
+    socket.on('draw', function(){
+       console.log("draw happened");
+    });
+
 	$scope.demonstrateTwoWayBinding = function()
 	{
 		console.log("In controller:: attempting 2 way binding");

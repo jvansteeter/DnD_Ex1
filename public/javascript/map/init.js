@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapInit', function (mapRenderer) {
+clientApp.service('mapInit', function (mapRenderer, socket) {
     var mapInit = {};
     var players;
 
@@ -20,6 +20,7 @@ clientApp.service('mapInit', function (mapRenderer) {
 
         // run game
         function gameLoop() {
+            socket.emit("draw");
             mapRenderer.draw();
             window.requestAnimationFrame(gameLoop);
         }
