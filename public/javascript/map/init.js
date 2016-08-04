@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapInit', function ($window) {
+clientApp.service('mapInit', function () {
     var mapInit = {};
     var players;
 
@@ -9,25 +9,23 @@ clientApp.service('mapInit', function ($window) {
     var count = 0;
 
     mapInit.start = function(){
-        // ***** Startup Process
 
         // build the mapCanvas
         var $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="650" height="650" data-index="0"/>');
         $mapTag.append($mapCanvas);
 
-        mapInit.run();
-    };
-
-    mapInit.run = function(){
+        mapRenderer.init({
+            $el:$mapCanvas
+        });
 
         // run game
         function gameLoop() {
             count++;
-            console.log(count);
             window.requestAnimationFrame(gameLoop);
         }
         gameLoop();
     };
+
 
     mapInit.setPlayers = function(data)
     {
