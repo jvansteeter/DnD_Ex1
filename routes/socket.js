@@ -34,11 +34,6 @@ module.exports = function (socket)
 		});
 	});
 
-    socket.on('draw', function(){
-        socket.broadcast.emit('draw');
-    });
-
-
 	// notify other clients that a new user has joined
 	/*socket.broadcast.emit('user:join', 
 	{
