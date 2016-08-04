@@ -20,7 +20,6 @@ clientApp.service('mapInit', function (mapRenderer, socket) {
 
         // run game
         function gameLoop() {
-            socket.emit("draw");
             mapRenderer.draw();
             window.requestAnimationFrame(gameLoop);
         }
