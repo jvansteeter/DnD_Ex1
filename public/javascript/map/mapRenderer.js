@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapRenderer', function () {
+clientApp.service('mapRenderer', function (socket) {
 
     var mapRenderer = {};
 
