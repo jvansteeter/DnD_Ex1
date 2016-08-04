@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapInit)
+clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapMain)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
@@ -18,7 +18,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			Profile.setEncounter(data.encounter._id);
 
 			$scope.updatePlayers();
-            mapInit.start();
+            mapMain.start();
 		});
 	});
 
