@@ -20,7 +20,7 @@ clientApp.service('mapInit', function (mapRenderer) {
 
         // run game
         function gameLoop() {
-            count++;
+            mapRenderer.draw();
             window.requestAnimationFrame(gameLoop);
         }
         gameLoop();

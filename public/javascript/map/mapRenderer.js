@@ -18,8 +18,12 @@ clientApp.service('mapRenderer', function () {
 
         this.bgImage = new Image();
         this.bgImage.src = "image/map/dungeon.jpg";
+    };
+
+    mapRenderer.draw = function(){
         this.context.drawImage(this.bgImage,0,0);
     };
+
 
     return mapRenderer;
 });
