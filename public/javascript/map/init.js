@@ -8,15 +8,20 @@ clientApp.service('mapInit', function ($window) {
     var $mapTag = $('#mapDiv');
     var count = 0;
 
-    // ***** Startup Process
+    mapInit.start = function(){
+        // ***** Startup Process
 
-    // build the mapCanvas
-    var $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="650" height="650" data-index="0"/>');
-    $mapTag.append($mapCanvas);
+        // build the mapCanvas
+        var $mapCanvas = $('<canvas style="border:1px solid #c3c3c3;" id="mapCanvas" width="650" height="650" data-index="0"/>');
+        $mapTag.append($mapCanvas);
+
+        mapInit.run();
+    };
 
     mapInit.run = function(){
         count++;
         console.log(count);
+        this.run();
         // $window.requestAnimationFrame(this.run());
     };
 
