@@ -18,6 +18,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			Profile.setEncounter(data.encounter._id);
 
 			$scope.updatePlayers();
+            mapInit.start();
 		});
 	});
 
