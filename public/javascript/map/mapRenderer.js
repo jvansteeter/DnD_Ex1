@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapRenderer', function (socket) {
+clientApp.service('mapRenderer', function () {
 
     var mapRenderer = {};
 
@@ -21,7 +21,6 @@ clientApp.service('mapRenderer', function (socket) {
     };
 
     mapRenderer.draw = function(){
-        socket.emit('draw');
         this.context.drawImage(this.bgImage,0,0);
     };
 
