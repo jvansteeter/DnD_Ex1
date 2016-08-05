@@ -299,11 +299,11 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 	{
 		if (player.npc)
 		{
-			return "255, 0, 0";
+			return "rgba(255, 0, 0, 0.3)";
 		}
 		else
 		{
-			return "51, 122, 183";
+			return "rgba(51, 122, 183, 0.3)";
 		}
 	};
 });
