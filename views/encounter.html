@@ -100,7 +100,7 @@
 										<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
 											<div class="row">
 												<div class="col col-md-4">
-													<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse">{{ player.name }} </a>
+													<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer; text-decoration: none;">{{ player.name }} </a>
 														<span style="float: right;">
 															<a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a>
 															<a href="#" ng-if="isHost() || isMyCharacter($index)" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
