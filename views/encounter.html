@@ -81,7 +81,7 @@
 							<div class="initiative box">
 								<ul ng-model="players" class="list-group">
 									<li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
-									<li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item" ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0" style="border-left: 4px solid rgb({{ getColor(player) }});">
+									<li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item" ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0" style="border-left: 4px solid {{ getColor(player) }};">
 										<span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
 										<span ng-if="player.hitPoints > 0">{{ player.name }}</span>
 										<span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
@@ -96,10 +96,10 @@
 						<div class="row">
 							<div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
 								<div class="panel panel-default" ng-show="isVisible($index) || isHost()" ng-repeat="player in players track by $index">
-									<div class="panel-heading" role="tab" style="border: 1px solid rgba({{ getColor(player) }}, 0.3)">
+									<div class="panel-heading" role="tab" style="border-left: 15px solid {{ getColor(player) }};">
 										<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
 											<div class="row">
-												<div class="col col-md-4">
+												<div class="col col-md-4" style="padding-left: 10px">
 													<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer; text-decoration: none;">{{ player.name }} </a>
 														<span style="float: right;">
 															<a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a>
