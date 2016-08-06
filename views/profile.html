@@ -17,10 +17,11 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/app/profileApp.js"></script>
     <script src="javascript/profileService.js"></script>
     <script src="javascript/socketFactory.js"></script>
     <script src="javascript/control/profileController.js"></script>
@@ -62,33 +63,46 @@
         </div>
     </nav><!-- /.navbar -->
 
-<!-- Begin Body -->
-<div class="container" ng-controller="profileController">
-  <div class="row">
+    <!-- Begin Body -->
+    <div class="container" ng-controller="profileController">
+      <div class="row">
 
-    <div class="col col-sm-3">
-      <hr>
-      <div id="profile pic">
-        <a href="#" class="thumbnail">
-          <img src="" alt="Profile pic">
-        </a>
-      </div>
-      <div class="well well-sm">
-        <div class="list-group" style="margin-bottom: 0px">
-          <a href="newCharacter" class="list-group-item btn btn-lg btn-block">New Character</a>
-          <a href="#" class="list-group-item btn btn-lg btn-block" data-template-url="modal/listCharactersModal.html" bs-modal="modal">Edit Character</a>
-          <a href="newNPC" class="list-group-item btn btn-lg btn-block">New NPC</a>
-          <a href="#" class="list-group-item btn btn-lg btn-block" data-template-url="modal/listNPCModal.html" bs-modal="modal">Edit NPC</a>
+        <div class="col col-sm-3">
+          <hr>
+          <div id="profile pic" flow-init
+               flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+               flow-files-submitted="uploadProfilePhoto($flow)">
+            <input type="hidden" ng-init="initFlow($flow)">
+            <a href="#" class="thumbnail" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">
+              <img flow-img="$flow.files[0]" />
+            </a>
+            <a href="#" class="thumbnail" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">
+              <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+            </a>
+          </div>
+          <div class="well well-sm">
+            <div class="list-group" style="margin-bottom: 0px">
+              <a href="newCharacter" class="list-group-item btn btn-lg btn-block">New Character</a>
+              <a href="#" class="list-group-item btn btn-lg btn-block" data-template-url="modal/listCharactersModal.html" bs-modal="modal">Edit Character</a>
+              <a href="newNPC" class="list-group-item btn btn-lg btn-block">New NPC</a>
+              <a href="#" class="list-group-item btn btn-lg btn-block" data-template-url="modal/listNPCModal.html" bs-modal="modal">Edit NPC</a>
+              <a href="#" class="list-group-item btn btn-lg btn-block" ng-click="seeFlow()">See flow</a>
+              <a href="#" class="list-group-item btn btn-lg btn-block" ng-click="saveNoImage()">Save No Image</a>
+              <a href="#" class="list-group-item btn btn-lg btn-block" ng-click="getNoImage()">Get No Image</a>
+            </div>
+          </div>
         </div>
+
+        <div class="col col-sm-9">
+          <h1>{{ name }}</h1>
+          <div id="myImage"></div>
+          <form name="upload" class="form" data-ng-submit="uploadImage()">
+            <input type="file" name="file" onchange="angular.element(this).scope().uploadImage(this.files)" />
+            <button type="submit">Upload </button>
+          </form>
+        </div>
+
       </div>
     </div>
-
-    <div class="col col-sm-9">
-      <h1>{{ name }}</h1>
-      
-    </div>
-
-  </div>
-</div>
   </body>
 </html>

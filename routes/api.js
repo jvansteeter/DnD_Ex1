@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var fs = require('fs');
 var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
 var NPC = mongoose.model('NPC');
+var DBImage = mongoose.model('Image');
+var formidable = require('formidable');
 // var passport = require('passport');
 
 //
@@ -41,6 +44,44 @@ router.post('/encounter/create', function(req, res)
                 res.send("OK");
             });
     });
+});
+
+router.get('/image/no', function(req, res)
+{
+    console.log("---!!! Trying to get no image !!!---");
+    DBImage.findOne({"title": "no"}, function(error, dbImage)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding image");
+            return;
+        }
+
+        res.contentType(dbImage.file.contentType);
+        res.send(dbImage.file.data);
+    });
+});
+
+
+router.post('/image/no', function(req, res)
+{
+    console.log("---!!! Trying to save no image !!!---");
+    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req.files));
+    var newImage = new DBImage();
+    newImage.title = "no";
+    newImage.file.data = req.body.file;
+    newImage.file.contentType = 'image/png';
+    newImage.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving image");
+            return;
+        }
+
+        res.send(req.body);
+    })
 });
 
 router.get('/encounter/all', function(req, res)

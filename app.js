@@ -3,10 +3,10 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
-var loginPage = require
+var busboy = require('express-busboy');
 
 var app = express();
 
@@ -33,6 +33,7 @@ require('./models/encounter');
 require('./models/encounterPlayer');
 require('./models/character');
 require('./models/npc');
+require('./models/image');
 require('./config/passport');
 
 // setup routes
@@ -43,10 +44,15 @@ var api = require('./routes/api');
 // uncomment after placing your favicon in /public
 app.use(favicon('public/image/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+busboy.extend(app, {
+    upload: true,
+    path: '/upload',
+    allowedPath: /./
+});
 
 // Routes
 app.use('/', indexRouter);
