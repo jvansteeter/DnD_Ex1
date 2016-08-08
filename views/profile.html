@@ -32,35 +32,35 @@
   </head>
   <body>
     <nav class="navbar navbar-static navbar-inverse">
-        <div class="container">
-          <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="fa fa-chevron-down"></span>
-          </a>
-          <div class="nav-collapse collase">
-            <ul class="nav navbar-nav">
-              <li><a href="home">Home</a></li>
-              <li><a href="profile">Profile</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
-                <ul class="dropdown-menu">
-                  <li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
-                 </ul>
-              </li>
-            </ul>
+      <div class="container">
+        <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="fa fa-chevron-down"></span>
+        </a>
+        <div class="nav-collapse collase">
+          <ul class="nav navbar-nav">
+            <li><a href="home">Home</a></li>
+            <li><a href="profile">Profile</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
+              <ul class="dropdown-menu">
+                <li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
+               </ul>
+            </li>
+          </ul>
 
-            <ul class="nav navbar-right navbar-nav">
-              <li class="dropdown" ng-controller="headerController">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
-                <ul class="dropdown-menu">
-                  <li><a href="login">Logout</a></li>
-                  <li><a href="#">Profile</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">About</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+          <ul class="nav navbar-right navbar-nav">
+            <li class="dropdown" ng-controller="headerController">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+              <ul class="dropdown-menu">
+                <li><a href="login">Logout</a></li>
+                <li><a href="#">Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="#">About</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav><!-- /.navbar -->
 
     <!-- Begin Body -->
@@ -73,11 +73,9 @@
                flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
                flow-files-submitted="uploadProfilePhoto($flow)">
             <input type="hidden" ng-init="initFlow($flow)">
-            <a href="#" class="thumbnail" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">
-              <img flow-img="$flow.files[0]" />
-            </a>
-            <a href="#" class="thumbnail" ng-show="!$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}">
-              <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+            <a href="#" class="thumbnail"  flow-btn flow-attrs="{accept:'image/*'}">
+              <img ng-if="$flow.files.length" flow-img="$flow.files[0]" />
+              <img ng-if="!$flow.files.length" src="/api/image/profile" />
             </a>
           </div>
           <div class="well well-sm">
@@ -96,10 +94,7 @@
         <div class="col col-sm-9">
           <h1>{{ name }}</h1>
           <div id="myImage"></div>
-          <form name="upload" class="form" data-ng-submit="uploadImage()">
-            <input type="file" name="file" onchange="angular.element(this).scope().uploadImage(this.files)" />
-            <button type="submit">Upload </button>
-          </form>
+
         </div>
 
       </div>
