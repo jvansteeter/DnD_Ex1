@@ -84,7 +84,12 @@
 					<h1>{{ encounter.title }}<span ng-if="!encounter.active" style="color: red; float: right;">Closed</span></h1>
                     <div class="container-fluid">
                         <div class="row">
-                            <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv"></div>
+                            <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv" ng-controller="inputController">
+								<canvas style="border:1px solid #c3c3c3; z-index:0; position:absolute;" id="mapCanvas" width="650" height="650"></canvas>
+								<canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="gridCanvas" width="650" height="650"></canvas>
+								<canvas style="border:1px solid #c3c3c3; z-index:2; position:absolute;" id="inputCanvas" width="650" height="650" ng-click="testClick()"></canvas>
+
+							</div>
                         </div>
                     </div>
 					<div class ="container-fluid">
