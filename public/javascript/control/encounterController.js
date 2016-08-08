@@ -294,4 +294,16 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			}
 		});
 	};
+
+	$scope.getColor = function(player)
+	{
+		if (player.npc)
+		{
+			return "rgba(255, 0, 0, 0.3)";
+		}
+		else
+		{
+			return "rgba(51, 122, 183, 0.3)";
+		}
+	};
 });
