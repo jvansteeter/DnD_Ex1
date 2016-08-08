@@ -1,15 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var fs = require('fs');
+var fs = require('fs-extra');
 var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
 var NPC = mongoose.model('NPC');
-var DBImage = mongoose.model('Image');
 var formidable = require('formidable');
-// var passport = require('passport');
+var path = require('path');
 
 //
 // API
@@ -46,42 +45,63 @@ router.post('/encounter/create', function(req, res)
     });
 });
 
-router.get('/image/no', function(req, res)
+router.get('/image/profile', function(req, res)
 {
     console.log("---!!! Trying to get no image !!!---");
-    DBImage.findOne({"title": "no"}, function(error, dbImage)
+    User.findById(req.user._id, function(error, user)
     {
         if (error)
         {
-            res.status(500).send("Error finding image");
+            res.status(500).send("Error finding user");
             return;
         }
 
-        res.contentType(dbImage.file.contentType);
-        res.send(dbImage.file.data);
+        res.sendFile(path.resolve(user.profilePhotoURL));
     });
 });
 
 
-router.post('/image/no', function(req, res)
+router.post('/image/profile', function(req, res)
 {
-    console.log("---!!! Trying to save no image !!!---");
+    console.log("---!!! Trying to save profile image !!!---");
     console.log(JSON.stringify(req.body));
     console.log(JSON.stringify(req.files));
-    var newImage = new DBImage();
-    newImage.title = "no";
-    newImage.file.data = req.body.file;
-    newImage.file.contentType = 'image/png';
-    newImage.save(function(error)
+
+    var directory = "image/users/" + req.user._id + "/";
+    var fileName = "profile" + path.extname(req.files.file.file);
+
+    console.log("check if dir exists");
+    fs.ensureDirSync(directory);
+
+    fs.copy(req.files.file.file, directory + fileName, function(error)
     {
         if (error)
         {
-            res.status(500).send("Error saving image");
+            res.status(500).send("Error copying file");
             return;
         }
 
-        res.send(req.body);
-    })
+        console.log("successfully written to file");
+        User.findById(req.user._id, function(error, user)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding user");
+                return;
+            }
+
+            user.profilePhotoURL = directory + fileName;
+            user.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send("Error saving profile photo");
+                }
+
+                res.send("OK");
+            });
+        });
+    });
 });
 
 router.get('/encounter/all', function(req, res)

@@ -6,6 +6,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 {
 	var flow;
 	$scope.name = Profile.getFirstName() + " " + Profile.getLastName();
+	$scope.files = [];
 
 	socket.on('init', function (data) 
 	{
@@ -64,32 +65,56 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 	{
 		$flow.upload();
 		$flow.files[0] = $flow.files[$flow.files.length - 1];
+		console.log($flow);
+
+		var url = 'api/image/profile';
+		var fd = new FormData();
+		fd.append("file", $flow.files[0].file);
+		$http.post(url, fd, {
+			withCredentials : false,
+			headers : {
+				'Content-Type' : undefined
+			},
+			transformRequest : angular.identity
+		})
+			.success(function(data)
+			{
+				console.log(data);
+			})
+			.error(function(data)
+			{
+				console.log(data);
+			});
 	};
 
-	$scope.uploadImage = function(files)
-	{
-		var url = 'api/image/no';
-		for ( var i = 0; i < files.length; i++)
-		{
-			var fd = new FormData();
-			fd.append("file", files[i]);
-			$http.post(url, fd, {
-				withCredentials : false,
-				headers : {
-					'Content-Type' : undefined
-				},
-				transformRequest : angular.identity
-			})
-				.success(function(data)
-				{
-					console.log(data);
-				})
-				.error(function(data)
-				{
-					console.log(data);
-				});
-		}
-	};
+	// $scope.uploadImage = function(event)
+	// {
+	// 	console.log("Attempting to upload image");
+	// 	console.log(event);
+	// 	var files = $scope.files;
+    //
+	// 	var url = 'api/image/profile';
+	// 	for ( var i = 0; i < files.length; i++)
+	// 	{
+	// 		var fd = new FormData();
+	// 		fd.append("file", files[i]);
+	// 		$http.post(url, fd, {
+	// 			withCredentials : false,
+	// 			headers : {
+	// 				'Content-Type' : undefined
+	// 			},
+	// 			transformRequest : angular.identity
+	// 		})
+	// 			.success(function(data)
+	// 			{
+	// 				console.log(data);
+	// 			})
+	// 			.error(function(data)
+	// 			{
+	// 				console.log(data);
+	// 			});
+	// 	}
+	// };
 
 	$scope.listModalgetCharacters = function()
 	{
