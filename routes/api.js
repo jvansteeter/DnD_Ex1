@@ -47,7 +47,6 @@ router.post('/encounter/create', function(req, res)
 
 router.get('/image/profile', function(req, res)
 {
-    console.log("---!!! Trying to get no image !!!---");
     User.findById(req.user._id, function(error, user)
     {
         if (error)
@@ -63,14 +62,9 @@ router.get('/image/profile', function(req, res)
 
 router.post('/image/profile', function(req, res)
 {
-    console.log("---!!! Trying to save profile image !!!---");
-    console.log(JSON.stringify(req.body));
-    console.log(JSON.stringify(req.files));
-
     var directory = "image/users/" + req.user._id + "/";
     var fileName = "profile" + path.extname(req.files.file.file);
 
-    console.log("check if dir exists");
     fs.ensureDirSync(directory);
 
     fs.copy(req.files.file.file, directory + fileName, function(error)
@@ -81,7 +75,6 @@ router.post('/image/profile', function(req, res)
             return;
         }
 
-        console.log("successfully written to file");
         User.findById(req.user._id, function(error, user)
         {
             if (error)
