@@ -6,6 +6,8 @@ var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
+var Campaign = mongoose.model('Campaign');
+var CampaignUser = mongoose.model('CampaignUser');
 var NPC = mongoose.model('NPC');
 var formidable = require('formidable');
 var path = require('path');
@@ -91,7 +93,15 @@ router.post('/image/profile', function(req, res)
                     res.status(500).send("Error saving profile photo");
                 }
 
-                res.send("OK");
+                fs.unlink(req.files.file.file, function(error)
+                {
+                    if (error)
+                    {
+                        res.status(500).send("Error unlinking old file");
+                    }
+
+                    res.send("OK");
+                });
             });
         });
     });
@@ -790,6 +800,37 @@ router.post('/encounter/updatenpc', function(req, res)
            res.send("OK");
        });
    }) ;
+});
+
+router.get('/user', function(req, res)
+{
+    console.log(JSON.stringify(req.user));
+    res.json(req.user);
+});
+
+router.post('/campaign/create', function(req, res)
+{
+    var campaign = new Campaign();
+    campaign.addHost(req.user._id);
+    campaign.name = req.body.name;
+    campaign.description = req.body.description;
+    campaign.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving campaign");
+            return;
+        }
+
+        var campaignUser = new CampaignUser();
+        campaignUser.userID = req.user._id;
+        campaignUser.campaignID = campaign._id;
+
+        campaignUser.save(function(error)
+        {
+            res.send("OK");
+        });
+    })
 });
 
 // function isLoggedIn(req, res, next) 

@@ -4,7 +4,13 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('profileController', function($scope, $window, $http, socket, Profile) 
 {
-	$scope.name = Profile.getFirstName() + " " + Profile.getLastName();
+	$scope.newCampaignModal = {};
+
+	Profile.async().then(function()
+	{
+		$scope.user = Profile.getUser();
+		$scope.name = $scope.user.first_name + " " + $scope.user.last_name;
+	});
 
 	socket.on('init', function (data) 
 	{
@@ -65,5 +71,18 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 	$scope.listModalselectNPC = function(index)
 	{
 		window.location = 'editNPC?' + $scope.npcs[index]._id;
+	};
+
+	$scope.createNewCampaign = function()
+	{
+		var url = 'api/campaign/create';
+		var data = {
+			name: $scope.newCampaignModal.name,
+			description: $scope.newCampaignModal.description
+		};
+		$http.post(url,data).success(function()
+		{
+			console.log("Campaign successfully created");
+		});
 	};
 });
