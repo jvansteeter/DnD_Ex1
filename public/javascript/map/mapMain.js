@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapMain', function (mapRenderer, gridRenderer) {
+clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer) {
     var mapMain = {};
     var gameState;
 
@@ -18,11 +18,14 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer) {
         var $gridCanvas = $('#gridCanvas');
         gridRenderer.init($gridCanvas);
 
+        var $tokenCanvas = $('#tokenCanvas');
+        tokenRenderer.init($tokenCanvas, gameState);
 
 
         // run game
         function gameLoop() {
             mapRenderer.draw();
+            tokenRenderer.draw();
             window.requestAnimationFrame(gameLoop);
         }
         gameLoop();
