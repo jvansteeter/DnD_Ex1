@@ -18,7 +18,6 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			Profile.setEncounter(data.encounter._id);
 
 			$scope.updateGameState();
-            mapMain.start();
 		});
 	});
 
@@ -45,8 +44,9 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		$http.get(url).success(function(data)
 		{
 			$scope.players = data.players;
-			console.log(data);
+			// console.log(data);
 			mapMain.setGameState(data);
+			mapMain.start();
 		});
 	};
 
