@@ -33,7 +33,8 @@ require('./models/encounter');
 require('./models/encounterPlayer');
 require('./models/character');
 require('./models/npc');
-require('./models/image');
+require('./models/campaign');
+require('./models/campaignUser');
 require('./config/passport');
 
 // setup routes
@@ -64,6 +65,7 @@ app.use('/encounter', isLoggedIn, express.static('views/encounter.html'));
 app.use('/home', isLoggedIn, express.static('views/home.html'));
 app.use('/newCharacter', isLoggedIn, express.static('views/newCharacter.html'));
 app.use('/newNPC', isLoggedIn, express.static('views/newNPC.html'));
+app.use('/campaign', isLoggedIn, express.static('views/campaign.html'));
 app.use('/auth', authRouter);
 app.use('/api', isAuthenticated, api);
 
