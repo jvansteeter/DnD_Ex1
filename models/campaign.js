@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var campaignPostSchema = new mongoose.Schema(
 {
+    name: String,
+    description: String,
     hosts: [],
     createdAt: {type: Number, required: true, default: Date.now}
 });

@@ -34,6 +34,7 @@ require('./models/encounterPlayer');
 require('./models/character');
 require('./models/npc');
 require('./models/campaign');
+require('./models/campaignPost');
 require('./models/campaignUser');
 require('./config/passport');
 

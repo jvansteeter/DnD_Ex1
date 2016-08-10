@@ -6,6 +6,13 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 {
 	$scope.newCampaignModal = {};
 
+	$http.get('api/user/campaigns').success(function(data)
+	{
+		console.log("Getting campaigns");
+		console.log(data);
+		$scope.campaigns = data;
+	});
+
 	Profile.async().then(function()
 	{
 		$scope.user = Profile.getUser();

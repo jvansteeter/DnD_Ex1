@@ -8,17 +8,22 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 	$scope.encounter = {};
 	$scope.players = [];
 
+	$http.get('api/encounter/' + encounterID).success(function(data)
+	{
+		$scope.encounter = data.encounter;
+		$scope.updatePlayers();
+	});
+
+	Profile.async().then(function()
+	{
+		var user = Profile.getUser();
+		$scope.name = user.first_name + " " + user.last_name;
+		Profile.setUser(user);
+	});
+
 	socket.on('init', function (data)
 	{
-		var url = "api/encounter/" + encounterID;
 
-		$http.get(url).success(function(data)
-		{
-			$scope.encounter = data.encounter;
-			Profile.setEncounter(data.encounter._id);
-
-			$scope.updatePlayers();
-		});
 	});
 
 	socket.on('update:encounter', function(data)
@@ -190,7 +195,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.listModalselectCharacter = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addcharacter/' + encounterID;
 		var data =
@@ -222,7 +227,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.listModalselectNPC = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addnpc2/' + encounterID;
 		var data =

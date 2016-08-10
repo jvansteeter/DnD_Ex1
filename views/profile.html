@@ -39,7 +39,6 @@
         <div class="nav-collapse collase">
           <ul class="nav navbar-nav">
             <li><a href="home">Home</a></li>
-            <li><a href="campaign">Campaign</a></li>
             <li><a href="profile">Profile</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
@@ -85,7 +84,7 @@
               <a href="#" class="list-group-item btn btn-lg" data-template-url="modal/listCharactersModal.html" bs-modal="modal">Edit Character</a>
               <a href="newNPC" class="list-group-item btn btn-lg">New NPC</a>
               <a href="#" class="list-group-item btn btn-lg" data-template-url="modal/listNPCModal.html" bs-modal="modal">Edit NPC</a>
-              <a href="#" class="list-group-item btn btn-lg" data-placement="center" data-template-url="modal/newCampaign.html" bs-modal>Create Campaign</a>
+              <a href="#" class="list-group-item btn btn-lg" data-placement="center" data-template-url="modal/newCampaignModal.html" bs-modal>Create Campaign</a>
             </div>
           </div>
         </div>
@@ -99,6 +98,9 @@
               <h2 class="panel-title" style="font-size: 20px">My Campaigns</h2>
             </div>
             <div class="panel-body">
+              <ul>
+                <li ng-repeat="campaign in campaigns"><a href="campaign?{{ campaign._id }}">{{ campaign.name }}</a></li>
+              </ul>
               <hr>
             </div>
           </div>

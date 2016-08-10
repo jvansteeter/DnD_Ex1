@@ -24,69 +24,42 @@ clientApp.service('Profile', function($window, $http, $q)
         return user;
     };
 
-    profile.setFirstName = function(name)
+    profile.setUser = function(data)
     {
-        $window.sessionStorage.setItem("firstName", name);
+        user = data;
     };
 
     profile.getFirstName = function()
     {
         // var data = $window.sessionStorage.getItem("firstName");
         // return data;
-    };
-
-    profile.setLastName = function(name)
-    {
-        $window.sessionStorage.setItem("lastName", name);
+        return user.first_name;
     };
 
     profile.getLastName = function()
     {
         // var data = $window.sessionStorage.getItem("lastName");
         // return data;
-    };
-
-    profile.setUsername = function(name)
-    {
-        $window.sessionStorage.setItem("username", name);
+        return user.last_name;
     };
 
     profile.getUsername = function()
     {
         // var data = $window.sessionStorage.getItem("username");
         // return data;
-    };
-
-    profile.setUserID = function(userID)
-    {
-        $window.sessionStorage.setItem("userID", userID);
+        return user.username;
     };
 
     profile.getUserID = function()
     {
         // var data = $window.sessionStorage.getItem("userID");
         // return data;
+        return user._id;
     };
 
-    profile.getEncounter = function()
+    profile.getProfilePhotoURL = function()
     {
-        var myData = $window.sessionStorage.getItem("encounter");
-        return myData;
-    };
-    
-    profile.setEncounter = function(encounter)
-    {
-        $window.sessionStorage.setItem("encounter", encounter);
-    };
-
-    profile.setCampaign = function(campaign)
-    {
-        $window.sessionStorage.setItem("campaign", campaign);
-    };
-
-    profile.getCampaign = function()
-    {
-        return $window.sessionStorage.getItem("campaign");
+        return user.profilePhotoURL;
     };
     
     return profile;
