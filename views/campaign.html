@@ -25,7 +25,6 @@
   <script src="javascript/socketFactory.js"></script>
   <script src="javascript/control/campaignController.js"></script>
   <script src="javascript/control/headerController.js"></script>
-  <script src="javascript/control/encounterModalController.js"></script>
 
   <title>Dungeon Map</title>
 </head>
@@ -81,12 +80,12 @@
       <hr>
       <div class="well well-sm">
         <div class="list-group" style="margin-bottom: 0px">
-          <a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="modal/newEncounterModal.html" bs-modal="modal">New Post</a>
+          <a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="modal/campaignPostModal.html" bs-modal="modal">New Post</a>
         </div>
       </div>
     </div>
     <div class="col col-sm-9">
-      <h1>Clash of Dominions</h1>
+      <h1>{{ campaign.name }}</h1>
       <div class="panel panel-default" ng-repeat="post in posts">
         <div class="panel-heading">
           <h2 class="panel-title" style="font-size: 20px">
@@ -104,9 +103,7 @@
         </div>
         <div class="panel-body">
           <h6>{{ post.createdAt }}</h6>
-          <p>{{ encounter.description }}</p>
-          <br>
-          <a href="encounter?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
+          <p>{{ post.content }}</p>
           <hr>
         </div>
       </div>

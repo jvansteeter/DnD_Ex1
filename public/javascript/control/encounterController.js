@@ -2,23 +2,28 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapMain)
+clientApp.controller('encounterController', function($scope, $http, socket, Profile)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 	$scope.players = [];
 
+	$http.get('api/encounter/' + encounterID).success(function(data)
+	{
+		$scope.encounter = data.encounter;
+		$scope.updatePlayers();
+	});
+
+	Profile.async().then(function()
+	{
+		var user = Profile.getUser();
+		$scope.name = user.first_name + " " + user.last_name;
+		Profile.setUser(user);
+	});
+
 	socket.on('init', function (data)
 	{
-		var url = "api/encounter/" + encounterID;
 
-		$http.get(url).success(function(data)
-		{
-			$scope.encounter = data.encounter;
-			Profile.setEncounter(data.encounter._id);
-
-			$scope.updateGameState();
-		});
 	});
 
 	socket.on('update:encounter', function(data)
@@ -26,7 +31,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		console.log("Updating encounter");
 		if (data.encounterID === encounterID)
 		{
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		}
 	});
 
@@ -38,15 +43,18 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		}
 	});
 
-	$scope.updateGameState = function()
+	$scope.demonstrateTwoWayBinding = function()
 	{
-		var url = 'api/encounter/gamestate/' + encounterID;
+		console.log("In controller:: attempting 2 way binding");
+	};
+
+	$scope.updatePlayers = function()
+	{
+		var url = 'api/encounter/players/' + encounterID;
 		$http.get(url).success(function(data)
 		{
-			$scope.players = data.players;
-			// console.log(data);
-			mapMain.setGameState(data);
-			mapMain.start();
+			$scope.players = data;
+			console.log(data);
 		});
 	};
 
@@ -125,7 +133,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				encounterID : encounterID
 			});
 
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -149,7 +157,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				encounterID : encounterID
 			});
 
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -187,7 +195,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.listModalselectCharacter = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addcharacter/' + encounterID;
 		var data =
@@ -203,7 +211,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -219,7 +227,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.listModalselectNPC = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addnpc2/' + encounterID;
 		var data =
@@ -235,7 +243,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -287,7 +295,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-				$scope.updateGameState();
+				$scope.updatePlayers();
 			}
 		});
 	};

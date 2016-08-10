@@ -7,6 +7,7 @@ var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
 var Campaign = mongoose.model('Campaign');
+var CampaignPost = mongoose.model('CampaignPost');
 var CampaignUser = mongoose.model('CampaignUser');
 var NPC = mongoose.model('NPC');
 var formidable = require('formidable');
@@ -484,7 +485,7 @@ router.post('/character/create', function(req, res)
 {
     Character.create(
     {
-        userID: req.body.userID,
+        userID: req.user._id,
         name: req.body.character.name,
         class: req.body.character.class,
         level: req.body.character.level,
@@ -565,7 +566,7 @@ router.post('/npc/create', function(req, res)
 {
     NPC.create(
         {
-            userID: req.body.userID,
+            userID: req.user._id,
             name: req.body.npc.name,
             descriptors: req.body.npc.descriptors,
             description: req.body.npc.description,
@@ -804,8 +805,53 @@ router.post('/encounter/updatenpc', function(req, res)
 
 router.get('/user', function(req, res)
 {
-    console.log(JSON.stringify(req.user));
     res.json(req.user);
+});
+
+router.get('/user/campaigns', function(req, res)
+{
+    CampaignUser.find({userID: req.user._id}, function(error, campaignUsers)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign user relations");
+            return;
+        }
+
+        var campaignIDs = [];
+        for (var i = 0; i < campaignUsers.length; i++)
+        {
+            campaignIDs.push(campaignUsers[i].campaignID);
+        }
+
+        Campaign.find({_id: {$in: campaignIDs}}, function(error, campaigns)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding campaigns");
+                return;
+            }
+
+            res.send(campaigns);
+        });
+    });
+});
+
+router.get('/campaign/:campaign_id', function(req, res)
+{
+    console.log("Requesting the campaign");
+    console.log(req.params.campaign_id);
+    Campaign.findById(req.params.campaign_id, function(error, campaign)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign");
+            return;
+        }
+
+        console.log("Sending the response");
+        res.json(campaign);
+    });
 });
 
 router.post('/campaign/create', function(req, res)
@@ -830,6 +876,25 @@ router.post('/campaign/create', function(req, res)
         {
             res.send("OK");
         });
+    })
+});
+
+router.post('campaign/post', function(req, res)
+{
+    var post = new CampaignPost();
+    post.userID = req.user._id;
+    post.author = req.user.first_name + " " + req.user.last_name;
+    post.authorPhoto = req.user.profilePhotoURL;
+    post.content = req.body.content;
+    post.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving post");
+            return;
+        }
+
+        res.send("OK");
     })
 });
 
