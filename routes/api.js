@@ -207,7 +207,7 @@ router.post('/encounter/addnpc/:encounter_id', function(req, res)
 
 router.post('/encounter/addnpc2/:encounter_id', function(req, res)
 {
-    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    Encounter.findById(req.params.encounter_id, function(error, encounterState)
     {
         if (error)
         {
@@ -237,7 +237,7 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
                     npc : true
                 });
 
-            encounter.addPlayer(encounterPlayer._id);
+            encounterState.addPlayer(encounterPlayer._id);
             encounterPlayer.save(function(error)
             {
                 if (error)

@@ -19,8 +19,8 @@ clientApp.service('tokenRenderer', function () {
 
         context = canvas.get(0).getContext('2d');
 
-        gameState = gameStateParam;
-        console.log(gameState);
+        encounterState = gameStateParam;
+        console.log(encounterState);
         tileSize = 50;
 
     };
@@ -30,9 +30,9 @@ clientApp.service('tokenRenderer', function () {
         this.tokenImage = new Image();
         this.tokenImage.src = "image/map/playerOne.png";
 
-        for(i = 0; i < gameState.players.length; i++){
+        for(i = 0; i < encounterState.players.length; i++){
             this.tokenImage = new Image();
-            if(!gameState.players[i].npc){
+            if(!encounterState.players[i].npc){
                 this.tokenImage.src = "image/map/playerOne.png";
             }
             else {
