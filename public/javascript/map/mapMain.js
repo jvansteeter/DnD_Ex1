@@ -19,7 +19,7 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer)
         gridRenderer.init($gridCanvas);
 
         var $tokenCanvas = $('#tokenCanvas');
-        tokenRenderer.init($tokenCanvas, gameState);
+        tokenRenderer.init($tokenCanvas, encounterState);
 
 
         // run game
@@ -35,7 +35,7 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer)
     mapMain.setGameState = function(data)
     {
         console.log("---!!! In mapInit setGameState function !!!---");
-        gameState = data;
+        encounterState = data;
     };
     
 
