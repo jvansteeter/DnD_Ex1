@@ -2,11 +2,11 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, socket, Profile, mapMain)
+clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
-	$scope.players = [];
+	$scope.gameState;
 
 	socket.on('init', function (data)
 	{
@@ -17,7 +17,10 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 			$scope.encounter = data.encounter;
 			Profile.setEncounter(data.encounter._id);
 
-			$scope.updateGameState();
+			$scope.updateGameState().then(function()
+			{
+				mapMain.start();
+			});
 		});
 	});
 
@@ -40,14 +43,21 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.updateGameState = function()
 	{
+
+		var deffered = $q.defer();
 		var url = 'api/encounter/gamestate/' + encounterID;
 		$http.get(url).success(function(data)
 		{
-			$scope.players = data.players;
+			$scope.gameState = data;
 			// console.log(data);
 			mapMain.setGameState(data);
-			mapMain.start();
+			deffered.resolve();
+		}).error(function(data)
+		{
+			deffered.reject();
 		});
+
+		return deffered.promise;
 	};
 
 	$scope.setPlayer = function(index)
@@ -71,17 +81,17 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.isNPC = function(index)
 	{
-		return $scope.players[index].npc;
+		return $scope.gameState.players[index].npc;
 	};
 	
 	$scope.isMyCharacter = function(index)
 	{
-		return (Profile.getUserID() === $scope.players[index].userID);
+		return (Profile.getUserID() === $scope.gameState.players[index].userID);
 	};
 
 	$scope.isVisible = function(index)
 	{
-		return $scope.players[index].visible;
+		return $scope.gameState.players[index].visible;
 	};
 
 	$scope.toggleVisible = function(index)
@@ -89,7 +99,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		var url = 'api/encounter/togglevisible';
 		var data =
 		{
-			playerID : $scope.players[index]._id
+			playerID : $scope.gameState.players[index]._id
 		};
 		$http.post(url, data).success(function(data)
 		{
@@ -99,7 +109,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				{
 					encounterID : encounterID
 				});
-				$scope.players[index].visible = !$scope.players[index].visible;
+				$scope.gameState.players[index].visible = !$scope.gameState.players[index].visible;
 			}
 		});
 	};
@@ -114,7 +124,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		hit = hit * $scope.multiple;
 		var data = 
 		{
-			playerID : $scope.players[$scope.selectedPlayer]._id,
+			playerID : $scope.gameState.players[$scope.selectedPlayer]._id,
 			hit : hit
 		};
 		var url = 'api/encounter/hitplayer';
@@ -139,7 +149,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		var url = 'api/encounter/setinitiative';
 		var data =
 		{
-			playerID : $scope.players[$scope.selectedPlayer]._id,
+			playerID : $scope.gameState.players[$scope.selectedPlayer]._id,
 			initiative : initiative
 		};
 		$http.post(url, data).success(function(data)
@@ -160,7 +170,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		var url = 'api/encounter/removeplayer/' + encounterID;
 		var data =
 		{
-			playerID : $scope.players[index]._id
+			playerID : $scope.gameState.players[index]._id
 		};
 
 		$http.post(url, data).success(function(data)
@@ -171,7 +181,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 				encounterID : encounterID
 			});
 
-			$scope.players.splice(index, 1);
+			$scope.gameState.players.splice(index, 1);
 		});
 	};
 
@@ -268,7 +278,7 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 	
 	$scope.setNPCtoEdit = function(index)
 	{
-		$scope.editNPC = JSON.parse(JSON.stringify($scope.players[index]));
+		$scope.editNPC = JSON.parse(JSON.stringify($scope.gameState.players[index]));
 	};
 
 	$scope.editModalSave = function()
