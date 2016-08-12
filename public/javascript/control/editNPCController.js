@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('editNPCController', function($scope, $window, $http, Profile)
+clientApp.controller('editNPCController', function($scope, $window, $http)
 {
     $scope.npc = {};
     $scope.npc.features = [];

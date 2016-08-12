@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var fs = require('fs-extra');
 var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
+var Campaign = mongoose.model('Campaign');
+var CampaignPost = mongoose.model('CampaignPost');
+var CampaignUser = mongoose.model('CampaignUser');
 var NPC = mongoose.model('NPC');
-// var passport = require('passport');
+var formidable = require('formidable');
+var path = require('path');
 
 //
 // API
@@ -14,7 +19,7 @@ var NPC = mongoose.model('NPC');
 
 router.post('/encounter/create', function(req, res)
 {
-    User.findById(req.body.userID, function(error, user)
+    User.findById(req.user._id, function(error, user)
     {
         if (error)
         {
@@ -26,8 +31,9 @@ router.post('/encounter/create', function(req, res)
         Encounter.create(
             {
                 title : req.body.title,
+                campaignID: req.body.campaignID,
                 description : req.body.description,
-                hostID : req.body.userID,
+                hostID : req.user._id,
                 hostName : name,
                 active : false
             }, function(error, encounter)
@@ -43,6 +49,66 @@ router.post('/encounter/create', function(req, res)
     });
 });
 
+router.get('/image/profile', function(req, res)
+{
+    User.findById(req.user._id, function(error, user)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding user");
+            return;
+        }
+
+        res.sendFile(path.resolve(user.profilePhotoURL));
+    });
+});
+
+
+router.post('/image/profile', function(req, res)
+{
+    var directory = "image/users/" + req.user._id + "/";
+    var fileName = "profile" + path.extname(req.files.file.file);
+
+    fs.ensureDirSync(directory);
+
+    fs.copy(req.files.file.file, directory + fileName, function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error copying file");
+            return;
+        }
+
+        User.findById(req.user._id, function(error, user)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding user");
+                return;
+            }
+
+            user.profilePhotoURL = directory + fileName;
+            user.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send("Error saving profile photo");
+                }
+
+                fs.unlink(req.files.file.file, function(error)
+                {
+                    if (error)
+                    {
+                        res.status(500).send("Error unlinking old file");
+                    }
+
+                    res.send("OK");
+                });
+            });
+        });
+    });
+});
+
 router.get('/encounter/all', function(req, res)
 {
     Encounter.find({ $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
@@ -53,7 +119,35 @@ router.get('/encounter/all', function(req, res)
             return;
         }
 
-        res.json({ encounters : encounters });
+        res.json(encounters);
+    });
+});
+
+router.get('/campaign/all', function(req, res)
+{
+    Campaign.find({}, function(error, campaigns)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding encounters");
+            return;
+        }
+
+        res.json(campaigns);
+    });
+});
+
+router.get('/campaign/encounter/:campaign_id', function(req, res)
+{
+    Encounter.find({ campaignID: req.params.campaign_id, $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding encounters");
+            return;
+        }
+
+        res.json(encounters);
     });
 });
 
@@ -67,7 +161,7 @@ router.get('/encounter/:encounter_id', function(req, res)
             return;
         }
 
-        res.json({ encounter : encounter });
+        res.json(encounter);
     });
 });
 
@@ -421,7 +515,7 @@ router.post('/character/create', function(req, res)
 {
     Character.create(
     {
-        userID: req.body.userID,
+        userID: req.user._id,
         name: req.body.character.name,
         class: req.body.character.class,
         level: req.body.character.level,
@@ -502,7 +596,7 @@ router.post('/npc/create', function(req, res)
 {
     NPC.create(
         {
-            userID: req.body.userID,
+            userID: req.user._id,
             name: req.body.npc.name,
             descriptors: req.body.npc.descriptors,
             description: req.body.npc.description,
@@ -737,6 +831,134 @@ router.post('/encounter/updatenpc', function(req, res)
            res.send("OK");
        });
    }) ;
+});
+
+router.get('/user', function(req, res)
+{
+    res.json(req.user);
+});
+
+router.get('/user/campaigns', function(req, res)
+{
+    CampaignUser.find({userID: req.user._id}, function(error, campaignUsers)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign user relations");
+            return;
+        }
+
+        var campaignIDs = [];
+        for (var i = 0; i < campaignUsers.length; i++)
+        {
+            campaignIDs.push(campaignUsers[i].campaignID);
+        }
+
+        Campaign.find({_id: {$in: campaignIDs}}, function(error, campaigns)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding campaigns");
+                return;
+            }
+
+            res.send(campaigns);
+        });
+    });
+});
+
+router.get('/campaign/:campaign_id', function(req, res)
+{
+    console.log("Requesting the campaign");
+    console.log(req.params.campaign_id);
+    Campaign.findById(req.params.campaign_id, function(error, campaign)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign");
+            return;
+        }
+
+        console.log("Sending the response");
+        res.json(campaign);
+    });
+});
+
+router.post('/campaign/create', function(req, res)
+{
+    var campaign = new Campaign();
+    campaign.addHost(req.user._id);
+    campaign.title = req.body.title;
+    campaign.description = req.body.description;
+    campaign.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving campaign");
+            return;
+        }
+
+        var campaignUser = new CampaignUser();
+        campaignUser.userID = req.user._id;
+        campaignUser.campaignID = campaign._id;
+
+        campaignUser.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving campaign user relation");
+                return;
+            }
+
+            res.send("OK");
+        });
+    })
+});
+
+router.post('/campaign/join/', function(req, res)
+{
+    CampaignUser.findOrCreate(
+    {
+        userID: req.user._id,
+        campaignID: req.body.campaignID
+    }, function(error, campaignUser)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding or creating campaign user relation");
+            return;
+        }
+
+        campaignUser.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving campaign user relation");
+                return;
+            }
+
+            res.send("OK");
+        });
+    });
+});
+
+router.post('campaign/post', function(req, res)
+{
+    var post = new CampaignPost();
+    post.userID = req.user._id;
+    post.author = req.user.first_name + " " + req.user.last_name;
+    post.authorPhoto = req.user.profilePhotoURL;
+    post.content = req.body.content;
+    post.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving post");
+            return;
+        }
+
+        res.send("OK");
+    })
 });
 
 // function isLoggedIn(req, res, next) 

@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <form ng-submit="$hide()">
+        <div class="modal-body">
+          <input type='text' class='form-control' ng-model="newCampaignModal.title" placeholder='Title' style="margin-bottom: 10px" required autofocus>
+          <textarea style="resize: none" class="form-control" ng-model="newCampaignModal.description" rows="4" placeholder="Description" required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" ng-click="createNewCampaign()">Create</button>
+          <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

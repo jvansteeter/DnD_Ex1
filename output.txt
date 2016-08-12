@@ -1,0 +1,7 @@
+nohup: ignoring input
+
+> dnd@0.0.0 start /home/bitnami/servers/dndexperiments/dnd
+> node ./bin/www
+
+---!!! Connection has been intialized !!!---
+---!!! Connection has been intialized !!!---

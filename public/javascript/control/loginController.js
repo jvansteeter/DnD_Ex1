@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('loginControl', function($scope, $window, $http, $location, Profile) 
+clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 {
 	$scope.usernameInput = "";
 	$scope.passwordInput = "";
@@ -39,10 +39,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			console.log("Login was successful");
 			console.log(response);
 
-			Profile.setUsername(response.data.username);
-			Profile.setUserID(response.data._id);
-			Profile.setFirstName(response.data.first_name);
-			Profile.setLastName(response.data.last_name);
 			window.location = 'profile';
 		}, function(response)
 		{
@@ -109,10 +105,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 					console.log("Login was successful");
 					console.log(data);
 
-					Profile.setUsername(data.username);
-					Profile.setUserID(response.data._id);
-					Profile.setFirstName(data.first_name);
-					Profile.setLastName(data.last_name);
 					window.location = 'profile';
 				});
 			}

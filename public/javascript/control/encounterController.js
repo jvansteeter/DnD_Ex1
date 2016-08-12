@@ -7,9 +7,16 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 
-	socket.on('init', function(data)
+	Profile.async().then(function()
 	{
-		var url = "api/encounter/" + encounterID;
+		var user = Profile.getUser();
+		$scope.name = user.first_name + " " + user.last_name;
+		Profile.setUser(user);
+		$scope.init();
+	});
+
+	socket.on('init', function (data)
+	{
 
 		$http.get(url).success(function(data)
 		{
@@ -42,6 +49,23 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.updateGameState = function()
 	{
+		$http.get('api/encounter/' + encounterID).success(function(data)
+		{
+			console.log("init");
+			console.log(data);
+			$scope.encounter = data;
+			if (Profile.getUserID() === data.hostID)
+			{
+				$scope.host = true;
+			}
+			else
+			{
+				$scope.host = false;
+			}
+
+			$scope.updatePlayers();
+		});
+	};
 
 		var deffered = $q.defer();
 		var url = 'api/encounter/gamestate/' + encounterID;
@@ -71,6 +95,12 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.isHost = function()
 	{
+		// if (Profile.getUserID() === $scope.encounter.hostID)
+		// {
+		// 	return true;
+		// }
+		// return false;
+		return $scope.host;
 		return Profile.getUserID() === $scope.encounter.hostID;
 
 	};
@@ -193,7 +223,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.listModalselectCharacter = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addcharacter/' + encounterID;
 		var data =
@@ -225,7 +255,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.listModalselectNPC = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addnpc2/' + encounterID;
 		var data =
