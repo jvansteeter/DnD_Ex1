@@ -3,23 +3,24 @@ var clientApp = angular.module('clientApp');
 clientApp.service('mapRenderer', function () {
 
     var mapRenderer = {};
-        
-    mapRenderer.init = function(canvas){
-        this.w = canvas.width();
-        this.h = canvas.height();
+    var canvas;
+    var context;
+    var width;
+    var height;
+    var bgImage = new Image();
 
-        // this.tileSize = options.tileSize;
-        this.context = canvas.get(0).getContext('2d');
+    mapRenderer.init = function(canvasParam){
 
-        // this.gameModel = options.gameModel;
-        // this.bgImage = this.gameModel.mapImage.getImage();
+        canvas = canvasParam;
+        width = canvas.width();
+        height = canvas.height();
+        context = canvas.get(0).getContext('2d');
 
-        this.bgImage = new Image();
-        this.bgImage.src = "image/map/dungeon.jpg";
+        bgImage.src = "image/map/dungeon.jpg";
     };
 
     mapRenderer.draw = function(){
-        this.context.drawImage(this.bgImage,0,0);
+        context.drawImage(bgImage,0,0);
     };
     
     return mapRenderer;

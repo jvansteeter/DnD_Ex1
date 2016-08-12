@@ -3,24 +3,21 @@ var clientApp = angular.module('clientApp');
 clientApp.service('tokenRenderer', function () {
 
     var tokenRenderer = {};
-    var gameState;
+    var encounterState;
     var canvas;
     var context;
     var width;
     var height;
     var tileSize;
 
-    tokenRenderer.init = function(canvasParam, gameStateParam){
+    tokenRenderer.init = function(canvasParam, encounterStateParam){
 
         canvas = canvasParam;
 
         width = canvas.width();
         height = canvas.height();
-
         context = canvas.get(0).getContext('2d');
-
-        encounterState = gameStateParam;
-        console.log(encounterState);
+        encounterState = encounterStateParam;
         tileSize = 50;
 
     };
