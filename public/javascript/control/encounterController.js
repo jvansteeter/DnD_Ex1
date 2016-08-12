@@ -7,32 +7,36 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 
-	Profile.async().then(function()
-	{
-		var user = Profile.getUser();
-		$scope.name = user.first_name + " " + user.last_name;
-		Profile.setUser(user);
-		$scope.init();
-	});
-
 	socket.on('init', function (data)
 	{
-
-		$http.get(url).success(function(data)
+		Profile.async().then(function()
 		{
-			$scope.encounter = data.encounter;
-			Profile.setEncounter(data.encounter._id);
+			var user = Profile.getUser();
+			$scope.name = user.first_name + " " + user.last_name;
+			Profile.setUser(user);
 
-			$scope.updateGameState().then(function()
+			$http.get('api/encounter/' + encounterID).success(function(data)
 			{
-				mapMain.start();
+				$scope.encounter = data;
+				if (Profile.getUserID() === data.hostID)
+				{
+					$scope.host = true;
+				}
+				else
+				{
+					$scope.host = false;
+				}
+
+				$scope.updateGameState().then(function()
+				{
+					mapMain.start();
+				});
 			});
 		});
 	});
 
 	socket.on('update:encounter', function(data)
 	{
-		console.log("Updating encounter");
 		if (data.encounterID === encounterID)
 		{
 			$scope.updateGameState();
@@ -49,30 +53,11 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.updateGameState = function()
 	{
-		$http.get('api/encounter/' + encounterID).success(function(data)
-		{
-			console.log("init");
-			console.log(data);
-			$scope.encounter = data;
-			if (Profile.getUserID() === data.hostID)
-			{
-				$scope.host = true;
-			}
-			else
-			{
-				$scope.host = false;
-			}
-
-			$scope.updatePlayers();
-		});
-	};
-
 		var deffered = $q.defer();
 		var url = 'api/encounter/gamestate/' + encounterID;
 		$http.get(url).success(function(data)
 		{
 			$scope.encounterState = data;
-			// console.log(data);
 			mapMain.setGameState(data);
 			deffered.resolve();
 		}).error(function(data)
@@ -101,8 +86,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		// }
 		// return false;
 		return $scope.host;
-		return Profile.getUserID() === $scope.encounter.hostID;
-
 	};
 
 	$scope.isNPC = function(index)
@@ -191,8 +174,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.removePlayer = function(index)
 	{
-		console.log("Removing player " + index);
-
 		var url = 'api/encounter/removeplayer/' + encounterID;
 		var data =
 		{
@@ -201,8 +182,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 		$http.post(url, data).success(function(data)
 		{
-			console.log(data);
-			socket.emit('update:encounter', 
+			socket.emit('update:encounter',
 			{
 				encounterID : encounterID
 			});
@@ -216,7 +196,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		var url = 'api/character/all/' + Profile.getUserID();
 		$http.get(url).success(function(data)
 		{
-			console.log(data);
 			$scope.characters = data.characters;
 		});
 	};
@@ -233,8 +212,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		
 		$http.post(url, data).success(function(data)
 		{
-			console.log(data);
-			console.log("Character successfully added");
 			socket.emit('update:encounter',
 				{
 					encounterID : encounterID
@@ -248,7 +225,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		var url = 'api/npc/all/';
 		$http.get(url).success(function(data)
 		{
-			console.log(data);
 			$scope.npcs = data.npcs;
 		});
 	};
@@ -265,8 +241,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 		$http.post(url, data).success(function(data)
 		{
-			console.log(data);
-			console.log("NPC successfully added");
 			socket.emit('update:encounter',
 				{
 					encounterID : encounterID
@@ -277,8 +251,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.submit = function()
 	{
-		console.log("Ending encounter");
-
 		var url = 'api/encounter/setactive/' + encounterID;
 		var active = !$scope.encounter.active;
 		var data =
@@ -288,8 +260,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 		$http.post(url, data).success(function(data)
 		{
-			console.log(data);
-
 			if (data === "OK")
 			{
 				socket.emit('encounter:end', 
@@ -309,7 +279,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.editModalSave = function()
 	{
-		console.log($scope.editNPC);
 		var url = "api/encounter/updatenpc";
 		var data =
 		{

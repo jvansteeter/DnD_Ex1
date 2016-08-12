@@ -378,17 +378,13 @@ router.get('/encounter/gamestate/:encounter_id', function(req, res)
 
 router.post('/encounter/hitplayer', function(req, res)
 {
-    console.log("---!!! Attempting to hit a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
         {
-            console.log("Error finding the player");
             res.status(500).send("Error finding encounter player");
             return;
         }
-
-        console.log("found player " + player._id + " " + player.name + " " + req.body.hit);
 
         player.hitPoints += req.body.hit;
         if (!player.npc && player.hitPoints < -9)
@@ -404,7 +400,6 @@ router.post('/encounter/hitplayer', function(req, res)
         {
             if (error)
             {
-                console.log("Error saving the player");
                 res.status(500).send("Error saving encounter player");
                 return;
             }
@@ -416,24 +411,19 @@ router.post('/encounter/hitplayer', function(req, res)
 
 router.post('/encounter/setinitiative', function(req, res)
 {
-    console.log("---!!! Attempting to set the initiative of a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
         {
-            console.log("Error finding the player");
             res.status(500).send("Error finding encounter player");
             return;
         }
-
-        console.log("found player " + player._id + " " + player.name + " " + req.body.hit);
 
         player.initiative = req.body.initiative;
         player.save(function(error)
         {
             if (error)
             {
-                console.log("Error saving the player");
                 res.status(500).send("Error saving player");
                 return;
             }
@@ -445,7 +435,6 @@ router.post('/encounter/setinitiative', function(req, res)
 
 router.post('/encounter/togglevisible', function(req, res)
 {
-    console.log("---!!! Attempting to toggle visibility !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
@@ -639,7 +628,6 @@ router.post('/npc/create', function(req, res)
 
 router.post('/npc/update', function(req, res)
 {
-    console.log(req.body.npc._id);
     NPC.findById(req.body.npc._id, function(error, npc)
     {
         if (error)
@@ -869,8 +857,6 @@ router.get('/user/campaigns', function(req, res)
 
 router.get('/campaign/:campaign_id', function(req, res)
 {
-    console.log("Requesting the campaign");
-    console.log(req.params.campaign_id);
     Campaign.findById(req.params.campaign_id, function(error, campaign)
     {
         if (error)
@@ -879,7 +865,6 @@ router.get('/campaign/:campaign_id', function(req, res)
             return;
         }
 
-        console.log("Sending the response");
         res.json(campaign);
     });
 });
@@ -960,14 +945,5 @@ router.post('campaign/post', function(req, res)
         res.send("OK");
     })
 });
-
-// function isLoggedIn(req, res, next) 
-// {
-//     // if user is authenticated in the session, carry on 
-//     if (req.isAuthenticated())
-//         return next();
-//     // if they aren't redirect them to the home page
-//     res.sendStatus(401);
-// }
 
 module.exports = router;

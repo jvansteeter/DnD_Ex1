@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var findOrCreate = require('mongoose-findorcreate');
 
 // setup bcrypt
