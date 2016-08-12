@@ -4,7 +4,13 @@ clientApp.service('Profile', function($window, $http, $q)
 {
     var deffered = $q.defer();
     var profile = {};
-    var user = {};
+    var user = {
+        first_name: "",
+        last_name: "",
+        username: "",
+        _id: "",
+        profilePhotoURL: ""
+    };
 
     profile.async = function()
     {
