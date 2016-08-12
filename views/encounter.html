@@ -70,6 +70,7 @@
 <!-- Begin Body -->
 <div class="container" ng-controller="encounterController">
     <div class="row">
+
         <div class="col col-md-3">
             <hr>
             <div class="well well-sm">
@@ -96,7 +97,8 @@
                     <div class="initiative box">
                         <ul ng-model="players" class="list-group">
                             <li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
-                            <li ng-repeat="player in encounterState.players | orderBy:'-initiative'" class="list-group-item"
+                            <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
+                                class="list-group-item"
                                 ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0"
                                 style="border-left: 4px solid {{ getColor(player) }};">
                                 <span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
@@ -107,12 +109,14 @@
                 </li>
             </ul>
         </div>
+
         <div class="col col-md-9">
             <h1>{{ encounter.title }}<span ng-if="!encounter.active" style="color: red; float: right;">Closed</span>
             </h1>
             <div class="container-fluid">
                 <div class="row">
-                    <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv"
+                    <div style="overflow:scroll; position: relative; height: 650px; width: 650px; margin-bottom: 20px;"
+                         id="mapDiv"
                          ng-controller="inputController">
                         <canvas style="border:1px solid #c3c3c3; z-index:0; position:absolute;" id="mapCanvas"
                                 width="650" height="650"></canvas>
@@ -125,6 +129,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist"
@@ -254,30 +259,32 @@
                     </div>
                 </div>
                 <!--<div class="col col-md-3">-->
-                    <!--<br>-->
-                    <!--<br>-->
-                    <!--<br>-->
-                    <!--<ul class="nav nav-stacked">-->
-                        <!--&lt;!&ndash;li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li&ndash;&gt;-->
-                        <!--<li>-->
-                            <!--<div class="initiative box">-->
-                                <!--<ul ng-model="players" class="list-group">-->
-                                    <!--<li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4>-->
-                                    <!--</li>-->
-                                    <!--<li ng-repeat="player in encounterState.players | orderBy:'-initiative'"-->
-                                        <!--class="list-group-item" ng-hide="!isHost() && !player.visible"-->
-                                        <!--ng-if="player.initiative > 0">-->
-                                        <!--<span ng-if="player.hitPoints < 1"-->
-                                              <!--style="color:red"><strike>{{ player.name }}</strike></span>-->
-                                        <!--<span ng-if="player.hitPoints > 0">{{ player.name }}</span>-->
-                                        <!--<span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-                            <!--</div>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<br>-->
+                <!--<br>-->
+                <!--<br>-->
+                <!--<ul class="nav nav-stacked">-->
+                <!--&lt;!&ndash;li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li&ndash;&gt;-->
+                <!--<li>-->
+                <!--<div class="initiative box">-->
+                <!--<ul ng-model="players" class="list-group">-->
+                <!--<li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4>-->
+                <!--</li>-->
+                <!--<li ng-repeat="player in encounterState.players | orderBy:'-initiative'"-->
+                <!--class="list-group-item" ng-hide="!isHost() && !player.visible"-->
+                <!--ng-if="player.initiative > 0">-->
+                <!--<span ng-if="player.hitPoints < 1"-->
+                <!--style="color:red"><strike>{{ player.name }}</strike></span>-->
+                <!--<span ng-if="player.hitPoints > 0">{{ player.name }}</span>-->
+                <!--<span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--</ul>-->
                 <!--</div>-->
             </div>
         </div>
+    </div>
+</div>
 </body>
 </html>
