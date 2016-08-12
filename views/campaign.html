@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="javascript/angularModule.js"></script>
+  <script src="javascript/app/campaignApp.js"></script>
   <script src="javascript/profileService.js"></script>
   <script src="javascript/socketFactory.js"></script>
   <script src="javascript/control/campaignController.js"></script>
@@ -76,38 +76,97 @@
 <!-- Begin Body -->
 <div class="container" ng-controller="campaignController">
   <div class="row">
-    <div class="col col-sm-3">
+    <div class="hidden">
       <hr>
       <div class="well well-sm">
         <div class="list-group" style="margin-bottom: 0px">
-          <a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="modal/campaignPostModal.html" bs-modal="modal">New Post</a>
+          <a href="#" class="list-group-item btn btn-lg">Add Encounter</a>
         </div>
       </div>
     </div>
-    <div class="col col-sm-9">
+    <div class="col col-xs-12">
       <h1>{{ campaign.name }}</h1>
-      <div class="panel panel-default" ng-repeat="post in posts">
-        <div class="panel-heading">
-          <h2 class="panel-title" style="font-size: 20px">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col col-xs-1">
-                  <img class="img-circle" src="">
+      <div bs-tabs>
+
+        <div data-title="Home" bs-pane>
+
+        </div>
+
+        <div data-title="Encounters" bs-pane>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="{{ encounterMenu }}">
+                <hr>
+                <div class="well well-sm">
+                  <div class="list-group" style="margin-bottom: 0px">
+                    <a href="#" class="list-group-item btn btn-lg" data-animation="am-fade-and-slide-top" data-template-url="modal/newEncounterModal.html" bs-modal="modal">Add Encounter</a>
+                  </div>
                 </div>
-                <div class="col col-xs-11">
-                  {{ post.author }}
+              </div>
+              <div class="{{ encounterMain }}">
+                <hr>
+                <div class="panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
+                  <div class="panel panel-default" ng-repeat="encounter in encounters">
+                    <div class="panel-heading">
+                      <h2 class="panel-title" style="font-size: 20px">
+                        <a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer">{{ encounter.title }}</a>
+                        <span style="float: right; color: red" ng-if="!encounter.active">Closed</span>
+                      </h2>
+                    </div>
+                    <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                      <div class="panel-body">
+                        <h6> Hosted by: {{ encounter.hostName }}</h6>
+                        <p>{{ encounter.description }}</p>
+                        <br>
+                        <a href="encounter?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
+                        <hr>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </h2>
+          </div>
         </div>
-        <div class="panel-body">
-          <h6>{{ post.createdAt }}</h6>
-          <p>{{ post.content }}</p>
-          <hr>
+
+        <div data-title="Wall" bs-pane>
+
         </div>
+
       </div>
     </div>
+    <!--<div class="col col-sm-3">-->
+      <!--<hr>-->
+      <!--<div class="well well-sm">-->
+        <!--<div class="list-group" style="margin-bottom: 0px">-->
+          <!--<a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="modal/campaignPostModal.html" bs-modal="modal">New Post</a>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col col-sm-9">-->
+      <!--<h1>{{ campaign.name }}</h1>-->
+      <!--<div class="panel panel-default" ng-repeat="post in posts">-->
+        <!--<div class="panel-heading">-->
+          <!--<h2 class="panel-title" style="font-size: 20px">-->
+            <!--<div class="container-fluid">-->
+              <!--<div class="row">-->
+                <!--<div class="col col-xs-1">-->
+                  <!--<img class="img-circle" src="">-->
+                <!--</div>-->
+                <!--<div class="col col-xs-1">-->
+                  <!--{{ post.author }}-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</h2>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+          <!--<h6>{{ post.createdAt }}</h6>-->
+          <!--<p>{{ post.content }}</p>-->
+          <!--<hr>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </div>
 </body>

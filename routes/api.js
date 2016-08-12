@@ -19,7 +19,7 @@ var path = require('path');
 
 router.post('/encounter/create', function(req, res)
 {
-    User.findById(req.body.userID, function(error, user)
+    User.findById(req.user._id, function(error, user)
     {
         if (error)
         {
@@ -31,8 +31,9 @@ router.post('/encounter/create', function(req, res)
         Encounter.create(
             {
                 title : req.body.title,
+                campaignID: req.body.campaignID,
                 description : req.body.description,
-                hostID : req.body.userID,
+                hostID : req.user._id,
                 hostName : name,
                 active : false
             }, function(error, encounter)
@@ -118,7 +119,21 @@ router.get('/encounter/all', function(req, res)
             return;
         }
 
-        res.json({ encounters : encounters });
+        res.json(encounters);
+    });
+});
+
+router.get('/encounter/:campaign_id', function(req, res)
+{
+    Encounter.find({ campaignID: req.params.campaign_id, $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding encounters");
+            return;
+        }
+
+        res.json(encounters);
     });
 });
 

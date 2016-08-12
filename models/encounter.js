@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var encounterSchema = new mongoose.Schema(
 {
     title: String,
+    campaignID: String,
     description: String,
     hostID: String,
     hostName: String,

@@ -8,17 +8,12 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 	$scope.encounter = {};
 	$scope.players = [];
 
-	$http.get('api/encounter/' + encounterID).success(function(data)
-	{
-		$scope.encounter = data.encounter;
-		$scope.updatePlayers();
-	});
-
 	Profile.async().then(function()
 	{
 		var user = Profile.getUser();
 		$scope.name = user.first_name + " " + user.last_name;
 		Profile.setUser(user);
+		$scope.init();
 	});
 
 	socket.on('init', function (data)
@@ -43,9 +38,24 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		}
 	});
 
-	$scope.demonstrateTwoWayBinding = function()
+	$scope.init = function()
 	{
-		console.log("In controller:: attempting 2 way binding");
+		$http.get('api/encounter/' + encounterID).success(function(data)
+		{
+			console.log("init");
+			console.log(data);
+			$scope.encounter = data.encounter;
+			if (Profile.getUserID() === data.encounter.hostID)
+			{
+				$scope.host = true;
+			}
+			else
+			{
+				$scope.host = false;
+			}
+
+			$scope.updatePlayers();
+		});
 	};
 
 	$scope.updatePlayers = function()
@@ -70,11 +80,12 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 
 	$scope.isHost = function()
 	{
-		if (Profile.getUserID() === $scope.encounter.hostID)
-		{
-			return true;
-		}
-		return false;
+		// if (Profile.getUserID() === $scope.encounter.hostID)
+		// {
+		// 	return true;
+		// }
+		// return false;
+		return $scope.host;
 	};
 
 	$scope.isNPC = function(index)
