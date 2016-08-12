@@ -37,6 +37,7 @@
     <div class="nav-collapse collase">
       <ul class="nav navbar-nav">
         <li><a href="home">Home</a></li>
+        <li><a href="campaignList">Campaign</a></li>
         <li><a href="profile">Profile</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
@@ -76,14 +77,6 @@
 <!-- Begin Body -->
 <div class="container" ng-controller="campaignController">
   <div class="row">
-    <div class="hidden">
-      <hr>
-      <div class="well well-sm">
-        <div class="list-group" style="margin-bottom: 0px">
-          <a href="#" class="list-group-item btn btn-lg">Add Encounter</a>
-        </div>
-      </div>
-    </div>
     <div class="col col-xs-12">
       <h1>{{ campaign.name }}</h1>
       <div bs-tabs>

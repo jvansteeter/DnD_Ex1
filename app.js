@@ -67,6 +67,7 @@ app.use('/home', isLoggedIn, express.static('views/home.html'));
 app.use('/newCharacter', isLoggedIn, express.static('views/newCharacter.html'));
 app.use('/newNPC', isLoggedIn, express.static('views/newNPC.html'));
 app.use('/campaign', isLoggedIn, express.static('views/campaign.html'));
+app.use('/campaignList', isLoggedIn, express.static('views/campaignList.html'));
 app.use('/auth', authRouter);
 app.use('/api', isAuthenticated, api);
 

@@ -44,8 +44,8 @@ clientApp.controller('encounterController', function($scope, $http, socket, Prof
 		{
 			console.log("init");
 			console.log(data);
-			$scope.encounter = data.encounter;
-			if (Profile.getUserID() === data.encounter.hostID)
+			$scope.encounter = data;
+			if (Profile.getUserID() === data.hostID)
 			{
 				$scope.host = true;
 			}
