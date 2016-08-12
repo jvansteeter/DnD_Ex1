@@ -1,228 +1,285 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="clientApp">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-        <meta name="generator" content="Bootply" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <link href="stylesheet/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="stylesheet/style.css" rel="stylesheet">
 
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-        <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-        <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-        <!--script src="bower_components/angular-ui-sortable/sortable.min.js"></script-->
-        <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <!--script src="bower_components/angular-ui-sortable/sortable.min.js"></script-->
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="javascript/app/encounterApp.js"></script>
-        <script src="javascript/profileService.js"></script>
-        <script src="javascript/control/headerController.js"></script>
-        <script src="javascript/socketFactory.js"></script>
-        <script src="javascript/map/mapRenderer.js"></script>
-		<script src="javascript/map/gridRenderer.js"></script>
-		<script src="javascript/map/tokenRenderer.js"></script>
-		<script src="javascript/map/inputController.js"></script>
-        <script src="javascript/map/mapMain.js"></script>
-        <script src="javascript/control/encounterController.js"></script>
-        <script src="javascript/control/encounterAddPlayerController.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascript/app/encounterApp.js"></script>
+    <script src="javascript/profileService.js"></script>
+    <script src="javascript/control/headerController.js"></script>
+    <script src="javascript/socketFactory.js"></script>
+    <script src="javascript/map/mapRenderer.js"></script>
+    <script src="javascript/map/gridRenderer.js"></script>
+    <script src="javascript/map/tokenRenderer.js"></script>
+    <script src="javascript/map/inputController.js"></script>
+    <script src="javascript/map/mapMain.js"></script>
+    <script src="javascript/control/encounterController.js"></script>
+    <script src="javascript/control/encounterAddPlayerController.js"></script>
 
-        <title>Dungeon Map</title>
-	</head>
-	<body>
-		<nav class="navbar navbar-static navbar-inverse">
-			<div class="container">
-				<div class="nav-collapse collase">
-					<ul class="nav navbar-nav navbar-left">
-						<li><a href="home">Home</a></li>
-						<li><a href="profile">Profile</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i class="fa fa-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
-							</ul>
-						</li>
-					</ul>
-					<ul class="nav navbar-right navbar-nav">
-						<li class="dropdown" ng-controller="headerController">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="login">Logout</a></li>
-								<li><a href="#">Profile</a></li>
-								<li class="divider"></li>
-								<li><a href="#">About</a></li>
-							 </ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav><!-- /.navbar -->
+    <title>Dungeon Map</title>
+</head>
+<body>
+<nav class="navbar navbar-static navbar-inverse">
+    <div class="container">
+        <div class="nav-collapse collase">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="home">Home</a></li>
+                <li><a href="profile">Profile</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i
+                            class="fa fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-right navbar-nav">
+                <li class="dropdown" ng-controller="headerController">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <i class="fa fa-user"></i> <i
+                            class="fa fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="login">Logout</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-		<div class="container" ng-controller="encounterController">
-			<div class="row">
-				<div class="col col-md-3">
-					<hr>
-					<div class="well well-sm">
-						<div class="list-group" style="margin-bottom: 0px">
-							<a href="#" class="list-group-item" data-template-url="modal/listCharactersModal.html" data-placement="center" bs-modal="modal">Add Character</a>
-							<a href="#" class="list-group-item" data-template-url="modal/encounterAddPlayerModal.html" data-placement="center" bs-modal="modal">Add Player</a>
-							<a href="#" ng-show="isHost()" class="list-group-item" data-template-url="modal/encounterAddNPCModal.html" bs-modal="modal"><strike>Add NPC</strike></a>
-							<a href="#" ng-show="isHost()" class="list-group-item" data-template-url="modal/listNPCModal.html" bs-modal="modal">Add NPC</a>
-							<a href="#" ng-if="encounter.active" ng-show="isHost()" class="list-group-item" data-template-url="modal/areYouSureModal.html" data-placement="center" title="Close Encounter?" bs-modal="modal">Close Encounter</a>
-							<a href="#" ng-if="!encounter.active" ng-show="isHost()" class="list-group-item" data-template-url="modal/areYouSureModal.html" data-placement="center" title="Open Encounter?" bs-modal="modal">Open Encounter</a>
-						</div>
-					</div>
-					<ul class="nav nav-stacked">
-						<!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
-						<li>
-							<div class="initiative box">
-								<ul ng-model="players" class="list-group">
-									<li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
-									<li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item" ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0" style="border-left: 4px solid {{ getColor(player) }};">
-										<span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
-										<span ng-if="player.hitPoints > 0">{{ player.name }}</span>
-										<span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="col col-md-9">
-					<h1>{{ encounter.title }}<span ng-if="!encounter.active" style="color: red; float: right;">Closed</span></h1>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv" ng-controller="inputController">
-								<canvas style="border:1px solid #c3c3c3; z-index:0; position:absolute;" id="mapCanvas" width="650" height="650"></canvas>
-								<canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="gridCanvas" width="650" height="650"></canvas>
-								<canvas style="border:1px solid #c3c3c3; z-index:2; position:absolute;" id="tokenCanvas" width="650" height="650"></canvas>
-								<canvas style="border:1px solid #c3c3c3; z-index:3; position:absolute;" id="inputCanvas" width="650" height="650" ng-click="testClick()"></canvas>
-
-							</div>
-                        </div>
+<div class="container" ng-controller="encounterController">
+    <div class="row">
+        <div class="col col-md-3">
+            <hr>
+            <div class="well well-sm">
+                <div class="list-group" style="margin-bottom: 0px">
+                    <a href="#" class="list-group-item" data-template-url="modal/listCharactersModal.html"
+                       data-placement="center" bs-modal="modal">Add Character</a>
+                    <a href="#" class="list-group-item" data-template-url="modal/encounterAddPlayerModal.html"
+                       data-placement="center" bs-modal="modal">Add Player</a>
+                    <a href="#" ng-show="isHost()" class="list-group-item"
+                       data-template-url="modal/encounterAddNPCModal.html" bs-modal="modal"><strike>Add NPC</strike></a>
+                    <a href="#" ng-show="isHost()" class="list-group-item" data-template-url="modal/listNPCModal.html"
+                       bs-modal="modal">Add NPC</a>
+                    <a href="#" ng-if="encounter.active" ng-show="isHost()" class="list-group-item"
+                       data-template-url="modal/areYouSureModal.html" data-placement="center" title="Close Encounter?"
+                       bs-modal="modal">Close Encounter</a>
+                    <a href="#" ng-if="!encounter.active" ng-show="isHost()" class="list-group-item"
+                       data-template-url="modal/areYouSureModal.html" data-placement="center" title="Open Encounter?"
+                       bs-modal="modal">Open Encounter</a>
+                </div>
+            </div>
+            <ul class="nav nav-stacked">
+                <!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
+                <li>
+                    <div class="initiative box">
+                        <ul ng-model="players" class="list-group">
+                            <li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
+                            <li ng-repeat="player in players | orderBy:'-initiative'" class="list-group-item"
+                                ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0"
+                                style="border-left: 4px solid {{ getColor(player) }};">
+                                <span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
+                                <span ng-if="player.hitPoints > 0">{{ player.name }}</span>
+                                <span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
+                        </ul>
                     </div>
-					<div class ="container-fluid">
-						<div class="row">
-							<div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
-								<div class="panel panel-default" ng-show="isVisible($index) || isHost()" ng-repeat="player in encounterState.players track by $index">
-									<div class="panel-heading" role="tab">
+                </li>
+            </ul>
+        </div>
+        <div class="col col-md-9">
+            <h1>{{ encounter.title }}<span ng-if="!encounter.active" style="color: red; float: right;">Closed</span>
+            </h1>
+            <div class="container-fluid">
+                <div class="row">
+                    <div style="overflow:scroll; position: relative; height: 650px;" id="mapDiv"
+                         ng-controller="inputController">
+                        <canvas style="border:1px solid #c3c3c3; z-index:0; position:absolute;" id="mapCanvas"
+                                width="650" height="650"></canvas>
+                        <canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="gridCanvas"
+                                width="650" height="650"></canvas>
+                        <canvas style="border:1px solid #c3c3c3; z-index:2; position:absolute;" id="tokenCanvas"
+                                width="650" height="650"></canvas>
+                        <canvas style="border:1px solid #c3c3c3; z-index:3; position:absolute;" id="inputCanvas"
+                                width="650" height="650" ng-click="testClick()"></canvas>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col col-md-12 panel-group" data-allow-multiple="true" role="tablist"
+                         aria-multiselectable="true" bs-collapse>
+                        <div class="panel panel-default" ng-show="isVisible($index) || isHost()"
+                             ng-repeat="player in encounterState.players track by $index">
+                            <div class="panel-heading" role="tab">
+                                <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+                                    <div class="panel-heading" role="tab"
+                                         style="border-left: 15px solid {{ getColor(player) }};">
                                         <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
-									<div class="panel-heading" role="tab" style="border-left: 15px solid {{ getColor(player) }};">
-										<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
                                             <div id="mapDiv"></div>
-											<div class="row">
-												<div class="col col-md-4" style="padding-left: 10px">
-													<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer; text-decoration: none;">{{ player.name }} </a>
+                                            <div class="row">
+                                                <div class="col col-md-4" style="padding-left: 10px">
+                                                    <h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse"
+                                                                               style="cursor: pointer; text-decoration: none;">{{
+                                                        player.name }} </a>
 														<span style="float: right;">
-															<a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-plus" style="color: green;"></i></a>
-															<a href="#" ng-if="isHost() || isMyCharacter($index)" ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom" data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover><i class="fa fa-minus" style="color: red;"></i></a>
+															<a href="#" ng-if="isHost()"
+                                                               ng-click="setPlayer($index); setMultiplier(1)"
+                                                               data-placement="bottom"
+                                                               data-template-url="modal/playerHPPopover.html"
+                                                               data-auto-close="1" bs-popover><i class="fa fa-plus"
+                                                                                                 style="color: green;"></i></a>
+															<a href="#" ng-if="isHost() || isMyCharacter($index)"
+                                                               ng-click="setPlayer($index); setMultiplier(-1)"
+                                                               data-placement="bottom"
+                                                               data-template-url="modal/playerHPPopover.html"
+                                                               data-auto-close="1" bs-popover><i class="fa fa-minus"
+                                                                                                 style="color: red;"></i></a>
 														</span>
-													</h4>
-												</div>
-												<div class="col col-md-5">
-													<i class="fa fa-heart"></i>
+                                                    </h4>
+                                                </div>
+                                                <div class="col col-md-5">
+                                                    <i class="fa fa-heart"></i>
 													<span ng-if="!isHost() && isNPC($index)">???
-														<span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  {{ player.hitPoints - player.maxHitPoints }} </span>
-														<span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }} </span>
+														<span ng-if="(player.hitPoints - player.maxHitPoints) < 0"
+                                                              style="color: red">  {{ player.hitPoints - player.maxHitPoints }} </span>
+														<span ng-if="(player.hitPoints - player.maxHitPoints) > 0"
+                                                              style="color: green">  +{{ player.hitPoints - player.maxHitPoints }} </span>
 														<span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
 													</span>
 
 													<span ng-if="isHost() || !isNPC($index)">
 														<span ng-if="player.hitPoints < 1" style="color: dimgrey">{{ player.hitPoints }}</span>
-														<span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green">{{ player.hitPoints }}</span>
-														<span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0" style="color: red">{{ player.hitPoints }}</span>
+														<span ng-if="player.hitPoints >= player.maxHitPoints"
+                                                              style="color: green">{{ player.hitPoints }}</span>
+														<span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"
+                                                              style="color: red">{{ player.hitPoints }}</span>
 														 / {{ player.maxHitPoints }}
 													</span>
-													<i class="fa fa-shield"></i>
-													<span ng-if="!isHost() && isNPC($index)">??? </span>
-													<span ng-if="isHost() || !isNPC($index)">{{ player.armorClass }} </span>
-													<i class="fa fa-eye"></i>
-													<span ng-if="!player.passivePerception || (!isHost() && isNPC($index))">???</span>
-													<span ng-if="player.passivePerception && (isHost() || !isNPC($index))">{{ player.passivePerception }}</span>
-												</div>
-												<div class="col col-md-3">
+                                                    <i class="fa fa-shield"></i>
+                                                    <span ng-if="!isHost() && isNPC($index)">??? </span>
+                                                    <span ng-if="isHost() || !isNPC($index)">{{ player.armorClass }} </span>
+                                                    <i class="fa fa-eye"></i>
+                                                    <span ng-if="!player.passivePerception || (!isHost() && isNPC($index))">???</span>
+                                                    <span ng-if="player.passivePerception && (isHost() || !isNPC($index))">{{ player.passivePerception }}</span>
+                                                </div>
+                                                <div class="col col-md-3">
 													<span style="float: right;">
 														<strong style="color: red;">{{ player.status }} </strong>
-														<a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye"></i></a>
-														<a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)" ng-click="toggleVisible($index)"> <i class="fa fa-eye-slash"></i></a>
-														<a href="#" ng-if="isMyCharacter($index)" ng-click="setPlayer($index)"> <i class="fa fa-bolt" data-template-url="modal/initiativePopover.html" data-auto-close="1" bs-popover></i></a>
-														<a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;"><i class="fa fa-close"></i></a>
+														<a href="#"
+                                                           ng-show="isHost() && isNPC($index) && isVisible($index)"
+                                                           ng-click="toggleVisible($index)"> <i
+                                                                class="fa fa-eye"></i></a>
+														<a href="#"
+                                                           ng-show="isHost() && isNPC($index) && !isVisible($index)"
+                                                           ng-click="toggleVisible($index)"> <i
+                                                                class="fa fa-eye-slash"></i></a>
+														<a href="#" ng-if="isMyCharacter($index)"
+                                                           ng-click="setPlayer($index)"> <i class="fa fa-bolt"
+                                                                                            data-template-url="modal/initiativePopover.html"
+                                                                                            data-auto-close="1"
+                                                                                            bs-popover></i></a>
+														<a href="#" ng-show="isHost()" ng-click="removePlayer($index)"
+                                                           style="color: black;"><i class="fa fa-close"></i></a>
 													</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="panel-collapse" role="tabpanel" bs-collapse-target>
-										<div class="panel-body container-fluid" ng-if="!isNPC($index) || isHost()" style="padding-top: 5px">
-											<a href="#" ng-if="isNPC($index)" ng-click="setNPCtoEdit($index)" data-template-url="modal/editNPCModal.html" data-placement="center" bs-modal="modal" style="float: right">edit <i class="fa fa-pencil-square-o"></i></a>
-											<span style="text-decoration: underline;">Saves</span>
-											<br>
-											<div class="row">
-												<div class="col col-xs-2">Str:
-													<span ng-if="player.saves.strength > 0" style="color: green">+{{ player.saves.strength }}</span>
-													<span ng-if="player.saves.strength < 0" style="color: red">{{ player.saves.strength }}</span>
-													<span ng-if="player.saves.strength === 0">{{ player.saves.strength }}</span>
-												</div>
-												<div class="col col-xs-2">Dex:
-													<span ng-if="player.saves.dexterity > 0" style="color: green">+{{ player.saves.dexterity }}</span>
-													<span ng-if="player.saves.dexterity < 0" style="color: red">{{ player.saves.dexterity }}</span>
-													<span ng-if="player.saves.dexterity === 0">{{ player.saves.dexterity }}</span>
-												</div>
-												<div class="col col-xs-2">Con:
-													<span ng-if="player.saves.constitution > 0" style="color: green">+{{ player.saves.constitution }}</span>
-													<span ng-if="player.saves.constitution < 0" style="color: red">{{ player.saves.constitution }}</span>
-													<span ng-if="player.saves.constitution === 0">{{ player.saves.constitution }}</span>
-												</div>
-												<div class="col col-xs-2">Int:
-													<span ng-if="player.saves.intelligence > 0" style="color: green">+{{ player.saves.intelligence }}</span>
-													<span ng-if="player.saves.intelligence < 0" style="color: red">{{ player.saves.intelligence }}</span>
-													<span ng-if="player.saves.intelligence === 0">{{ player.saves.intelligence }}</span>
-												</div>
-												<div class="col col-xs-2">Wis:
-													<span ng-if="player.saves.wisdom > 0" style="color: green">+{{ player.saves.wisdom }}</span>
-													<span ng-if="player.saves.wisdom < 0" style="color: red">{{ player.saves.wisdom }}</span>
-													<span ng-if="player.saves.wisdom === 0">{{ player.saves.wisdom }}</span>
-												</div>
-												<div class="col col-xs-2">Cha:
-													<span ng-if="player.saves.charisma > 0" style="color: green">+{{ player.saves.charisma }}</span>
-													<span ng-if="player.saves.charisma < 0" style="color: red">{{ player.saves.charisma }}</span>
-													<span ng-if="player.saves.charisma === 0">{{ player.saves.charisma }}</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col col-md-3">
-				<br>
-				<br>
-				<br>
-					<ul class="nav nav-stacked">
-						<!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
-						<li>
-							<div class="initiative box">
-								<ul ng-model="players" class="list-group">
-									<li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4></li>
-									<li ng-repeat="player in encounterState.players | orderBy:'-initiative'" class="list-group-item" ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0">
-									<span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
-									<span ng-if="player.hitPoints > 0">{{ player.name }}</span>
-									<span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</body>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                        <div class="panel-body container-fluid" ng-if="!isNPC($index) || isHost()"
+                                             style="padding-top: 5px">
+                                            <a href="#" ng-if="isNPC($index)" ng-click="setNPCtoEdit($index)"
+                                               data-template-url="modal/editNPCModal.html" data-placement="center"
+                                               bs-modal="modal" style="float: right">edit <i
+                                                    class="fa fa-pencil-square-o"></i></a>
+                                            <span style="text-decoration: underline;">Saves</span>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col col-xs-2">Str:
+                                                    <span ng-if="player.saves.strength > 0" style="color: green">+{{ player.saves.strength }}</span>
+                                                    <span ng-if="player.saves.strength < 0" style="color: red">{{ player.saves.strength }}</span>
+                                                    <span ng-if="player.saves.strength === 0">{{ player.saves.strength }}</span>
+                                                </div>
+                                                <div class="col col-xs-2">Dex:
+                                                    <span ng-if="player.saves.dexterity > 0" style="color: green">+{{ player.saves.dexterity }}</span>
+                                                    <span ng-if="player.saves.dexterity < 0" style="color: red">{{ player.saves.dexterity }}</span>
+                                                    <span ng-if="player.saves.dexterity === 0">{{ player.saves.dexterity }}</span>
+                                                </div>
+                                                <div class="col col-xs-2">Con:
+                                                    <span ng-if="player.saves.constitution > 0" style="color: green">+{{ player.saves.constitution }}</span>
+                                                    <span ng-if="player.saves.constitution < 0" style="color: red">{{ player.saves.constitution }}</span>
+                                                    <span ng-if="player.saves.constitution === 0">{{ player.saves.constitution }}</span>
+                                                </div>
+                                                <div class="col col-xs-2">Int:
+                                                    <span ng-if="player.saves.intelligence > 0" style="color: green">+{{ player.saves.intelligence }}</span>
+                                                    <span ng-if="player.saves.intelligence < 0" style="color: red">{{ player.saves.intelligence }}</span>
+                                                    <span ng-if="player.saves.intelligence === 0">{{ player.saves.intelligence }}</span>
+                                                </div>
+                                                <div class="col col-xs-2">Wis:
+                                                    <span ng-if="player.saves.wisdom > 0" style="color: green">+{{ player.saves.wisdom }}</span>
+                                                    <span ng-if="player.saves.wisdom < 0" style="color: red">{{ player.saves.wisdom }}</span>
+                                                    <span ng-if="player.saves.wisdom === 0">{{ player.saves.wisdom }}</span>
+                                                </div>
+                                                <div class="col col-xs-2">Cha:
+                                                    <span ng-if="player.saves.charisma > 0" style="color: green">+{{ player.saves.charisma }}</span>
+                                                    <span ng-if="player.saves.charisma < 0" style="color: red">{{ player.saves.charisma }}</span>
+                                                    <span ng-if="player.saves.charisma === 0">{{ player.saves.charisma }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-3">
+                    <br>
+                    <br>
+                    <br>
+                    <ul class="nav nav-stacked">
+                        <!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
+                        <li>
+                            <div class="initiative box">
+                                <ul ng-model="players" class="list-group">
+                                    <li class="list-group-item active"><h4>Initiatives <i class="fa fa-bolt"></i></h4>
+                                    </li>
+                                    <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
+                                        class="list-group-item" ng-hide="!isHost() && !player.visible"
+                                        ng-if="player.initiative > 0">
+                                        <span ng-if="player.hitPoints < 1"
+                                              style="color:red"><strike>{{ player.name }}</strike></span>
+                                        <span ng-if="player.hitPoints > 0">{{ player.name }}</span>
+                                        <span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</body>
 </html>
