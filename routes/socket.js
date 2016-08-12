@@ -35,9 +35,13 @@ module.exports = function (socket)
 	});
 
 	socket.on('new:campaign', function(data)
+	{
+		socket.broadcast.emit('new:campaign');
+	});
+};
 	// notify other clients that a new user has joined
 	/*socket.broadcast.emit('user:join',
 	{
 		socket.broadcast.emit('new:campaign');
 	});
-};
+};*/
