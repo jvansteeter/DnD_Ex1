@@ -3,15 +3,13 @@ var clientApp = angular.module('clientApp');
 clientApp.service('mapRenderer', function () {
 
     var mapRenderer = {};
-
-    mapRenderer.init = function(options){
-        this.$el = options.$el;
-
-        this.w = this.$el.width();
-        this.h = this.$el.height();
+        
+    mapRenderer.init = function(canvas){
+        this.w = canvas.width();
+        this.h = canvas.height();
 
         // this.tileSize = options.tileSize;
-        this.context = this.$el.get(0).getContext('2d');
+        this.context = canvas.get(0).getContext('2d');
 
         // this.gameModel = options.gameModel;
         // this.bgImage = this.gameModel.mapImage.getImage();
@@ -23,7 +21,6 @@ clientApp.service('mapRenderer', function () {
     mapRenderer.draw = function(){
         this.context.drawImage(this.bgImage,0,0);
     };
-
-
+    
     return mapRenderer;
 });
