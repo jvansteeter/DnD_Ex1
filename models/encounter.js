@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 var encounterSchema = new mongoose.Schema(
 {
@@ -13,8 +12,7 @@ var encounterSchema = new mongoose.Schema(
     active: Boolean
 });
 
-// hash the password
-encounterSchema.methods.addPlayer = function(player) 
+encounterSchema.methods.addPlayer = function(player)
 {
     this.players.push(player);
     this.save();
