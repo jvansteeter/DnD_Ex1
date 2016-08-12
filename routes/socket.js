@@ -39,3 +39,9 @@ module.exports = function (socket)
 		socket.broadcast.emit('new:campaign');
 	});
 };
+	// notify other clients that a new user has joined
+	/*socket.broadcast.emit('user:join',
+	{
+		socket.broadcast.emit('new:campaign');
+	});
+};*/
