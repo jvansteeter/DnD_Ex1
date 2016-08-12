@@ -24,20 +24,18 @@ clientApp.service('tokenRenderer', function () {
 
     tokenRenderer.draw = function(){
         context.clearRect(0, 0, width, height);
-        this.tokenImage = new Image();
-        this.tokenImage.src = "image/map/playerOne.png";
 
-        for(i = 0; i < encounterState.players.length; i++){
-            this.tokenImage = new Image();
+        for(var i = 0; i < encounterState.players.length; i++){
+            var tokenImage = new Image();
             if(!encounterState.players[i].npc){
-                this.tokenImage.src = "image/map/playerOne.png";
+                tokenImage.src = "image/map/playerOne.png";
             }
             else {
-                this.tokenImage.src = "image/map/playerThree.png";
+                tokenImage.src = "image/map/playerThree.png";
             }
 
             context.drawImage(
-                this.tokenImage,
+                tokenImage,
                 i * tileSize,
                 1 * tileSize
             );
