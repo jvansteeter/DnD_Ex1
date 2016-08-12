@@ -3,27 +3,25 @@ var clientApp = angular.module('clientApp');
 clientApp.service('mapRenderer', function () {
 
     var mapRenderer = {};
+    var canvas;
+    var context;
+    var width;
+    var height;
+    var bgImage = new Image();
 
-    mapRenderer.init = function(options){
-        this.$el = options.$el;
+    mapRenderer.init = function(canvasParam){
 
-        this.w = this.$el.width();
-        this.h = this.$el.height();
+        canvas = canvasParam;
+        width = canvas.width();
+        height = canvas.height();
+        context = canvas.get(0).getContext('2d');
 
-        // this.tileSize = options.tileSize;
-        this.context = this.$el.get(0).getContext('2d');
-
-        // this.gameModel = options.gameModel;
-        // this.bgImage = this.gameModel.mapImage.getImage();
-
-        this.bgImage = new Image();
-        this.bgImage.src = "image/map/dungeon.jpg";
+        bgImage.src = "image/map/dungeon.jpg";
     };
 
     mapRenderer.draw = function(){
-        this.context.drawImage(this.bgImage,0,0);
+        context.drawImage(bgImage,0,0);
     };
-
-
+    
     return mapRenderer;
 });

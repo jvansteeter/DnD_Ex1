@@ -2,11 +2,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer) {
     var mapMain = {};
-    var gameState;
-
-    // config variables
-    var $mapTag = $('#mapDiv');
-    var count = 0;
+    var encounterState;
 
     mapMain.start = function(){
 
@@ -25,6 +21,7 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer)
         // run game
         function gameLoop() {
             mapRenderer.draw();
+            gridRenderer.draw();
             tokenRenderer.draw();
             window.requestAnimationFrame(gameLoop);
         }
