@@ -7,7 +7,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
 
-	socket.on('init', function (data)
+	socket.on('init', function(data)
 	{
 		var url = "api/encounter/" + encounterID;
 
@@ -67,15 +67,12 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	$scope.setMultiplier = function(multiple)
 	{
 		$scope.multiple = multiple;
-	}
+	};
 
 	$scope.isHost = function()
 	{
-		if (Profile.getUserID() === $scope.encounter.hostID)
-		{
-			return true;
-		}
-		return false;
+		return Profile.getUserID() === $scope.encounter.hostID;
+
 	};
 
 	$scope.isNPC = function(index)
