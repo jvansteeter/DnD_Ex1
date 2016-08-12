@@ -20,7 +20,7 @@ clientApp.service('gridRenderer', function () {
     };
 
     gridRenderer.draw = function(){
-
+        context.clearRect(0, 0, width, height);
         context.fillStyle = "rgba(255,0,0,.3)";
         for(i = 0; i < 12; i++){
             context.fillRect(tileSize * i, 0, 2, 650);
