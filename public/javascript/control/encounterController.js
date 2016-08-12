@@ -2,25 +2,23 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain)
+clientApp.controller('encounterController', function($scope, $http, socket, Profile)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
+	$scope.players = [];
 
-	socket.on('init', function(data)
+	Profile.async().then(function()
 	{
-		var url = "api/encounter/" + encounterID;
+		var user = Profile.getUser();
+		$scope.name = user.first_name + " " + user.last_name;
+		Profile.setUser(user);
+		$scope.init();
+	});
 
-		$http.get(url).success(function(data)
-		{
-			$scope.encounter = data.encounter;
-			Profile.setEncounter(data.encounter._id);
+	socket.on('init', function (data)
+	{
 
-			$scope.updateGameState().then(function()
-			{
-				mapMain.start();
-			});
-		});
 	});
 
 	socket.on('update:encounter', function(data)
@@ -28,7 +26,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		console.log("Updating encounter");
 		if (data.encounterID === encounterID)
 		{
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		}
 	});
 
@@ -40,23 +38,34 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		}
 	});
 
-	$scope.updateGameState = function()
+	$scope.init = function()
 	{
+		$http.get('api/encounter/' + encounterID).success(function(data)
+		{
+			console.log("init");
+			console.log(data);
+			$scope.encounter = data;
+			if (Profile.getUserID() === data.hostID)
+			{
+				$scope.host = true;
+			}
+			else
+			{
+				$scope.host = false;
+			}
 
-		var deffered = $q.defer();
-		var url = 'api/encounter/gamestate/' + encounterID;
+			$scope.updatePlayers();
+		});
+	};
+
+	$scope.updatePlayers = function()
+	{
+		var url = 'api/encounter/players/' + encounterID;
 		$http.get(url).success(function(data)
 		{
-			$scope.encounterState = data;
-			// console.log(data);
-			mapMain.setGameState(data);
-			deffered.resolve();
-		}).error(function(data)
-		{
-			deffered.reject();
+			$scope.players = data;
+			console.log(data);
 		});
-
-		return deffered.promise;
 	};
 
 	$scope.setPlayer = function(index)
@@ -67,27 +76,31 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	$scope.setMultiplier = function(multiple)
 	{
 		$scope.multiple = multiple;
-	};
+	}
 
 	$scope.isHost = function()
 	{
-		return Profile.getUserID() === $scope.encounter.hostID;
-
+		// if (Profile.getUserID() === $scope.encounter.hostID)
+		// {
+		// 	return true;
+		// }
+		// return false;
+		return $scope.host;
 	};
 
 	$scope.isNPC = function(index)
 	{
-		return $scope.encounterState.players[index].npc;
+		return $scope.players[index].npc;
 	};
 	
 	$scope.isMyCharacter = function(index)
 	{
-		return (Profile.getUserID() === $scope.encounterState.players[index].userID);
+		return (Profile.getUserID() === $scope.players[index].userID);
 	};
 
 	$scope.isVisible = function(index)
 	{
-		return $scope.encounterState.players[index].visible;
+		return $scope.players[index].visible;
 	};
 
 	$scope.toggleVisible = function(index)
@@ -95,7 +108,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		var url = 'api/encounter/togglevisible';
 		var data =
 		{
-			playerID : $scope.encounterState.players[index]._id
+			playerID : $scope.players[index]._id
 		};
 		$http.post(url, data).success(function(data)
 		{
@@ -105,7 +118,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-				$scope.encounterState.players[index].visible = !$scope.encounterState.players[index].visible;
+				$scope.players[index].visible = !$scope.players[index].visible;
 			}
 		});
 	};
@@ -120,7 +133,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		hit = hit * $scope.multiple;
 		var data = 
 		{
-			playerID : $scope.encounterState.players[$scope.selectedPlayer]._id,
+			playerID : $scope.players[$scope.selectedPlayer]._id,
 			hit : hit
 		};
 		var url = 'api/encounter/hitplayer';
@@ -131,7 +144,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				encounterID : encounterID
 			});
 
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -145,7 +158,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		var url = 'api/encounter/setinitiative';
 		var data =
 		{
-			playerID : $scope.encounterState.players[$scope.selectedPlayer]._id,
+			playerID : $scope.players[$scope.selectedPlayer]._id,
 			initiative : initiative
 		};
 		$http.post(url, data).success(function(data)
@@ -155,7 +168,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				encounterID : encounterID
 			});
 
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -166,7 +179,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		var url = 'api/encounter/removeplayer/' + encounterID;
 		var data =
 		{
-			playerID : $scope.encounterState.players[index]._id
+			playerID : $scope.players[index]._id
 		};
 
 		$http.post(url, data).success(function(data)
@@ -177,7 +190,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				encounterID : encounterID
 			});
 
-			$scope.encounterState.players.splice(index, 1);
+			$scope.players.splice(index, 1);
 		});
 	};
 
@@ -193,7 +206,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.listModalselectCharacter = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addcharacter/' + encounterID;
 		var data =
@@ -209,7 +222,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -225,7 +238,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.listModalselectNPC = function(index)
 	{
-		var encounterID = Profile.getEncounter();
+		var encounterID = $scope.encounter._id;
 
 		var url = 'api/encounter/addnpc2/' + encounterID;
 		var data =
@@ -241,7 +254,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-			$scope.updateGameState();
+			$scope.updatePlayers();
 		});
 	};
 
@@ -274,7 +287,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	
 	$scope.setNPCtoEdit = function(index)
 	{
-		$scope.editNPC = JSON.parse(JSON.stringify($scope.encounterState.players[index]));
+		$scope.editNPC = JSON.parse(JSON.stringify($scope.players[index]));
 	};
 
 	$scope.editModalSave = function()
@@ -293,20 +306,8 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-				$scope.updateGameState();
+				$scope.updatePlayers();
 			}
 		});
-	};
-
-	$scope.getColor = function(player)
-	{
-		if (player.npc)
-		{
-			return "rgba(255, 0, 0, 0.3)";
-		}
-		else
-		{
-			return "rgba(51, 122, 183, 0.3)";
-		}
 	};
 });

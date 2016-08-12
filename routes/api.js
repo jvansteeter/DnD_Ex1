@@ -123,7 +123,21 @@ router.get('/encounter/all', function(req, res)
     });
 });
 
-router.get('/encounter/:campaign_id', function(req, res)
+router.get('/campaign/all', function(req, res)
+{
+    Campaign.find({}, function(error, campaigns)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding encounters");
+            return;
+        }
+
+        res.json(campaigns);
+    });
+});
+
+router.get('/campaign/encounter/:campaign_id', function(req, res)
 {
     Encounter.find({ campaignID: req.params.campaign_id, $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
     {
@@ -147,7 +161,7 @@ router.get('/encounter/:encounter_id', function(req, res)
             return;
         }
 
-        res.json({ encounter : encounter });
+        res.json(encounter);
     });
 });
 
@@ -874,7 +888,7 @@ router.post('/campaign/create', function(req, res)
 {
     var campaign = new Campaign();
     campaign.addHost(req.user._id);
-    campaign.name = req.body.name;
+    campaign.title = req.body.title;
     campaign.description = req.body.description;
     campaign.save(function(error)
     {
@@ -890,9 +904,42 @@ router.post('/campaign/create', function(req, res)
 
         campaignUser.save(function(error)
         {
+            if (error)
+            {
+                res.status(500).send("Error saving campaign user relation");
+                return;
+            }
+
             res.send("OK");
         });
     })
+});
+
+router.post('/campaign/join/', function(req, res)
+{
+    CampaignUser.findOrCreate(
+    {
+        userID: req.user._id,
+        campaignID: req.body.campaignID
+    }, function(error, campaignUser)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding or creating campaign user relation");
+            return;
+        }
+
+        campaignUser.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving campaign user relation");
+                return;
+            }
+
+            res.send("OK");
+        });
+    });
 });
 
 router.post('campaign/post', function(req, res)

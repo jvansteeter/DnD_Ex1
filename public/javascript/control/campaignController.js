@@ -66,7 +66,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     $scope.updateEncounters = function()
     {
-        var url = "api/encounter/" + $scope.campaign._id;
+        var url = "api/campaign/encounter/" + $scope.campaign._id;
         $http.get(url).success(function(data)
         {
             $scope.encounters = data.reverse();

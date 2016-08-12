@@ -84,7 +84,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 	{
 		var url = 'api/campaign/create';
 		var data = {
-			name: $scope.newCampaignModal.name,
+			title: $scope.newCampaignModal.title,
 			description: $scope.newCampaignModal.description
 		};
 		$http.post(url,data).success(function()
