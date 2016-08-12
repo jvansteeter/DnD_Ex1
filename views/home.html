@@ -78,30 +78,11 @@
 <!-- Begin Body -->
 <div class="container" ng-controller="homeController">
 	<div class="row">
-		<div class="col col-sm-3">
-			<hr>
-				<div class="well well-sm">
-					<div class="list-group" style="margin-bottom: 0px">
-						<a href="#" class="list-group-item btn btn-lg btn-block" data-animation="am-fade-and-slide-top" data-template-url="modal/newEncounterModal.html" bs-modal="modal">New Encounter</a>
-					</div>
-				</div>
-		</div>
-		<div class="col col-sm-9">
-			<h1>Open Encounters:</h1>
-			<div class="panel panel-default" ng-repeat="encounter in encounters">
-				<div class="panel-heading">
-					<h2 class="panel-title" style="font-size: 20px">{{ encounter.title }}</h2>
-				</div>
-				<div class="panel-body">
-					<h6> Hosted by: {{ encounter.hostName }}</h6>
-					<p>{{ encounter.description }}</p>
-					<br>
-					<a href="encounter?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
-					<hr>
-				</div>
-			</div>
+		<div class="col col-xs-12">
+			<h1>Home</h1>
+			<h2>Stay tuned for future development</h2>
 		</div>
 	</div>
 </div>
-	</body>
+</body>
 </html>
