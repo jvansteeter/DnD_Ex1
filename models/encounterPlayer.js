@@ -19,7 +19,10 @@ var encounterPlayerSchema = new mongoose.Schema(
         wisdom: Number,
         charisma: Number
     },
-    npc: Boolean
+    npc: Boolean,
+    mapX: Number,
+    mapY: Number,
+    mapIconURI: String
 });
 
 encounterPlayerSchema.methods.hit = function(hit)
