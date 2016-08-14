@@ -29,7 +29,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 				$scope.updateGameState().then(function()
 				{
-					mapMain.start();
+					mapMain.start($scope.host);
 				});
 			});
 		});
@@ -53,19 +53,19 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.updateGameState = function()
 	{
-		var deffered = $q.defer();
+		var deferred = $q.defer();
 		var url = 'api/encounter/gamestate/' + encounterID;
 		$http.get(url).success(function(data)
 		{
 			$scope.encounterState = data;
 			mapMain.setGameState(data);
-			deffered.resolve();
+			deferred.resolve();
 		}).error(function(data)
 		{
-			deffered.reject();
+			deferred.reject();
 		});
 
-		return deffered.promise;
+		return deferred.promise;
 	};
 
 	$scope.setPlayer = function(index)

@@ -2,9 +2,9 @@ var clientApp = angular.module('clientApp');
 
 clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer) {
     var mapMain = {};
-    var encounterState;
+    var isHost = false;
 
-    mapMain.start = function(){
+    mapMain.start = function(isHostParam){
 
         // build the mapCanvas
         var $mapCanvas = $('#mapCanvas');
@@ -15,7 +15,7 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer)
         gridRenderer.init($gridCanvas);
 
         var $tokenCanvas = $('#tokenCanvas');
-        tokenRenderer.init($tokenCanvas, encounterState);
+        tokenRenderer.init($tokenCanvas, isHostParam);
 
 
         // run game
@@ -31,8 +31,7 @@ clientApp.service('mapMain', function (mapRenderer, gridRenderer, tokenRenderer)
 
     mapMain.setGameState = function(data)
     {
-        console.log("---!!! In mapInit setGameState function !!!---");
-        encounterState = data;
+        tokenRenderer.updateEncounterState(data);
     };
     
 
