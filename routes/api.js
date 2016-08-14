@@ -266,6 +266,33 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
                     npc : true
                 });
 
+            //calculate and assign mapX, mapY to encounterPlayer
+            console.log("begining calculation")
+            console.log(encounterState);
+
+            var tokenPlaced = false;
+            while(!tokenPlaced){
+                var y = 0;
+                var x = 0;
+
+                var spaceIsFree = true;
+                for(var i = 0; i < encounterState.players.length; i++){
+                    var player = encounterState.players[i];
+                    if(player.mapX === x && player.mapY === y){
+                        spaceIsFree = false;
+                    }
+                }
+
+                if(spaceIsFree){
+                    encounterPlayer.mapX = x;
+                    encounterPlayer.mapY = y;
+                    tokenPlaced = true;
+                }
+                else{
+                    x++;
+                }
+            }
+
             encounterState.addPlayer(encounterPlayer._id);
             encounterPlayer.save(function(error)
             {

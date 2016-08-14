@@ -49,8 +49,8 @@ clientApp.service('tokenRenderer', function () {
                 context.globalAlpha = 1;
                 context.drawImage(
                     tokenImage,
-                    i * tileSize,
-                    1 * tileSize
+                    player.mapX * tileSize,
+                    player.mapY * tileSize
                 );
             }
             else{
@@ -58,16 +58,16 @@ clientApp.service('tokenRenderer', function () {
                     context.globalAlpha = 0.35;
                     context.drawImage(
                         tokenImage,
-                        i * tileSize,
-                        1 * tileSize
+                        player.mapX * tileSize,
+                        player.mapY * tileSize
                     );
                 }
                 else{
                     context.globalAlpha = 0.0;
                     context.drawImage(
                         tokenImage,
-                        i * tileSize,
-                        1 * tileSize
+                        player.mapX * tileSize,
+                        player.mapY * tileSize
                     );
                 }
 
