@@ -529,58 +529,70 @@ router.get('/class/all', function (req, res)
 
 router.post('/character/create', function(req, res)
 {
-    Character.create(
-    {
-        userID: req.user._id,
-        name: req.body.character.name,
-        class: req.body.character.class,
-        level: req.body.character.level,
-        background: req.body.character.background,
-        playerName: req.body.character.playerName,
-        race: req.body.character.race,
-        alignment: req.body.character.alignment,
-        exp: req.body.character.exp,
-        proficiencyBonus: req.body.character.proficiencyBonus,
-        strength: req.body.character.strength,
-        dexterity: req.body.character.dexterity,
-        constitution: req.body.character.constitution,
-        intelligence: req.body.character.intelligence,
-        wisdom: req.body.character.wisdom,
-        charisma: req.body.character.charisma,
-        armorClass: req.body.character.armorClass,
-        initiative: req.body.character.initiative,
-        speed: req.body.character.speed,
-        hitPoints: req.body.character.maxHitPoints,
-        maxHitPoints: req.body.character.maxHitPoints,
-        features: req.body.character.features,
-        proficiencies: req.body.character.proficiencies,
-        languages: req.body.character.languages,
-        personality: req.body.character.personality,
-        ideals: req.body.character.ideals,
-        bonds: req.body.character.bonds,
-        flaws: req.body.character.flaws,
-        attacks: req.body.character.attacks,
-        money: req.body.character.money,
-        equipment: req.body.character.equipment
-    }, function(error, character)
+    var character = new Character();
+    character.setCharacter(req.body.character);
+    character.save(function(error)
     {
         if (error)
         {
-            res.status(500).send("Error creating character");
+            res.status(500).send("Error saving new character");
             return;
         }
 
-        character.generateCharacter();
-        character.save(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving character");
-            }
-
-            res.send("OK");
-        });
+        res.send("OK");
     });
+    // Character.create(
+    // {
+    //     userID: req.user._id,
+    //     name: req.body.character.name,
+    //     class: req.body.character.class,
+    //     level: req.body.character.level,
+    //     background: req.body.character.background,
+    //     playerName: req.body.character.playerName,
+    //     race: req.body.character.race,
+    //     alignment: req.body.character.alignment,
+    //     exp: req.body.character.exp,
+    //     proficiencyBonus: req.body.character.proficiencyBonus,
+    //     strength: req.body.character.strength,
+    //     dexterity: req.body.character.dexterity,
+    //     constitution: req.body.character.constitution,
+    //     intelligence: req.body.character.intelligence,
+    //     wisdom: req.body.character.wisdom,
+    //     charisma: req.body.character.charisma,
+    //     armorClass: req.body.character.armorClass,
+    //     initiative: req.body.character.initiative,
+    //     speed: req.body.character.speed,
+    //     hitPoints: req.body.character.maxHitPoints,
+    //     maxHitPoints: req.body.character.maxHitPoints,
+    //     features: req.body.character.features,
+    //     proficiencies: req.body.character.proficiencies,
+    //     languages: req.body.character.languages,
+    //     personality: req.body.character.personality,
+    //     ideals: req.body.character.ideals,
+    //     bonds: req.body.character.bonds,
+    //     flaws: req.body.character.flaws,
+    //     attacks: req.body.character.attacks,
+    //     money: req.body.character.money,
+    //     equipment: req.body.character.equipment
+    // }, function(error, character)
+    // {
+    //     if (error)
+    //     {
+    //         res.status(500).send("Error creating character");
+    //         return;
+    //     }
+    //
+    //     character.generateCharacter();
+    //     character.save(function(error)
+    //     {
+    //         if (error)
+    //         {
+    //             res.status(500).send("Error saving character");
+    //         }
+    //
+    //         res.send("OK");
+    //     });
+    // });
 });
 
 router.post('/character/update', function(req, res)
@@ -610,47 +622,59 @@ router.post('/character/update', function(req, res)
 
 router.post('/npc/create', function(req, res)
 {
-    NPC.create(
+    var npc = new NPC();
+    npc.setNPC(req.body.npc);
+    npc.save(function(error)
+    {
+        if (error)
         {
-            userID: req.user._id,
-            name: req.body.npc.name,
-            descriptors: req.body.npc.descriptors,
-            description: req.body.npc.description,
-            strength: req.body.npc.strength,
-            dexterity: req.body.npc.dexterity,
-            constitution: req.body.npc.constitution,
-            intelligence: req.body.npc.intelligence,
-            wisdom: req.body.npc.wisdom,
-            charisma: req.body.npc.charisma,
-            armorClass: req.body.npc.armorClass,
-            hitPoints: req.body.npc.hitPoints,
-            speed: req.body.npc.speed,
-            features: req.body.npc.features,
-            specials: req.body.npc.specials,
-            money: req.body.npc.money,
-            equipment: req.body.npc.equipment,
-            attacks: req.body.npc.attacks,
-            actions: req.body.npc.actions
-        }, function(error, npc)
-        {
-            if (error)
-            {
-                res.status(500).send("Error creating NPC");
-                return;
-            }
+            res.status(500).send("Error saving new NPC");
+            return;
+        }
 
-            npc.generateNPC();
-            npc.save(function(error)
-            {
-                if (error)
-                {
-                    res.status(500).send("Error saving NPC");
-                    return;
-                }
-                
-                res.send("OK");
-            });
-        });
+        res.send("OK");
+    });
+    // NPC.create(
+    //     {
+    //         userID: req.user._id,
+    //         name: req.body.npc.name,
+    //         descriptors: req.body.npc.descriptors,
+    //         description: req.body.npc.description,
+    //         strength: req.body.npc.strength,
+    //         dexterity: req.body.npc.dexterity,
+    //         constitution: req.body.npc.constitution,
+    //         intelligence: req.body.npc.intelligence,
+    //         wisdom: req.body.npc.wisdom,
+    //         charisma: req.body.npc.charisma,
+    //         armorClass: req.body.npc.armorClass,
+    //         hitPoints: req.body.npc.hitPoints,
+    //         speed: req.body.npc.speed,
+    //         features: req.body.npc.features,
+    //         specials: req.body.npc.specials,
+    //         money: req.body.npc.money,
+    //         equipment: req.body.npc.equipment,
+    //         attacks: req.body.npc.attacks,
+    //         actions: req.body.npc.actions
+    //     }, function(error, npc)
+    //     {
+    //         if (error)
+    //         {
+    //             res.status(500).send("Error creating NPC");
+    //             return;
+    //         }
+    //
+    //         npc.generateNPC();
+    //         npc.save(function(error)
+    //         {
+    //             if (error)
+    //             {
+    //                 res.status(500).send("Error saving NPC");
+    //                 return;
+    //             }
+    //
+    //             res.send("OK");
+    //         });
+    //     });
 });
 
 router.post('/npc/update', function(req, res)
@@ -663,26 +687,6 @@ router.post('/npc/update', function(req, res)
             return;
         }
 
-        // npc.name = req.body.npc.name;
-        // npc.descriptors = req.body.npc.descriptors;
-        // npc.description = req.body.npc.description;
-        // npc.strength = req.body.npc.strength;
-        // npc.dexterity = req.body.npc.dexterity;
-        // npc.constitution = req.body.npc.constitution;
-        // npc.intelligence = req.body.npc.intelligence;
-        // npc.wisdom = req.body.npc.wisdom;
-        // npc.charisma = req.body.npc.charisma;
-        // npc.armorClass = req.body.npc.armorClass;
-        // npc.speed = req.body.npc.speed;
-        // npc.hitPoints = req.body.npc.hitPoints;
-        // npc.features = req.body.npc.features;
-        // npc.specials = req.body.npc.specials;
-        // npc.money = req.body.npc.money;
-        // npc.equipment = req.body.npc.equipment;
-        // npc.attacks = req.body.npc.attacks;
-        // npc.actions = req.body.npc.actions;
-        //
-        // npc.generateNPC();
         npc.setNPC(req.body.npc);
         npc.save(function(error)
         {
@@ -972,5 +976,20 @@ router.post('campaign/post', function(req, res)
         res.send("OK");
     })
 });
+
+function getGameState(encounter)
+{
+    EncounterPlayer.find({_id : {$in : encounter.players }}, function(error, players)
+    {
+        if (error)
+        {
+            return;
+        }
+
+        encounter.players = players;
+
+        return encounter;
+    });
+}
 
 module.exports = router;
