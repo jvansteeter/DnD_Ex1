@@ -622,6 +622,7 @@ router.post('/character/update', function(req, res)
 router.post('/npc/create', function(req, res)
 {
     var npc = new NPC();
+    npc.userID = req.user._id;
     npc.setNPC(req.body.npc);
     npc.save(function(error)
     {
