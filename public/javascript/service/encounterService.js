@@ -12,9 +12,6 @@ clientApp.service('Encounter', function ($http, $q, Profile)
         var deferred = $q.defer();
         Profile.async().then(function()
         {
-            var user = Profile.getUser();
-            Profile.setUser(user);
-
             $http.get('api/encounter/' + encounterID).success(function(data)
             {
                 encounterService.update().then(function()
@@ -50,7 +47,7 @@ clientApp.service('Encounter', function ($http, $q, Profile)
 
     encounterService.isHost = function()
     {
-        if (encounterState.host == Profile.getUserID())
+        if (encounterState.hostID === Profile.getUserID())
         {
             return true;
         }

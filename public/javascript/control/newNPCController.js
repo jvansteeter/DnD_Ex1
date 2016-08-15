@@ -13,9 +13,6 @@ clientApp.controller('newNPCController', function($scope, $window, $http)
 
     $scope.save = function ()
     {
-        console.log("Saving");
-        console.log($scope.npc);
-
         var url = 'api/npc/create';
         var data =
         {
@@ -23,8 +20,6 @@ clientApp.controller('newNPCController', function($scope, $window, $http)
         };
         $http.post(url, data).success(function(data)
         {
-            console.log("Response");
-            console.log(data);
             if (data === "OK")
             {
                 window.location = 'profile';

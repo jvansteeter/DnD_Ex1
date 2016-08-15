@@ -15,7 +15,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 	
 	$scope.login = function()
 	{
-		console.log("login username=" + $scope.usernameInput);
 		if ($scope.usernameInput === "")
 		{
 			$scope.loginInfo = "Username is blank";
@@ -36,15 +35,9 @@ clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 
 		$http.post(url, data).then(function(response)
 		{
-			console.log("Login was successful");
-			console.log(response);
-
 			window.location = 'profile';
 		}, function(response)
 		{
-			console.log("Login was unsuccessful");
-			console.log(response);
-
 			if (response.status === 401)
 			{
 				$scope.alertMessage = "Invalid Username or Password";
@@ -55,7 +48,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 
 	$scope.register = function()
 	{
-		console.log("Attempting to register");
 		if ($scope.usernameRegister === "")
 		{
 			$scope.registerInfo = "Username is blank";
@@ -86,10 +78,8 @@ clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 			"lastname" : $scope.lastNameRegister,
 			"authCode" : $scope.authCodeRegister
 		};
-		console.log(data);
 		$http.post(url, data).success(function(data)
 		{
-			console.log(data);
 			if(data === "OK")
 			{
 				$scope.registerInfo = "User created";
@@ -102,9 +92,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 
 				$http.post(url, data).success(function(data)
 				{
-					console.log("Login was successful");
-					console.log(data);
-
 					window.location = 'profile';
 				});
 			}

@@ -6,6 +6,5 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 {
 	socket.on('init', function (data)
 	{
-		console.log(data);
 	});
 });

@@ -6,12 +6,10 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
 {
     socket.on('init', function (data)
     {
-        console.log(data);
 
         var url = "api/campaign/all";
         $http.get(url).success(function(data)
         {
-            console.log(data);
             $scope.campaigns = data.reverse();
         });
     });
@@ -21,7 +19,6 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
         var url = "api/campaign/all";
         $http.get(url).success(function(data)
         {
-            console.log(data);
             $scope.encounters = data.reverse();
         });
     });

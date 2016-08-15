@@ -16,8 +16,6 @@ clientApp.service('Profile', function($window, $http, $q)
     {
         $http.get('api/user').success(function (data)
         {
-            console.log("I have the user data");
-            console.log(data);
             user = data;
             deffered.resolve();
         });
@@ -28,11 +26,6 @@ clientApp.service('Profile', function($window, $http, $q)
     profile.getUser = function()
     {
         return user;
-    };
-
-    profile.setUser = function(data)
-    {
-        user = data;
     };
 
     profile.getFirstName = function()

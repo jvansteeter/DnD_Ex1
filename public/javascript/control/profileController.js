@@ -8,8 +8,6 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 
 	$http.get('api/user/campaigns').success(function(data)
 	{
-		console.log("Getting campaigns");
-		console.log(data);
 		$scope.campaigns = data;
 	});
 
@@ -21,14 +19,12 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 
 	socket.on('init', function (data) 
 	{
-		console.log(data);
 	});
 
 	$scope.uploadProfilePhoto = function($flow)
 	{
 		$flow.upload();
 		$flow.files[0] = $flow.files[$flow.files.length - 1];
-		console.log($flow);
 
 		var url = 'api/image/profile';
 		var fd = new FormData();
@@ -39,15 +35,7 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 				'Content-Type' : undefined
 			},
 			transformRequest : angular.identity
-		})
-			.success(function(data)
-			{
-				console.log(data);
-			})
-			.error(function(data)
-			{
-				console.log(data);
-			});
+		});
 	};
 
 	$scope.listModalgetCharacters = function()
@@ -55,7 +43,6 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 		var url = 'api/character/all/' + Profile.getUserID();
 		$http.get(url).success(function(data)
 		{
-			console.log(data);
 			$scope.characters = data.characters;
 		});
 	};
@@ -70,7 +57,6 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 		var url = 'api/npc/all/';
 		$http.get(url).success(function(data)
 		{
-			console.log(data);
 			$scope.npcs = data.npcs;
 		});
 	};
@@ -87,9 +73,6 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 			title: $scope.newCampaignModal.title,
 			description: $scope.newCampaignModal.description
 		};
-		$http.post(url,data).success(function()
-		{
-			console.log("Campaign successfully created");
-		});
+		$http.post(url,data).success(function(){});
 	};
 });
