@@ -5,7 +5,7 @@ var clientApp = angular.module('clientApp');
 clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter)
 {
 	var encounterID = window.location.search.replace('?', '');
-	$scope.encounter = {};
+	$scope.encounterState = {};
 	$scope.host = false;
 
 	socket.on('init', function (data)
@@ -13,7 +13,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		Encounter.init(encounterID).then(function()
 		{
 			$scope.host = Encounter.isHost();
-			$scope.encounter = Encounter.getEncounterState();
+			$scope.encounterState = Encounter.getEncounterState();
 		});
 		// Profile.async().then(function()
 		// {
@@ -207,7 +207,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.listModalselectCharacter = function(index)
 	{
-		var encounterID = $scope.encounter._id;
+		var encounterID = $scope.encounterState._id;
 
 		var url = 'api/encounter/addcharacter/' + encounterID;
 		var data =
@@ -236,7 +236,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.listModalselectNPC = function(index)
 	{
-		var encounterID = $scope.encounter._id;
+		var encounterID = $scope.encounterState._id;
 
 		var url = 'api/encounter/addnpc2/' + encounterID;
 		var data =
@@ -257,7 +257,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	$scope.submit = function()
 	{
 		var url = 'api/encounter/setactive/' + encounterID;
-		var active = !$scope.encounter.active;
+		var active = !$scope.encounterState.active;
 		var data =
 		{
 			active : active
@@ -272,7 +272,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 					encounterID : encounterID
 				});
 				socket.emit('new:encounter', {});
-				$scope.encounter.active = active;
+				$scope.encounterState.active = active;
 			}
 		});
 	};

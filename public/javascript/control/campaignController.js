@@ -8,8 +8,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     Profile.async().then(function()
     {
-        var user = Profile.getUser();
-        Profile.setUser(user);
         $scope.init();
     });
 
