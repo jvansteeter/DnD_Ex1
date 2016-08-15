@@ -15,7 +15,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     socket.on('init', function (data)
     {
-        console.log(data);
     });
 
     socket.on('update' + $scope.campaign, function()
@@ -23,7 +22,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         var url = "api/encounter/all";
         $http.get(url, data).success(function(data)
         {
-            console.log(data);
             $scope.encounters = data.reverse();
         });
     });
@@ -44,11 +42,8 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
         $http.get('api/campaign/' + campaignID).success(function(data)
         {
-            console.log("I have campaign");
-            console.log(data);
             $scope.campaign = data;
 
-            console.log("init");
             if ($scope.isHost())
             {
                 $scope.encounterMenu = "col col-xs-3";
@@ -75,8 +70,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     $scope.createNewPost = function()
     {
-        console.log("attempting to create new post");
-
         var url = 'api/campaign/post';
         var data = {
             campaignID: campaignID,
@@ -84,7 +77,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         };
         $http.post(url, data).success(function(data)
         {
-            console.log(data);
             $scope.posts.push({
 
             });
@@ -109,8 +101,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
         $http.post(url, data).success(function(data)
         {
-            console.log("Create new encounter was successful");
-            console.log(data);
             $scope.updateEncounters();
             socket.emit('new:encounter');
         });

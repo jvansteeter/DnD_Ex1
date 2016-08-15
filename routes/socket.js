@@ -4,7 +4,6 @@ var Encounter = mongoose.model('Encounter');
 // export function for listening to the socket
 module.exports = function (socket) 
 {
-	console.log('---!!! Connection has been intialized !!!---');
 	// send the new user their name and a list of users
 	socket.emit('init', 
 	{
@@ -13,13 +12,11 @@ module.exports = function (socket)
 
 	socket.on('new:encounter', function(data)
 	{
-		console.log("---!!! RECEIVED MESSAGE ABOUT NEW ENCOUNTER !!!---");
 		socket.broadcast.emit('new:encounter');
 	});
 
 	socket.on('update:encounter', function(data)
 	{
-		console.log("---!!! RECEIVED MESSAGE TO UPDATE ENCOUNTER !!!---");
 		socket.broadcast.emit('update:encounter',
 		{
 			encounterID : data.encounterID

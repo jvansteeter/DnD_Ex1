@@ -267,8 +267,6 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
                 });
 
             //calculate and assign mapX, mapY to encounterPlayer
-            console.log("begining calculation")
-            console.log(encounterState);
 
             var tokenPlaced = false;
             while(!tokenPlaced){

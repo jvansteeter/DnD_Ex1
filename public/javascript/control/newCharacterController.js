@@ -26,9 +26,6 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
 
     $scope.save = function ()
     {
-        console.log("Saving");
-        console.log($scope.character);
-
         var url = 'api/character/create';
         var data =
         {
@@ -36,8 +33,6 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
         };
         $http.post(url, data).success(function(data)
         {
-            console.log("Response");
-            console.log(data);
             if (data === "OK")
             {
                 window.location = 'profile';
