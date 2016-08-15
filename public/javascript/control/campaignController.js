@@ -13,6 +13,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     socket.on('init', function (data)
     {
+
     });
 
     socket.on('update' + $scope.campaign, function()
@@ -34,12 +35,16 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         $scope.newEncounter = {};
         $scope.newEncounter.title = "";
         $scope.newEncounter.description = "";
+        $scope.newPost = {};
+        $scope.newPost.content = "";
         $scope.tooltip = {
             title: "Add tags to post"
         };
+        $scope.posts = [];
 
         $http.get('api/campaign/' + campaignID).success(function(data)
         {
+            console.log(data);
             $scope.campaign = data;
 
             if ($scope.isHost())
@@ -54,6 +59,12 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
             }
 
             $scope.updateEncounters();
+            $scope.updatePosts();
+        });
+
+        $http.get('api/campaign/adventurers/' + campaignID).success(function(data)
+        {
+            $scope.adventurers = data;
         });
     };
 
@@ -66,6 +77,15 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         });
     };
 
+    $scope.updatePosts = function()
+    {
+        var url = 'api/campaign/post/' + campaignID;
+        $http.get(url).success(function(data)
+        {
+            $scope.posts = data.reverse();
+        });
+    };
+
     $scope.createNewPost = function()
     {
         var url = 'api/campaign/post';
@@ -75,9 +95,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         };
         $http.post(url, data).success(function(data)
         {
-            $scope.posts.push({
-
-            });
+            $scope.updatePosts();
         });
     };
 

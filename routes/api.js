@@ -891,12 +891,70 @@ router.get('/campaign/:campaign_id', function(req, res)
     {
         if (error)
         {
-            res.status(500).send("Error finding campaign");
+            res.status(500).send(error);
             return;
         }
 
         res.json(campaign);
     });
+});
+
+router.get('/campaign/adventurers/:campaign_id', function(req, res)
+{
+    Campaign.findById(req.params.campaign_id, function(error, campaign)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign");
+            return;
+        }
+
+        CampaignUser.find({campaignID : campaign._id}, function(error, campaignUsers)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding campaign Users");
+                return;
+            }
+
+            var adventurerIDs = [];
+            for (var i = 0; i < campaignUsers.length; i++)
+            {
+                adventurerIDs.push(campaignUsers[i].userID);
+            }
+
+            User.find({_id : {$in : adventurerIDs }}, function(error, users)
+            {
+                if (error)
+                {
+                    res.status(500).send("Error finding users");
+                    return;
+                }
+
+                var adventurerNames = [];
+                for (var i = 0; i < users.length; i++)
+                {
+                    adventurerNames.push(users[i].first_name);
+                }
+
+                res.json(adventurerNames);
+            });
+        });
+    });
+});
+
+router.get('/campaign/post/:campaign_id', function(req, res)
+{
+     CampaignPost.find({campaignID : req.params.campaign_id}, function(error, campaignPosts)
+     {
+         if (error)
+         {
+             res.status(500).send(error);
+             return;
+         }
+
+         res.json(campaignPosts);
+     });
 });
 
 router.post('/campaign/create', function(req, res)
@@ -957,12 +1015,13 @@ router.post('/campaign/join/', function(req, res)
     });
 });
 
-router.post('campaign/post', function(req, res)
+router.post('/campaign/post', function(req, res)
 {
     var post = new CampaignPost();
     post.userID = req.user._id;
     post.author = req.user.first_name + " " + req.user.last_name;
     post.authorPhoto = req.user.profilePhotoURL;
+    post.campaignID = req.body.campaignID;
     post.content = req.body.content;
     post.save(function(error)
     {
