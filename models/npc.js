@@ -7,38 +7,38 @@ var npcSchema = new mongoose.Schema(
         descriptors: String,
         description: String,
         strength: {
-            score: Number,
+            score: {type: Number, default: 0},
             modifier: Number,
             save: {type: Number, required: false, default: 0}
         },
         dexterity: {
-            score: Number,
+            score: {type: Number, default: 0},
             modifier: Number,
             save: {type: Number, required: false, default: 0}
         },
         constitution: {
-            score: Number,
+            score: {type: Number, default: 0},
             modifier: Number,
             save: {type: Number, required: false, default: 0}
         },
         intelligence: {
-            score: Number,
+            score: {type: Number, default: 0},
             modifier: Number,
             save: {type: Number, required: false, default: 0}
         },
         wisdom: {
-            score: Number,
+            score: {type: Number, default: 0},
             modifier: Number,
             save: {type: Number, required: false, default: 0}
         },
         charisma: {
-            score: Number,
+            score: {type: Number, default: 0},
             modifier: Number,
             save: {type: Number, required: false, default: 0}
         },
-        passivePerception: Number,
-        armorClass: Number,
-        hitPoints: Number,
+        passivePerception: {type: Number, default: 0},
+        armorClass: {type: Number, default: 0},
+        hitPoints: {type: Number, default: 1},
         speed: String,
         features: [],
         specials: [{
@@ -66,8 +66,7 @@ var npcSchema = new mongoose.Schema(
             name: String,
             description: String
         }],
-        status: [],
-        npc: {type: Boolean, required: true, default: true}
+        status: []
     });
 
 npcSchema.methods.setNPC = function(npc)

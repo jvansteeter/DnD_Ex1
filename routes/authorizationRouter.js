@@ -21,7 +21,6 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
     {
         if (created) 
         {
-        	console.log("---!!! User was created !!!---");
             // if this username is not taken, then create a user record
             user.username = req.body.username;
             user.first_name = req.body.firstname;
@@ -31,7 +30,6 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
             {
 				if (err) 
 				{
-					console.log("\tThere was an error while saving the user");
 				    return res.send(err);
 				}
 		        return res.send("OK");

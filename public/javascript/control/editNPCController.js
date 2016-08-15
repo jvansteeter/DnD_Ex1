@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('editNPCController', function($scope, $window, $http, Profile)
+clientApp.controller('editNPCController', function($scope, $window, $http)
 {
     $scope.npc = {};
     $scope.npc.features = [];
@@ -19,9 +19,6 @@ clientApp.controller('editNPCController', function($scope, $window, $http, Profi
 
     $scope.save = function ()
     {
-        console.log("Saving");
-        console.log($scope.npc);
-
         var url = 'api/npc/update';
         var data =
         {
@@ -29,8 +26,6 @@ clientApp.controller('editNPCController', function($scope, $window, $http, Profi
         };
         $http.post(url, data).success(function(data)
         {
-            console.log("Response");
-            console.log(data);
             if (data === "OK")
             {
                 window.location = 'profile';
@@ -100,7 +95,6 @@ clientApp.controller('editNPCController', function($scope, $window, $http, Profi
 
     $scope.submit = function()
     {
-        console.log("Attempting to delete character");
 
         var url = 'api/npc/delete/' + npcID;
         $http.get(url).success(function(data)
@@ -108,10 +102,6 @@ clientApp.controller('editNPCController', function($scope, $window, $http, Profi
             if (data === "OK")
             {
                 window.location = 'profile';
-            }
-            else
-            {
-                console.log(data);
             }
         });
     };

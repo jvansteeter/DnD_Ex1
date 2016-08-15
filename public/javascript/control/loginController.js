@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('loginControl', function($scope, $window, $http, $location, Profile) 
+clientApp.controller('loginControl', function($scope, $window, $http, Profile)
 {
 	$scope.usernameInput = "";
 	$scope.passwordInput = "";
@@ -15,7 +15,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 	
 	$scope.login = function()
 	{
-		console.log("login username=" + $scope.usernameInput);
 		if ($scope.usernameInput === "")
 		{
 			$scope.loginInfo = "Username is blank";
@@ -36,19 +35,9 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 
 		$http.post(url, data).then(function(response)
 		{
-			console.log("Login was successful");
-			console.log(response);
-
-			Profile.setUsername(response.data.username);
-			Profile.setUserID(response.data._id);
-			Profile.setFirstName(response.data.first_name);
-			Profile.setLastName(response.data.last_name);
 			window.location = 'profile';
 		}, function(response)
 		{
-			console.log("Login was unsuccessful");
-			console.log(response);
-
 			if (response.status === 401)
 			{
 				$scope.alertMessage = "Invalid Username or Password";
@@ -59,7 +48,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 
 	$scope.register = function()
 	{
-		console.log("Attempting to register");
 		if ($scope.usernameRegister === "")
 		{
 			$scope.registerInfo = "Username is blank";
@@ -90,10 +78,8 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 			"lastname" : $scope.lastNameRegister,
 			"authCode" : $scope.authCodeRegister
 		};
-		console.log(data);
 		$http.post(url, data).success(function(data)
 		{
-			console.log(data);
 			if(data === "OK")
 			{
 				$scope.registerInfo = "User created";
@@ -106,13 +92,6 @@ clientApp.controller('loginControl', function($scope, $window, $http, $location,
 
 				$http.post(url, data).success(function(data)
 				{
-					console.log("Login was successful");
-					console.log(data);
-
-					Profile.setUsername(data.username);
-					Profile.setUserID(response.data._id);
-					Profile.setFirstName(data.first_name);
-					Profile.setLastName(data.last_name);
 					window.location = 'profile';
 				});
 			}

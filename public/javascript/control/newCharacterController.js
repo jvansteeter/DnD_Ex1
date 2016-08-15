@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('newCharacterController', function($scope, $window, $http, $alert, Profile)
+clientApp.controller('newCharacterController', function($scope, $window, $http, $alert)
 {
     $scope.character = {};
     $scope.character.features = [];
@@ -26,19 +26,13 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
 
     $scope.save = function ()
     {
-        console.log("Saving");
-        console.log($scope.character);
-
         var url = 'api/character/create';
         var data =
         {
-            userID: Profile.getUserID(),
             character: $scope.character
         };
         $http.post(url, data).success(function(data)
         {
-            console.log("Response");
-            console.log(data);
             if (data === "OK")
             {
                 window.location = 'profile';

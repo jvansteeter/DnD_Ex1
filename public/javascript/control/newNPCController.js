@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('newNPCController', function($scope, $window, $http, Profile)
+clientApp.controller('newNPCController', function($scope, $window, $http)
 {
     $scope.npc = {};
     $scope.npc.features = [];
@@ -13,19 +13,13 @@ clientApp.controller('newNPCController', function($scope, $window, $http, Profil
 
     $scope.save = function ()
     {
-        console.log("Saving");
-        console.log($scope.npc);
-
         var url = 'api/npc/create';
         var data =
         {
-            userID: Profile.getUserID(),
             npc: $scope.npc
         };
         $http.post(url, data).success(function(data)
         {
-            console.log("Response");
-            console.log(data);
             if (data === "OK")
             {
                 window.location = 'profile';

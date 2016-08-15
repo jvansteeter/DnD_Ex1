@@ -32,8 +32,6 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
 
     $scope.save = function ()
     {
-        console.log("Saving");
-        console.log($scope.character);
 
         var url = 'api/character/update';
         var data =
@@ -42,8 +40,6 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
         };
         $http.post(url, data).success(function(data)
         {
-            console.log("Response");
-            console.log(data);
             if (data === "OK")
             {
                 window.location = 'profile';
@@ -113,7 +109,6 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
 
     $scope.submit = function()
     {
-        console.log("Attempting to delete character");
 
         var url = 'api/character/delete/' + characterID;
         $http.get(url).success(function(data)
@@ -121,10 +116,6 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
             if (data === "OK")
             {
                 window.location = 'profile';
-            }
-            else
-            {
-                console.log(data);
             }
         });
     };

@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var fs = require('fs-extra');
 var User = mongoose.model('User');
 var Encounter = mongoose.model('Encounter');
 var EncounterPlayer = mongoose.model('EncounterPlayer');
 var Character = mongoose.model('Character');
+var Campaign = mongoose.model('Campaign');
+var CampaignPost = mongoose.model('CampaignPost');
+var CampaignUser = mongoose.model('CampaignUser');
 var NPC = mongoose.model('NPC');
-// var passport = require('passport');
+var formidable = require('formidable');
+var path = require('path');
 
 //
 // API
@@ -14,7 +19,7 @@ var NPC = mongoose.model('NPC');
 
 router.post('/encounter/create', function(req, res)
 {
-    User.findById(req.body.userID, function(error, user)
+    User.findById(req.user._id, function(error, user)
     {
         if (error)
         {
@@ -26,8 +31,9 @@ router.post('/encounter/create', function(req, res)
         Encounter.create(
             {
                 title : req.body.title,
+                campaignID: req.body.campaignID,
                 description : req.body.description,
-                hostID : req.body.userID,
+                hostID : req.user._id,
                 hostName : name,
                 active : false
             }, function(error, encounter)
@@ -43,6 +49,66 @@ router.post('/encounter/create', function(req, res)
     });
 });
 
+router.get('/image/profile', function(req, res)
+{
+    User.findById(req.user._id, function(error, user)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding user");
+            return;
+        }
+
+        res.sendFile(path.resolve(user.profilePhotoURL));
+    });
+});
+
+
+router.post('/image/profile', function(req, res)
+{
+    var directory = "image/users/" + req.user._id + "/";
+    var fileName = "profile" + path.extname(req.files.file.file);
+
+    fs.ensureDirSync(directory);
+
+    fs.copy(req.files.file.file, directory + fileName, function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error copying file");
+            return;
+        }
+
+        User.findById(req.user._id, function(error, user)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding user");
+                return;
+            }
+
+            user.profilePhotoURL = directory + fileName;
+            user.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send("Error saving profile photo");
+                }
+
+                fs.unlink(req.files.file.file, function(error)
+                {
+                    if (error)
+                    {
+                        res.status(500).send("Error unlinking old file");
+                    }
+
+                    res.send("OK");
+                });
+            });
+        });
+    });
+});
+
 router.get('/encounter/all', function(req, res)
 {
     Encounter.find({ $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
@@ -53,7 +119,35 @@ router.get('/encounter/all', function(req, res)
             return;
         }
 
-        res.json({ encounters : encounters });
+        res.json(encounters);
+    });
+});
+
+router.get('/campaign/all', function(req, res)
+{
+    Campaign.find({}, function(error, campaigns)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding encounters");
+            return;
+        }
+
+        res.json(campaigns);
+    });
+});
+
+router.get('/campaign/encounter/:campaign_id', function(req, res)
+{
+    Encounter.find({ campaignID: req.params.campaign_id, $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding encounters");
+            return;
+        }
+
+        res.json(encounters);
     });
 });
 
@@ -67,7 +161,7 @@ router.get('/encounter/:encounter_id', function(req, res)
             return;
         }
 
-        res.json({ encounter : encounter });
+        res.json(encounter);
     });
 });
 
@@ -142,7 +236,7 @@ router.post('/encounter/addnpc/:encounter_id', function(req, res)
 
 router.post('/encounter/addnpc2/:encounter_id', function(req, res)
 {
-    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    Encounter.findById(req.params.encounter_id, function(error, encounterState)
     {
         if (error)
         {
@@ -172,7 +266,32 @@ router.post('/encounter/addnpc2/:encounter_id', function(req, res)
                     npc : true
                 });
 
-            encounter.addPlayer(encounterPlayer._id);
+            //calculate and assign mapX, mapY to encounterPlayer
+
+            var tokenPlaced = false;
+            while(!tokenPlaced){
+                var y = 0;
+                var x = 0;
+
+                var spaceIsFree = true;
+                for(var i = 0; i < encounterState.players.length; i++){
+                    var player = encounterState.players[i];
+                    if(player.mapX === x && player.mapY === y){
+                        spaceIsFree = false;
+                    }
+                }
+
+                if(spaceIsFree){
+                    encounterPlayer.mapX = x;
+                    encounterPlayer.mapY = y;
+                    tokenPlaced = true;
+                }
+                else{
+                    x++;
+                }
+            }
+
+            encounterState.addPlayer(encounterPlayer._id);
             encounterPlayer.save(function(error)
             {
                 if (error)
@@ -258,7 +377,7 @@ router.post('/encounter/removeplayer/:encounter_id', function(req, res)
     });
 });
 
-router.get('/encounter/players/:encounter_id', function(req, res)
+router.get('/encounter/gamestate/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
@@ -276,24 +395,21 @@ router.get('/encounter/players/:encounter_id', function(req, res)
                 return;
             }
 
-            res.json(players);
+            encounter.players = players;
+            res.json(encounter);
         });
     });
 });
 
 router.post('/encounter/hitplayer', function(req, res)
 {
-    console.log("---!!! Attempting to hit a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
         {
-            console.log("Error finding the player");
             res.status(500).send("Error finding encounter player");
             return;
         }
-
-        console.log("found player " + player._id + " " + player.name + " " + req.body.hit);
 
         player.hitPoints += req.body.hit;
         if (!player.npc && player.hitPoints < -9)
@@ -309,7 +425,6 @@ router.post('/encounter/hitplayer', function(req, res)
         {
             if (error)
             {
-                console.log("Error saving the player");
                 res.status(500).send("Error saving encounter player");
                 return;
             }
@@ -321,24 +436,19 @@ router.post('/encounter/hitplayer', function(req, res)
 
 router.post('/encounter/setinitiative', function(req, res)
 {
-    console.log("---!!! Attempting to set the initiative of a player !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
         {
-            console.log("Error finding the player");
             res.status(500).send("Error finding encounter player");
             return;
         }
-
-        console.log("found player " + player._id + " " + player.name + " " + req.body.hit);
 
         player.initiative = req.body.initiative;
         player.save(function(error)
         {
             if (error)
             {
-                console.log("Error saving the player");
                 res.status(500).send("Error saving player");
                 return;
             }
@@ -350,7 +460,6 @@ router.post('/encounter/setinitiative', function(req, res)
 
 router.post('/encounter/togglevisible', function(req, res)
 {
-    console.log("---!!! Attempting to toggle visibility !!!---");
     EncounterPlayer.findById(req.body.playerID, function(error, player)
     {
         if (error)
@@ -418,58 +527,71 @@ router.get('/class/all', function (req, res)
 
 router.post('/character/create', function(req, res)
 {
-    Character.create(
-    {
-        userID: req.body.userID,
-        name: req.body.character.name,
-        class: req.body.character.class,
-        level: req.body.character.level,
-        background: req.body.character.background,
-        playerName: req.body.character.playerName,
-        race: req.body.character.race,
-        alignment: req.body.character.alignment,
-        exp: req.body.character.exp,
-        proficiencyBonus: req.body.character.proficiencyBonus,
-        strength: req.body.character.strength,
-        dexterity: req.body.character.dexterity,
-        constitution: req.body.character.constitution,
-        intelligence: req.body.character.intelligence,
-        wisdom: req.body.character.wisdom,
-        charisma: req.body.character.charisma,
-        armorClass: req.body.character.armorClass,
-        initiative: req.body.character.initiative,
-        speed: req.body.character.speed,
-        hitPoints: req.body.character.maxHitPoints,
-        maxHitPoints: req.body.character.maxHitPoints,
-        features: req.body.character.features,
-        proficiencies: req.body.character.proficiencies,
-        languages: req.body.character.languages,
-        personality: req.body.character.personality,
-        ideals: req.body.character.ideals,
-        bonds: req.body.character.bonds,
-        flaws: req.body.character.flaws,
-        attacks: req.body.character.attacks,
-        money: req.body.character.money,
-        equipment: req.body.character.equipment
-    }, function(error, character)
+    var character = new Character();
+    character.userID = req.user._id;
+    character.setCharacter(req.body.character);
+    character.save(function(error)
     {
         if (error)
         {
-            res.status(500).send("Error creating character");
+            res.status(500).send("Error saving new character");
             return;
         }
 
-        character.generateCharacter();
-        character.save(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving character");
-            }
-
-            res.send("OK");
-        });
+        res.send("OK");
     });
+    // Character.create(
+    // {
+    //     userID: req.user._id,
+    //     name: req.body.character.name,
+    //     class: req.body.character.class,
+    //     level: req.body.character.level,
+    //     background: req.body.character.background,
+    //     playerName: req.body.character.playerName,
+    //     race: req.body.character.race,
+    //     alignment: req.body.character.alignment,
+    //     exp: req.body.character.exp,
+    //     proficiencyBonus: req.body.character.proficiencyBonus,
+    //     strength: req.body.character.strength,
+    //     dexterity: req.body.character.dexterity,
+    //     constitution: req.body.character.constitution,
+    //     intelligence: req.body.character.intelligence,
+    //     wisdom: req.body.character.wisdom,
+    //     charisma: req.body.character.charisma,
+    //     armorClass: req.body.character.armorClass,
+    //     initiative: req.body.character.initiative,
+    //     speed: req.body.character.speed,
+    //     hitPoints: req.body.character.maxHitPoints,
+    //     maxHitPoints: req.body.character.maxHitPoints,
+    //     features: req.body.character.features,
+    //     proficiencies: req.body.character.proficiencies,
+    //     languages: req.body.character.languages,
+    //     personality: req.body.character.personality,
+    //     ideals: req.body.character.ideals,
+    //     bonds: req.body.character.bonds,
+    //     flaws: req.body.character.flaws,
+    //     attacks: req.body.character.attacks,
+    //     money: req.body.character.money,
+    //     equipment: req.body.character.equipment
+    // }, function(error, character)
+    // {
+    //     if (error)
+    //     {
+    //         res.status(500).send("Error creating character");
+    //         return;
+    //     }
+    //
+    //     character.generateCharacter();
+    //     character.save(function(error)
+    //     {
+    //         if (error)
+    //         {
+    //             res.status(500).send("Error saving character");
+    //         }
+    //
+    //         res.send("OK");
+    //     });
+    // });
 });
 
 router.post('/character/update', function(req, res)
@@ -499,52 +621,64 @@ router.post('/character/update', function(req, res)
 
 router.post('/npc/create', function(req, res)
 {
-    NPC.create(
+    var npc = new NPC();
+    npc.userID = req.user._id;
+    npc.setNPC(req.body.npc);
+    npc.save(function(error)
+    {
+        if (error)
         {
-            userID: req.body.userID,
-            name: req.body.npc.name,
-            descriptors: req.body.npc.descriptors,
-            description: req.body.npc.description,
-            strength: req.body.npc.strength,
-            dexterity: req.body.npc.dexterity,
-            constitution: req.body.npc.constitution,
-            intelligence: req.body.npc.intelligence,
-            wisdom: req.body.npc.wisdom,
-            charisma: req.body.npc.charisma,
-            armorClass: req.body.npc.armorClass,
-            hitPoints: req.body.npc.hitPoints,
-            speed: req.body.npc.speed,
-            features: req.body.npc.features,
-            specials: req.body.npc.specials,
-            money: req.body.npc.money,
-            equipment: req.body.npc.equipment,
-            attacks: req.body.npc.attacks,
-            actions: req.body.npc.actions
-        }, function(error, npc)
-        {
-            if (error)
-            {
-                res.status(500).send("Error creating NPC");
-                return;
-            }
+            res.status(500).send("Error saving new NPC");
+            return;
+        }
 
-            npc.generateNPC();
-            npc.save(function(error)
-            {
-                if (error)
-                {
-                    res.status(500).send("Error saving NPC");
-                    return;
-                }
-                
-                res.send("OK");
-            });
-        });
+        res.send("OK");
+    });
+    // NPC.create(
+    //     {
+    //         userID: req.user._id,
+    //         name: req.body.npc.name,
+    //         descriptors: req.body.npc.descriptors,
+    //         description: req.body.npc.description,
+    //         strength: req.body.npc.strength,
+    //         dexterity: req.body.npc.dexterity,
+    //         constitution: req.body.npc.constitution,
+    //         intelligence: req.body.npc.intelligence,
+    //         wisdom: req.body.npc.wisdom,
+    //         charisma: req.body.npc.charisma,
+    //         armorClass: req.body.npc.armorClass,
+    //         hitPoints: req.body.npc.hitPoints,
+    //         speed: req.body.npc.speed,
+    //         features: req.body.npc.features,
+    //         specials: req.body.npc.specials,
+    //         money: req.body.npc.money,
+    //         equipment: req.body.npc.equipment,
+    //         attacks: req.body.npc.attacks,
+    //         actions: req.body.npc.actions
+    //     }, function(error, npc)
+    //     {
+    //         if (error)
+    //         {
+    //             res.status(500).send("Error creating NPC");
+    //             return;
+    //         }
+    //
+    //         npc.generateNPC();
+    //         npc.save(function(error)
+    //         {
+    //             if (error)
+    //             {
+    //                 res.status(500).send("Error saving NPC");
+    //                 return;
+    //             }
+    //
+    //             res.send("OK");
+    //         });
+    //     });
 });
 
 router.post('/npc/update', function(req, res)
 {
-    console.log(req.body.npc._id);
     NPC.findById(req.body.npc._id, function(error, npc)
     {
         if (error)
@@ -553,26 +687,6 @@ router.post('/npc/update', function(req, res)
             return;
         }
 
-        // npc.name = req.body.npc.name;
-        // npc.descriptors = req.body.npc.descriptors;
-        // npc.description = req.body.npc.description;
-        // npc.strength = req.body.npc.strength;
-        // npc.dexterity = req.body.npc.dexterity;
-        // npc.constitution = req.body.npc.constitution;
-        // npc.intelligence = req.body.npc.intelligence;
-        // npc.wisdom = req.body.npc.wisdom;
-        // npc.charisma = req.body.npc.charisma;
-        // npc.armorClass = req.body.npc.armorClass;
-        // npc.speed = req.body.npc.speed;
-        // npc.hitPoints = req.body.npc.hitPoints;
-        // npc.features = req.body.npc.features;
-        // npc.specials = req.body.npc.specials;
-        // npc.money = req.body.npc.money;
-        // npc.equipment = req.body.npc.equipment;
-        // npc.attacks = req.body.npc.attacks;
-        // npc.actions = req.body.npc.actions;
-        //
-        // npc.generateNPC();
         npc.setNPC(req.body.npc);
         npc.save(function(error)
         {
@@ -738,13 +852,188 @@ router.post('/encounter/updatenpc', function(req, res)
    }) ;
 });
 
-// function isLoggedIn(req, res, next) 
-// {
-//     // if user is authenticated in the session, carry on 
-//     if (req.isAuthenticated())
-//         return next();
-//     // if they aren't redirect them to the home page
-//     res.sendStatus(401);
-// }
+router.get('/user', function(req, res)
+{
+    res.json(req.user);
+});
+
+router.get('/user/campaigns', function(req, res)
+{
+    CampaignUser.find({userID: req.user._id}, function(error, campaignUsers)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign user relations");
+            return;
+        }
+
+        var campaignIDs = [];
+        for (var i = 0; i < campaignUsers.length; i++)
+        {
+            campaignIDs.push(campaignUsers[i].campaignID);
+        }
+
+        Campaign.find({_id: {$in: campaignIDs}}, function(error, campaigns)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding campaigns");
+                return;
+            }
+
+            res.send(campaigns);
+        });
+    });
+});
+
+router.get('/campaign/:campaign_id', function(req, res)
+{
+    Campaign.findById(req.params.campaign_id, function(error, campaign)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        res.json(campaign);
+    });
+});
+
+router.get('/campaign/adventurers/:campaign_id', function(req, res)
+{
+    Campaign.findById(req.params.campaign_id, function(error, campaign)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding campaign");
+            return;
+        }
+
+        CampaignUser.find({campaignID : campaign._id}, function(error, campaignUsers)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding campaign Users");
+                return;
+            }
+
+            var adventurerIDs = [];
+            for (var i = 0; i < campaignUsers.length; i++)
+            {
+                adventurerIDs.push(campaignUsers[i].userID);
+            }
+
+            User.find({_id : {$in : adventurerIDs }}, function(error, users)
+            {
+                if (error)
+                {
+                    res.status(500).send("Error finding users");
+                    return;
+                }
+
+                var adventurerNames = [];
+                for (var i = 0; i < users.length; i++)
+                {
+                    adventurerNames.push(users[i].first_name);
+                }
+
+                res.json(adventurerNames);
+            });
+        });
+    });
+});
+
+router.get('/campaign/post/:campaign_id', function(req, res)
+{
+     CampaignPost.find({campaignID : req.params.campaign_id}, function(error, campaignPosts)
+     {
+         if (error)
+         {
+             res.status(500).send(error);
+             return;
+         }
+
+         res.json(campaignPosts);
+     });
+});
+
+router.post('/campaign/create', function(req, res)
+{
+    var campaign = new Campaign();
+    campaign.addHost(req.user._id);
+    campaign.title = req.body.title;
+    campaign.description = req.body.description;
+    campaign.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving campaign");
+            return;
+        }
+
+        var campaignUser = new CampaignUser();
+        campaignUser.userID = req.user._id;
+        campaignUser.campaignID = campaign._id;
+
+        campaignUser.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving campaign user relation");
+                return;
+            }
+
+            res.send("OK");
+        });
+    })
+});
+
+router.post('/campaign/join/', function(req, res)
+{
+    CampaignUser.findOrCreate(
+    {
+        userID: req.user._id,
+        campaignID: req.body.campaignID
+    }, function(error, campaignUser)
+    {
+        if (error)
+        {
+            res.status(500).send("Error finding or creating campaign user relation");
+            return;
+        }
+
+        campaignUser.save(function(error)
+        {
+            if (error)
+            {
+                res.status(500).send("Error saving campaign user relation");
+                return;
+            }
+
+            res.send("OK");
+        });
+    });
+});
+
+router.post('/campaign/post', function(req, res)
+{
+    var post = new CampaignPost();
+    post.userID = req.user._id;
+    post.author = req.user.first_name + " " + req.user.last_name;
+    post.authorPhoto = req.user.profilePhotoURL;
+    post.campaignID = req.body.campaignID;
+    post.content = req.body.content;
+    post.save(function(error)
+    {
+        if (error)
+        {
+            res.status(500).send("Error saving post");
+            return;
+        }
+
+        res.send("OK");
+    })
+});
 
 module.exports = router;

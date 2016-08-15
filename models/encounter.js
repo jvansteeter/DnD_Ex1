@@ -1,19 +1,20 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 var encounterSchema = new mongoose.Schema(
 {
     title: String,
+    campaignID: String,
     description: String,
     hostID: String,
     hostName: String,
     players: [],
     createdAt: {type: Number, required: true, default: Date.now},
-    active: Boolean
+    active: Boolean,
+    mapImageURI: String,
+    mapTileSize: Number
 });
 
-// hash the password
-encounterSchema.methods.addPlayer = function(player) 
+encounterSchema.methods.addPlayer = function(player)
 {
     this.players.push(player);
     this.save();
