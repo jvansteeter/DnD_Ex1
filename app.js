@@ -42,6 +42,7 @@ require('./config/passport');
 var indexRouter = require("./routes/index");
 var authRouter = require("./routes/authorizationRouter");
 var api = require('./routes/api');
+var image = require('./routes/image');
 
 // uncomment after placing your favicon in /public
 app.use(favicon('public/image/favicon.ico'));
@@ -70,6 +71,7 @@ app.use('/campaign', isLoggedIn, express.static('views/campaign.html'));
 app.use('/campaignList', isLoggedIn, express.static('views/campaignList.html'));
 app.use('/auth', authRouter);
 app.use('/api', isAuthenticated, api);
+app.use('/api/image', isAuthenticated, image);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) 
