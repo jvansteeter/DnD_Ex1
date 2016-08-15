@@ -2,44 +2,52 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain)
+clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter)
 {
 	var encounterID = window.location.search.replace('?', '');
 	$scope.encounter = {};
+	$scope.host = false;
 
 	socket.on('init', function (data)
 	{
-		Profile.async().then(function()
+		Encounter.init(encounterID).then(function()
 		{
-			var user = Profile.getUser();
-			$scope.name = user.first_name + " " + user.last_name;
-			Profile.setUser(user);
-
-			$http.get('api/encounter/' + encounterID).success(function(data)
-			{
-				$scope.encounter = data;
-				if (Profile.getUserID() === data.hostID)
-				{
-					$scope.host = true;
-				}
-				else
-				{
-					$scope.host = false;
-				}
-
-				$scope.updateGameState().then(function()
-				{
-					mapMain.start($scope.host);
-				});
-			});
+			$scope.host = Encounter.isHost();
+			$scope.encounter = Encounter.getEncounterState();
+			console.log($scope.encounter);
+			mapMain.setGameState(Encounter.isHost());
 		});
+		// Profile.async().then(function()
+		// {
+		// 	var user = Profile.getUser();
+		// 	$scope.name = user.first_name + " " + user.last_name;
+		// 	Profile.setUser(user);
+        //
+		// 	$http.get('api/encounter/' + encounterID).success(function(data)
+		// 	{
+		// 		$scope.encounter = data;
+		// 		if (Profile.getUserID() === data.hostID)
+		// 		{
+		// 			$scope.host = true;
+		// 		}
+		// 		else
+		// 		{
+		// 			$scope.host = false;
+		// 		}
+        //
+		// 		$scope.updateEncounterState().then(function()
+		// 		{
+		// 			mapMain.start($scope.host);
+		// 		});
+		// 	});
+		// });
 	});
 
 	socket.on('update:encounter', function(data)
 	{
 		if (data.encounterID === encounterID)
 		{
-			$scope.updateGameState();
+			$scope.updateEncounterState();
 		}
 	});
 
@@ -51,21 +59,25 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		}
 	});
 
-	$scope.updateGameState = function()
+	$scope.updateEncounterState = function()
 	{
-		var deferred = $q.defer();
-		var url = 'api/encounter/gamestate/' + encounterID;
-		$http.get(url).success(function(data)
+		Encounter.update().then(function()
 		{
-			$scope.encounterState = data;
-			mapMain.setGameState(data);
-			deferred.resolve();
-		}).error(function(data)
-		{
-			deferred.reject();
+			$scope.encounterState = Encounter.getEncounterState();
 		});
-
-		return deferred.promise;
+		// var deferred = $q.defer();
+		// var url = 'api/encounter/gamestate/' + encounterID;
+		// $http.get(url).success(function(data)
+		// {
+		// 	$scope.encounterState = data;
+		// 	mapMain.setGameState(data);
+		// 	deferred.resolve();
+		// }).error(function()
+		// {
+		// 	deferred.reject();
+		// });
+        //
+		// return deferred.promise;
 	};
 
 	$scope.setPlayer = function(index)
@@ -80,11 +92,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.isHost = function()
 	{
-		// if (Profile.getUserID() === $scope.encounter.hostID)
-		// {
-		// 	return true;
-		// }
-		// return false;
 		return $scope.host;
 	};
 
@@ -144,7 +151,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				encounterID : encounterID
 			});
 
-			$scope.updateGameState();
+			$scope.updateEncounterState();
 		});
 	};
 
@@ -168,7 +175,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				encounterID : encounterID
 			});
 
-			$scope.updateGameState();
+			$scope.updateEncounterState();
 		});
 	};
 
@@ -216,7 +223,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-			$scope.updateGameState();
+			$scope.updateEncounterState();
 		});
 	};
 
@@ -245,7 +252,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-			$scope.updateGameState();
+			$scope.updateEncounterState();
 		});
 	};
 
@@ -292,7 +299,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				{
 					encounterID : encounterID
 				});
-				$scope.updateGameState();
+				$scope.updateEncounterState();
 			}
 		});
 	};

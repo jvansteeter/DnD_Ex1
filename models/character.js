@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var characterSchema = new mongoose.Schema(
 {
 	userID: String,
-    name: String,
+    name: {type: String, default: ""},
     class: String,
     level: String,
     background: String,
@@ -11,15 +11,15 @@ var characterSchema = new mongoose.Schema(
     race: String,
     alignment: String,
     exp: Number,
-    proficiencyBonus: Number,
+    proficiencyBonus: {type: Number, default: 0},
     strength: {
-    	score: Number,
+    	score: {type: Number, default: 1},
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
     	athletics: {type: Boolean, required: true, default: false}
     },
     dexterity: {
-    	score: Number,
+    	score: {type: Number, default: 1},
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
     	acrobatics: {type: Boolean, required: true, default: false},
@@ -27,12 +27,12 @@ var characterSchema = new mongoose.Schema(
     	stealth: {type: Boolean, required: true, default: false}
     },
     constitution: {
-    	score: Number,
+    	score: {type: Number, default: 1},
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false}
     },
     intelligence: {
-    	score: Number,
+    	score: {type: Number, default: 1},
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
     	arcana: {type: Boolean, required: true, default: false},
@@ -42,7 +42,7 @@ var characterSchema = new mongoose.Schema(
     	religion: {type: Boolean, required: true, default: false}
     },
     wisdom: {
-    	score: Number,
+    	score: {type: Number, default: 1},
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
     	animalHandling: {type: Boolean, required: true, default: false},
@@ -52,7 +52,7 @@ var characterSchema = new mongoose.Schema(
     	survival: {type: Boolean, required: true, default: false}
     },
     charisma: {
-    	score: Number,
+    	score: {type: Number, default: 1},
     	modifier: Number,
     	save: {type: Boolean, required: true, default: false},
     	intimidation: {type: Boolean, required: true, default: false},

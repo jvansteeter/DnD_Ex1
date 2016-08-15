@@ -1,6 +1,7 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('tokenRenderer', function () {
+clientApp.service('tokenRenderer', function (Encounter)
+{
 
     var tokenRenderer = {};
     var encounterState;
@@ -21,6 +22,7 @@ clientApp.service('tokenRenderer', function () {
         tileSize = 50;
         isHost = isHostParam;
 
+        encounterState = Encounter.getEncounterState();
     };
 
     tokenRenderer.updateEncounterState = function(newEncounterState){
