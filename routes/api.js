@@ -530,6 +530,7 @@ router.get('/class/all', function (req, res)
 router.post('/character/create', function(req, res)
 {
     var character = new Character();
+    character.userID = req.user._id;
     character.setCharacter(req.body.character);
     character.save(function(error)
     {
@@ -976,20 +977,5 @@ router.post('campaign/post', function(req, res)
         res.send("OK");
     })
 });
-
-function getGameState(encounter)
-{
-    EncounterPlayer.find({_id : {$in : encounter.players }}, function(error, players)
-    {
-        if (error)
-        {
-            return;
-        }
-
-        encounter.players = players;
-
-        return encounter;
-    });
-}
 
 module.exports = router;
