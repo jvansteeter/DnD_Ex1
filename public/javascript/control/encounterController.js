@@ -15,7 +15,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 			$scope.host = Encounter.isHost();
 			$scope.encounter = Encounter.getEncounterState();
 			console.log($scope.encounter);
-			mapMain.setGameState(Encounter.isHost());
+			// mapMain.setGameState(Encounter.isHost());
 		});
 		// Profile.async().then(function()
 		// {
