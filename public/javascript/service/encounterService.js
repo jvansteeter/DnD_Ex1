@@ -27,7 +27,9 @@ clientApp.service('Encounter', function ($http, $q, Profile)
     encounterService.update = function()
     {
         var deferred = $q.defer();
+
         var url = 'api/encounter/gamestate/' + encounterID;
+
         $http.get(url).success(function(data)
         {
             encounterState = data;
@@ -42,6 +44,7 @@ clientApp.service('Encounter', function ($http, $q, Profile)
 
     encounterService.getEncounterState = function()
     {
+        console.log("getting encounter");
         return encounterState;
     };
 

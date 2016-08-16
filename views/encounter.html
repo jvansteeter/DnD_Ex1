@@ -30,7 +30,7 @@
     <!--<script src="javascript/map/mapRenderer.js"></script>-->
     <script src="javascript/map/gridRenderer.js"></script>
     <!--<script src="javascript/service/encounterService.js>"></script>-->
-    <!--<script src="javascript/map/tokenRenderer.js"></script>-->
+    <script src="javascript/map/tokenRenderer.js"></script>
     <!--<script src="javascript/map/inputController.js"></script>-->
     <script src="javascript/map/mapMain.js"></script>
     <script src="javascript/control/encounterController.js"></script>
@@ -129,8 +129,10 @@
                                         width="650" height="650"></canvas>
                             </div>
 
-                            <!--<canvas style="border:1px solid #c3c3c3; z-index:2; position:absolute;" id="tokenCanvas"-->
-                            <!--width="650" height="650"></canvas>-->
+                            <div ng-controller="tokenRenderer">
+                                <canvas style="border:1px solid #c3c3c3; z-index:2; position:absolute;" id="tokenCanvas"
+                                        width="650" height="650"></canvas>
+                            </div>
                             <!--<canvas style="border:1px solid #c3c3c3; z-index:3; position:absolute;" id="inputCanvas"-->
                             <!--width="650" height="650" ng-click="testClick()"></canvas>-->
                         </div>

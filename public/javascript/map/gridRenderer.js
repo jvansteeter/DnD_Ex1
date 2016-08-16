@@ -13,6 +13,7 @@ clientApp.controller('gridRenderer', function ($window) {
         width = canvas.width();
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
+        tileSize = 50;
 
         draw();
     }
@@ -21,11 +22,11 @@ clientApp.controller('gridRenderer', function ($window) {
         context.clearRect(0, 0, width, height);
         context.fillStyle = "rgba(255,0,0,.3)";
         for (var vert = 0; vert < 12; vert++) {
-            context.fillRect(50 * vert, 0, 2, 650);
+            context.fillRect(tileSize * vert, 0, 2, 650);
         }
 
         for (var hori = 0; hori < 12; hori++) {
-            context.fillRect(0, 50 * hori, 650, 2);
+            context.fillRect(0, tileSize * hori, 650, 2);
         }
 
         $window.requestAnimationFrame(draw);

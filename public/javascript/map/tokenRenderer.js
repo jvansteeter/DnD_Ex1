@@ -1,7 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('tokenRenderer', function (Encounter)
-{
+clientApp.controller('tokenRenderer', function ($window, Encounter) {
 
     var tokenRenderer = {};
     var encounterState;
@@ -12,34 +11,31 @@ clientApp.service('tokenRenderer', function (Encounter)
     var tileSize;
     var isHost = false;
 
-    tokenRenderer.init = function(canvasParam, isHostParam){
-
-        canvas = canvasParam;
-
+    function init() {
+        encounterState = Encounter.getEncounterState();
+        canvas = $('#tokenCanvas');
+        context = canvas.get(0).getContext('2d');
         width = canvas.width();
         height = canvas.height();
-        context = canvas.get(0).getContext('2d');
         tileSize = 50;
-        isHost = isHostParam;
+        isHost = Encounter.isHost();
 
-        encounterState = Encounter.getEncounterState();
-    };
+        draw();
+    }
 
-    tokenRenderer.updateEncounterState = function(newEncounterState){
-        encounterState = newEncounterState;
-    };
-
-    tokenRenderer.draw = function(){
+    function draw() {
         context.clearRect(0, 0, width, height);
 
+        console.log(encounterState);
+
         //for each player entry in the encounter JSON
-        for(var i = 0; i < encounterState.players.length; i++){
+        for (var i = 0; i < encounterState.players.length; i++) {
             //collect the current player
             var player = encounterState.players[i];
 
             //identify the icon for the player
             var tokenImage = new Image();
-            if(!player.npc){
+            if (!player.npc) {
                 tokenImage.src = "image/map/playerOne.png";
             }
             else {
@@ -47,7 +43,7 @@ clientApp.service('tokenRenderer', function (Encounter)
             }
 
             //draw the icon based off of current settings
-            if(player.visible){
+            if (player.visible) {
                 context.globalAlpha = 1;
                 context.drawImage(
                     tokenImage,
@@ -55,8 +51,8 @@ clientApp.service('tokenRenderer', function (Encounter)
                     player.mapY * tileSize
                 );
             }
-            else{
-                if(isHost){
+            else {
+                if (isHost) {
                     context.globalAlpha = 0.35;
                     context.drawImage(
                         tokenImage,
@@ -64,7 +60,7 @@ clientApp.service('tokenRenderer', function (Encounter)
                         player.mapY * tileSize
                     );
                 }
-                else{
+                else {
                     context.globalAlpha = 0.0;
                     context.drawImage(
                         tokenImage,
@@ -75,8 +71,77 @@ clientApp.service('tokenRenderer', function (Encounter)
 
             }
         }
-    };
 
+        $window.requestAnimationFrame(draw);
+    }
 
-    return tokenRenderer;
+    init();
+
+    // tokenRenderer.init = function(canvasParam, isHostParam){
+    //
+    //     canvas = canvasParam;
+    //
+    //     width = canvas.width();
+    //     height = canvas.height();
+    //     context = canvas.get(0).getContext('2d');
+    //     tileSize = 50;
+    //     isHost = isHostParam;
+    //
+    //     encounterState = Encounter.getEncounterState();
+    // };
+    //
+    // tokenRenderer.updateEncounterState = function(newEncounterState){
+    //     encounterState = newEncounterState;
+    // };
+    //
+    // tokenRenderer.draw = function(){
+    //     context.clearRect(0, 0, width, height);
+    //
+    //     //for each player entry in the encounter JSON
+    //     for(var i = 0; i < encounterState.players.length; i++){
+    //         //collect the current player
+    //         var player = encounterState.players[i];
+    //
+    //         //identify the icon for the player
+    //         var tokenImage = new Image();
+    //         if(!player.npc){
+    //             tokenImage.src = "image/map/playerOne.png";
+    //         }
+    //         else {
+    //             tokenImage.src = "image/map/playerThree.png";
+    //         }
+    //
+    //         //draw the icon based off of current settings
+    //         if(player.visible){
+    //             context.globalAlpha = 1;
+    //             context.drawImage(
+    //                 tokenImage,
+    //                 player.mapX * tileSize,
+    //                 player.mapY * tileSize
+    //             );
+    //         }
+    //         else{
+    //             if(isHost){
+    //                 context.globalAlpha = 0.35;
+    //                 context.drawImage(
+    //                     tokenImage,
+    //                     player.mapX * tileSize,
+    //                     player.mapY * tileSize
+    //                 );
+    //             }
+    //             else{
+    //                 context.globalAlpha = 0.0;
+    //                 context.drawImage(
+    //                     tokenImage,
+    //                     player.mapX * tileSize,
+    //                     player.mapY * tileSize
+    //                 );
+    //             }
+    //
+    //         }
+    //     }
+    // };
+    //
+    //
+    // return tokenRenderer;
 });
