@@ -40,7 +40,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         $scope.tooltip = {
             title: "Add tags to post"
         };
-        $scope.posts = [];
 
         $http.get('api/campaign/' + campaignID).success(function(data)
         {

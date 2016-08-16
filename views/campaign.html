@@ -140,11 +140,11 @@
               </div>
               <div class="col col-xs-9">
                 <hr>
-                <div class="panel-group">
+                <div class="panel-group" ng-if="posts.length > 0">
                   <div class="panel panel-default" ng-repeat="post in posts">
                     <div class="panel-heading">
                       <h2 class="panel-title" style="font-size: 20px">
-                        <img class="img-thumbnail" style="width: 40px" src="api/{{ post.authorPhoto }}">
+                        <img class="img-rounded" id="comment-icon" style="width: 40px" ng-src="api/{{ post.authorPhoto }}">
                         {{ post.author }}
                       </h2>
                     </div>
