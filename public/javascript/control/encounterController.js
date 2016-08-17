@@ -13,7 +13,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		Encounter.init(encounterID).then(function()
 		{
 			$scope.host = Encounter.isHost();
-			$scope.encounterState = Encounter.getEncounterState();
+			$scope.encounterState = Encounter.encounterState;
 		});
 		// Profile.async().then(function()
 		// {
@@ -61,7 +61,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	{
 		Encounter.update().then(function()
 		{
-			$scope.encounterState = Encounter.getEncounterState();
+			$scope.encounterState = Encounter.encounterState;
 		});
 		// var deferred = $q.defer();
 		// var url = 'api/encounter/gamestate/' + encounterID;

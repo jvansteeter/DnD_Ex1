@@ -1,10 +1,12 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('Encounter', function ($http, $q, Profile)
+clientApp.factory('Encounter', function ($http, $q, Profile)
 {
     var encounterService = {};
-    var encounterState;
     var encounterID;
+
+    encounterService.encounterState = {};
+    encounterService.updateHasRun = false;
 
     encounterService.init = function(inputID)
     {
@@ -32,7 +34,8 @@ clientApp.service('Encounter', function ($http, $q, Profile)
 
         $http.get(url).success(function(data)
         {
-            encounterState = data;
+            encounterService.encounterState = data;
+            encounterService.updateHasRun = true;
             deferred.resolve();
         }).error(function()
         {
@@ -42,15 +45,9 @@ clientApp.service('Encounter', function ($http, $q, Profile)
         return deferred.promise;
     };
 
-    encounterService.getEncounterState = function()
-    {
-        console.log("getting encounter");
-        return encounterState;
-    };
-
     encounterService.isHost = function()
     {
-        if (encounterState.hostID === Profile.getUserID())
+        if (encounterService.encounterState.hostID === Profile.getUserID())
         {
             return true;
         }
@@ -59,6 +56,7 @@ clientApp.service('Encounter', function ($http, $q, Profile)
             return false;
         }
     };
+
 
     return encounterService;
 });
