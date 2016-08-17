@@ -197,7 +197,7 @@ router.post('/addnpc2/:encounter_id', function(req, res)
             var tokenPlaced = false;
             var y = 0;
             var x = 0;
-            
+
             while(!tokenPlaced){
                 var spaceIsFree = true;
                 for(var i = 0; i < playersJSON.length; i++){
@@ -214,6 +214,10 @@ router.post('/addnpc2/:encounter_id', function(req, res)
                 }
                 else{
                     x++;
+                    /*
+                    if x is larger than the encounterX size
+                    then x=0 and y++;
+                     */
                 }
             }
 
