@@ -146,8 +146,13 @@ router.post('/addnpc/:encounter_id', function(req, res)
     });
 });
 
+/**
+ * POTENTIAL RACE CONDITION
+ */
 router.post('/addnpc2/:encounter_id', function(req, res)
 {
+    var playersJSON = {};
+
     Encounter.findById(req.params.encounter_id, function(error, encounterState)
     {
         if (error)
@@ -155,6 +160,16 @@ router.post('/addnpc2/:encounter_id', function(req, res)
             res.status(500).send("Error finding encounter");
             return;
         }
+
+        EncounterPlayer.find({_id : {$in : encounterState.players }}, function(error, players)
+        {
+            if (error)
+            {
+                res.status(500).send("Error finding encounter players");
+                return;
+            }
+            playersJSON = players;
+        });
 
         var npcID = req.body.npcID;
         NPC.findById(npcID, function(error, npc)
@@ -179,15 +194,14 @@ router.post('/addnpc2/:encounter_id', function(req, res)
                 });
 
             //calculate and assign mapX, mapY to encounterPlayer
-
             var tokenPlaced = false;
+            var y = 0;
+            var x = 0;
+            
             while(!tokenPlaced){
-                var y = 0;
-                var x = 0;
-
                 var spaceIsFree = true;
-                for(var i = 0; i < encounterState.players.length; i++){
-                    var player = encounterState.players[i];
+                for(var i = 0; i < playersJSON.length; i++){
+                    var player = playersJSON[i];
                     if(player.mapX === x && player.mapY === y){
                         spaceIsFree = false;
                     }
