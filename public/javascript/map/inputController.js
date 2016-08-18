@@ -21,8 +21,12 @@ clientApp.controller('inputController', function ($scope, Encounter) {
 
     }
 
-    $scope.click = function () {
-        
+    $scope.click = function (event) {
+        var rect = canvas[0].getBoundingClientRect();
+        var canvasX = event.clientX - rect.left;
+        var canvasY = event.clientY - rect.top;
+
+        inputToMap(canvasX);
     };
 
     $scope.mouseMove = function (event) {
@@ -49,7 +53,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
 
     $scope.mouseLeave = function(event){
         mouseDown = false;
-    }
+    };
 
     $scope.mouseUp = function(){
         mouseDown = false;
@@ -68,6 +72,17 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         }
     };
 
+    function inputToMap(inputX){
+        var mapX = (inputX - Encounter.mapLeftDisplace)/(Encounter.mapZoom/100);
+        var mapXcoor = Math.floor(mapX / 50);
+
+        console.log("inputX: " + inputX);
+        console.log("xDisplace: " + Encounter.mapLeftDisplace);
+        console.log("zoom: " + (Encounter.mapZoom / 100));
+        console.log("mapX: " + mapX);
+        console.log("mapXcoor: " + mapXcoor);
+        console.log("\n");
+    }
 
     init();
 });
