@@ -22,5 +22,10 @@ clientApp.controller('inputController', function($scope, Encounter)
      console.log('mouseMove');
    };
 
+   $scope.mouseScroll = function($event, $delta, $deltaX, $deltaY) {
+      console.log("delta: " + $delta + " deltaX: " + $deltaX + " deltaY: " + $deltaY);
+   };
+
+
    init();
 });
