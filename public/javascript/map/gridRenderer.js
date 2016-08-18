@@ -21,6 +21,8 @@ clientApp.controller('gridRenderer', function ($window, Encounter) {
     }
 
     function draw() {
+        canvas.css({"zoom":Encounter.mapZoom + "%"});
+
         dimX = Encounter.encounterState.mapDimX;
         dimY = Encounter.encounterState.mapDimY;
 

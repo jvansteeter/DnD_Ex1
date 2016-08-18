@@ -19,6 +19,8 @@ clientApp.controller('tokenRenderer', function ($window, Encounter) {
     }
 
     function draw() {
+        canvas.css({"zoom":Encounter.mapZoom + "%"});
+
         if (Encounter.updateHasRun) {
             var encounterState = Encounter.encounterState;
             context.clearRect(0, 0, width, height);

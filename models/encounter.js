@@ -15,7 +15,8 @@ var encounterSchema = new mongoose.Schema(
     mapResX: Number,
     mapResY: Number,
     mapDimX: Number,
-    mapDimY: Number
+    mapDimY: Number,
+    mapZoom: Number
 });
 
 encounterSchema.methods.addPlayer = function(player)

@@ -22,7 +22,10 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     };
 
     $scope.mouseScroll = function (event, delta, deltaX, deltaY) {
-        console.log("delta: " + delta + " deltaX: " + deltaX + " deltaY: " + deltaY);
+        // console.log("delta: " + delta + " deltaX: " + deltaX + " deltaY: " + deltaY);
+        var oldZoom = Encounter.mapZoom;
+        Encounter.mapZoom = oldZoom + delta;
+        console.log(Encounter.mapZoom);
     };
 
 

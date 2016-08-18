@@ -16,11 +16,14 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
         bgImage.src = "image/map/dungeon.jpg";
+        Encounter.mapZoom = 100;
 
         draw();
     }
 
     function draw(){
+        canvas.css({"zoom":Encounter.mapZoom + "%"});
+
         Encounter.encounterState.mapResX = bgImage.width;
         Encounter.encounterState.mapResY = bgImage.height;
         // tileSize = Encounter.encounterState.mapTileSize;
