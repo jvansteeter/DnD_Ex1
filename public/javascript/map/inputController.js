@@ -14,18 +14,24 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     }
 
     $scope.click = function () {
-        console.log('click');
+
     };
 
     $scope.mouseMove = function () {
-        console.log('mouseMove');
+
     };
 
     $scope.mouseScroll = function (event, delta, deltaX, deltaY) {
-        // console.log("delta: " + delta + " deltaX: " + deltaX + " deltaY: " + deltaY);
+
         var oldZoom = Encounter.mapZoom;
-        Encounter.mapZoom = oldZoom + delta;
-        console.log(Encounter.mapZoom);
+        Encounter.mapZoom = oldZoom + (delta * 5);
+        if(Encounter.mapZoom >= 250){
+            Encounter.mapZoom = 250;
+        }
+
+        if(Encounter.mapZoom <= 35){
+            Encounter.mapZoom = 35;
+        }
     };
 
 
