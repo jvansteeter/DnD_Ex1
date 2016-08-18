@@ -25,6 +25,7 @@
     "angular-strap": "~2.3.8",
     "jquery-ui": ">=1.9",
     "ng-flow": "~2",
-    "hamsterjs": "1.1.2"
+    "hamsterjs": "1.1.2",
+    "angular-mousewheel":"1.0.5"
   }
 }
