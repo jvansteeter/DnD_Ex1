@@ -1,3 +1,4 @@
 /node_modules
 /.idea
 /image/users
+/public/bower_components
