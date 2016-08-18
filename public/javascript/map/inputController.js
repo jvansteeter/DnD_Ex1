@@ -7,6 +7,8 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     var height;
 
     var mouseDown = false;
+    var mouseX = 0;
+    var mouseY = 0;
 
     function init() {
         canvas = $('#inputCanvas');
@@ -20,19 +22,33 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     }
 
     $scope.click = function () {
-        var oldTopDisplace = Encounter.mapTopDisplace;
-        var oldLeftDisplace = Encounter.mapLeftDisplace;
-
-        Encounter.mapTopDisplace = oldTopDisplace + 25;
-        Encounter.mapLeftDisplace = oldLeftDisplace + 25;
+        // var oldTopDisplace = Encounter.mapTopDisplace;
+        // var oldLeftDisplace = Encounter.mapLeftDisplace;
+        //
+        // Encounter.mapTopDisplace = oldTopDisplace + 25;
+        // Encounter.mapLeftDisplace = oldLeftDisplace + 25;
     };
 
-    $scope.mouseMove = function () {
+    $scope.mouseMove = function (event) {
+        if(mouseDown){
+            var oldMapTopDisplace = Encounter.mapTopDisplace;
+            var oldMapLeftDisplace = Encounter.mapLeftDisplace;
 
+            var deltaX = event.clientX - mouseX;
+            var deltaY = event.clientY - mouseY;
+
+            Encounter.mapTopDisplace = oldMapTopDisplace + deltaY;
+            Encounter.mapLeftDisplace = oldMapLeftDisplace + deltaX;
+
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        }
     };
 
-    $scope.mouseDown = function(){
+    $scope.mouseDown = function(event){
         mouseDown = true;
+        mouseX = event.clientX;
+        mouseY = event.clientY;
     };
 
     $scope.mouseUp = function(){

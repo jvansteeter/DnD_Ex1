@@ -131,10 +131,12 @@
                             </div>
                             <div ng-controller="inputController">
                                 <canvas style="z-index:3; position:absolute;" id="inputCanvas"
-                                    width="650" height="650"
-                                    ng-click="click()"
-                                    ng-mousemove="mouseMove()"
-                                    msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)">
+                                        width="650" height="650"
+                                        ng-click="click()"
+                                        ng-mousemove="mouseMove($event)"
+                                        msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)"
+                                        ng-mousedown="mouseDown($event)"
+                                        ng-mouseup="mouseUp()">
                                 </canvas>
                             </div>
                         </div>
@@ -155,7 +157,7 @@
                                                 <h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse"
                                                                            style="cursor: pointer; text-decoration: none;">{{
                                                     player.name }} </a>
-                          <span style="float: right;">
+                                                    <span style="float: right;">
                             <a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)"
                                data-placement="bottom" data-template-url="modal/playerHPPopover.html"
                                data-auto-close="1" bs-popover>
@@ -172,12 +174,12 @@
                                             <div class="col col-md-5">
 
                                                 <i class="fa fa-heart"></i>
-                        <span ng-if="!isHost() && isNPC($index)">???
+                                                <span ng-if="!isHost() && isNPC($index)">???
                           <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  {{ player.hitPoints - player.maxHitPoints }} </span>
                           <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }} </span>
                           <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
                         </span>
-                        <span ng-if="isHost() || !isNPC($index)">
+                                                <span ng-if="isHost() || !isNPC($index)">
                           <span ng-if="player.hitPoints < 1" style="color: dimgrey">{{ player.hitPoints }}</span>
                           <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green">{{ player.hitPoints }}</span>
                           <span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"
@@ -237,17 +239,17 @@
                                             <span ng-if="player.saves.dexterity === 0">{{ player.saves.dexterity }}</span>
                                         </div>
                                         <div class="col col-xs-2">Con:
-                      <span ng-if="player.saves.constitution > 0"
-                            style="color: green">+{{ player.saves.constitution }}</span>
-                      <span ng-if="player.saves.constitution < 0"
-                            style="color: red">{{ player.saves.constitution }}</span>
+                                            <span ng-if="player.saves.constitution > 0"
+                                                  style="color: green">+{{ player.saves.constitution }}</span>
+                                            <span ng-if="player.saves.constitution < 0"
+                                                  style="color: red">{{ player.saves.constitution }}</span>
                                             <span ng-if="player.saves.constitution === 0">{{ player.saves.constitution }}</span>
                                         </div>
                                         <div class="col col-xs-2">Int:
-                      <span ng-if="player.saves.intelligence > 0"
-                            style="color: green">+{{ player.saves.intelligence }}</span>
-                      <span ng-if="player.saves.intelligence < 0"
-                            style="color: red">{{ player.saves.intelligence }}</span>
+                                            <span ng-if="player.saves.intelligence > 0"
+                                                  style="color: green">+{{ player.saves.intelligence }}</span>
+                                            <span ng-if="player.saves.intelligence < 0"
+                                                  style="color: red">{{ player.saves.intelligence }}</span>
                                             <span ng-if="player.saves.intelligence === 0">{{ player.saves.intelligence }}</span>
                                         </div>
                                         <div class="col col-xs-2">Wis:
