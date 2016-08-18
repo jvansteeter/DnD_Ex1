@@ -11,6 +11,8 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         width = canvas.width();
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
+        Encounter.mapZoom = 100;
+
     }
 
     $scope.click = function () {
