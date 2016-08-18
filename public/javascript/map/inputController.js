@@ -37,8 +37,8 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             var deltaX = event.clientX - mouseX;
             var deltaY = event.clientY - mouseY;
 
-            Encounter.mapTopDisplace = oldMapTopDisplace + deltaY;
-            Encounter.mapLeftDisplace = oldMapLeftDisplace + deltaX;
+            Encounter.mapTopDisplace = oldMapTopDisplace + (deltaY / (Encounter.mapZoom/100));
+            Encounter.mapLeftDisplace = oldMapLeftDisplace + (deltaX / (Encounter.mapZoom/100));
 
             mouseX = event.clientX;
             mouseY = event.clientY;
