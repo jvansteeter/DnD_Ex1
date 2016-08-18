@@ -1,27 +1,31 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('mapRenderer', function () {
+clientApp.controller('mapRenderer', function ($window, Encounter) {
 
-    var mapRenderer = {};
     var canvas;
     var context;
     var width;
     var height;
     var bgImage = new Image();
 
-    mapRenderer.init = function(canvasParam){
+    var tileSize = 50;
 
-        canvas = canvasParam;
+    function init(){
+        canvas = $('#mapCanvas');
         width = canvas.width();
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
-
         bgImage.src = "image/map/dungeon.jpg";
-    };
 
-    mapRenderer.draw = function(){
+        draw();
+    }
+
+    function draw(){
+        context.clearRect(0, 0, width, height);
         context.drawImage(bgImage,0,0);
-    };
-    
-    return mapRenderer;
+
+        $window.requestAnimationFrame(draw);
+    }
+
+    init();
 });
