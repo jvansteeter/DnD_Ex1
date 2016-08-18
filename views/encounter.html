@@ -130,13 +130,14 @@
                                         width="650" height="650"></canvas>
                             </div>
                             <div ng-controller="inputController">
-                                <canvas style="z-index:3; position:absolute;" id="inputCanvas"
-                                        width="650" height="650"
+                                <canvas style="z-index:3; position:absolute; width: 100%; height: 450px"
+                                        id="inputCanvas"
                                         ng-click="click()"
                                         ng-mousemove="mouseMove($event)"
                                         msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)"
                                         ng-mousedown="mouseDown($event)"
-                                        ng-mouseup="mouseUp()">
+                                        ng-mouseup="mouseUp()"
+                                        ng-mouseleave="mouseLeave()">
                                 </canvas>
                             </div>
                         </div>

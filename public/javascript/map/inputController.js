@@ -22,11 +22,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     }
 
     $scope.click = function () {
-        // var oldTopDisplace = Encounter.mapTopDisplace;
-        // var oldLeftDisplace = Encounter.mapLeftDisplace;
-        //
-        // Encounter.mapTopDisplace = oldTopDisplace + 25;
-        // Encounter.mapLeftDisplace = oldLeftDisplace + 25;
+        
     };
 
     $scope.mouseMove = function (event) {
@@ -50,6 +46,10 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         mouseX = event.clientX;
         mouseY = event.clientY;
     };
+
+    $scope.mouseLeave = function(event){
+        mouseDown = false;
+    }
 
     $scope.mouseUp = function(){
         mouseDown = false;
