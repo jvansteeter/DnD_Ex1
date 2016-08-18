@@ -82,4 +82,18 @@ router.get('/users/:user_id/:photo_name', function(req, res)
     res.sendFile(path.resolve("image/users/" + req.params.user_id + "/" + req.params.photo_name));
 });
 
+router.get('/encountermap/:encounter_id', function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        res.sendFile(path.resolve(encounter.mapURL));
+    })
+});
+
 module.exports = router;

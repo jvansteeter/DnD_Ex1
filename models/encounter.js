@@ -9,6 +9,8 @@ var encounterSchema = new mongoose.Schema(
     hostName: String,
     players: [],
     createdAt: {type: Number, required: true, default: Date.now},
+    initialized: {type: Boolean, default: false},
+    mapURL: String,
     active: Boolean,
     mapImageURI: String,
     mapTileSize: Number,

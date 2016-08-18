@@ -461,4 +461,75 @@ router.post('/updatenpc', function(req, res)
     }) ;
 });
 
+router.get('/initwithoutmap/:encounter_id', function(req, res)
+{
+     Encounter.findById(req.params.encounter_id, function(error, encounter)
+     {
+         if (error)
+         {
+             res.status(500).send(error);
+             return;
+         }
+
+         encounter.initialized = true;
+         encounter.save(function(error)
+         {
+             if (error)
+             {
+                 res.status(500).send(error);
+                 return;
+             }
+
+             res.send("OK");
+         })
+     });
+});
+
+router.post('/uploadmap/:encounter_id', function(req, res)
+{
+    var encounterID = req.params.encounter_id;
+    var directory = "image/encounters/" + encounterID + "/";
+    var fileName = "map" + path.extname(req.files.file.file);
+
+    fs.ensureDirSync(directory);
+
+    fs.copy(req.files.file.file, directory + fileName, function(error)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        Encounter.findById(encounterID, function(error, encounter)
+        {
+            if (error)
+            {
+                res.status(500).send(error);
+                return;
+            }
+
+            encounter.initialized = true;
+            encounter.mapURL = directory + fileName;
+            encounter.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send(error);
+                }
+
+                fs.unlink(req.files.file.file, function(error)
+                {
+                    if (error)
+                    {
+                        res.status(500).send(error);
+                    }
+
+                    res.send("OK");
+                });
+            });
+        });
+    });
+});
+
 module.exports = router;

@@ -1,10 +1,18 @@
 'use strict';
 
-var clientApp = angular.module('clientApp');
+var clientApp = angular.module('clientApp')
 
-clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter)
+clientApp.config(function($modalProvider)
+{
+	angular.extend($modalProvider.defaults, {
+		html: true
+	});
+});
+
+clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
 {
 	var encounterID = window.location.search.replace('?', '');
+	var initModal;
 	$scope.encounterState = {};
 	$scope.host = false;
 
@@ -14,31 +22,18 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		{
 			$scope.host = Encounter.isHost();
 			$scope.encounterState = Encounter.encounterState;
+
+			if (!$scope.encounterState.initialized)
+			{
+				initModal = $uibModal.open({
+					animation: true,
+					templateUrl: 'modal/initializeMapModal.html',
+					scope: $scope,
+					backdrop: 'static',
+					size: ''
+				});
+			}
 		});
-		// Profile.async().then(function()
-		// {
-		// 	var user = Profile.getUser();
-		// 	$scope.name = user.first_name + " " + user.last_name;
-		// 	Profile.setUser(user);
-        //
-		// 	$http.get('api/encounter/' + encounterID).success(function(data)
-		// 	{
-		// 		$scope.encounter = data;
-		// 		if (Profile.getUserID() === data.hostID)
-		// 		{
-		// 			$scope.host = true;
-		// 		}
-		// 		else
-		// 		{
-		// 			$scope.host = false;
-		// 		}
-        //
-		// 		$scope.updateEncounterState().then(function()
-		// 		{
-		// 			mapMain.start($scope.host);
-		// 		});
-		// 	});
-		// });
 	});
 
 	socket.on('update:encounter', function(data)
@@ -56,6 +51,36 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 			$scope.status = 'ENDED'
 		}
 	});
+
+	$scope.uploadMapPhoto = function($flow)
+	{
+		console.log("Uploading map photo");
+		$flow.upload();
+		$flow.files[0] = $flow.files[$flow.files.length - 1];
+
+		var url = 'api/encounter/uploadmap/' + encounterID;
+		var fd = new FormData();
+		fd.append("file", $flow.files[0].file);
+		$http.post(url, fd, {
+			withCredentials : false,
+			headers : {
+				'Content-Type' : undefined
+			},
+			transformRequest : angular.identity
+		}).success(function(data)
+		{
+			initModal.close();
+		});
+	};
+
+	$scope.initWithoutMap = function()
+	{
+		var url = 'api/encounter/initwithoutmap/' + encounterID;
+		$http.get(url).success(function(data)
+		{
+			initModal.close();
+		});
+	};
 
 	$scope.updateEncounterState = function()
 	{
