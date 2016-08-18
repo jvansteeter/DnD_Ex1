@@ -21,6 +21,12 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
     }
 
     function draw(){
+        Encounter.encounterState.mapResX = bgImage.width;
+        Encounter.encounterState.mapResY = bgImage.height;
+        // tileSize = Encounter.encounterState.mapTileSize;
+        Encounter.encounterState.mapDimX = bgImage.width / tileSize;
+        Encounter.encounterState.mapDimY = bgImage.height / tileSize;
+
         context.clearRect(0, 0, width, height);
         context.drawImage(bgImage,0,0);
 

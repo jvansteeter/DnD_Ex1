@@ -11,7 +11,11 @@ var encounterSchema = new mongoose.Schema(
     createdAt: {type: Number, required: true, default: Date.now},
     active: Boolean,
     mapImageURI: String,
-    mapTileSize: Number
+    mapTileSize: Number,
+    mapResX: Number,
+    mapResY: Number,
+    mapDimX: Number,
+    mapDimY: Number
 });
 
 encounterSchema.methods.addPlayer = function(player)

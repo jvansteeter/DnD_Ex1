@@ -1,12 +1,14 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('gridRenderer', function ($window) {
+clientApp.controller('gridRenderer', function ($window, Encounter) {
 
     var canvas;
     var context;
     var width;
     var height;
     var tileSize;
+    var dimX;
+    var dimY;
 
     function init() {
         canvas = $('#gridCanvas');
@@ -19,14 +21,17 @@ clientApp.controller('gridRenderer', function ($window) {
     }
 
     function draw() {
+        dimX = Encounter.encounterState.mapDimX;
+        dimY = Encounter.encounterState.mapDimY;
+
         context.clearRect(0, 0, width, height);
         context.fillStyle = "rgba(255,0,0,.3)";
-        for (var vert = 0; vert < 12; vert++) {
-            context.fillRect(tileSize * vert, 0, 2, 650);
+        for (var vertLine = 0; vertLine < dimX; vertLine++) {
+            context.fillRect(tileSize * vertLine, 0, 2, 650);
         }
 
-        for (var hori = 0; hori < 12; hori++) {
-            context.fillRect(0, tileSize * hori, 650, 2);
+        for (var horizLine = 0; horizLine < dimY; horizLine++) {
+            context.fillRect(0, tileSize * horizLine, 650, 2);
         }
 
         $window.requestAnimationFrame(draw);
