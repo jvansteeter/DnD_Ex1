@@ -15,6 +15,7 @@ var path = require('path');
 
 //
 //  Encounter API
+// /api/encounter
 //
 
 router.post('/create', function(req, res)
