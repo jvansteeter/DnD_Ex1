@@ -22,6 +22,8 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
 
     function draw(){
         canvas.css({"zoom":Encounter.mapZoom + "%"});
+        canvas.css({"left":Encounter.mapLeftDisplace});
+        canvas.css({"top":Encounter.mapTopDisplace});
 
         Encounter.encounterState.mapResX = bgImage.width;
         Encounter.encounterState.mapResY = bgImage.height;

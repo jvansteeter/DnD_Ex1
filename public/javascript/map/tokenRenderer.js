@@ -20,6 +20,8 @@ clientApp.controller('tokenRenderer', function ($window, Encounter) {
 
     function draw() {
         canvas.css({"zoom":Encounter.mapZoom + "%"});
+        canvas.css({"left":Encounter.mapLeftDisplace});
+        canvas.css({"top":Encounter.mapTopDisplace});
 
         if (Encounter.updateHasRun) {
             var encounterState = Encounter.encounterState;
