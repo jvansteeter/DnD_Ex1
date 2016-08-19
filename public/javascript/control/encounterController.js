@@ -33,15 +33,28 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 					size: ''
 				});
 			}
+
+			socket.emit('join',
+				{
+					room: encounterID,
+					username: Profile.getFirstName() + " " + Profile.getLastName()
+				});
 		});
+	});
+
+	socket.on('new:joined', function(data)
+	{
+		console.log(data.username + " has joined the chat room");
+	});
+
+	socket.on('exit', function(data)
+	{
+		console.log(data.username + " has left the chat room");
 	});
 
 	socket.on('update:encounter', function(data)
 	{
-		if (data.encounterID === encounterID)
-		{
-			$scope.updateEncounterState();
-		}
+		$scope.updateEncounterState();
 	});
 
 	socket.on('encounter:end', function(data)

@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('Profile', function($window, $http, $q)
+clientApp.factory('Profile', function($window, $http, $q)
 {
     var deffered = $q.defer();
     var profile = {};
