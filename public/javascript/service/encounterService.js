@@ -3,18 +3,17 @@ var clientApp = angular.module('clientApp');
 clientApp.factory('Encounter', function ($http, $q, Profile)
 {
     var encounterService = {};
-    var encounterID;
 
     encounterService.encounterState = {};
     encounterService.updateHasRun = false;
 
     encounterService.init = function(inputID)
     {
-        encounterID = inputID;
+        encounterService.encounterID = inputID;
         var deferred = $q.defer();
         Profile.async().then(function()
         {
-            $http.get('api/encounter/' + encounterID).success(function(data)
+            $http.get('api/encounter/' + encounterService.encounterID).success(function(data)
             {
                 encounterService.update().then(function()
                 {
@@ -30,7 +29,7 @@ clientApp.factory('Encounter', function ($http, $q, Profile)
     {
         var deferred = $q.defer();
 
-        var url = 'api/encounter/gamestate/' + encounterID;
+        var url = 'api/encounter/gamestate/' + encounterService.encounterID;
 
         $http.get(url).success(function(data)
         {

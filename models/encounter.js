@@ -12,7 +12,7 @@ var encounterSchema = new mongoose.Schema(
     initialized: {type: Boolean, default: false},
     mapURL: String,
     active: Boolean,
-    mapImageURI: String,
+    
     mapTileSize: Number,
     mapResX: Number,
     mapResY: Number,

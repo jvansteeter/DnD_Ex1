@@ -9,30 +9,35 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
     var bgImage = new Image();
 
     var tileSize = 50;
+    var imageURL;
 
-    function init(){
+    function init() {
         canvas = $('#mapCanvas');
         width = canvas.width();
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
-        bgImage.src = "image/map/dungeon.jpg";
 
         draw();
     }
 
-    function draw(){
-        canvas.css({"zoom":Encounter.mapZoom + "%"});
-        canvas.css({"left":Encounter.mapLeftDisplace});
-        canvas.css({"top":Encounter.mapTopDisplace});
+    function draw() {
 
-        Encounter.encounterState.mapResX = bgImage.width;
-        Encounter.encounterState.mapResY = bgImage.height;
-        // tileSize = Encounter.encounterState.mapTileSize;
-        Encounter.encounterState.mapDimX = bgImage.width / tileSize;
-        Encounter.encounterState.mapDimY = bgImage.height / tileSize;
+        if (Encounter.updateHasRun) {
+            bgImage.src = "api/image/encounterMap/" + Encounter.encounterID;
 
-        context.clearRect(0, 0, width, height);
-        context.drawImage(bgImage,0,0);
+            canvas.css({"zoom": Encounter.mapZoom + "%"});
+            canvas.css({"left": Encounter.mapLeftDisplace});
+            canvas.css({"top": Encounter.mapTopDisplace});
+
+            Encounter.encounterState.mapResX = bgImage.width;
+            Encounter.encounterState.mapResY = bgImage.height;
+            // tileSize = Encounter.encounterState.mapTileSize;
+            Encounter.encounterState.mapDimX = bgImage.width / tileSize;
+            Encounter.encounterState.mapDimY = bgImage.height / tileSize;
+
+            context.clearRect(0, 0, width, height);
+            context.drawImage(bgImage, 0, 0);
+        }
 
         $window.requestAnimationFrame(draw);
     }
