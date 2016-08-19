@@ -84,6 +84,7 @@ router.get('/users/:user_id/:photo_name', function(req, res)
 
 router.get('/encountermap/:encounter_id', function(req, res)
 {
+    console.log(req.params.encounter_id);
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
         if (error)
@@ -92,7 +93,14 @@ router.get('/encountermap/:encounter_id', function(req, res)
             return;
         }
 
-        res.sendFile(path.resolve(encounter.mapURL));
+        if (encounter.mapURL)
+        {
+            res.sendFile(path.resolve(encounter.mapURL));
+        }
+        else
+        {
+            res.sendFile(path.resolve("public/image/map/dungeon.jpg"));
+        }
     })
 });
 

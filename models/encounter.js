@@ -10,9 +10,10 @@ var encounterSchema = new mongoose.Schema(
     players: [],
     createdAt: {type: Number, required: true, default: Date.now},
     initialized: {type: Boolean, default: false},
+    hasMap: Boolean,
     mapURL: String,
     active: Boolean,
-    
+
     mapTileSize: Number,
     mapResX: Number,
     mapResY: Number,
