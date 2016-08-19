@@ -137,15 +137,15 @@
           <div style="overflow: hidden; width: 100%; height: 450px; margin-bottom: 20px; background-color: #dedede">
             <div style="position: relative;" id="mapDiv">
               <div ng-controller="mapRenderer">
-                <canvas style="border:1px solid #c3c3c3; z-index:0; position:absolute;" id="mapCanvas"
+                <canvas style="z-index:0; position:absolute;" id="mapCanvas"
                         width="650" height="650"></canvas>
               </div>
               <div ng-controller="gridRenderer">
-                <canvas style="border:1px solid #c3c3c3; z-index:1; position:absolute;" id="gridCanvas"
+                <canvas style="z-index:1; position:absolute;" id="gridCanvas"
                         width="650" height="650"></canvas>
               </div>
               <div ng-controller="tokenRenderer">
-                <canvas style="border:1px solid #c3c3c3; z-index:2; position:absolute;" id="tokenCanvas"
+                <canvas style="z-index:2; position:absolute;" id="tokenCanvas"
                         width="650" height="650"></canvas>
               </div>
               <div ng-controller="inputController">

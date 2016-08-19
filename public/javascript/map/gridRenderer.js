@@ -30,12 +30,12 @@ clientApp.controller('gridRenderer', function ($window, Encounter) {
 
         context.clearRect(0, 0, width, height);
         context.fillStyle = "rgba(255,0,0,.3)";
-        for (var vertLine = 0; vertLine < dimX; vertLine++) {
-            context.fillRect(tileSize * vertLine, 0, 2, 650);
+        for (var vertLine = 0; vertLine <= dimX; vertLine++) {
+            context.fillRect(tileSize * vertLine, 0, 2, dimY * tileSize);
         }
 
-        for (var horizLine = 0; horizLine < dimY; horizLine++) {
-            context.fillRect(0, tileSize * horizLine, 650, 2);
+        for (var horizLine = 0; horizLine <= dimY; horizLine++) {
+            context.fillRect(0, tileSize * horizLine, dimX * tileSize, 2);
         }
 
         $window.requestAnimationFrame(draw);

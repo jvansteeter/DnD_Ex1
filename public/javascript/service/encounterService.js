@@ -56,5 +56,22 @@ clientApp.factory('Encounter', function ($http, $q, Profile)
         }
     };
 
+    encounterService.sendMapData = function(mapResX, mapResY, mapDimX, mapDimY){
+        var url = 'api/encounter/updatemapdata/' + encounterService.encounterID;
+
+        var data ={
+            mapDimX: mapDimX,
+            mapDimY: mapDimY,
+            mapResX: mapResX,
+            mapResY: mapResY
+        };
+
+        $http.post(url, data).success(function(data){
+
+        }).error(function(){
+
+        })
+    };
+
     return encounterService;
 });
