@@ -90,19 +90,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		{
 			$scope.encounterState = Encounter.encounterState;
 		});
-		// var deferred = $q.defer();
-		// var url = 'api/encounter/gamestate/' + encounterID;
-		// $http.get(url).success(function(data)
-		// {
-		// 	$scope.encounterState = data;
-		// 	mapMain.setGameState(data);
-		// 	deferred.resolve();
-		// }).error(function()
-		// {
-		// 	deferred.reject();
-		// });
-        //
-		// return deferred.promise;
 	};
 
 	$scope.setPlayer = function(index)
@@ -265,7 +252,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	{
 		var encounterID = $scope.encounterState._id;
 
-		var url = 'api/encounter/addnpc2/' + encounterID;
+		var url = 'api/encounter/addnpc/' + encounterID;
 		var data =
 		{
 			npcID: $scope.npcs[index]._id

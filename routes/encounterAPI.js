@@ -112,45 +112,45 @@ router.post('/addplayer/:encounter_id', function(req, res)
     });
 });
 
-router.post('/addnpc/:encounter_id', function(req, res)
-{
-    Encounter.findById(req.params.encounter_id, function(error, encounter)
-    {
-        if (error)
-        {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-        var encounterPlayer = new EncounterPlayer(
-            {
-                name : req.body.name,
-                userID: req.body.userID,
-                initiative : req.body.initiative,
-                armorClass : req.body.armorClass,
-                hitPoints : req.body.hitPoints,
-                maxHitPoints : req.body.maxHitPoints,
-                visible : false,
-                npc : true
-            });
-
-        encounter.addPlayer(encounterPlayer._id);
-        encounterPlayer.save(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving encounter player");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
-});
+// router.post('/addnpc/:encounter_id', function(req, res)
+// {
+//     Encounter.findById(req.params.encounter_id, function(error, encounter)
+//     {
+//         if (error)
+//         {
+//             res.status(500).send("Error finding encounter");
+//             return;
+//         }
+//         var encounterPlayer = new EncounterPlayer(
+//             {
+//                 name : req.body.name,
+//                 userID: req.body.userID,
+//                 initiative : req.body.initiative,
+//                 armorClass : req.body.armorClass,
+//                 hitPoints : req.body.hitPoints,
+//                 maxHitPoints : req.body.maxHitPoints,
+//                 visible : false,
+//                 npc : true
+//             });
+//
+//         encounter.addPlayer(encounterPlayer._id);
+//         encounterPlayer.save(function(error)
+//         {
+//             if (error)
+//             {
+//                 res.status(500).send("Error saving encounter player");
+//                 return;
+//             }
+//
+//             res.send("OK");
+//         });
+//     });
+// });
 
 /**
  * POTENTIAL RACE CONDITION
  */
-router.post('/addnpc2/:encounter_id', function(req, res)
+router.post('/addnpc/:encounter_id', function(req, res)
 {
     var playersJSON = {};
 
@@ -294,7 +294,6 @@ router.post('/removeplayer/:encounter_id', function(req, res)
             return;
         }
 
-        //res.json(encounterPlayer);
         encounter.removePlayer(req.body.playerID);
         EncounterPlayer.remove({_id: req.body.playerID }, function(error)
         {
@@ -308,7 +307,7 @@ router.post('/removeplayer/:encounter_id', function(req, res)
     });
 });
 
-router.get('/gamestate/:encounter_id', function(req, res)
+router.get('/encounterstate/:encounter_id', function(req, res)
 {
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {

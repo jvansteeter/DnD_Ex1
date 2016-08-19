@@ -29,7 +29,7 @@ clientApp.factory('Encounter', function ($http, $q, Profile)
     {
         var deferred = $q.defer();
 
-        var url = 'api/encounter/gamestate/' + encounterService.encounterID;
+        var url = 'api/encounter/encounterstate/' + encounterService.encounterID;
 
         $http.get(url).success(function(data)
         {
