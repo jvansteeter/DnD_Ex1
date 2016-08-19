@@ -69,6 +69,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 			transformRequest : angular.identity
 		}).success(function(data)
 		{
+			$scope.updateEncounterState();
 			initModal.close();
 		});
 	};
@@ -78,6 +79,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		var url = 'api/encounter/initwithoutmap/' + encounterID;
 		$http.get(url).success(function(data)
 		{
+			$scope.updateEncounterState();
 			initModal.close();
 		});
 	};
