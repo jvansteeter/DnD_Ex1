@@ -83,7 +83,6 @@ router.get('/users/:user_id/:photo_name', function(req, res)
 
 router.get('/encountermap/:encounter_id', function(req, res)
 {
-    console.log(req.params.encounter_id);
     Encounter.findById(req.params.encounter_id, function(error, encounter)
     {
         if (error)
@@ -101,6 +100,53 @@ router.get('/encountermap/:encounter_id', function(req, res)
             res.sendFile(path.resolve("public/image/map/dungeon.jpg"));
         }
     })
+});
+
+router.get('/character/:character_id', function(req, res)
+{
+    Character.findById(req.params.character_id, function(error, character)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        if (character.iconURL)
+        {
+            res.sendFile(path.resolve(character.iconURL));
+        }
+        else
+        {
+            res.sendFile(path.resolve("image/common/noImage.png"));
+        }
+    })
+});
+
+router.get('/npc/:npc_id', function(req, res)
+{
+    NPC.findById(req.params.npc_id, function(error, npc)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        if (npc.iconURL)
+        {
+            res.sendFile(path.resolve(npc.iconURL));
+        }
+        else
+        {
+            res.sendFile(path.resolve("image/common/noImage.png"));
+        }
+    })
+});
+
+router.get('/noimage', function(req, res)
+{
+    res.sendFile(path.resolve("image/common/noImage.png"));
 });
 
 module.exports = router;

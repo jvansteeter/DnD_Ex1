@@ -14,6 +14,7 @@ var path = require('path');
 
 //
 //  Character API
+//  api/character
 //
 
 router.post('/create', function(req, res)
@@ -29,7 +30,52 @@ router.post('/create', function(req, res)
             return;
         }
 
-        res.send("OK");
+        res.send(character);
+    });
+});
+
+router.post('/icon/:character_id', function(req, res)
+{
+    var directory = "image/characters/" + req.params.character_id + "/";
+    var fileName = "icon" + path.extname(req.files.file.file);
+
+    fs.ensureDirSync(directory);
+
+    fs.copy(req.files.file.file, directory + fileName, function(error)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        Character.findById(req.params.character_id, function(error, character)
+        {
+            if (error)
+            {
+                res.status(500).send(error);
+                return;
+            }
+
+            character.iconURL = directory + fileName;
+            character.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send(error);
+                }
+
+                fs.unlink(req.files.file.file, function(error)
+                {
+                    if (error)
+                    {
+                        res.status(500).send(error);
+                    }
+
+                    res.send("OK");
+                });
+            });
+        });
     });
 });
 

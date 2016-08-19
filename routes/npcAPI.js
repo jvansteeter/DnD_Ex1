@@ -14,6 +14,7 @@ var path = require('path');
 
 //
 //  NPC API
+//  api/npc
 //
 
 router.post('/create', function(req, res)
@@ -29,7 +30,7 @@ router.post('/create', function(req, res)
             return;
         }
 
-        res.send("OK");
+        res.send(npc);
     });
 });
 
@@ -116,6 +117,51 @@ router.get('/delete/:npc_id', function(req, res)
             }
 
             res.send("OK");
+        });
+    });
+});
+
+router.post('/icon/:npc_id', function(req, res)
+{
+    var directory = "image/npcs/" + req.params.npc_id + "/";
+    var fileName = "icon" + path.extname(req.files.file.file);
+
+    fs.ensureDirSync(directory);
+
+    fs.copy(req.files.file.file, directory + fileName, function(error)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        NPC.findById(req.params.npc_id, function(error, npc)
+        {
+            if (error)
+            {
+                res.status(500).send(error);
+                return;
+            }
+
+            npc.iconURL = directory + fileName;
+            npc.save(function(error)
+            {
+                if (error)
+                {
+                    res.status(500).send(error);
+                }
+
+                fs.unlink(req.files.file.file, function(error)
+                {
+                    if (error)
+                    {
+                        res.status(500).send(error);
+                    }
+
+                    res.send("OK");
+                });
+            });
         });
     });
 });

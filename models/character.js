@@ -4,6 +4,7 @@ var characterSchema = new mongoose.Schema(
 {
 	userID: String,
     name: {type: String, default: ""},
+	iconURL: String,
     class: String,
     level: String,
     background: String,

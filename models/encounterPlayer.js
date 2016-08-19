@@ -4,6 +4,7 @@ var encounterPlayerSchema = new mongoose.Schema(
 {
     name: String,
     userID: String,
+    iconURL: String,
     initiative: Number,
     armorClass: Number,
     hitPoints: Number,

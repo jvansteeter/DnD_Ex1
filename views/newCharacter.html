@@ -17,9 +17,10 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
-    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/app/newCharacterApp.js"></script>
     <script src="javascript/service/profileService.js"></script>
     <script src="javascript/control/newCharacterController.js"></script>
     <script src="javascript/control/headerController.js"></script>
@@ -91,6 +92,14 @@
             <div class="col col-md-4">
               <h1>Character Name</h1>
               <input type="text" class='form-control' ng-model="character.name">
+              <div id="profile pic" flow-init
+                   flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                   flow-files-submitted="uploadCharacterIcon($flow)">
+                <a href="#" class="thumbnail" flow-btn flow-attrs="{accept:'image/*'}" style="width: 210px; margin: auto; margin-top: 10px">
+                  <img ng-if="$flow.files.length" flow-img="$flow.files[0]" />
+                  <img ng-if="!$flow.files.length" src="api/image/noimage" alt="No image"/>
+                </a>
+              </div>
             </div>
             <div class="col col-md-8">
               <div class="container-fluid">
