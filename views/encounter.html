@@ -133,7 +133,7 @@
       </h1>
       <div class="container-fluid">
 
-        <div class="row">
+        <div class="row" ng-if="encounterState.mapURL">
           <div style="overflow: hidden; width: 100%; height: 450px; margin-bottom: 20px; background-color: #dedede">
             <div style="position: relative;" id="mapDiv">
               <div ng-controller="mapRenderer">
