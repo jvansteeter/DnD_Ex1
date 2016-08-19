@@ -144,6 +144,27 @@ router.get('/npc/:npc_id', function(req, res)
     })
 });
 
+router.get('/encounterplayer/:player_id', function(req, res)
+{
+    EncounterPlayer.findById(req.params.player_id, function(error, player)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        if (player.iconURL)
+        {
+            res.sendFile(path.resolve(player.iconURL));
+        }
+        else
+        {
+            res.send("");
+        }
+    })
+});
+
 router.get('/noimage', function(req, res)
 {
     res.sendFile(path.resolve("image/common/noImage.png"));
