@@ -51,7 +51,7 @@
 
           <ul class="nav navbar-right navbar-nav">
             <li class="dropdown" ng-controller="headerController">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span>  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="login">Logout</a></li>
                 <li><a href="#">Profile</a></li>
@@ -91,7 +91,7 @@
 
         <div class="col col-sm-9">
 
-          <h1>{{ name }}</h1>
+          <h1 ng-bind="name"></h1>
 
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -99,7 +99,7 @@
             </div>
             <div class="panel-body">
               <ul>
-                <li ng-repeat="campaign in campaigns"><a href="campaign?{{ campaign._id }}">{{ campaign.title }}</a></li>
+                <li ng-repeat="campaign in campaigns"><a href="campaign?{{ campaign._id }}" ng-bind="campaign.title"></a></li>
               </ul>
               <hr>
             </div>

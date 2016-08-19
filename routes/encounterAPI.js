@@ -266,7 +266,7 @@ router.post('/removeplayer/:encounter_id', function (req, res) {
     });
 });
 
-router.get('/gamestate/:encounter_id', function (req, res) {
+router.get('/encounterstate/:encounter_id', function (req, res) {
     Encounter.findById(req.params.encounter_id, function (error, encounter) {
         if (error) {
             res.status(500).send("Error finding encounter");

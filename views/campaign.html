@@ -61,7 +61,7 @@
           </ul>
         </li>
         <li class="dropdown" ng-controller="headerController">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span>  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
             <li><a href="login">Logout</a></li>
             <li><a href="#">Profile</a></li>
@@ -78,12 +78,12 @@
 <div class="container" ng-controller="campaignController">
   <div class="row">
     <div class="col col-xs-12">
-      <h1>{{ campaign.title }}</h1>
+      <h1 ng-bind="campaign.title"></h1>
       <div bs-tabs>
 
         <div data-title="Home" bs-pane>
           <br>
-          <h5>{{ campaign.description }}</h5>
+          <h5 ng-bind="campaign.description"></h5>
           <h2>Adventurers</h2>
           <ul>
             <li ng-repeat="adventurer in adventurers">{{ adventurer }}</li>
@@ -107,14 +107,14 @@
                   <div class="panel panel-default" ng-repeat="encounter in encounters">
                     <div class="panel-heading">
                       <h2 class="panel-title" style="font-size: 20px">
-                        <a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer">{{ encounter.title }}</a>
+                        <a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer" ng-bind="encounter.title"></a>
                         <span style="float: right; color: red" ng-if="!encounter.active">Closed</span>
                       </h2>
                     </div>
                     <div class="panel-collapse" role="tabpanel" bs-collapse-target>
                       <div class="panel-body">
-                        <h6> Hosted by: {{ encounter.hostName }}</h6>
-                        <p>{{ encounter.description }}</p>
+                        <h6> Hosted by: <span ng-bind="encounter.hostName"></span></h6>
+                        <p ng-bind="encounter.description"></p>
                         <br>
                         <a href="encounter?{{ encounter._id }}"><button class="btn btn-default">Join Encounter</button></a>
                         <hr>
@@ -145,12 +145,12 @@
                     <div class="panel-heading">
                       <h2 class="panel-title" style="font-size: 20px">
                         <img class="img-rounded" id="comment-icon" style="width: 40px" ng-src="api/{{ post.authorPhoto }}">
-                        {{ post.author }}
+                        <span ng-bind="post.author"></span>
                       </h2>
                     </div>
                     <div class="panel-collapse">
                       <div class="panel-body">
-                        <p>{{ post.content }}</p>
+                        <p ng-bind="post.content"></p>
                         <hr>
                       </div>
                     </div>

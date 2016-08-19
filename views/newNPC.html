@@ -58,7 +58,7 @@
 
             <ul class="nav navbar-right navbar-nav">
                 <li class="dropdown" ng-controller="headerController">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span>  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="login">Logout</a></li>
                         <li><a href="#">Profile</a></li>
@@ -102,7 +102,7 @@
                         <div class="row">
                             <div class="col col-md-12">
                                 <h4>Long Description</h4>
-                                <textarea type='text' style="resize: none" name="Description" class="form-control" rows="4" cols="150" ng-model="npc.description"></textarea>
+                                <textarea style="resize: none" name="Description" class="form-control" rows="4" cols="150" ng-model="npc.description"></textarea>
                             </div>
                         </div>
                     </div>

@@ -57,7 +57,7 @@
       </ul>
       <ul class="nav navbar-right navbar-nav">
         <li class="dropdown" ng-controller="headerController">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <i class="fa fa-user"></i> <i
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span> <i class="fa fa-user"></i> <i
                   class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
             <li><a href="login">Logout</a></li>
@@ -73,23 +73,6 @@
 
 <!-- Begin Body -->
 <div class="container" ng-controller="encounterController">
-  <script type="text/ng-template" id="myModalContent.html">
-    <div class="modal-header">
-      <h3 class="modal-title">I'm a modal!</h3>
-    </div>
-    <div class="modal-body">
-      <ul>
-        <li ng-repeat="item in items">
-          <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-        </li>
-      </ul>
-      Selected: <b>{{ selected.item }}</b>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    </div>
-  </script>
   <div class="row">
 
     <div class="col col-md-3">
@@ -118,9 +101,9 @@
                   class="list-group-item"
                   ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0"
                   style="border-left: 4px solid {{ getColor(player) }};">
-                <span ng-if="player.hitPoints < 1" style="color:red"><strike>{{ player.name }}</strike></span>
-                <span ng-if="player.hitPoints > 0">{{ player.name }}</span>
-                <span class="badge"><i class="fa fa-bolt"></i> {{ player.initiative }}</span></li>
+                <span ng-if="player.hitPoints < 1" style="color:red"><strike ng-bind="player.name"></strike></span>
+                <span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
+                <span class="badge"><i class="fa fa-bolt"></i>  <span ng-bind="player.initiative"></span></span></li>
             </ul>
           </div>
         </li>
@@ -128,7 +111,7 @@
     </div>
 
     <div class="col col-md-9">
-      <h1>{{ encounterState.title }}<span ng-if="!encounterState.active"
+      <h1><span ng-bind="encounterState.title"></span><span ng-if="!encounterState.active"
                                           style="color: red; float: right;">Closed</span>
       </h1>
       <div class="container-fluid">
@@ -174,9 +157,8 @@
                   <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
                     <div class="row">
                       <div class="col col-md-4" style="padding-left: 10px">
-                        <h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse"
-                                                   style="cursor: pointer; text-decoration: none;">{{
-                          player.name }} </a>
+                        <h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse" style="cursor: pointer; text-decoration: none;">
+                          <span ng-bind="player.name"></span>  </a>
                           <span style="float: right;">
                             <a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)"
                                data-placement="bottom" data-template-url="modal/playerHPPopover.html"
@@ -195,29 +177,29 @@
 
                         <i class="fa fa-heart"></i>
                         <span ng-if="!isHost() && isNPC($index)">???
-                          <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  {{ player.hitPoints - player.maxHitPoints }} </span>
-                          <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +{{ player.hitPoints - player.maxHitPoints }} </span>
+                          <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                          <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
                           <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
                         </span>
                         <span ng-if="isHost() || !isNPC($index)">
-                          <span ng-if="player.hitPoints < 1" style="color: dimgrey">{{ player.hitPoints }}</span>
-                          <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green">{{ player.hitPoints }}</span>
+                          <span ng-if="player.hitPoints < 1" style="color: dimgrey" ng-bind="player.hitPoints"></span>
+                          <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green" ng-bind="player.hitPoints"></span>
                           <span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"
-                                style="color: red">{{ player.hitPoints }}</span>
-                           / {{ player.maxHitPoints }}
+                                style="color: red" ng-bind="player.hitPoints"></span>
+                           / <span ng-bind="player.maxHitPoints"></span>
                         </span>
 
                         <i class="fa fa-shield"></i>
                         <span ng-if="!isHost() && isNPC($index)">??? </span>
-                        <span ng-if="isHost() || !isNPC($index)">{{ player.armorClass }} </span>
+                        <span ng-if="isHost() || !isNPC($index)" ng-bind="player.armorClass"> </span>
 
                         <i class="fa fa-eye"></i>
                         <span ng-if="!player.passivePerception || (!isHost() && isNPC($index))">???</span>
-                        <span ng-if="player.passivePerception && (isHost() || !isNPC($index))">{{ player.passivePerception }}</span>
+                        <span ng-if="player.passivePerception && (isHost() || !isNPC($index))" ng-bind="player.passivePerception"></span>
                       </div>
                       <div class="col col-md-3">
                         <span style="float: right;">
-                          <strong style="color: red;">{{ player.status }} </strong>
+                          <strong style="color: red;" ng-bind="player.status"> </strong>
                           <a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)"
                              ng-click="toggleVisible($index)">
                             <i class="fa fa-eye"></i>
@@ -249,38 +231,38 @@
                   <br>
                   <div class="row">
                     <div class="col col-xs-2">Str:
-                      <span ng-if="player.saves.strength > 0" style="color: green">+{{ player.saves.strength }}</span>
-                      <span ng-if="player.saves.strength < 0" style="color: red">{{ player.saves.strength }}</span>
-                      <span ng-if="player.saves.strength === 0">{{ player.saves.strength }}</span>
+                      <span ng-if="player.saves.strength > 0" style="color: green">+<span ng-bind="player.saves.strength"></span></span>
+                      <span ng-if="player.saves.strength < 0" style="color: red"><span ng-bind="player.saves.strength"></span></span>
+                      <span ng-if="player.saves.strength === 0"><span ng-bind="player.saves.strength"></span></span>
                     </div>
                     <div class="col col-xs-2">Dex:
-                      <span ng-if="player.saves.dexterity > 0" style="color: green">+{{ player.saves.dexterity }}</span>
-                      <span ng-if="player.saves.dexterity < 0" style="color: red">{{ player.saves.dexterity }}</span>
-                      <span ng-if="player.saves.dexterity === 0">{{ player.saves.dexterity }}</span>
+                      <span ng-if="player.saves.dexterity > 0" style="color: green">+<span ng-bind="player.saves.dexterity"></span></span>
+                      <span ng-if="player.saves.dexterity < 0" style="color: red"><span ng-bind="player.saves.dexterity"></span></span>
+                      <span ng-if="player.saves.dexterity === 0"><span ng-bind="player.saves.dexterity"></span></span>
                     </div>
                     <div class="col col-xs-2">Con:
                       <span ng-if="player.saves.constitution > 0"
-                            style="color: green">+{{ player.saves.constitution }}</span>
+                            style="color: green">+<span ng-bind="player.saves.constitution"></span></span>
                       <span ng-if="player.saves.constitution < 0"
-                            style="color: red">{{ player.saves.constitution }}</span>
-                      <span ng-if="player.saves.constitution === 0">{{ player.saves.constitution }}</span>
+                            style="color: red"><span ng-bind="player.saves.constitution"></span></span>
+                      <span ng-if="player.saves.constitution === 0"><span ng-bind="player.saves.constitution"></span></span>
                     </div>
                     <div class="col col-xs-2">Int:
                       <span ng-if="player.saves.intelligence > 0"
-                            style="color: green">+{{ player.saves.intelligence }}</span>
+                            style="color: green">+<span ng-bind="player.saves.intelligence"></span></span>
                       <span ng-if="player.saves.intelligence < 0"
-                            style="color: red">{{ player.saves.intelligence }}</span>
-                      <span ng-if="player.saves.intelligence === 0">{{ player.saves.intelligence }}</span>
+                            style="color: red"><span ng-bind="player.saves.intelligence"></span></span>
+                      <span ng-if="player.saves.intelligence === 0"><span ng-bind="player.saves.intelligence"></span></span>
                     </div>
                     <div class="col col-xs-2">Wis:
-                      <span ng-if="player.saves.wisdom > 0" style="color: green">+{{ player.saves.wisdom }}</span>
-                      <span ng-if="player.saves.wisdom < 0" style="color: red">{{ player.saves.wisdom }}</span>
-                      <span ng-if="player.saves.wisdom === 0">{{ player.saves.wisdom }}</span>
+                      <span ng-if="player.saves.wisdom > 0" style="color: green">+<span ng-bind="player.saves.wisdom"></span></span>
+                      <span ng-if="player.saves.wisdom < 0" style="color: red"><span ng-bind="player.saves.wisdom"></span></span>
+                      <span ng-if="player.saves.wisdom === 0"><span ng-bind="player.saves.wisdom"></span></span>
                     </div>
                     <div class="col col-xs-2">Cha:
-                      <span ng-if="player.saves.charisma > 0" style="color: green">+{{ player.saves.charisma }}</span>
-                      <span ng-if="player.saves.charisma < 0" style="color: red">{{ player.saves.charisma }}</span>
-                      <span ng-if="player.saves.charisma === 0">{{ player.saves.charisma }}</span>
+                      <span ng-if="player.saves.charisma > 0" style="color: green">+<span ng-bind="player.saves.charisma"></span></span>
+                      <span ng-if="player.saves.charisma < 0" style="color: red"><span ng-bind="player.saves.charisma"></span></span>
+                      <span ng-if="player.saves.charisma === 0"><span ng-bind="player.saves.charisma"></span></span>
                     </div>
                   </div>
                 </div>
