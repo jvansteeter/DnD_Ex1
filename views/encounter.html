@@ -121,15 +121,15 @@
             <div style="position: relative;" id="mapDiv">
               <div ng-controller="mapRenderer">
                 <canvas style="z-index:0; position:absolute;" id="mapCanvas"
-                        width="650" height="650"></canvas>
+                        width={{getResX()}} height={{getResY()}}></canvas>
               </div>
               <div ng-controller="gridRenderer">
                 <canvas style="z-index:1; position:absolute;" id="gridCanvas"
-                        width="650" height="650"></canvas>
+                        width={{getResX()}} height={{getResY()}}></canvas>
               </div>
               <div ng-controller="tokenRenderer">
                 <canvas style="z-index:2; position:absolute;" id="tokenCanvas"
-                        width="650" height="650"></canvas>
+                        width={{getResX()}} height={{getResY()}}></canvas>
               </div>
               <div ng-controller="inputController">
                 <canvas style="z-index:3; position:absolute; width: 100%; height: 450px"

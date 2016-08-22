@@ -1,19 +1,15 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('gridRenderer', function ($window, Encounter) {
+clientApp.controller('gridRenderer', function ($scope, $window, Encounter) {
 
     var canvas;
     var context;
-    var width;
-    var height;
+
     var tileSize;
-    var dimX;
-    var dimY;
 
     function init() {
         canvas = $('#gridCanvas');
-        width = canvas.width();
-        height = canvas.height();
+
         context = canvas.get(0).getContext('2d');
         tileSize = 50;
 
@@ -25,10 +21,12 @@ clientApp.controller('gridRenderer', function ($window, Encounter) {
         canvas.css({"left":Encounter.mapLeftDisplace});
         canvas.css({"top":Encounter.mapTopDisplace});
 
-        dimX = Encounter.encounterState.mapDimX;
-        dimY = Encounter.encounterState.mapDimY;
+        var dimX = Encounter.encounterState.mapDimX;
+        var dimY = Encounter.encounterState.mapDimY;
+        var resX = Encounter.encounterState.mapResX;
+        var resY = Encounter.encounterState.mapResY;
 
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, resX, resY);
         context.fillStyle = "rgba(255,0,0,.3)";
         for (var vertLine = 0; vertLine <= dimX; vertLine++) {
             context.fillRect(tileSize * vertLine, 0, 2, dimY * tileSize);
@@ -40,6 +38,14 @@ clientApp.controller('gridRenderer', function ($window, Encounter) {
 
         $window.requestAnimationFrame(draw);
     }
+
+    $scope.getResX = function(){
+        return Encounter.encounterState.mapResX;
+    };
+
+    $scope.getResY = function(){
+        return Encounter.encounterState.mapResY;
+    };
 
     init();
 });

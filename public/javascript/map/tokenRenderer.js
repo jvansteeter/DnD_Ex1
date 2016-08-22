@@ -1,18 +1,16 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('tokenRenderer', function ($window, Encounter) {
+clientApp.controller('tokenRenderer', function ($scope, $window, Encounter) {
 
     var canvas;
     var context;
-    var width;
-    var height;
+
     var tileSize;
 
     function init() {
         canvas = $('#tokenCanvas');
         context = canvas.get(0).getContext('2d');
-        width = canvas.width();
-        height = canvas.height();
+
         tileSize = 50;
 
         draw();
@@ -25,7 +23,7 @@ clientApp.controller('tokenRenderer', function ($window, Encounter) {
 
         if (Encounter.updateHasRun) {
             var encounterState = Encounter.encounterState;
-            context.clearRect(0, 0, width, height);
+            context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY);
 
             //for each player entry in the encounter JSON
             for (var i = 0; i < encounterState.players.length; i++) {
@@ -72,6 +70,14 @@ clientApp.controller('tokenRenderer', function ($window, Encounter) {
         }
         $window.requestAnimationFrame(draw);
     }
+
+    $scope.getResX = function(){
+        return Encounter.encounterState.mapResX;
+    };
+
+    $scope.getResY = function(){
+        return Encounter.encounterState.mapResY;
+    };
 
     init();
 });

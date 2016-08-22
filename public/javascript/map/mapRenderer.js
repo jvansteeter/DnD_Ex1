@@ -1,21 +1,17 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('mapRenderer', function ($window, Encounter) {
+clientApp.controller('mapRenderer', function ($scope, $window, Encounter) {
 
     var canvas;
     var context;
-    var width;
-    var height;
+
     var bgImage = new Image();
 
     var tileSize = 50;
     var mapDataUpdate = false;
-    var imageURL;
 
     function init() {
         canvas = $('#mapCanvas');
-        width = canvas.width();
-        height = canvas.height();
         context = canvas.get(0).getContext('2d');
 
         draw();
@@ -50,13 +46,21 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
                     mapDataUpdate = true;
                 }
 
-                context.clearRect(0, 0, width, height);
+                context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY);
                 context.drawImage(bgImage, 0, 0);
             }
         }
 
         $window.requestAnimationFrame(draw);
     }
+
+    $scope.getResX = function(){
+        return Encounter.encounterState.mapResX;
+    };
+
+    $scope.getResY = function(){
+        return Encounter.encounterState.mapResY;
+    };
 
     init();
 });

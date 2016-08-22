@@ -76,12 +76,12 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         var mapX = (inputX - Encounter.mapLeftDisplace)/(Encounter.mapZoom/100);
         var mapXcoor = Math.floor(mapX / 50);
 
-        console.log("inputX: " + inputX);
-        console.log("xDisplace: " + Encounter.mapLeftDisplace);
-        console.log("zoom: " + (Encounter.mapZoom / 100));
-        console.log("mapX: " + mapX);
-        console.log("mapXcoor: " + mapXcoor);
-        console.log("\n");
+        // console.log("inputX: " + inputX);
+        // console.log("xDisplace: " + Encounter.mapLeftDisplace);
+        // console.log("zoom: " + (Encounter.mapZoom / 100));
+        // console.log("mapX: " + mapX);
+        // console.log("mapXcoor: " + mapXcoor);
+        // console.log("\n");
     }
 
     init();
