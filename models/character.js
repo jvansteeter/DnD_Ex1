@@ -66,7 +66,7 @@ var characterSchema = new mongoose.Schema(
 	initiative: Number,
     speed: String,
     hitPoints: Number,
-    maxHitPoints: Number,
+    maxHitPoints: {type: Number, default: 1},
     tempHitPoints: Number,
     features: [],
 	proficiencies: [],

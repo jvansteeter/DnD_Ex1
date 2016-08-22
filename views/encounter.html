@@ -102,7 +102,7 @@
                   ng-hide="!isHost() && !player.visible" ng-if="player.initiative > 0"
                   style="border-left: 4px solid {{ getColor(player) }};">
                 <span ng-if="player.hitPoints < 1" style="color:red"><strike ng-bind="player.name"></strike></span>
-                <span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
+                <span ng-if="player.hitPoints >= 0" ng-bind="player.name"></span>
                 <span class="badge"><i class="fa fa-bolt"></i>  <span ng-bind="player.initiative"></span></span></li>
             </ul>
           </div>
