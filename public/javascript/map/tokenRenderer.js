@@ -4,7 +4,7 @@ clientApp.controller('tokenRenderer', function ($scope, $window, Encounter) {
 
     var canvas;
     var context;
-
+// minor change
     var tileSize;
 
     function init() {
