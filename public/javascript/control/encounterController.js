@@ -85,23 +85,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		}
 	});
 
-	// $scope.$on('$locationChangeStart', function(event)
-	// {
-	// 	console.log("disconnecting user");
-	// 	event.preventDefault();
-	// 	// var url = 'api/encounter/disconnect/' + encounterService.encounterID;
-	// 	// var data = {
-	// 	// 	id: Profile.getUserID()
-	// 	// };
-	// 	// $http.post(url, data);
-	// 	Encounter.disconnect();
-	// });
-
-	$browser.onUrlChange(function(newUrl, newState)
-	{
-		console.log("url change");
-	});
-
 	$scope.uploadMapPhoto = function($flow)
 	{
 		console.log("Uploading map photo");
