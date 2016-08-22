@@ -24,7 +24,7 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
     function draw() {
 
         if (Encounter.updateHasRun) {
-            if(Encounter.encounterState.mapURL){
+            if (Encounter.encounterState.mapURL) {
 
                 canvas.css({"zoom": Encounter.mapZoom + "%"});
                 canvas.css({"left": Encounter.mapLeftDisplace});
@@ -39,12 +39,7 @@ clientApp.controller('mapRenderer', function ($window, Encounter) {
                 Encounter.encounterState.mapDimX = bgImage.width / tileSize;
                 Encounter.encounterState.mapDimY = bgImage.height / tileSize;
 
-                console.log(Encounter.encounterState.mapResX,
-                    Encounter.encounterState.mapResY,
-                    Encounter.encounterState.mapDimX,
-                    Encounter.encounterState.mapDimY);
-
-                if(!mapDataUpdate && Encounter.encounterState.mapResX != 0){
+                if (!mapDataUpdate && Encounter.encounterState.mapResX != 0) {
 
                     Encounter.sendMapData(
                         Encounter.encounterState.mapResX,

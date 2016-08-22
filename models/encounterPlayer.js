@@ -23,7 +23,6 @@ var encounterPlayerSchema = new mongoose.Schema(
     npc: Boolean,
     mapX: Number,
     mapY: Number,
-    mapIconURI: String
 });
 
 encounterPlayerSchema.methods.hit = function(hit)

@@ -78,40 +78,6 @@ router.get('/:encounter_id', function (req, res)
     });
 });
 
-// router.post('/addplayer/:encounter_id', function (req, res)
-// {
-//     Encounter.findById(req.params.encounter_id, function (error, encounter)
-//     {
-//         if (error)
-//         {
-//             res.status(500).send("Error finding encounter");
-//             return;
-//         }
-//         var encounterPlayer = new EncounterPlayer(
-//             {
-//                 name: req.body.name,
-//                 userID: req.body.userID,
-//                 initiative: req.body.initiative,
-//                 armorClass: req.body.armorClass,
-//                 hitPoints: req.body.hitPoints,
-//                 maxHitPoints: req.body.maxHitPoints,
-//                 visible: true,
-//                 npc: false
-//             });
-//         encounter.addPlayer(encounterPlayer._id);
-//         encounterPlayer.save(function (error)
-//         {
-//             if (error)
-//             {
-//                 res.status(500).send("Error saving encounter player");
-//                 return;
-//             }
-//
-//             res.send("OK");
-//         });
-//     });
-// });
-
 router.post('/addnpc/:encounter_id', function (req, res)
 {
     var playersJSON = {};
