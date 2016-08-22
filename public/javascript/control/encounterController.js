@@ -85,18 +85,18 @@ clientApp.controller('encounterController', function($scope, $http, $q, $locatio
 		}
 	});
 
-	$scope.$on('$locationChange', function(event)
-	{
-		console.log("disconnecting user");
-		confirm("does this work?");
-		event.preventDefault();
-		// var url = 'api/encounter/disconnect/' + encounterService.encounterID;
-		// var data = {
-		// 	id: Profile.getUserID()
-		// };
-		// $http.post(url, data);
-		Encounter.disconnect();
-	});
+	// $scope.$on('$locationChange', function(event)
+	// {
+	// 	console.log("disconnecting user");
+	// 	confirm("does this work?");
+	// 	event.preventDefault();
+	// 	// var url = 'api/encounter/disconnect/' + encounterService.encounterID;
+	// 	// var data = {
+	// 	// 	id: Profile.getUserID()
+	// 	// };
+	// 	// $http.post(url, data);
+	// 	Encounter.disconnect();
+	// });
 
 	$scope.uploadMapPhoto = function($flow)
 	{
