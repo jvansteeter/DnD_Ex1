@@ -9,7 +9,7 @@ clientApp.config(function($modalProvider)
 	});
 });
 
-clientApp.controller('encounterController', function($scope, $http, $q, $location, socket, Profile, mapMain, Encounter, $uibModal)
+clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
 {
 	var encounterID = window.location.search.replace('?', '');
 	var initModal;
@@ -85,10 +85,9 @@ clientApp.controller('encounterController', function($scope, $http, $q, $locatio
 		}
 	});
 
-	// $scope.$on('$locationChange', function(event)
+	// $scope.$on('$locationChangeStart', function(event)
 	// {
 	// 	console.log("disconnecting user");
-	// 	confirm("does this work?");
 	// 	event.preventDefault();
 	// 	// var url = 'api/encounter/disconnect/' + encounterService.encounterID;
 	// 	// var data = {
@@ -97,6 +96,11 @@ clientApp.controller('encounterController', function($scope, $http, $q, $locatio
 	// 	// $http.post(url, data);
 	// 	Encounter.disconnect();
 	// });
+
+	$browser.onUrlChange(function(newUrl, newState)
+	{
+		console.log("url change");
+	});
 
 	$scope.uploadMapPhoto = function($flow)
 	{

@@ -26,7 +26,7 @@ router.post('/create', function(req, res)
     {
         if (error)
         {
-            res.status(500).send("Error saving new character");
+            res.status(500).send(error);
             return;
         }
 
