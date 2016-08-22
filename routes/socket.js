@@ -31,11 +31,6 @@ module.exports = function (socket)
             });
     });
 
-	socket.on('userInfo', function(user)
-	{
-		socket.broadcast.to(room).emit('userInfo', user);
-	});
-
 	socket.on('new:encounter', function(data)
 	{
 		socket.broadcast.emit('new:encounter');

@@ -43,7 +43,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 					username: username
 				});
 
-			// Encounter.connect();
+			Encounter.connect();
 		});
 	});
 
@@ -51,19 +51,6 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	{
 		console.log("New user has joined");
 		console.log(JSON.stringify(data));
-		// socket.emit('userInfo',
-		// 	{
-		// 		id: Profile.getUserID(),
-		// 		username: Profile.getFirstName() + " " + Profile.getLastName()
-		// 	});
-
-		Encounter.connect();
-	});
-
-	socket.on('userInfo', function(user)
-	{
-		console.log("User in chatroom");
-		console.log(user);
 	});
 
 	socket.on('exit', function(data)
