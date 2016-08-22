@@ -13,6 +13,12 @@ var encounterSchema = new mongoose.Schema(
     hasMap: Boolean,
     mapURL: String,
     active: Boolean,
+    connectedUsers: [
+        {
+            userID: String,
+            username: String
+        }
+    ],
 
     mapTileSize: Number,
     mapResX: Number,

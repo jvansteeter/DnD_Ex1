@@ -5,6 +5,7 @@ var Encounter = mongoose.model('Encounter');
 module.exports = function (socket) 
 {
     var room;
+	var id;
     var username;
 	// send the new user their name and a list of users
 	socket.emit('init', 
@@ -15,21 +16,25 @@ module.exports = function (socket)
 	socket.on('join', function(data)
     {
         room = data.room;
+		id = data.id;
         username = data.username;
         socket.join(room);
-        socket.broadcast.to(room).emit('new:joined',
-            {
-                username: username
-            });
+        socket.broadcast.to(room).emit('new:joined', username);
     });
 
     socket.on('disconnect', function()
     {
         socket.broadcast.to(room).emit('exit',
             {
+            	id: id,
                 username: username
             });
     });
+
+	socket.on('userInfo', function(user)
+	{
+		socket.broadcast.to(room).emit('userInfo', user);
+	});
 
 	socket.on('new:encounter', function(data)
 	{
@@ -54,9 +59,3 @@ module.exports = function (socket)
 		socket.broadcast.emit('new:campaign');
 	});
 };
-	// notify other clients that a new user has joined
-	/*socket.broadcast.emit('user:join',
-	{
-		socket.broadcast.emit('new:campaign');
-	});
-};*/

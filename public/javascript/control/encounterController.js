@@ -9,14 +9,14 @@ clientApp.config(function($modalProvider)
 	});
 });
 
-clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
+clientApp.controller('encounterController', function($scope, $http, $q, $location, socket, Profile, mapMain, Encounter, $uibModal)
 {
 	var encounterID = window.location.search.replace('?', '');
 	var initModal;
 	$scope.encounterState = {};
 	$scope.host = false;
 
-	socket.on('init', function (data)
+	socket.on('init', function ()
 	{
 		Encounter.init(encounterID).then(function()
 		{
@@ -34,22 +34,42 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 				});
 			}
 
+			var id = Profile.getUserID();
+			var username = Profile.getFirstName() + " " + Profile.getLastName();
 			socket.emit('join',
 				{
 					room: encounterID,
-					username: Profile.getFirstName() + " " + Profile.getLastName()
+					id: id,
+					username: username
 				});
+
+			// Encounter.connect();
 		});
 	});
 
 	socket.on('new:joined', function(data)
 	{
-		console.log(data.username + " has joined the chat room");
+		console.log("New user has joined");
+		console.log(JSON.stringify(data));
+		// socket.emit('userInfo',
+		// 	{
+		// 		id: Profile.getUserID(),
+		// 		username: Profile.getFirstName() + " " + Profile.getLastName()
+		// 	});
+
+		Encounter.connect();
+	});
+
+	socket.on('userInfo', function(user)
+	{
+		console.log("User in chatroom");
+		console.log(user);
 	});
 
 	socket.on('exit', function(data)
 	{
 		console.log(data.username + " has left the chat room");
+		// Encounter.disconnect(data.id);
 	});
 
 	socket.on('update:encounter', function(data)
@@ -63,6 +83,19 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		{
 			$scope.status = 'ENDED'
 		}
+	});
+
+	$scope.$on('$locationChange', function(event)
+	{
+		console.log("disconnecting user");
+		confirm("does this work?");
+		event.preventDefault();
+		// var url = 'api/encounter/disconnect/' + encounterService.encounterID;
+		// var data = {
+		// 	id: Profile.getUserID()
+		// };
+		// $http.post(url, data);
+		Encounter.disconnect();
 	});
 
 	$scope.uploadMapPhoto = function($flow)

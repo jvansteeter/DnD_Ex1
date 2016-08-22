@@ -530,4 +530,83 @@ router.post('/uploadmap/:encounter_id', function (req, res)
     });
 });
 
+router.post('/connect/:encounter_id', function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        var id = req.body.id;
+        var username = req.body.username;
+        var unique = true;
+        for (var i = 0; i < encounter.connectedUsers.length; i++)
+        {
+            if (encounter.connectedUsers[i].userID === id)
+            {
+                unique = false;
+            }
+        }
+
+        if (unique)
+        {
+            encounter.connectedUsers.push({userID: id, username: username});
+            encounter.save(function (error)
+            {
+                if (error)
+                {
+                    res.status(500).send(error);
+                    return;
+                }
+
+                res.send("OK");
+            });
+        }
+        else
+        {
+            res.send("OK");
+        }
+    });
+});
+
+router.post('/disconnect/:encounter_id', function(req, res)
+{
+    Encounter.findById(req.params.encounter_id, function(error, encounter)
+    {
+        if (error)
+        {
+            res.status(500).send(error);
+            return;
+        }
+
+        var id = req.body.id;
+        console.log("Disconnect " + id);
+        for (var i = 0; i < encounter.connectedUsers.length; i++)
+        {
+            console.log(JSON.stringify(encounter.connectedUsers[i]));
+            if (encounter.connectedUsers[i].userID === id)
+            {
+                encounter.connectedUsers.splice(i, 1);
+                console.log("Found and removed disconnected user");
+            }
+        }
+
+        encounter.save(function (error)
+        {
+            if (error)
+            {
+                res.status(500).send(error);
+                return;
+            }
+
+            res.send("OK");
+        });
+    });
+});
+
+
+
 module.exports = router;
