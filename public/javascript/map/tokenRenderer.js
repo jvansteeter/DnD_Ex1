@@ -31,7 +31,6 @@ clientApp.controller('tokenRenderer', function ($window, Encounter) {
             for (var i = 0; i < encounterState.players.length; i++) {
                 //collect the current player
                 var player = encounterState.players[i];
-                console.log(player._id);
 
                 if(!player.iconURL){
                     continue;
