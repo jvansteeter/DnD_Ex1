@@ -22,15 +22,12 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     }
 
     $scope.click = function (event) {
-
-        console.log("click");
         var canvasPts = screenToMapDim(event.clientX, event.clientY);
         var players = Encounter.encounterState.players;
 
         var selectedCount = 0;
         var selectedIndex = -1;
 
-        console.log("A");
         // before processing the click, check for any selected players
         for (var i = 0; i < players.length; i++) {
             if(angular.isDefined(players[i].isSelected)){
@@ -41,7 +38,6 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             }
         }
 
-        console.log("B");
         // if there is more than one piece selected, un-select all of them and return
         if (selectedCount > 1) {
             for (var j = 0; j < players.length; j++) {
@@ -50,7 +46,6 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             return;
         }
 
-        console.log("C");
         // there is a token selected, condition check the move location
         if (selectedCount == 1) {
             // is there a token on the destination location
@@ -74,9 +69,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             players[selectedIndex].isSelected = false;
         }
 
-        console.log("D");
         if (selectedCount == 0) {
-            console.log("inside D: canvasPts: " + canvasPts.x + "," + canvasPts.y);
             // search for a token that was hot by the mouse event
             for (var k = 0; k < players.length; k++) {
                 if (players[k].mapX == canvasPts.x && players[k].mapY == canvasPts.y) {
