@@ -41,6 +41,11 @@ module.exports = function (socket)
 		socket.broadcast.to(room).emit('update:encounter');
 	});
 
+	socket.on('update:player', function(data)
+	{
+		socket.broadcast.to(room).emit('update:player', data);
+	});
+
 	socket.on('encounter:end', function(data)
 	{
 		socket.broadcast.emit('encounter:end',

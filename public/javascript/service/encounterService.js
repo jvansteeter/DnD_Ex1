@@ -113,7 +113,7 @@ clientApp.factory('Encounter', function ($http, $q, Profile, socket)
         };
         $http.post(url, data).success(function(data)
         {
-            socket.emit('update:encounter');
+            socket.emit('update:player', encounterService.encounterState.players[index]);
         });
     };
 
