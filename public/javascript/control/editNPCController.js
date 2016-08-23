@@ -4,6 +4,9 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('editNPCController', function($scope, $window, $http)
 {
+    var uploadImage = false;
+    var flow;
+
     $scope.npc = {};
     $scope.npc.features = [];
     $scope.npc.specials = [];
@@ -26,16 +29,40 @@ clientApp.controller('editNPCController', function($scope, $window, $http)
         };
         $http.post(url, data).success(function(data)
         {
-            if (data === "OK")
+            if (uploadImage)
             {
-                window.location = 'profile';
+                flow.upload();
+                flow.files[0] = flow.files[flow.files.length - 1];
+
+                var url = 'api/npc/icon/' + $scope.npc._id;
+                var fd = new FormData();
+                fd.append("file", flow.files[0].file);
+                $http.post(url, fd, {
+                    withCredentials: false,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                }).success(function(data)
+                {
+                    window.location = 'profile';
+                }).error(function(data)
+                {
+                    $scope.errorMessage = data;
+                    $('#errorAlert').fadeIn();
+                });
             }
             else
             {
-                $scope.errorMessage = data;
-                $('#errorAlert').fadeIn();
+                window.location = 'profile';
             }
         });
+    };
+
+    $scope.uploadCharacterIcon = function($flow)
+    {
+        uploadImage = true;
+        flow = $flow;
     };
 
     $scope.cancel = function()

@@ -17,9 +17,10 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
 
-    <script src="javascript/angularModule.js"></script>
+    <script src="javascript/app/newCharacterApp.js"></script>
     <script src="javascript/service/profileService.js"></script>
     <script src="javascript/control/newCharacterController.js"></script>
     <script src="javascript/control/headerController.js"></script>
@@ -59,7 +60,7 @@
 
             <ul class="nav navbar-right navbar-nav">
               <li class="dropdown" ng-controller="headerController">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span>  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
                   <li><a href="login">Logout</a></li>
                   <li><a href="#">Profile</a></li>
@@ -74,7 +75,7 @@
 
 <!-- Begin Body -->
     <div class="alert alert-danger collapse" role="alert" id="errorAlert">
-      <a href="#" class="alert-link">{{ alertMessage }}</a>
+      <a href="#" class="alert-link" ng-bind="alertMessage"></a>
     </div>
     <div class="container" ng-controller="newCharacterController">
       <form>
@@ -91,6 +92,14 @@
             <div class="col col-md-4">
               <h1>Character Name</h1>
               <input type="text" class='form-control' ng-model="character.name">
+              <div id="profile pic" flow-init
+                   flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                   flow-files-submitted="uploadCharacterIcon($flow)">
+                <a href="#" class="thumbnail" flow-btn flow-attrs="{accept:'image/*'}" style="width: 210px; margin: auto; margin-top: 10px">
+                  <img ng-if="$flow.files.length" flow-img="$flow.files[0]" />
+                  <img ng-if="!$flow.files.length" src="api/image/noimage" alt="No image"/>
+                </a>
+              </div>
             </div>
             <div class="col col-md-8">
               <div class="container-fluid">
@@ -99,13 +108,13 @@
                     <h4>Class</h4>
                     <select class='form-control' ng-model="character.class">
                       <option value=""></option>
-                      <option ng-repeat="class in classes" value="{{ class }}">{{ class }}</option>
+                      <option ng-repeat="class in classes" value="{{ class }}" ng-bind="class"></option>
                     </select>
                   </div>
                   <div class="col col-md-2">
                     <h4>Level</h4>
                     <select class='form-control' ng-model="character.level">
-                      <option ng-repeat="level in levels" value="{{ level }}">{{ level }}</option>
+                      <option ng-repeat="level in levels" value="{{ level }}" ng-bind="level"></option>
                     </select>
                   </div>
                   <div class="col col-md-3">
@@ -274,7 +283,7 @@
                     <div class="row" ng-repeat="language in character.languages track by $index">
                       <select class="form-control" ng-model="character.languages[$index]">
                         <option value="" selected disabled></option>
-                        <option ng-repeat="dndLanguage in dndLanguages" value="{{ dndLanguage }}">{{ dndLanguage }}</option>
+                        <option ng-repeat="dndLanguage in dndLanguages" value="{{ dndLanguage }}" ng-bind="dndLanguage"></option>
                       </select>
                     </div>
                     <br>

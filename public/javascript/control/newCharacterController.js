@@ -18,6 +18,9 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
             'Common', 'Dwarvish', 'Elvish', 'Giant', 'Gnomish', 'Goblin', 'Halfling', 'Orc',
             'Abyssal', 'Celestial', 'Draconic', 'Deep Speech', 'Infernal', 'Primordial', 'Sylvan', 'Undercommon'
         ];
+
+    var uploadImage = false;
+    var flow;
     
     $http.get('api/class/all').success(function(data)
     {
@@ -31,18 +34,42 @@ clientApp.controller('newCharacterController', function($scope, $window, $http, 
         {
             character: $scope.character
         };
-        $http.post(url, data).success(function(data)
+        $http.post(url, data).success(function(character)
         {
-            if (data === "OK")
+            if (uploadImage)
             {
-                window.location = 'profile';
+                flow.upload();
+                flow.files[0] = flow.files[flow.files.length - 1];
+
+                var url = 'api/character/icon/' + character._id;
+                var fd = new FormData();
+                fd.append("file", flow.files[0].file);
+                $http.post(url, fd, {
+                    withCredentials: false,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                }).success(function(data)
+                {
+                    window.location = 'profile';
+                }).error(function(data)
+                {
+                    $scope.errorMessage = data;
+                    $('#errorAlert').fadeIn();
+                });
             }
             else
             {
-                $scope.errorMessage = data;
-                $('#errorAlert').fadeIn();
+                window.location = 'profile';
             }
         });
+    };
+
+    $scope.uploadCharacterIcon = function($flow)
+    {
+        uploadImage = true;
+        flow = $flow;
     };
 
     $scope.cancel = function()

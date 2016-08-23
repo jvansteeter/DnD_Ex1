@@ -3,7 +3,6 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
 var busboy = require('express-busboy');
@@ -41,8 +40,14 @@ require('./config/passport');
 // setup routes
 var indexRouter = require("./routes/index");
 var authRouter = require("./routes/authorizationRouter");
-var api = require('./routes/api');
-var image = require('./routes/image');
+// var api = require('./routes/api');
+var etc = require('./routes/etcAPI');
+var image = require('./routes/imageAPI');
+var npc = require('./routes/npcAPI');
+var campaign = require('./routes/campaignAPI');
+var character = require('./routes/characterAPI');
+var encounter = require('./routes/encounterAPI');
+var user = require('./routes/userAPI');
 
 // uncomment after placing your favicon in /public
 app.use(favicon('public/image/favicon.ico'));
@@ -70,8 +75,14 @@ app.use('/newNPC', isLoggedIn, express.static('views/newNPC.html'));
 app.use('/campaign', isLoggedIn, express.static('views/campaign.html'));
 app.use('/campaignList', isLoggedIn, express.static('views/campaignList.html'));
 app.use('/auth', authRouter);
-app.use('/api', isAuthenticated, api);
+// app.use('/api', isAuthenticated, api);
+app.use('/api', isAuthenticated, etc);
 app.use('/api/image', isAuthenticated, image);
+app.use('/api/npc', isAuthenticated, npc);
+app.use('/api/campaign', isAuthenticated, campaign);
+app.use('/api/character', isAuthenticated, character);
+app.use('/api/encounter', isAuthenticated, encounter);
+app.use('/api/user', isAuthenticated, user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) 

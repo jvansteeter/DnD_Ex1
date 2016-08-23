@@ -1,82 +1,83 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('tokenRenderer', function (Encounter)
-{
+clientApp.controller('tokenRenderer', function ($scope, $window, Encounter) {
 
-    var tokenRenderer = {};
-    var encounterState;
     var canvas;
     var context;
-    var width;
-    var height;
+// minor change
     var tileSize;
-    var isHost = false;
 
-    tokenRenderer.init = function(canvasParam, isHostParam){
-
-        canvas = canvasParam;
-
-        width = canvas.width();
-        height = canvas.height();
+    function init() {
+        canvas = $('#tokenCanvas');
         context = canvas.get(0).getContext('2d');
+
         tileSize = 50;
-        isHost = isHostParam;
 
-        encounterState = Encounter.getEncounterState();
-    };
+        draw();
+    }
 
-    tokenRenderer.updateEncounterState = function(newEncounterState){
-        encounterState = newEncounterState;
-    };
+    function draw() {
+        canvas.css({"zoom": Encounter.mapZoom + "%"});
+        canvas.css({"left": Encounter.mapLeftDisplace});
+        canvas.css({"top": Encounter.mapTopDisplace});
 
-    tokenRenderer.draw = function(){
-        context.clearRect(0, 0, width, height);
+        if (Encounter.updateHasRun) {
+            var encounterState = Encounter.encounterState;
+            context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY);
 
-        //for each player entry in the encounter JSON
-        for(var i = 0; i < encounterState.players.length; i++){
-            //collect the current player
-            var player = encounterState.players[i];
+            //for each player entry in the encounter JSON
+            for (var i = 0; i < encounterState.players.length; i++) {
+                //collect the current player
+                var player = encounterState.players[i];
 
-            //identify the icon for the player
-            var tokenImage = new Image();
-            if(!player.npc){
-                tokenImage.src = "image/map/playerOne.png";
-            }
-            else {
-                tokenImage.src = "image/map/playerThree.png";
-            }
+                if(!player.iconURL){
+                    continue;
+                }
 
-            //draw the icon based off of current settings
-            if(player.visible){
-                context.globalAlpha = 1;
-                context.drawImage(
-                    tokenImage,
-                    player.mapX * tileSize,
-                    player.mapY * tileSize
-                );
-            }
-            else{
-                if(isHost){
-                    context.globalAlpha = 0.35;
+                //identify the icon for the player
+                var tokenImage = new Image();
+                tokenImage.src = "api/image/encounterplayer/" + player._id;
+
+                var isHost = Encounter.isHost();
+                //draw the icon based off of current settings
+                if (player.visible) {
+                    context.globalAlpha = 1;
                     context.drawImage(
                         tokenImage,
                         player.mapX * tileSize,
                         player.mapY * tileSize
                     );
                 }
-                else{
-                    context.globalAlpha = 0.0;
-                    context.drawImage(
-                        tokenImage,
-                        player.mapX * tileSize,
-                        player.mapY * tileSize
-                    );
+                else {
+                    if (isHost) {
+                        context.globalAlpha = 0.35;
+                        context.drawImage(
+                            tokenImage,
+                            player.mapX * tileSize,
+                            player.mapY * tileSize
+                        );
+                    }
+                    else {
+                        context.globalAlpha = 0.0;
+                        context.drawImage(
+                            tokenImage,
+                            player.mapX * tileSize,
+                            player.mapY * tileSize
+                        );
+                    }
                 }
-
             }
         }
+        $window.requestAnimationFrame(draw);
+    }
+
+    $scope.getResX = function(){
+        return Encounter.encounterState.mapResX;
     };
 
+    $scope.getResY = function(){
+        return Encounter.encounterState.mapResY;
+    };
 
-    return tokenRenderer;
+    init();
 });

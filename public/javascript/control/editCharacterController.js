@@ -11,6 +11,9 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
     $scope.character.attacks = [];
     $scope.character.equipment = [];
 
+    var uploadImage = false;
+    var flow;
+
     $scope.classes = [];
     $scope.levels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
     $scope.dndLanguages =
@@ -32,7 +35,6 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
 
     $scope.save = function ()
     {
-
         var url = 'api/character/update';
         var data =
         {
@@ -40,16 +42,40 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
         };
         $http.post(url, data).success(function(data)
         {
-            if (data === "OK")
+            if (uploadImage)
             {
-                window.location = 'profile';
+                flow.upload();
+                flow.files[0] = flow.files[flow.files.length - 1];
+
+                var url = 'api/character/icon/' + $scope.character._id;
+                var fd = new FormData();
+                fd.append("file", flow.files[0].file);
+                $http.post(url, fd, {
+                    withCredentials: false,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                }).success(function(data)
+                {
+                    window.location = 'profile';
+                }).error(function(data)
+                {
+                    $scope.errorMessage = data;
+                    $('#errorAlert').fadeIn();
+                });
             }
             else
             {
-                $scope.errorMessage = data;
-                $('#errorAlert').fadeIn();
+                window.location = 'profile';
             }
         });
+    };
+
+    $scope.uploadCharacterIcon = function($flow)
+    {
+        uploadImage = true;
+        flow = $flow;
     };
 
     $scope.cancel = function()

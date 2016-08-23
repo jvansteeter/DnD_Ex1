@@ -1,2 +1,5 @@
 /node_modules
 /.idea
+/image/users
+/image/encounters
+/public/bower_components

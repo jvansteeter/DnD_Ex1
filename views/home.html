@@ -25,7 +25,6 @@
 		<script src="javascript/socketFactory.js"></script>
 		<script src="javascript/control/homeController.js"></script>
 		<script src="javascript/control/headerController.js"></script>
-		<script src="javascript/control/encounterModalController.js"></script>
 
 		<title>Dungeon Map</title>
 	</head>
@@ -62,7 +61,7 @@
 									</ul>
 							</li>
 							<li class="dropdown" ng-controller="headerController">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }}  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span>  <i class="fa fa-user"></i> <i class="fa fa-chevron-down"></i></a>
 								<ul class="dropdown-menu">
 									<li><a href="login">Logout</a></li>
 									<li><a href="#">Profile</a></li>

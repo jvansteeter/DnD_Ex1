@@ -1,38 +1,42 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('Encounter', function ($http, $q, Profile)
+clientApp.factory('Encounter', function ($http, $q, Profile, socket)
 {
     var encounterService = {};
-    var encounterState;
-    var encounterID;
 
-    encounterService.init = function(inputID)
+    encounterService.encounterState = {};
+    encounterService.updateHasRun = false;
+
+    encounterService.init = function (inputID)
     {
-        encounterID = inputID;
+        encounterService.encounterID = inputID;
         var deferred = $q.defer();
-        Profile.async().then(function()
+        Profile.async().then(function ()
         {
-            $http.get('api/encounter/' + encounterID).success(function(data)
+            $http.get('api/encounter/' + encounterService.encounterID).success(function (data)
             {
-                encounterService.update().then(function()
+                encounterService.update().then(function ()
                 {
                     deferred.resolve();
                 });
             });
         });
-
+        
         return deferred.promise;
     };
 
-    encounterService.update = function()
+    encounterService.update = function ()
     {
         var deferred = $q.defer();
-        var url = 'api/encounter/gamestate/' + encounterID;
-        $http.get(url).success(function(data)
+
+        var url = 'api/encounter/encounterstate/' + encounterService.encounterID;
+
+        $http.get(url).success(function (data)
         {
-            encounterState = data;
+            encounterService.encounterState = data;
+            encounterService.updateHasRun = true;
             deferred.resolve();
-        }).error(function()
+        }).error(function ()
         {
             deferred.reject();
         });
@@ -40,14 +44,9 @@ clientApp.service('Encounter', function ($http, $q, Profile)
         return deferred.promise;
     };
 
-    encounterService.getEncounterState = function()
+    encounterService.isHost = function ()
     {
-        return encounterState;
-    };
-
-    encounterService.isHost = function()
-    {
-        if (encounterState.hostID === Profile.getUserID())
+        if (encounterService.encounterState.hostID === Profile.getUserID())
         {
             return true;
         }
@@ -55,6 +54,67 @@ clientApp.service('Encounter', function ($http, $q, Profile)
         {
             return false;
         }
+    };
+
+    encounterService.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY)
+    {
+        var url = 'api/encounter/updatemapdata/' + encounterService.encounterID;
+
+        var data = {
+            mapDimX: mapDimX,
+            mapDimY: mapDimY,
+            mapResX: mapResX,
+            mapResY: mapResY
+        };
+
+        $http.post(url, data).success(function (data)
+        {
+
+        }).error(function ()
+        {
+
+        })
+    };
+
+    encounterService.connect = function ()
+    {
+        var id = Profile.getUserID();
+        var username = Profile.getFirstName() + " " + Profile.getLastName();
+        var url = 'api/encounter/connect/' + encounterService.encounterID;
+        var data = {
+            id: id,
+            username: username
+        };
+        $http.post(url, data).success(function(data)
+        {
+            encounterService.update();
+        });
+    };
+
+    encounterService.disconnect = function()
+    {
+        console.log("disconnecting user");
+        var url = 'api/encounter/disconnect/' + encounterService.encounterID;
+        var data = {
+            id: Profile.getUserID()
+        };
+        $http.post(url, data).success(function(data)
+        {
+            encounterService.update();
+        });
+    };
+
+    encounterService.updatePlayer = function(index)
+    {
+        var player = encounterService.encounterState.players[index];
+        var url = 'api/encounter/updateplayer';
+        var data = {
+            player: player
+        };
+        $http.post(url, data).success(function(data)
+        {
+            socket.emit('update:encounter');
+        });
     };
 
     return encounterService;

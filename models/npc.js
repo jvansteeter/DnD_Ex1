@@ -4,6 +4,7 @@ var npcSchema = new mongoose.Schema(
     {
         userID: String,
         name: String,
+        iconURL: String,
         descriptors: String,
         description: String,
         strength: {

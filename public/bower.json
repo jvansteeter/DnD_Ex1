@@ -1,0 +1,32 @@
+{
+  "name": "Dnd Client Components",
+  "homepage": "https://github.com/jvansteeter/DnD_Ex1",
+  "authors": [
+    "Clayton Condie <clayton.condie@gmail.com>",
+    "Joshua Van Steeter <spam.magnet1991@gmail.com>"
+  ],
+  "description": "Front end dependencies for Dungeon Map Server",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.5.6",
+    "angular-motion": "~0.4.4",
+    "angular-sanitize": "~1.5.6",
+    "bootstrap": "~3.3.6",
+    "font-awesome": "~4.6.3",
+    "angular-strap": "~2.3.8",
+    "jquery-ui": ">=1.9",
+    "ng-flow": "~2",
+    "hamsterjs": "1.1.2",
+    "angular-mousewheel":"1.0.5",
+    "angular-bootstrap":"2.0.2"
+  }
+}

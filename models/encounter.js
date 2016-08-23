@@ -9,9 +9,22 @@ var encounterSchema = new mongoose.Schema(
     hostName: String,
     players: [],
     createdAt: {type: Number, required: true, default: Date.now},
+    initialized: {type: Boolean, default: false},
+    hasMap: Boolean,
+    mapURL: String,
     active: Boolean,
-    mapImageURI: String,
-    mapTileSize: Number
+    connectedUsers: [
+        {
+            userID: String,
+            username: String
+        }
+    ],
+
+    mapTileSize: Number,
+    mapResX: Number,
+    mapResY: Number,
+    mapDimX: Number,
+    mapDimY: Number
 });
 
 encounterSchema.methods.addPlayer = function(player)

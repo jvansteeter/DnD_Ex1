@@ -4,6 +4,7 @@ var characterSchema = new mongoose.Schema(
 {
 	userID: String,
     name: {type: String, default: ""},
+	iconURL: String,
     class: String,
     level: String,
     background: String,
@@ -15,57 +16,57 @@ var characterSchema = new mongoose.Schema(
     strength: {
     	score: {type: Number, default: 1},
     	modifier: Number,
-    	save: {type: Boolean, required: true, default: false},
-    	athletics: {type: Boolean, required: true, default: false}
+    	save: {type: Boolean, default: false},
+    	athletics: {type: Boolean, default: false}
     },
     dexterity: {
     	score: {type: Number, default: 1},
     	modifier: Number,
-    	save: {type: Boolean, required: true, default: false},
-    	acrobatics: {type: Boolean, required: true, default: false},
-    	sleightOfHand: {type: Boolean, required: true, default: false},
-    	stealth: {type: Boolean, required: true, default: false}
+    	save: {type: Boolean, default: false},
+    	acrobatics: {type: Boolean, default: false},
+    	sleightOfHand: {type: Boolean, default: false},
+    	stealth: {type: Boolean, default: false}
     },
     constitution: {
     	score: {type: Number, default: 1},
     	modifier: Number,
-    	save: {type: Boolean, required: true, default: false}
+    	save: {type: Boolean, default: false}
     },
     intelligence: {
     	score: {type: Number, default: 1},
     	modifier: Number,
-    	save: {type: Boolean, required: true, default: false},
-    	arcana: {type: Boolean, required: true, default: false},
-    	history: {type: Boolean, required: true, default: false},
-    	investigation: {type: Boolean, required: true, default: false},
-    	nature: {type: Boolean, required: true, default: false},
-    	religion: {type: Boolean, required: true, default: false}
+    	save: {type: Boolean, default: false},
+    	arcana: {type: Boolean, default: false},
+    	history: {type: Boolean, default: false},
+    	investigation: {type: Boolean, default: false},
+    	nature: {type: Boolean, default: false},
+    	religion: {type: Boolean, default: false}
     },
     wisdom: {
     	score: {type: Number, default: 1},
     	modifier: Number,
-    	save: {type: Boolean, required: true, default: false},
-    	animalHandling: {type: Boolean, required: true, default: false},
-    	insight: {type: Boolean, required: true, default: false},
-    	medicine: {type: Boolean, required: true, default: false},
-    	perception: {type: Boolean, required: true, default: false},
-    	survival: {type: Boolean, required: true, default: false}
+    	save: {type: Boolean, default: false},
+    	animalHandling: {type: Boolean, default: false},
+    	insight: {type: Boolean, default: false},
+    	medicine: {type: Boolean, default: false},
+    	perception: {type: Boolean, default: false},
+    	survival: {type: Boolean, default: false}
     },
     charisma: {
     	score: {type: Number, default: 1},
     	modifier: Number,
-    	save: {type: Boolean, required: true, default: false},
-    	intimidation: {type: Boolean, required: true, default: false},
-    	persuasion: {type: Boolean, required: true, default: false},
-    	performance: {type: Boolean, required: true, default: false},
-    	deception: {type: Boolean, required: true, default: false}
+    	save: {type: Boolean, default: false},
+    	intimidation: {type: Boolean, default: false},
+    	persuasion: {type: Boolean, default: false},
+    	performance: {type: Boolean, default: false},
+    	deception: {type: Boolean, default: false}
     },
     passivePerception: Number,
     armorClass: Number,
 	initiative: Number,
     speed: String,
     hitPoints: Number,
-    maxHitPoints: Number,
+    maxHitPoints: {type: Number, default: 1},
     tempHitPoints: Number,
     features: [],
 	proficiencies: [],
@@ -92,11 +93,12 @@ var characterSchema = new mongoose.Schema(
 		quantity: Number
 	}],
     status: [],
-    npc: {type: Boolean, required: true, default: false}
+    npc: {type: Boolean, default: false}
 }, {strict: false});
 
 characterSchema.methods.setCharacter = function(character)
 {
+	console.log(JSON.stringify(character));
 	for (var value in character)
 	{
 		this[value] = character[value];

@@ -1,1 +1,1 @@
-angular.module('clientApp', [/*'ui.sortable', */'ngAnimate', 'mgcrea.ngStrap', 'ngSanitize']);
+angular.module('clientApp', ['ngAnimate', 'mgcrea.ngStrap', 'ngSanitize', 'monospaced.mousewheel', 'ui.bootstrap', 'flow']);

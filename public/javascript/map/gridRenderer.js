@@ -1,36 +1,51 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('gridRenderer', function () {
+clientApp.controller('gridRenderer', function ($scope, $window, Encounter) {
 
-    var gridRenderer = {};
     var canvas;
     var context;
-    var width;
-    var height;
+
     var tileSize;
 
-    gridRenderer.init = function(canvasParam){
+    function init() {
+        canvas = $('#gridCanvas');
 
-        canvas = canvasParam;
-
-        width = canvas.width();
-        height = canvas.height();
         context = canvas.get(0).getContext('2d');
         tileSize = 50;
-    };
 
-    gridRenderer.draw = function(){
-        context.clearRect(0, 0, width, height);
+        draw();
+    }
+
+    function draw() {
+        canvas.css({"zoom":Encounter.mapZoom + "%"});
+        canvas.css({"left":Encounter.mapLeftDisplace});
+        canvas.css({"top":Encounter.mapTopDisplace});
+
+        var dimX = Encounter.encounterState.mapDimX;
+        var dimY = Encounter.encounterState.mapDimY;
+        var resX = Encounter.encounterState.mapResX;
+        var resY = Encounter.encounterState.mapResY;
+
+        context.clearRect(0, 0, resX, resY);
         context.fillStyle = "rgba(255,0,0,.3)";
-        for(i = 0; i < 12; i++){
-            context.fillRect(tileSize * i, 0, 2, 650);
+        for (var vertLine = 0; vertLine <= dimX; vertLine++) {
+            context.fillRect(tileSize * vertLine, 0, 2, dimY * tileSize);
         }
 
-        for(i = 0; i < 12; i++){
-            context.fillRect(0, tileSize * i, 650, 2);
+        for (var horizLine = 0; horizLine <= dimY; horizLine++) {
+            context.fillRect(0, tileSize * horizLine, dimX * tileSize, 2);
         }
+
+        $window.requestAnimationFrame(draw);
+    }
+
+    $scope.getResX = function(){
+        return Encounter.encounterState.mapResX;
     };
 
+    $scope.getResY = function(){
+        return Encounter.encounterState.mapResY;
+    };
 
-    return gridRenderer;
+    init();
 });

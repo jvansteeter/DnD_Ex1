@@ -4,6 +4,7 @@ var encounterPlayerSchema = new mongoose.Schema(
 {
     name: String,
     userID: String,
+    iconURL: String,
     initiative: Number,
     armorClass: Number,
     hitPoints: Number,
@@ -21,8 +22,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     },
     npc: Boolean,
     mapX: Number,
-    mapY: Number,
-    mapIconURI: String
+    mapY: Number
 });
 
 encounterPlayerSchema.methods.hit = function(hit)

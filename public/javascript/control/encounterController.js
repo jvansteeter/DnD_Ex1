@@ -2,51 +2,66 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter)
+clientApp.config(function($modalProvider)
+{
+	angular.extend($modalProvider.defaults, {
+		html: true
+	});
+});
+
+clientApp.controller('encounterController', function($scope, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
 {
 	var encounterID = window.location.search.replace('?', '');
+	var initModal;
 	$scope.encounterState = {};
 	$scope.host = false;
 
-	socket.on('init', function (data)
+	socket.on('init', function ()
 	{
 		Encounter.init(encounterID).then(function()
 		{
 			$scope.host = Encounter.isHost();
-			$scope.encounterState = Encounter.getEncounterState();
+			$scope.encounterState = Encounter.encounterState;
+
+			if (!$scope.encounterState.initialized)
+			{
+				initModal = $uibModal.open({
+					animation: true,
+					templateUrl: 'modal/initializeMapModal.html',
+					scope: $scope,
+					backdrop: 'static',
+					size: ''
+				});
+			}
+
+			var id = Profile.getUserID();
+			var username = Profile.getFirstName() + " " + Profile.getLastName();
+			socket.emit('join',
+				{
+					room: encounterID,
+					id: id,
+					username: username
+				});
+
+			Encounter.connect();
 		});
-		// Profile.async().then(function()
-		// {
-		// 	var user = Profile.getUser();
-		// 	$scope.name = user.first_name + " " + user.last_name;
-		// 	Profile.setUser(user);
-        //
-		// 	$http.get('api/encounter/' + encounterID).success(function(data)
-		// 	{
-		// 		$scope.encounter = data;
-		// 		if (Profile.getUserID() === data.hostID)
-		// 		{
-		// 			$scope.host = true;
-		// 		}
-		// 		else
-		// 		{
-		// 			$scope.host = false;
-		// 		}
-        //
-		// 		$scope.updateEncounterState().then(function()
-		// 		{
-		// 			mapMain.start($scope.host);
-		// 		});
-		// 	});
-		// });
+	});
+
+	socket.on('new:joined', function(data)
+	{
+		console.log("New user has joined");
+		console.log(data);
+	});
+
+	socket.on('exit', function(data)
+	{
+		console.log(data.username + " has left the chat room");
+		// Encounter.disconnect(data.id);
 	});
 
 	socket.on('update:encounter', function(data)
 	{
-		if (data.encounterID === encounterID)
-		{
-			$scope.updateEncounterState();
-		}
+		$scope.updateEncounterState();
 	});
 
 	socket.on('encounter:end', function(data)
@@ -57,25 +72,44 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		}
 	});
 
+	$scope.uploadMapPhoto = function($flow)
+	{
+		console.log("Uploading map photo");
+		$flow.upload();
+		$flow.files[0] = $flow.files[$flow.files.length - 1];
+
+		var url = 'api/encounter/uploadmap/' + encounterID;
+		var fd = new FormData();
+		fd.append("file", $flow.files[0].file);
+		$http.post(url, fd, {
+			withCredentials : false,
+			headers : {
+				'Content-Type' : undefined
+			},
+			transformRequest : angular.identity
+		}).success(function(data)
+		{
+			$scope.updateEncounterState();
+			initModal.close();
+		});
+	};
+
+	$scope.initWithoutMap = function()
+	{
+		var url = 'api/encounter/initwithoutmap/' + encounterID;
+		$http.get(url).success(function(data)
+		{
+			$scope.updateEncounterState();
+			initModal.close();
+		});
+	};
+
 	$scope.updateEncounterState = function()
 	{
 		Encounter.update().then(function()
 		{
-			$scope.encounterState = Encounter.getEncounterState();
+			$scope.encounterState = Encounter.encounterState;
 		});
-		// var deferred = $q.defer();
-		// var url = 'api/encounter/gamestate/' + encounterID;
-		// $http.get(url).success(function(data)
-		// {
-		// 	$scope.encounterState = data;
-		// 	mapMain.setGameState(data);
-		// 	deferred.resolve();
-		// }).error(function()
-		// {
-		// 	deferred.reject();
-		// });
-        //
-		// return deferred.promise;
 	};
 
 	$scope.setPlayer = function(index)
@@ -238,7 +272,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	{
 		var encounterID = $scope.encounterState._id;
 
-		var url = 'api/encounter/addnpc2/' + encounterID;
+		var url = 'api/encounter/addnpc/' + encounterID;
 		var data =
 		{
 			npcID: $scope.npcs[index]._id
@@ -284,10 +318,10 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.editModalSave = function()
 	{
-		var url = "api/encounter/updatenpc";
+		var url = "api/encounter/updateplayer";
 		var data =
 		{
-			npc : $scope.editNPC
+			player : $scope.editNPC
 		};
 		$http.post(url, data).success(function(data)
 		{
