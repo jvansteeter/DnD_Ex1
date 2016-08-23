@@ -22,48 +22,101 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     }
 
     $scope.click = function (event) {
-        var rect = canvas[0].getBoundingClientRect();
-        var canvasX = event.clientX - rect.left;
-        var canvasY = event.clientY - rect.top;
 
-        inputToMap(canvasX, canvasY);
+        console.log("click");
+        var canvasPts = screenToMapDim(event.clientX, event.clientY);
+        var players = Encounter.encounterState.players;
+
+        var selectedCount = 0;
+        var selectedIndex = -1;
+
+        console.log("A");
+        // before processing the click, check for any selected players
+        for (var i = 0; i < players.length; i++) {
+            if(angular.isDefined(players[i].isSelected)){
+                if (players[i].isSelected == true) {
+                    selectedIndex = i;
+                    selectedCount++;
+                }
+            }
+        }
+
+        console.log("B");
+        // if there is more than one piece selected, un-select all of them and return
+        if (selectedCount > 1) {
+            for (var j = 0; j < players.length; j++) {
+                players[j].isSelected = false;
+            }
+            return;
+        }
+
+        console.log("C");
+        // there is a token selected, condition check the move location
+        if (selectedCount == 1) {
+            // is there a token on the destination location
+            for (var x = 0; x < players.length; x++) {
+                var player = players[x];
+                if (player.mapX == canvasPts.x && player.mapY == canvasPts.y) {
+                    //if a token is found, un-select the selected token and stop
+                    players[selectedIndex].isSelected = false;
+                    return;
+                }
+            }
+
+            // move the selected token
+            players[selectedIndex].mapX = canvasPts.x;
+            players[selectedIndex].mapY = canvasPts.y;
+
+            // un-select the selected token
+            players[selectedIndex].isSelected = false;
+        }
+
+        console.log("D");
+        if (selectedCount == 0) {
+            console.log("inside D: canvasPts: " + canvasPts.x + "," + canvasPts.y);
+            // search for a token that was hot by the mouse event
+            for (var k = 0; k < players.length; k++) {
+                if (players[k].mapX == canvasPts.x && players[k].mapY == canvasPts.y) {
+                    //if a token is found, select it and stop
+                    players[k].isSelected = true;
+                    break;
+                }
+            }
+        }
     };
 
     $scope.mouseMove = function (event) {
-        if(mouseDown){
+        if (mouseDown) {
             var oldMapTopDisplace = Encounter.mapTopDisplace;
             var oldMapLeftDisplace = Encounter.mapLeftDisplace;
 
             var deltaX = event.clientX - mouseX;
             var deltaY = event.clientY - mouseY;
 
-            Encounter.mapTopDisplace = oldMapTopDisplace + (deltaY / (Encounter.mapZoom/100));
-            Encounter.mapLeftDisplace = oldMapLeftDisplace + (deltaX / (Encounter.mapZoom/100));
+            Encounter.mapTopDisplace = oldMapTopDisplace + (deltaY / (Encounter.mapZoom / 100));
+            Encounter.mapLeftDisplace = oldMapLeftDisplace + (deltaX / (Encounter.mapZoom / 100));
 
             mouseX = event.clientX;
             mouseY = event.clientY;
         }
-        else{
-            var rect = canvas[0].getBoundingClientRect();
-            var canvasX = event.clientX - rect.left;
-            var canvasY = event.clientY - rect.top;
-            var newCell = inputToMap(canvasX, canvasY);
-            Encounter.hoverCell = {x:newCell.x, y:newCell.y};
+        else {
+            var newCell = screenToMapDim(event.clientX, event.clientY);
+            Encounter.hoverCell = {x: newCell.x, y: newCell.y};
         }
     };
 
-    $scope.mouseDown = function(event){
+    $scope.mouseDown = function (event) {
         mouseDown = true;
         mouseX = event.clientX;
         mouseY = event.clientY;
     };
 
-    $scope.mouseLeave = function(event){
+    $scope.mouseLeave = function (event) {
         mouseDown = false;
-        Encounter.hoverCell = {x:-1, y:-1};
+        Encounter.hoverCell = {x: -1, y: -1};
     };
 
-    $scope.mouseUp = function(){
+    $scope.mouseUp = function () {
         mouseDown = false;
     };
 
@@ -71,23 +124,27 @@ clientApp.controller('inputController', function ($scope, Encounter) {
 
         var oldZoom = Encounter.mapZoom;
         Encounter.mapZoom = oldZoom + (delta * 5);
-        if(Encounter.mapZoom >= 250){
+        if (Encounter.mapZoom >= 250) {
             Encounter.mapZoom = 250;
         }
 
-        if(Encounter.mapZoom <= 35){
+        if (Encounter.mapZoom <= 35) {
             Encounter.mapZoom = 35;
         }
     };
 
-    function inputToMap(inputX, inputY){
-        var mapX = (inputX / (Encounter.mapZoom/100) - Encounter.mapLeftDisplace);
+    function screenToMapDim(inputX, inputY) {
+        var rect = canvas[0].getBoundingClientRect();
+        var canvasX = inputX - rect.left;
+        var canvasY = inputY - rect.top;
+
+        var mapX = (canvasX / (Encounter.mapZoom / 100) - Encounter.mapLeftDisplace);
         var mapXcoor = Math.floor(mapX / 50);
 
-        var mapY = (inputY / (Encounter.mapZoom/100) - Encounter.mapTopDisplace);
+        var mapY = (canvasY / (Encounter.mapZoom / 100) - Encounter.mapTopDisplace);
         var mapYcoor = Math.floor(mapY / 50);
 
-        return {x:mapXcoor, y:mapYcoor};
+        return {x: mapXcoor, y: mapYcoor};
     }
 
     init();
