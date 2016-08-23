@@ -67,6 +67,9 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             players[selectedIndex].mapX = canvasPts.x;
             players[selectedIndex].mapY = canvasPts.y;
 
+            // perpetuate the change
+            Encounter.updatePlayer(selectedIndex);
+
             // un-select the selected token
             players[selectedIndex].isSelected = false;
         }

@@ -1,6 +1,6 @@
 'use strict';
 
-var clientApp = angular.module('clientApp')
+var clientApp = angular.module('clientApp');
 
 clientApp.config(function($modalProvider)
 {
@@ -50,7 +50,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	socket.on('new:joined', function(data)
 	{
 		console.log("New user has joined");
-		console.log(JSON.stringify(data));
+		console.log(data);
 	});
 
 	socket.on('exit', function(data)
@@ -318,10 +318,10 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	$scope.editModalSave = function()
 	{
-		var url = "api/encounter/updatenpc";
+		var url = "api/encounter/updateplayer";
 		var data =
 		{
-			npc : $scope.editNPC
+			player : $scope.editNPC
 		};
 		$http.post(url, data).success(function(data)
 		{

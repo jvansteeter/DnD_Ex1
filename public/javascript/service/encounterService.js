@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.factory('Encounter', function ($http, $q, Profile)
+clientApp.factory('Encounter', function ($http, $q, Profile, socket)
 {
     var encounterService = {};
 
@@ -101,6 +101,19 @@ clientApp.factory('Encounter', function ($http, $q, Profile)
         $http.post(url, data).success(function(data)
         {
             encounterService.update();
+        });
+    };
+
+    encounterService.updatePlayer = function(index)
+    {
+        var player = encounterService.encounterState.players[index];
+        var url = 'api/encounter/updateplayer';
+        var data = {
+            player: player
+        };
+        $http.post(url, data).success(function(data)
+        {
+            socket.emit('update:encounter');
         });
     };
 
