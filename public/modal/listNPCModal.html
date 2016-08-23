@@ -8,7 +8,7 @@
                 <div class="modal-body" ng-init="listModalgetNPCs()">
                     <h4 class="modal-title" ng-bind="title"></h4>
                     <div class="list-group">
-                        <button type="submit" ng-repeat="npc in npcs track by $index" ng-click="listModalselectNPC($index); $hide()" class="list-group-item"><h4>{{ npc.name }} {{ npc.descriptors }}</h4></button>
+                        <button type="submit" ng-repeat="npc in npcs track by $index" ng-click="listModalselectNPC($index); $hide()" class="list-group-item"><h4>{{ npc.name }} - <em>{{ npc.descriptors }}</em></h4></button>
                     </div>
                 </div>
                 <div class="modal-footer">
