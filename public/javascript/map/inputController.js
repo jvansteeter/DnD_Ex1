@@ -26,7 +26,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         var canvasX = event.clientX - rect.left;
         var canvasY = event.clientY - rect.top;
 
-        inputToMap(canvasX);
+        inputToMap(canvasX, canvasY);
     };
 
     $scope.mouseMove = function (event) {
@@ -43,6 +43,13 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             mouseX = event.clientX;
             mouseY = event.clientY;
         }
+        else{
+            var rect = canvas[0].getBoundingClientRect();
+            var canvasX = event.clientX - rect.left;
+            var canvasY = event.clientY - rect.top;
+            var newCell = inputToMap(canvasX, canvasY);
+            Encounter.hoverCell = {x:newCell.x, y:newCell.y};
+        }
     };
 
     $scope.mouseDown = function(event){
@@ -53,6 +60,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
 
     $scope.mouseLeave = function(event){
         mouseDown = false;
+        Encounter.hoverCell = {x:-1, y:-1};
     };
 
     $scope.mouseUp = function(){
@@ -72,16 +80,14 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         }
     };
 
-    function inputToMap(inputX){
-        var mapX = (inputX - Encounter.mapLeftDisplace)/(Encounter.mapZoom/100);
+    function inputToMap(inputX, inputY){
+        var mapX = (inputX / (Encounter.mapZoom/100) - Encounter.mapLeftDisplace);
         var mapXcoor = Math.floor(mapX / 50);
 
-        // console.log("inputX: " + inputX);
-        // console.log("xDisplace: " + Encounter.mapLeftDisplace);
-        // console.log("zoom: " + (Encounter.mapZoom / 100));
-        // console.log("mapX: " + mapX);
-        // console.log("mapXcoor: " + mapXcoor);
-        // console.log("\n");
+        var mapY = (inputY / (Encounter.mapZoom/100) - Encounter.mapTopDisplace);
+        var mapYcoor = Math.floor(mapY / 50);
+
+        return {x:mapXcoor, y:mapYcoor};
     }
 
     init();

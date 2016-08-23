@@ -21,7 +21,7 @@ clientApp.factory('Encounter', function ($http, $q, Profile)
                 });
             });
         });
-
+        
         return deferred.promise;
     };
 
