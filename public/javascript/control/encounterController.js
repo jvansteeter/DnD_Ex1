@@ -64,6 +64,17 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		$scope.updateEncounterState();
 	});
 
+	socket.on('update:player', function(player)
+	{
+		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		{
+			if (Encounter.encounterState.players[i]._id === player._id)
+			{
+				Encounter.encounterState.players[i] = player;
+			}
+		}
+	});
+
 	socket.on('encounter:end', function(data)
 	{
 		if (data.encounterID === encounterID)
