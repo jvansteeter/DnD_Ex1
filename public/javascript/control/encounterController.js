@@ -68,10 +68,19 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 
 	socket.on('update:player', function (player)
 	{
+		player.isHovered = false;
 		for (var i = 0; i < Encounter.encounterState.players.length; i++)
 		{
 			if (Encounter.encounterState.players[i]._id === player._id)
 			{
+				if (angular.isDefined(Encounter.encounterState.players[i].isSelected) && Encounter.encounterState.players[i].isSelected === true)
+				{
+					player.isSelected = true;
+				}
+				else
+				{
+					player.isSelected = false;
+				}
 				for (var value in player)
 				{
 					Encounter.encounterState.players[i][value] = player[value];
@@ -213,7 +222,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 					encounterID: encounterID
 				});
 
-			$scope.encounterState.players.splice(index, 1);
+			$scope.updateEncounterState();
 		});
 	};
 
@@ -413,7 +422,6 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 		{
 			if (data === "OK")
 			{
-				console.log("issue command to update player");
 				socket.emit('update:player', player);
 			}
 		});

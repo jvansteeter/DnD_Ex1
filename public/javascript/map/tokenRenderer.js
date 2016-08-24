@@ -22,7 +22,6 @@ clientApp.controller('tokenRenderer', function ($scope, $window, Encounter) {
         canvas.css({"top": Encounter.mapTopDisplace});
 
         if (Encounter.updateHasRun) {
-            Encounter.updateHasRun = false;
             var encounterState = Encounter.encounterState;
             context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY);
 

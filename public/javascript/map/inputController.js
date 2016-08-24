@@ -30,7 +30,6 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     }
 
     $scope.click = function (event) {
-        Encounter.updateHasRun = true;
         var canvasPts = screenToMapDim(event.clientX, event.clientY);
         var players = Encounter.encounterState.players;
 
@@ -93,7 +92,6 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
 
-        Encounter.updateHasRun = true;
         if (mouseDown) {
             var oldMapTopDisplace = Encounter.mapTopDisplace;
             var oldMapLeftDisplace = Encounter.mapLeftDisplace;
@@ -126,14 +124,12 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     };
 
     $scope.mouseDown = function (event) {
-        Encounter.updateHasRun = true;
         mouseDown = true;
         mouseX = event.clientX;
         mouseY = event.clientY;
     };
 
     $scope.mouseLeave = function (event) {
-        Encounter.updateHasRun = true;
         mouseDown = false;
         Encounter.hoverCell = {x: -1, y: -1};
         body.css({"overflow":"visible"});
@@ -144,12 +140,10 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     };
 
     $scope.mouseUp = function () {
-        Encounter.updateHasRun = true;
         mouseDown = false;
     };
 
     $scope.mouseScroll = function (event, delta, deltaX, deltaY) {
-        Encounter.updateHasRun = true;
         var oldZoom = Encounter.mapZoom;
 
         var preferredZoomDelta = delta * 5;
