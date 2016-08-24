@@ -413,17 +413,24 @@ router.post('/updateplayer', function (req, res)
             return;
         }
 
-        player.setPlayer(req.body.player);
-        player.save(function (error)
+        if (typeof player !== "undefined" || player !== null)
         {
-            if (error)
+            player.setPlayer(req.body.player);
+            player.save(function (error)
             {
-                res.status(500).send("Error while saving update to npc");
-                return;
-            }
+                if (error)
+                {
+                    res.status(500).send("Error while saving update to npc");
+                    return;
+                }
 
-            res.send("OK");
-        });
+                res.send("OK");
+            });
+        }
+        else
+        {
+            res.status(400).send("OK");
+        }
     });
 });
 
