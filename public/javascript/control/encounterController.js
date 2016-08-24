@@ -13,6 +13,8 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 {
 	var encounterID = window.location.search.replace('?', '');
 	var initModal;
+	var selectedPlayer = -1;
+
 	$scope.encounterState = {};
 	$scope.host = false;
 
@@ -66,11 +68,18 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 
 	socket.on('update:player', function(player)
 	{
+		console.log("received command to update player");
+		console.log(player);
 		for (var i = 0; i < Encounter.encounterState.players.length; i++)
 		{
 			if (Encounter.encounterState.players[i]._id === player._id)
 			{
-				Encounter.encounterState.players[i] = player;
+				console.log("found one to update");
+				for (var value in player)
+				{
+					Encounter.encounterState.players[i][value] = player[value];
+					$scope.encounterState = Encounter.encounterState;
+				}
 			}
 		}
 	});
@@ -123,15 +132,15 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		});
 	};
 
-	$scope.setPlayer = function(index)
-	{
-		$scope.selectedPlayer = index;
-	};
-
-	$scope.setMultiplier = function(multiple)
-	{
-		$scope.multiple = multiple;
-	};
+	// $scope.setPlayer = function(index)
+	// {
+	// 	$scope.selectedPlayer = index;
+	// };
+    //
+	// $scope.setMultiplier = function(multiple)
+	// {
+	// 	$scope.multiple = multiple;
+	// };
 
 	$scope.isHost = function()
 	{
@@ -153,49 +162,80 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		return $scope.encounterState.players[index].visible;
 	};
 
+	// $scope.toggleVisible = function(index)
+	// {
+	// 	var url = 'api/encounter/togglevisible';
+	// 	var data =
+	// 	{
+	// 		playerID : $scope.encounterState.players[index]._id
+	// 	};
+	// 	$http.post(url, data).success(function(data)
+	// 	{
+	// 		if (data === "OK")
+	// 		{
+	// 			socket.emit('update:encounter',
+	// 			{
+	// 				encounterID : encounterID
+	// 			});
+	// 			$scope.encounterState.players[index].visible = !$scope.encounterState.players[index].visible;
+	// 		}
+	// 	});
+	// };
+
 	$scope.toggleVisible = function(index)
 	{
-		var url = 'api/encounter/togglevisible';
-		var data =
-		{
-			playerID : $scope.encounterState.players[index]._id
-		};
-		$http.post(url, data).success(function(data)
-		{
-			if (data === "OK")
-			{
-				socket.emit('update:encounter',
-				{
-					encounterID : encounterID
-				});
-				$scope.encounterState.players[index].visible = !$scope.encounterState.players[index].visible;
-			}
-		});
+		Encounter.encounterState.players[index].visible = !Encounter.encounterState.players[index].visible;
+
+		updateServerPlayer(Encounter.encounterState.players[index]);
 	};
 
-	$scope.hitPlayer = function(hit)
+	// $scope.hitPlayer = function(hit)
+	// {
+	// 	if (hit < 1 || isNaN(hit))
+	// 	{
+	// 		return;
+	// 	}
+    //
+	// 	hit = hit * $scope.multiple;
+	// 	var data =
+	// 	{
+	// 		playerID : $scope.encounterState.players[$scope.selectedPlayer]._id,
+	// 		hit : hit
+	// 	};
+	// 	var url = 'api/encounter/hitplayer';
+	// 	$http.post(url, data).success(function(data)
+	// 	{
+	// 		socket.emit('update:encounter',
+	// 		{
+	// 			encounterID : encounterID
+	// 		});
+    //
+	// 		$scope.updateEncounterState();
+	// 	});
+	// };
+
+	$scope.selectPlayer = function(index)
 	{
-		if (hit < 1 || isNaN(hit))
+		selectedPlayer = index;
+	};
+
+	$scope.healPlayer = function(hit)
+	{
+		console.log("Heal player");
+		console.log(Encounter.encounterState.players[selectedPlayer]);
+		console.log(hit);
+		if (hit === 0 || isNaN(hit))
 		{
 			return;
 		}
 
-		hit = hit * $scope.multiple;
-		var data = 
-		{
-			playerID : $scope.encounterState.players[$scope.selectedPlayer]._id,
-			hit : hit
-		};
-		var url = 'api/encounter/hitplayer';
-		$http.post(url, data).success(function(data)
-		{
-			socket.emit('update:encounter',
-			{
-				encounterID : encounterID
-			});
+		$scope.encounterState.players[selectedPlayer].hitPoints = $scope.encounterState.players[selectedPlayer].hitPoints + hit;
+		updateServerPlayer($scope.encounterState.players[selectedPlayer]);
+	};
 
-			$scope.updateEncounterState();
-		});
+	$scope.damagePlayer = function(hit)
+	{
+		$scope.healPlayer(-hit);
 	};
 
 	$scope.setInitiative = function(initiative)
@@ -358,4 +398,23 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 			return "rgba(51, 122, 183, 0.3)";
 		}
 	};
+
+	function updateServerPlayer(player)
+	{
+		console.log("update player");
+		console.log(player);
+		var url = 'api/encounter/updateplayer';
+		var data =
+		{
+			player : player
+		};
+		$http.post(url, data).success(function(data)
+		{
+			if (data === "OK")
+			{
+				console.log("issue command to update player");
+				socket.emit('update:player', player);
+			}
+		});
+	}
 });
