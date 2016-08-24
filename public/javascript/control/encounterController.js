@@ -426,13 +426,38 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 	{
 		for (var i = 0; i < Encounter.encounterState.players.length; i++)
 		{
-			if (Encounter.encounterState.players[i]._id === player._id && Encounter.encounterState.players[i].isHovered)
+			if (Encounter.encounterState.players[i]._id === player._id && (Encounter.encounterState.players[i].isHovered || Encounter.encounterState.players[i].isSelected))
 			{
-				return "background-color: rgb(255,255,255); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);";
+				if(Encounter.encounterState.players[i].isSelected){
+					return "background-color: rgba(0,0,0,.1); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
+				}
+
+				if(Encounter.encounterState.players[i].isHovered){
+					return "background-color: rgba(255,255,255,1); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
+				}
 			}
 		}
 
 		return "";
+	};
+
+	$scope.selectPlayer = function(player){
+		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		{
+			if (Encounter.encounterState.players[i]._id === player._id)
+			{
+				if(Encounter.encounterState.players[i].isSelected){
+					Encounter.encounterState.players[i].isSelected = false;
+				}
+				else{
+					Encounter.encounterState.players[i].isSelected = true;
+				}
+			}
+			else{
+				Encounter.encounterState.players[i].isSelected = false;
+			}
+
+		}
 	};
 
 	function updateServerPlayer(player)
