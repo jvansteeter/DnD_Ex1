@@ -428,7 +428,7 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		{
 			if (Encounter.encounterState.players[i]._id === player._id && Encounter.encounterState.players[i].isHovered)
 			{
-				return "background-color: rgba(51, 122, 183, 0.3);";
+				return "background-color: rgb(255,255,255); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);";
 			}
 		}
 
