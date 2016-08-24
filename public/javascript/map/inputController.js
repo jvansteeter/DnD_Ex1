@@ -98,6 +98,18 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         else {
             var newCell = screenToMapDim(event.clientX, event.clientY);
             Encounter.hoverCell = {x: newCell.x, y: newCell.y};
+
+            // check if the hoverCell coincides with any player tokens
+            var players = Encounter.encounterState.players;
+            for(var i = 0; i < players.length; i++){
+                var player = players[i];
+                if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y){
+                    player.isHovered = true;
+                }
+                else{
+                    player.isHovered = false;
+                }
+            }
         }
     };
 
