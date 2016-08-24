@@ -63,4 +63,5 @@ clientApp.controller('mapRenderer', function ($scope, $window, Encounter) {
     };
 
     init();
+    // new branch comment ... delete me
 });

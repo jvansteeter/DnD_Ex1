@@ -147,6 +147,7 @@
                         msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)"
                         ng-mousedown="mouseDown($event)"
                         ng-mouseup="mouseUp()"
+                        ng-mouseenter="mouseEnter()"
                         ng-mouseleave="mouseLeave()">
                 </canvas>
               </div>
@@ -159,8 +160,7 @@
                bs-collapse>
             <div class="panel panel-default" ng-show="isVisible($index) || isHost()"
                  ng-repeat="player in encounterState.players track by $index">
-              <div class="panel-heading" role="tab"
-                   style="border-left: 15px solid {{ getColor(player) }};">
+              <div class="panel-heading" role="tab" ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)" ng-mouseleave="removeHover()" style="border-left: 15px solid {{ getColor(player) }}; {{ isHovered(player) }}">
                 <div class="panel-title">
                   <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
                     <div class="row">
@@ -169,14 +169,14 @@
                                                    style="cursor: pointer; text-decoration: none;">
                           <span ng-bind="player.name"></span> </a>
                           <span style="float: right;">
-                            <a href="#" ng-if="isHost()" ng-click="setPlayer($index); setMultiplier(1)"
-                               data-placement="bottom" data-template-url="modal/playerHPPopover.html"
+                            <a href="#" ng-if="isHost()"
+                               data-placement="bottom" data-template-url="modal/playerHealPopover.html"
                                data-auto-close="1" bs-popover>
                               <i class="fa fa-plus" style="color: green;"></i>
                             </a>
                             <a href="#" ng-if="isHost() || isMyCharacter($index)"
-                               ng-click="setPlayer($index); setMultiplier(-1)" data-placement="bottom"
-                               data-template-url="modal/playerHPPopover.html" data-auto-close="1" bs-popover>
+                               data-placement="bottom" ng-click="selectPlayer($index)"
+                               data-template-url="modal/playerDamagePopover.html" data-auto-close="1" bs-popover>
                               <i class="fa fa-minus" style="color: red;"></i>
                             </a>
                           </span>
@@ -235,70 +235,70 @@
                   </div>
                 </div>
               </div>
-              <div class="panel-collapse" role="tabpanel" bs-collapse-target>
-                <div class="panel-body container-fluid" ng-if="!isNPC($index) || isHost()"
-                     style="padding-top: 5px">
-                  <a href="#" ng-if="isNPC($index)" ng-click="setNPCtoEdit($index)"
-                     data-template-url="modal/editNPCModal.html" data-placement="center"
-                     bs-modal="modal" style="float: right">edit <i class="fa fa-pencil-square-o"></i></a>
-                  <span style="text-decoration: underline;">Saves</span>
-                  <br>
-                  <div class="row">
-                    <div class="col col-xs-2">Str:
-                      <span ng-if="player.saves.strength > 0" style="color: green">+<span
-                              ng-bind="player.saves.strength"></span></span>
-                      <span ng-if="player.saves.strength < 0" style="color: red"><span
-                              ng-bind="player.saves.strength"></span></span>
-                      <span ng-if="player.saves.strength === 0"><span
-                              ng-bind="player.saves.strength"></span></span>
-                    </div>
-                    <div class="col col-xs-2">Dex:
-                      <span ng-if="player.saves.dexterity > 0" style="color: green">+<span
-                              ng-bind="player.saves.dexterity"></span></span>
-                      <span ng-if="player.saves.dexterity < 0" style="color: red"><span
-                              ng-bind="player.saves.dexterity"></span></span>
-                      <span ng-if="player.saves.dexterity === 0"><span
-                              ng-bind="player.saves.dexterity"></span></span>
-                    </div>
-                    <div class="col col-xs-2">Con:
-                      <span ng-if="player.saves.constitution > 0"
-                            style="color: green">+<span
-                              ng-bind="player.saves.constitution"></span></span>
-                      <span ng-if="player.saves.constitution < 0"
-                            style="color: red"><span
-                              ng-bind="player.saves.constitution"></span></span>
-                      <span ng-if="player.saves.constitution === 0"><span
-                              ng-bind="player.saves.constitution"></span></span>
-                    </div>
-                    <div class="col col-xs-2">Int:
-                      <span ng-if="player.saves.intelligence > 0"
-                            style="color: green">+<span
-                              ng-bind="player.saves.intelligence"></span></span>
-                      <span ng-if="player.saves.intelligence < 0"
-                            style="color: red"><span
-                              ng-bind="player.saves.intelligence"></span></span>
-                      <span ng-if="player.saves.intelligence === 0"><span
-                              ng-bind="player.saves.intelligence"></span></span>
-                    </div>
-                    <div class="col col-xs-2">Wis:
-                      <span ng-if="player.saves.wisdom > 0" style="color: green">+<span
-                              ng-bind="player.saves.wisdom"></span></span>
-                      <span ng-if="player.saves.wisdom < 0" style="color: red"><span
-                              ng-bind="player.saves.wisdom"></span></span>
-                      <span ng-if="player.saves.wisdom === 0"><span
-                              ng-bind="player.saves.wisdom"></span></span>
-                    </div>
-                    <div class="col col-xs-2">Cha:
-                      <span ng-if="player.saves.charisma > 0" style="color: green">+<span
-                              ng-bind="player.saves.charisma"></span></span>
-                      <span ng-if="player.saves.charisma < 0" style="color: red"><span
-                              ng-bind="player.saves.charisma"></span></span>
-                      <span ng-if="player.saves.charisma === 0"><span
-                              ng-bind="player.saves.charisma"></span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!--<div class="panel-collapse" role="tabpanel" bs-collapse-target>-->
+                <!--<div class="panel-body container-fluid" ng-if="!isNPC($index) || isHost()"-->
+                     <!--style="padding-top: 5px">-->
+                  <!--<a href="#" ng-if="isNPC($index)" ng-click="setNPCtoEdit($index)"-->
+                     <!--data-template-url="modal/editNPCModal.html" data-placement="center"-->
+                     <!--bs-modal="modal" style="float: right">edit <i class="fa fa-pencil-square-o"></i></a>-->
+                  <!--<span style="text-decoration: underline;">Saves</span>-->
+                  <!--<br>-->
+                  <!--<div class="row">-->
+                    <!--<div class="col col-xs-2">Str:-->
+                      <!--<span ng-if="player.saves.strength > 0" style="color: green">+<span-->
+                              <!--ng-bind="player.saves.strength"></span></span>-->
+                      <!--<span ng-if="player.saves.strength < 0" style="color: red"><span-->
+                              <!--ng-bind="player.saves.strength"></span></span>-->
+                      <!--<span ng-if="player.saves.strength === 0"><span-->
+                              <!--ng-bind="player.saves.strength"></span></span>-->
+                    <!--</div>-->
+                    <!--<div class="col col-xs-2">Dex:-->
+                      <!--<span ng-if="player.saves.dexterity > 0" style="color: green">+<span-->
+                              <!--ng-bind="player.saves.dexterity"></span></span>-->
+                      <!--<span ng-if="player.saves.dexterity < 0" style="color: red"><span-->
+                              <!--ng-bind="player.saves.dexterity"></span></span>-->
+                      <!--<span ng-if="player.saves.dexterity === 0"><span-->
+                              <!--ng-bind="player.saves.dexterity"></span></span>-->
+                    <!--</div>-->
+                    <!--<div class="col col-xs-2">Con:-->
+                      <!--<span ng-if="player.saves.constitution > 0"-->
+                            <!--style="color: green">+<span-->
+                              <!--ng-bind="player.saves.constitution"></span></span>-->
+                      <!--<span ng-if="player.saves.constitution < 0"-->
+                            <!--style="color: red"><span-->
+                              <!--ng-bind="player.saves.constitution"></span></span>-->
+                      <!--<span ng-if="player.saves.constitution === 0"><span-->
+                              <!--ng-bind="player.saves.constitution"></span></span>-->
+                    <!--</div>-->
+                    <!--<div class="col col-xs-2">Int:-->
+                      <!--<span ng-if="player.saves.intelligence > 0"-->
+                            <!--style="color: green">+<span-->
+                              <!--ng-bind="player.saves.intelligence"></span></span>-->
+                      <!--<span ng-if="player.saves.intelligence < 0"-->
+                            <!--style="color: red"><span-->
+                              <!--ng-bind="player.saves.intelligence"></span></span>-->
+                      <!--<span ng-if="player.saves.intelligence === 0"><span-->
+                              <!--ng-bind="player.saves.intelligence"></span></span>-->
+                    <!--</div>-->
+                    <!--<div class="col col-xs-2">Wis:-->
+                      <!--<span ng-if="player.saves.wisdom > 0" style="color: green">+<span-->
+                              <!--ng-bind="player.saves.wisdom"></span></span>-->
+                      <!--<span ng-if="player.saves.wisdom < 0" style="color: red"><span-->
+                              <!--ng-bind="player.saves.wisdom"></span></span>-->
+                      <!--<span ng-if="player.saves.wisdom === 0"><span-->
+                              <!--ng-bind="player.saves.wisdom"></span></span>-->
+                    <!--</div>-->
+                    <!--<div class="col col-xs-2">Cha:-->
+                      <!--<span ng-if="player.saves.charisma > 0" style="color: green">+<span-->
+                              <!--ng-bind="player.saves.charisma"></span></span>-->
+                      <!--<span ng-if="player.saves.charisma < 0" style="color: red"><span-->
+                              <!--ng-bind="player.saves.charisma"></span></span>-->
+                      <!--<span ng-if="player.saves.charisma === 0"><span-->
+                              <!--ng-bind="player.saves.charisma"></span></span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
             </div>
           </div>
         </div>

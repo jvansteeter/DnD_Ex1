@@ -21,19 +21,31 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
         canvas.css({"top": Encounter.mapTopDisplace});
 
         context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY)
+        var players = Encounter.encounterState.players;
+        var player;
+
         context.fillStyle = "rgba(255,0,0,.2)";
 
         if (angular.isDefined(Encounter.hoverCell)) {
             if (Encounter.hoverCell.x != -1) {
+
+                // check if the hover cell is over a player; if it is, don't render the red square
+                for( var j = 0; j < players.length; j++){
+                    player = players[j];
+                    if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y){
+                        context.fillStyle = "rgba(102,178,255,0";
+                    }
+                }
+
                 var xCoor = Encounter.hoverCell.x;
                 var yCoor = Encounter.hoverCell.y;
                 context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
             }
         }
 
-        var players = Encounter.encounterState.players;
+        // render the selected player, if present
         for (var i = 0; i < players.length; i++) {
-            var player = players[i];
+            player = players[i];
             if (player.isSelected) {
                 context.fillStyle = "rgba(255,0,0,.4)";
                 var selectX = player.mapX;
@@ -45,6 +57,18 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
                     tileSize * (1 - dialationFactor));
             }
         }
+
+        //render any players that are "isHovered"
+        for(var k = 0; k < players.length; k++){
+            player = players[k];
+            if(angular.isDefined(player.isHovered)){
+                if(player.isHovered){
+                    context.fillStyle = "rgba(102,178,255,.3)";
+                    context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
+                }
+            }
+        }
+
 
         $window.requestAnimationFrame(draw);
     }
