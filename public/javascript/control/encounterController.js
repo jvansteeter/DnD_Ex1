@@ -399,10 +399,44 @@ clientApp.controller('encounterController', function($scope, $http, $q, socket, 
 		}
 	};
 
+	$scope.setHover = function(player)
+	{
+		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		{
+			if (Encounter.encounterState.players[i]._id === player._id)
+			{
+				Encounter.encounterState.players[i].isHovered = true;
+			}
+			else
+			{
+				Encounter.encounterState.players[i].isHovered = false;
+			}
+		}
+	};
+
+	$scope.removeHover = function(player)
+	{
+		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		{
+			Encounter.encounterState.players[i].isHovered = false;
+		}
+	};
+
+	$scope.isHovered = function(player)
+	{
+		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		{
+			if (Encounter.encounterState.players[i]._id === player._id && Encounter.encounterState.players[i].isHovered)
+			{
+				return "background-color: rgba(51, 122, 183, 0.3);";
+			}
+		}
+
+		return "";
+	};
+
 	function updateServerPlayer(player)
 	{
-		console.log("update player");
-		console.log(player);
 		var url = 'api/encounter/updateplayer';
 		var data =
 		{
