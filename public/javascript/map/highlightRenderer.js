@@ -33,7 +33,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
                 for( var j = 0; j < players.length; j++){
                     player = players[j];
                     if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y){
-                        context.fillStyle = "rgba(255,255,0,0";
+                        context.fillStyle = "rgba(102,178,255,0";
                     }
                 }
 
@@ -63,7 +63,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
             player = players[k];
             if(angular.isDefined(player.isHovered)){
                 if(player.isHovered){
-                    context.fillStyle = "rgba(255,255,0,.2)";
+                    context.fillStyle = "rgba(102,178,255,.3)";
                     context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
                 }
             }

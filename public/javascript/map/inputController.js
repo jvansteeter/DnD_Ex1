@@ -1,6 +1,8 @@
 var clientApp = angular.module('clientApp');
 
 clientApp.controller('inputController', function ($scope, Encounter) {
+    var body;
+
     var canvas;
     var context;
     var width;
@@ -10,8 +12,14 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     var mouseX = 0;
     var mouseY = 0;
 
+    // hackiness right here
+    var currentMouseScreen = {x:0, y:0};
+    // end hackiness
+
     function init() {
         canvas = $('#inputCanvas');
+        body = $('body');
+
         width = canvas.width();
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
@@ -31,7 +39,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
 
         // before processing the click, check for any selected players
         for (var i = 0; i < players.length; i++) {
-            if(angular.isDefined(players[i].isSelected)){
+            if (angular.isDefined(players[i].isSelected)) {
                 if (players[i].isSelected == true) {
                     selectedIndex = i;
                     selectedCount++;
@@ -83,6 +91,8 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     };
 
     $scope.mouseMove = function (event) {
+        currentMouseScreen = {x: event.clientX, y: event.clientY};
+
         Encounter.updateHasRun = true;
         if (mouseDown) {
             var oldMapTopDisplace = Encounter.mapTopDisplace;
@@ -103,12 +113,12 @@ clientApp.controller('inputController', function ($scope, Encounter) {
 
             // check if the hoverCell coincides with any player tokens
             var players = Encounter.encounterState.players;
-            for(var i = 0; i < players.length; i++){
+            for (var i = 0; i < players.length; i++) {
                 var player = players[i];
-                if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y){
+                if (player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y) {
                     player.isHovered = true;
                 }
-                else{
+                else {
                     player.isHovered = false;
                 }
             }
@@ -126,6 +136,11 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         Encounter.updateHasRun = true;
         mouseDown = false;
         Encounter.hoverCell = {x: -1, y: -1};
+        body.css({"overflow":"visible"});
+    };
+
+    $scope.mouseEnter = function(){
+        body.css({"overflow":"hidden"});
     };
 
     $scope.mouseUp = function () {
@@ -136,14 +151,37 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     $scope.mouseScroll = function (event, delta, deltaX, deltaY) {
         Encounter.updateHasRun = true;
         var oldZoom = Encounter.mapZoom;
-        Encounter.mapZoom = oldZoom + (delta * 5);
-        if (Encounter.mapZoom >= 250) {
-            Encounter.mapZoom = 250;
+
+        var preferredZoomDelta = delta * 5;
+        var preferredNewZoom = oldZoom + preferredZoomDelta;
+
+        var actualZoomDelta;
+        var actualNewZoom;
+
+        if (preferredNewZoom >= 250) {
+            actualNewZoom = 250;
+            actualZoomDelta = oldZoom - 250;
+        }
+        else if (preferredNewZoom <= 35) {
+            actualNewZoom = 35;
+            actualZoomDelta = 35 - oldZoom;
+        }
+        else{
+            actualNewZoom = preferredNewZoom;
+            actualZoomDelta = preferredZoomDelta;
         }
 
-        if (Encounter.mapZoom <= 35) {
-            Encounter.mapZoom = 35;
-        }
+        var oldLeftDisplace = Encounter.mapLeftDisplace;
+        var oldTopDisplace = Encounter.mapTopDisplace;
+
+        var mapCoor = screenToMapRes(currentMouseScreen);
+
+        var newLeftDisplace = oldLeftDisplace + (mapCoor.x * actualZoomDelta / 100);
+        var newTopDisplace = oldTopDisplace + (mapCoor.y * actualZoomDelta / 100);
+
+        Encounter.mapLeftDisplace = newLeftDisplace;
+        Encounter.mapTopDisplace = newTopDisplace;
+        Encounter.mapZoom = actualNewZoom;
     };
 
     function screenToMapDim(inputX, inputY) {
@@ -158,6 +196,17 @@ clientApp.controller('inputController', function ($scope, Encounter) {
         var mapYcoor = Math.floor(mapY / 50);
 
         return {x: mapXcoor, y: mapYcoor};
+    }
+
+    function screenToMapRes(coor) {
+        var rect = canvas[0].getBoundingClientRect();
+        var canvasX = coor.x - rect.left;
+        var canvasY = coor.y - rect.top;
+
+        var mapX = (canvasX / (Encounter.mapZoom / 100) - Encounter.mapLeftDisplace);
+        var mapY = (canvasY / (Encounter.mapZoom / 100) - Encounter.mapTopDisplace);
+
+        return {x: mapX, y: mapY};
     }
 
     init();
