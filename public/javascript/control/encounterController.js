@@ -17,6 +17,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 
 	$scope.encounterState = {};
 	$scope.host = false;
+	$scope.menuCollapsed = true;
 
 	socket.on('init', function ()
 	{
