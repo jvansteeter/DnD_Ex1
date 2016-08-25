@@ -160,7 +160,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 	$scope.toggleVisible = function (index)
 	{
 		Encounter.encounterState.players[index].visible = !Encounter.encounterState.players[index].visible;
-
+		$scope.encounterState = Encounter.encounterState;
 		updateServerPlayer(Encounter.encounterState.players[index]);
 	};
 
