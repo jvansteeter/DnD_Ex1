@@ -32,7 +32,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
                 // check if the hover cell is over a player; if it is, don't render the red square
                 for( var j = 0; j < players.length; j++){
                     player = players[j];
-                    if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y){
+                    if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y && (player.visible || Encounter.isHost())){
                         context.fillStyle = "rgba(102,178,255,0";
                     }
                 }
@@ -62,7 +62,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
         for(var k = 0; k < players.length; k++){
             player = players[k];
             if(angular.isDefined(player.isHovered)){
-                if(player.isHovered){
+                if(player.isHovered && player.visible){
                     context.fillStyle = "rgba(102,178,255,.3)";
                     context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
                 }

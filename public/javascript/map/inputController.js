@@ -67,8 +67,10 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             }
 
             // move the selected token
-            players[selectedIndex].mapX = canvasPts.x;
-            players[selectedIndex].mapY = canvasPts.y;
+            if((canvasPts.x >= 0 && canvasPts.x < Encounter.encounterState.mapDimX) && (canvasPts.y >= 0 && canvasPts.y < Encounter.encounterState.mapDimY)){
+                players[selectedIndex].mapX = canvasPts.x;
+                players[selectedIndex].mapY = canvasPts.y;
+            }
 
             // perpetuate the change
             Encounter.updatePlayer(selectedIndex);
@@ -82,7 +84,14 @@ clientApp.controller('inputController', function ($scope, Encounter) {
             for (var k = 0; k < players.length; k++) {
                 if (players[k].mapX == canvasPts.x && players[k].mapY == canvasPts.y) {
                     //if a token is found, select it and stop
-                    players[k].isSelected = true;
+                    if(players[k].visible){
+                        players[k].isSelected = true;
+                    }
+                    else{
+                        if(Encounter.isHost()){
+                            players[k].isSelected = true;
+                        }
+                    }
                     break;
                 }
             }
