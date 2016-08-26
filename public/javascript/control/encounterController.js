@@ -193,7 +193,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		var url = 'api/encounter/setinitiative';
 		var data =
 		{
-			playerID: $scope.encounterState.players[$scope.selectedPlayer]._id,
+			playerID: $scope.encounterState.players[selectedPlayer]._id,
 			initiative: initiative
 		};
 		$http.post(url, data).success(function (data)
