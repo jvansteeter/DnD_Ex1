@@ -17,6 +17,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.encounterState = {};
 	$scope.host = false;
+	$scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
 	socket.on('init', function ()
 	{
@@ -147,9 +148,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		return $scope.encounterState.players[index].npc;
 	};
 
-	$scope.isMyCharacter = function (index)
+	$scope.isMyCharacter = function (player)
 	{
-		return (Profile.getUserID() === $scope.encounterState.players[index].userID);
+		console.log(Profile.getUserID());
+		console.log(player);
+		return (Profile.getUserID() === player._id);
 	};
 
 	$scope.isVisible = function (index)
@@ -157,11 +160,18 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		return $scope.encounterState.players[index].visible;
 	};
 
-	$scope.toggleVisible = function (index)
+	$scope.toggleVisible = function (player)
 	{
-		Encounter.encounterState.players[index].visible = !Encounter.encounterState.players[index].visible;
-		$scope.encounterState = Encounter.encounterState;
-		updateServerPlayer(Encounter.encounterState.players[index]);
+		for (var i = 0; i < $scope.encounterState.players.length; i++)
+		{
+			if ($scope.encounterState.players[i]._id === player._id)
+			{
+				Encounter.encounterState.players[i].visible = !Encounter.encounterState.players[i].visible;
+				$scope.encounterState = Encounter.encounterState;
+				updateServerPlayer(Encounter.encounterState.players[i]);
+				return;
+			}
+		}
 	};
 
 	$scope.healPlayer = function (hit)
@@ -175,6 +185,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		}
 
 		$scope.encounterState.players[selectedPlayer].hitPoints = $scope.encounterState.players[selectedPlayer].hitPoints + hit;
+		$scope.showPopover = false;
 		updateServerPlayer($scope.encounterState.players[selectedPlayer]);
 	};
 
@@ -207,12 +218,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		});
 	};
 
-	$scope.removePlayer = function (index)
+	$scope.removePlayer = function (player)
 	{
 		var url = 'api/encounter/removeplayer/' + encounterID;
 		var data =
 		{
-			playerID: $scope.encounterState.players[index]._id
+			playerID: player._id
 		};
 
 		$http.post(url, data).success(function (data)
@@ -398,12 +409,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			{
 				if (Encounter.encounterState.players[i].isSelected)
 				{
-					return "background-color: rgba(0,0,0,.1); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
+					return "background-color: rgba(0,0,0,.2); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
 				}
 
 				if (Encounter.encounterState.players[i].isHovered)
 				{
-					return "background-color: rgba(255,255,255,1); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
+					return "background-color: rgba(0,0,0,0.05); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
 				}
 			}
 		}
@@ -436,6 +447,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.toggleEncounterOpen = function()
 	{
+		if ($scope.encounterState.active)
+		{
+			$scope.areYouSureTitle = "Close Encounter?";
+		}
+		else
+		{
+			$scope.areYouSureTitle = "Open Encounter?";
+		}
 		modal = $uibModal.open({
 			animation: true,
 			templateUrl: 'modal/areYouSureModal.html',

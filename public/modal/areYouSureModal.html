@@ -1,7 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title">
-    <span ng-if="!encounterState.active">Open Encounter</span>
-    <span ng-if="encounterState.active">Close Encounter</span>
+    <span ng-bind="areYouSureTitle">Open Encounter</span>
   </h4>
 </div>
 <form ng-submit="$hide()">

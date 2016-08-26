@@ -2,8 +2,10 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('profileController', function($scope, $window, $http, socket, Profile) 
+clientApp.controller('profileController', function($scope, $window, $uibModal, $http, socket, Profile)
 {
+	var modal;
+
 	$scope.newCampaignModal = {};
 
 	$http.get('api/user/campaigns').success(function(data)
@@ -35,6 +37,26 @@ clientApp.controller('profileController', function($scope, $window, $http, socke
 				'Content-Type' : undefined
 			},
 			transformRequest : angular.identity
+		});
+	};
+
+	$scope.editCharacter = function()
+	{
+		modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'modal/listCharactersModal.html',
+			scope: $scope,
+			size: ''
+		});
+	};
+
+	$scope.editNPC = function()
+	{
+		modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'modal/listNPCModal.html',
+			scope: $scope,
+			size: ''
 		});
 	};
 

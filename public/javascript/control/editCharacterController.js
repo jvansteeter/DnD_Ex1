@@ -2,7 +2,7 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('editCharacterController', function($scope, $window, $http, $alert)
+clientApp.controller('editCharacterController', function($scope, $window, $http, $alert, $uibModal)
 {
     $scope.character = {};
     $scope.character.features = [];
@@ -13,6 +13,7 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
 
     var uploadImage = false;
     var flow;
+    var modal;
 
     $scope.classes = [];
     $scope.levels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
@@ -131,6 +132,17 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
     $scope.removeEquipment = function()
     {
         $scope.character.equipment.splice(-1, 1);
+    };
+
+    $scope.deleteCharacter = function()
+    {
+        $scope.areYouSureTitle = "Delete Character?";
+        modal = $uibModal.open({
+            animation: true,
+            templateUrl: 'modal/areYouSureModal.html',
+            scope: $scope,
+            size: ''
+        });
     };
 
     $scope.submit = function()

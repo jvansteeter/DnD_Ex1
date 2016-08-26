@@ -2,10 +2,11 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('editNPCController', function($scope, $window, $http)
+clientApp.controller('editNPCController', function($scope, $window, $http, $uibModal)
 {
     var uploadImage = false;
     var flow;
+    var modal;
 
     $scope.npc = {};
     $scope.npc.features = [];
@@ -120,9 +121,19 @@ clientApp.controller('editNPCController', function($scope, $window, $http)
         $scope.npc.actions.splice(-1, 1);
     };
 
+    $scope.deleteNPC = function()
+    {
+        $scope.areYouSureTitle = "Delete NPC?";
+        modal = $uibModal.open({
+            animation: true,
+            templateUrl: 'modal/areYouSureModal.html',
+            scope: $scope,
+            size: ''
+        });
+    };
+
     $scope.submit = function()
     {
-
         var url = 'api/npc/delete/' + npcID;
         $http.get(url).success(function(data)
         {
