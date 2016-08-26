@@ -9,15 +9,14 @@ clientApp.config(function ($modalProvider)
 	});
 });
 
-clientApp.controller('encounterController', function ($scope, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
+clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
 {
 	var encounterID = window.location.search.replace('?', '');
-	var initModal;
+	var modal;
 	var selectedPlayer = -1;
 
 	$scope.encounterState = {};
 	$scope.host = false;
-	$scope.menuCollapsed = true;
 
 	socket.on('init', function ()
 	{
@@ -28,7 +27,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 
 			if (!$scope.encounterState.initialized)
 			{
-				initModal = $uibModal.open({
+				modal = $uibModal.open({
 					animation: true,
 					templateUrl: 'modal/initializeMapModal.html',
 					scope: $scope,
@@ -116,7 +115,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 		}).success(function (data)
 		{
 			$scope.updateEncounterState();
-			initModal.close();
+			modal.close();
 		});
 	};
 
@@ -126,7 +125,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 		$http.get(url).success(function (data)
 		{
 			$scope.updateEncounterState();
-			initModal.close();
+			modal.close();
 		});
 	};
 
@@ -236,6 +235,16 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 		});
 	};
 
+	$scope.addCharacter = function()
+	{
+		modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'modal/listCharactersModal.html',
+			scope: $scope,
+			size: ''
+		});
+	};
+
 	$scope.listModalselectCharacter = function (index)
 	{
 		var encounterID = $scope.encounterState._id;
@@ -253,6 +262,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 					encounterID: encounterID
 				});
 			$scope.updateEncounterState();
+			modal.close();
 		});
 	};
 
@@ -262,6 +272,16 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 		$http.get(url).success(function (data)
 		{
 			$scope.npcs = data.npcs;
+		});
+	};
+
+	$scope.addNPC = function()
+	{
+		modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'modal/listNPCModal.html',
+			scope: $scope,
+			size: ''
 		});
 	};
 
@@ -282,6 +302,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 					encounterID: encounterID
 				});
 			$scope.updateEncounterState();
+			modal.close();
 		});
 	};
 
@@ -304,6 +325,7 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 					});
 				socket.emit('new:encounter', {});
 				$scope.encounterState.active = active;
+				modal.close();
 			}
 		});
 	};
@@ -410,6 +432,16 @@ clientApp.controller('encounterController', function ($scope, $http, $q, socket,
 				Encounter.encounterState.players[i].isSelected = false;
 			}
 		}
+	};
+
+	$scope.toggleEncounterOpen = function()
+	{
+		modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'modal/areYouSureModal.html',
+			scope: $scope,
+			size: ''
+		});
 	};
 
 	function updateServerPlayer(player)
