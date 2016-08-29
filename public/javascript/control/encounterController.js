@@ -150,9 +150,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.isMyCharacter = function (player)
 	{
-		console.log(Profile.getUserID());
-		console.log(player);
-		return (Profile.getUserID() === player._id);
+		return (Profile.getUserID() === player.userID);
 	};
 
 	$scope.isVisible = function (index)

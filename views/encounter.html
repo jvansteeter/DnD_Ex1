@@ -175,7 +175,10 @@
                       <a href="#" ng-show="isHost() && player.npc && !player.visible" ng-click="toggleVisible(player)">
                         <i class="fa fa-eye-slash"></i>
                       </a>
-                      <span class="badge" data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer" bs-popover><i class="fa fa-bolt"></i>
+                      <span ng-if="isHost() || isMyCharacter(player)" class="badge" data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer" bs-popover><i class="fa fa-bolt"></i>
+                        <span ng-bind="player.initiative"></span>
+                      </span>
+                      <span ng-if="!isHost() && !isMyCharacter(player)" class="badge"><i class="fa fa-bolt"></i>
                         <span ng-bind="player.initiative"></span>
                       </span>
                       <a href="#" ng-show="isHost()" ng-click="removePlayer(player)" style="color: black;">
