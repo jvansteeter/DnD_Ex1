@@ -2,4 +2,6 @@
 /.idea
 /image/users
 /image/encounters
+/image/characters
+/image/npcs
 /public/bower_components
