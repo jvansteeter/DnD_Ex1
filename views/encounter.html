@@ -46,7 +46,7 @@
         }
     </style>
 </head>
-<body style="display: flex; height: 100%; flex-direction: column; border: 3px purple solid">
+<body style="display: flex; height: 100%; flex-direction: column;">
 
 <!--Top Menu Container-->
 <nav class="navbar navbar-static navbar-inverse" style="margin: 0px;">
@@ -82,10 +82,10 @@
 </nav>
 
 <!-- Content Space -->
-<div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; border: 3px solid cyan; flex:1">
+<div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
 
     <!--Title Row-->
-    <div style="margin-bottom:5px; display:flex; border: 3px solid orange;">
+    <div style="margin-bottom:5px; display:flex">
         <!--Menu Span-->
         <span style="align-self: center">
             <button type="button" class="btn btn-default" ng-click="menuOpen = !menuOpen" ng-mouseleave="menuOpen = false">Menu <i class="fa fa-chevron-down"></i></button>
@@ -109,14 +109,14 @@
     </div>
 
     <!--Map Row-->
-    <div style="display: flex; border:3px solid blue; flex:1">
+    <div style="display: flex; flex:1">
 
         <!--Player Status Nav-->
-        <div style="display:flex; flex-direction:column; flex: 0 0 375px; border: 3px solid red">
+        <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
             <div>
                 <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
             </div>
-            <div class="initiative-box" style="border:4px solid green; flex:1; overflow-y: scroll;">
+            <div class="initiative-box" style="flex:1; overflow-y: scroll;">
                 <ul ng-model="players" class="list-group">
                     <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
                         class="list-group-item" ng-hide="!isHost() && !player.visible"
@@ -191,8 +191,7 @@
         </div>
 
         <!--Map Container-->
-        <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%; border: 3px solid yellow">
-        <!--<div ng-if="encounterState.mapURL" style="flex: 0 0 auto; border: 3px solid yellow">-->
+        <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">
 
             <div style="overflow: hidden; background-color: #dedede; height: inherit;">
                 <div style="position: relative;" id="mapDiv">
