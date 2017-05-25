@@ -84,10 +84,12 @@
 <div class="encounter-container" ng-controller="encounterController">
   <!--<div class="row">-->
   <div class="container">
-    <div class="row">
+    <div>
       <h1>
-        <span class="col col-8" ng-bind="encounterState.title"></span>
-        <span ng-if="!encounterState.active" style="color: red; float: right;">Closed</span>
+        <center>
+          <span ng-bind="encounterState.title"></span>
+          <span ng-if="!encounterState.active" style="color: red; float: right;">Closed</span>
+        </center>
       </h1>
     </div>
   </div>
