@@ -145,7 +145,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     };
 
     $scope.mouseEnter = function(){
-        body.css({"overflow":"hidden"});
+        // body.css({"overflow":"hidden"});
     };
 
     $scope.mouseUp = function () {
