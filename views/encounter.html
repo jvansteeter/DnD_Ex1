@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="clientApp">
+<html lang="en" ng-app="clientApp" style="height: 100%">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -46,7 +46,9 @@
         }
     </style>
 </head>
-<body>
+<body style="display: flex; height: 100%; flex-direction: column; border: 3px purple solid">
+
+<!--Top Menu Container-->
 <nav class="navbar navbar-static navbar-inverse" style="margin: 0px;">
     <div class="container">
         <div class="nav-collapse collase">
@@ -77,13 +79,13 @@
             </ul>
         </div>
     </div>
-</nav><!-- /.navbar -->
+</nav>
 
-<!-- Begin Body -->
-<div class="encounter-container" ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px">
+<!-- Content Space -->
+<div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; border: 3px solid cyan; flex:1">
 
     <!--Title Row-->
-    <div style="margin-bottom:5px;display:flex; border: 2px solid chartreuse;">
+    <div style="margin-bottom:5px; display:flex; border: 3px solid orange;">
         <!--Menu Span-->
         <span style="align-self: center">
             <button type="button" class="btn btn-default" ng-click="menuOpen = !menuOpen" ng-mouseleave="menuOpen = false">Menu <i class="fa fa-chevron-down"></i></button>
@@ -107,10 +109,10 @@
     </div>
 
     <!--Map Row-->
-    <div style="display: flex; border:2px solid blue; height: 2000px">
+    <div style="display: flex; border:3px solid blue; flex:1">
 
         <!--Player Status Nav-->
-        <div style="width: 40%; border: 2px solid red">
+        <div style="width: 40%; border: 3px solid red; overflow-y: scroll">
             <ul class="nav nav-stacked">
                 <li>
                     <div class="initiative-box">
@@ -191,7 +193,7 @@
         </div>
 
         <!--Map Container-->
-        <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%; border: 2px solid orange">
+        <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%; border: 3px solid yellow">
 
             <div style="overflow: hidden; background-color: #dedede; height: inherit;">
                 <div style="position: relative;" id="mapDiv">
