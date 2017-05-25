@@ -141,7 +141,7 @@ clientApp.controller('inputController', function ($scope, Encounter) {
     $scope.mouseLeave = function (event) {
         mouseDown = false;
         Encounter.hoverCell = {x: -1, y: -1};
-        body.css({"overflow":"visible"});
+        // body.css({"overflow":"visible"});
     };
 
     $scope.mouseEnter = function(){
