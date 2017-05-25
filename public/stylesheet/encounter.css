@@ -1,16 +1,3 @@
-.left-col {
-    float: left;
-    width: 30%;
-    margin-left: 10px;
-}
-.map-container {
-    width: 65%;
-    float: right;
-    height: 100%;
-}
 html, body{
     height: 100%;
-}
-.encounter-container {
-    height: 85%
 }
