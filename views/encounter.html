@@ -113,9 +113,9 @@
 
         <!--Player Status Nav-->
         <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
-            <div>
-                <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
-            </div>
+            <!--Blue Players Tag-->
+            <div><li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li></div>
+            <!--List of Players-->
             <div class="initiative-box" style="flex:1; overflow-y: scroll;">
                 <ul ng-model="players" class="list-group">
                     <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
@@ -193,8 +193,8 @@
         <!--Map Container-->
         <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">
 
-            <div style="overflow: hidden; background-color: #dedede; height: inherit;">
-                <div style="position: relative;" id="mapDiv">
+            <div style="overflow: hidden; background-color: #dedede; height: 100%;">
+                <div style="position: relative; height: 100%" id="mapDiv">
 
                     <div ng-controller="mapRenderer">
                         <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{getResX()}} height={{getResY()}}></canvas>
@@ -213,7 +213,7 @@
                     </div>
 
                     <div ng-controller="inputController">
-                        <canvas style="z-index:3; position:absolute; width: 100%; height: 535px"
+                        <canvas style="z-index:3; position:absolute; width: 100%; height: 100%"
                                 id="inputCanvas"
                                 ng-click="click($event)"
                                 ng-mousemove="mouseMove($event)"
