@@ -8,10 +8,11 @@
 
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheet/encounter.css">
+  <link href="stylesheet/style.css" rel="stylesheet">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <link href="stylesheet/style.css" rel="stylesheet">
 
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -47,7 +48,7 @@
   </style>
 </head>
 <body>
-<nav class="navbar navbar-static navbar-inverse">
+<nav class="navbar navbar-static navbar-inverse" style="margin: 0px;">
   <div class="container">
     <div class="nav-collapse collase">
       <ul class="nav navbar-nav navbar-left">
@@ -80,10 +81,19 @@
 </nav><!-- /.navbar -->
 
 <!-- Begin Body -->
-<div class="container" ng-controller="encounterController">
-  <div class="row">
-
-    <div class="col col-md-5">
+<div class="encounter-container" ng-controller="encounterController">
+  <!--<div class="row">-->
+  <div class="container">
+    <div>
+      <h1>
+        <center>
+          <span ng-bind="encounterState.title"></span>
+          <span ng-if="!encounterState.active" style="color: red; float: right;">Closed</span>
+        </center>
+      </h1>
+    </div>
+  </div>
+    <div class="left-col">
       <button type="button" class="btn btn-default" ng-click="menuOpen = !menuOpen" ng-mouseleave="menuOpen = false">Menu <i class="fa fa-chevron-down"></i></button>
       <div style="width: initial">
         <div uib-collapse="!menuOpen" ng-mouseenter="menuOpen = true" ng-mouseleave="menuOpen = false" style="position:absolute; z-index: 100;">
@@ -98,35 +108,15 @@
         </div>
       </div>
       <br>
-      <!--<div class="btn-group">-->
-        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-          <!--<i class="fa fa-chevron-down"></i>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu">-->
-          <!--<li><a href="#" data-template-url="modal/listCharactersModal.html"-->
-                 <!--data-placement="center" bs-modal="modal">Add Character</a></li>-->
-          <!--<li role="separator" class="divider"></li>-->
-          <!--<li><a href="#" ng-show="isHost()" data-template-url="modal/listNPCModal.html">-->
-            <!--<bs-modal="modal">Add NPC</a></li>-->
-         <!--<li ng-if="encounterState.active"><a href="#" ng-show="isHost()"-->
-                <!--data-template-url="modal/areYouSureModal.html" data-placement="center" title="Close Encounter?"-->
-                <!--bs-modal="modal">Close Encounter</a></li>-->
-         <!--<li ng-if="!encounterState.active"><a href="#" ng-show="isHost()"-->
-                <!--data-template-url="modal/areYouSureModal.html" data-placement="center" title="Open Encounter?"-->
-                <!--bs-modal="modal">Open Encounter</a></li>-->
-         <!--<li><a href="#">Separated link</a></li>-->
-       <!--</ul>-->
-     <!--</div>-->
      <ul class="nav nav-stacked">
-       <!--li><h4>Initiatives  <i class="fa fa-bolt"></i></h4></li-->
         <li>
-          <div class="initiative box">
+          <div class="initiative-box">
             <ul ng-model="players" class="list-group">
               <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
               <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
                   class="list-group-item" ng-hide="!isHost() && !player.visible"
                   ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)" ng-mouseleave="removeHover()"
-                  style="border-left: 10px solid {{ getColor(player) }}; {{ isHovered(player) }}">
+                  style="border-right: 10px solid {{ getColor(player) }}; {{ isHovered(player) }}">
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col col-xs-4" style="padding: 0px">
@@ -194,14 +184,10 @@
       </ul>
     </div>
 
-    <div class="col col-md-7">
-      <h1><span ng-bind="encounterState.title"></span><span ng-if="!encounterState.active"
-                                                            style="color: red; float: right;">Closed</span>
-      </h1>
-      <div class="container-fluid">
-
-        <div class="row" ng-if="encounterState.mapURL">
-          <div style="overflow: hidden; width: 100%; height: 535px; margin-bottom: 20px; background-color: #dedede">
+    <!--<div class="col col-md-7">-->
+      <!--<div class="container-fluid">-->
+        <div class="map-container" ng-if="encounterState.mapURL">
+          <div style="overflow: hidden; background-color: #dedede; height: inherit;">
             <div style="position: relative;" id="mapDiv">
               <div ng-controller="mapRenderer">
                 <canvas style="z-index:0; position:absolute;" id="mapCanvas"
@@ -234,97 +220,13 @@
             </div>
           </div>
         </div>
-
-        <!--<div class="row">-->
-          <!--<div class="panel-group" data-allow-multiple="true" role="tablist" aria-multiselectable="true"-->
-               <!--bs-collapse>-->
-            <!--<div class="panel panel-default" ng-show="isVisible($index) || isHost()"-->
-                 <!--ng-repeat="player in encounterState.players track by $index">-->
-              <!--<div class="panel-heading" role="tab" ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)" ng-mouseleave="removeHover()" style="border-left: 15px solid {{ getColor(player) }}; {{ isHovered(player) }}">-->
-                <!--<div class="panel-title">-->
-                  <!--<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">-->
-                    <!--<div class="row">-->
-                      <!--<div class="col col-md-4" style="padding-left: 10px">-->
-                        <!--<h4 class="panel-title"><a bs-collapse-toggle data-toggle="collapse"-->
-                                                   <!--style="cursor: pointer; text-decoration: none;">-->
-                          <!--<span ng-bind="player.name"></span> </a>-->
-                          <!--<span style="float: right;">-->
-                            <!--<a href="#" ng-if="isHost()"-->
-                               <!--data-placement="bottom" data-template-url="modal/playerHealPopover.html"-->
-                               <!--data-auto-close="1" bs-popover>-->
-                              <!--<i class="fa fa-plus" style="color: green;"></i>-->
-                            <!--</a>-->
-                            <!--<a href="#" ng-if="isHost() || isMyCharacter($index)"-->
-                               <!--data-placement="bottom" ng-click="selectPlayer($index)"-->
-                               <!--data-template-url="modal/playerDamagePopover.html" data-auto-close="1" bs-popover>-->
-                              <!--<i class="fa fa-minus" style="color: red;"></i>-->
-                            <!--</a>-->
-                          <!--</span>-->
-                        <!--</h4>-->
-                      <!--</div>-->
-                      <!--<div class="col col-md-5">-->
-
-                        <!--<i class="fa fa-heart"></i>-->
-                        <!--<span ng-if="!isHost() && isNPC($index)">???-->
-                          <!--<span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span-->
-                                  <!--ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>-->
-                          <!--<span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span-->
-                                  <!--ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>-->
-                          <!--<span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>-->
-                        <!--</span>-->
-                        <!--<span ng-if="isHost() || !isNPC($index)">-->
-                          <!--<span ng-if="player.hitPoints < 1" style="color: dimgrey" ng-bind="player.hitPoints"></span>-->
-                          <!--<span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green"-->
-                                <!--ng-bind="player.hitPoints"></span>-->
-                          <!--<span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"-->
-                                <!--style="color: red" ng-bind="player.hitPoints"></span>-->
-                           <!--/ <span ng-bind="player.maxHitPoints"></span>-->
-                        <!--</span>-->
-
-                        <!--<i class="fa fa-shield"></i>-->
-                        <!--<span ng-if="!isHost() && isNPC($index)">??? </span>-->
-                        <!--<span ng-if="isHost() || !isNPC($index)"-->
-                              <!--ng-bind="player.armorClass"> </span>-->
-
-                        <!--<i class="fa fa-eye"></i>-->
-                        <!--<span ng-if="!player.passivePerception || (!isHost() && isNPC($index))">???</span>-->
-                        <!--<span ng-if="player.passivePerception && (isHost() || !isNPC($index))"-->
-                              <!--ng-bind="player.passivePerception"></span>-->
-                      <!--</div>-->
-                      <!--<div class="col col-md-3">-->
-                        <!--<span style="float: right;">-->
-                          <!--<strong style="color: red;" ng-bind="player.status"> </strong>-->
-                          <!--<a href="#" ng-show="isHost() && isNPC($index) && isVisible($index)"-->
-                             <!--ng-click="toggleVisible($index)">-->
-                            <!--<i class="fa fa-eye"></i>-->
-                          <!--</a>-->
-                          <!--<a href="#" ng-show="isHost() && isNPC($index) && !isVisible($index)"-->
-                             <!--ng-click="toggleVisible($index)">-->
-                            <!--<i class="fa fa-eye-slash"></i>-->
-                          <!--</a>-->
-                          <!--<a href="#" ng-if="isMyCharacter($index)" ng-click="setPlayer($index)">-->
-                            <!--<i class="fa fa-bolt" data-template-url="modal/initiativePopover.html" data-auto-close="1"-->
-                               <!--bs-popover></i>-->
-                          <!--</a>-->
-                          <!--<a href="#" ng-show="isHost()" ng-click="removePlayer($index)" style="color: black;">-->
-                            <!--<i class="fa fa-close"></i>-->
-                          <!--</a>-->
-                        <!--</span>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      </div>
-    </div>
+      <!--</div>-->
+    <!--</div>-->
 
     <div>
 
     </div>
-  </div>
+  <!--</div>-->
 </div>
 </body>
 </html>

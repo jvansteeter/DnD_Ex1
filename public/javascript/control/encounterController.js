@@ -368,6 +368,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 	{
 		if (player.npc)
 		{
+			if (player.name === 'Commoner')
+			{
+				return "rgba(0, 255, 0, 0.3)";
+			}
 			return "rgba(255, 0, 0, 0.3)";
 		}
 		else
