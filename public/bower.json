@@ -27,6 +27,7 @@
     "ng-flow": "~2",
     "hamsterjs": "1.1.2",
     "angular-mousewheel":"1.0.5",
-    "angular-bootstrap":"2.0.2"
+    "angular-bootstrap":"2.0.2",
+    "image-loader-angular":"1.2.0"
   }
 }

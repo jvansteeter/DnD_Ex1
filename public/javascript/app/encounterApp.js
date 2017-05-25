@@ -1,1 +1,1 @@
-angular.module('clientApp', ['ngAnimate', 'mgcrea.ngStrap', 'ngSanitize', 'monospaced.mousewheel', 'ui.bootstrap', 'flow']);
+angular.module('clientApp', ['ngAnimate', 'mgcrea.ngStrap', 'ngSanitize', 'monospaced.mousewheel', 'ui.bootstrap', 'flow', 'sap.imageloader']);

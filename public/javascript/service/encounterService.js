@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.factory('Encounter', function ($http, $q, Profile, socket)
+clientApp.factory('EncounterService', function ($http, $q, Profile, TokenService, socket)
 {
     var encounterService = {};
 
@@ -116,6 +116,11 @@ clientApp.factory('Encounter', function ($http, $q, Profile, socket)
             socket.emit('update:player', encounterService.encounterState.players[index]);
         });
     };
+
+    encounterService.getPlayerIconById = function(playerId)
+    {
+        return TokenService.getPlayerIconById(playerId);
+	};
 
     return encounterService;
 });

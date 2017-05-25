@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('mapRenderer', function ($scope, $window, Encounter) {
+clientApp.controller('mapRenderer', function ($scope, $window, EncounterService) {
 
     var canvas;
     var context;
@@ -19,34 +19,34 @@ clientApp.controller('mapRenderer', function ($scope, $window, Encounter) {
 
     function draw() {
 
-        if (Encounter.updateHasRun) {
-            if (Encounter.encounterState.mapURL) {
+        if (EncounterService.updateHasRun) {
+            if (EncounterService.encounterState.mapURL) {
 
-                canvas.css({"zoom": Encounter.mapZoom + "%"});
-                canvas.css({"left": Encounter.mapLeftDisplace});
-                canvas.css({"top": Encounter.mapTopDisplace});
+                canvas.css({"zoom": EncounterService.mapZoom + "%"});
+                canvas.css({"left": EncounterService.mapLeftDisplace});
+                canvas.css({"top": EncounterService.mapTopDisplace});
 
-                bgImage.src = "api/image/encounterMap/" + Encounter.encounterID;
+                bgImage.src = "api/image/encounterMap/" + EncounterService.encounterID;
 
-                Encounter.encounterState.mapResX = bgImage.width;
-                Encounter.encounterState.mapResY = bgImage.height;
+                EncounterService.encounterState.mapResX = bgImage.width;
+                EncounterService.encounterState.mapResY = bgImage.height;
 
                 // tileSize = Encounter.encounterState.mapTileSize;
-                Encounter.encounterState.mapDimX = bgImage.width / tileSize;
-                Encounter.encounterState.mapDimY = bgImage.height / tileSize;
+                EncounterService.encounterState.mapDimX = bgImage.width / tileSize;
+                EncounterService.encounterState.mapDimY = bgImage.height / tileSize;
 
-                if (!mapDataUpdate && Encounter.encounterState.mapResX != 0) {
+                if (!mapDataUpdate && EncounterService.encounterState.mapResX != 0) {
 
-                    Encounter.sendMapData(
-                        Encounter.encounterState.mapResX,
-                        Encounter.encounterState.mapResY,
-                        Encounter.encounterState.mapDimX,
-                        Encounter.encounterState.mapDimY
+                    EncounterService.sendMapData(
+                        EncounterService.encounterState.mapResX,
+                        EncounterService.encounterState.mapResY,
+                        EncounterService.encounterState.mapDimX,
+                        EncounterService.encounterState.mapDimY
                     );
                     mapDataUpdate = true;
                 }
 
-                context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY);
+                context.clearRect(0, 0, EncounterService.encounterState.mapResX, EncounterService.encounterState.mapResY);
                 context.drawImage(bgImage, 0, 0);
             }
         }
@@ -55,11 +55,11 @@ clientApp.controller('mapRenderer', function ($scope, $window, Encounter) {
     }
 
     $scope.getResX = function(){
-        return Encounter.encounterState.mapResX;
+        return EncounterService.encounterState.mapResX;
     };
 
     $scope.getResY = function(){
-        return Encounter.encounterState.mapResY;
+        return EncounterService.encounterState.mapResY;
     };
 
     init();
