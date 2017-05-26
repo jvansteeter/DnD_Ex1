@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('gridRenderer', function ($scope, $window, Encounter) {
+clientApp.controller('gridRenderer', function ($scope, $window, EncounterService) {
 
     var canvas;
     var context;
@@ -17,14 +17,14 @@ clientApp.controller('gridRenderer', function ($scope, $window, Encounter) {
     }
 
     function draw() {
-        canvas.css({"zoom":Encounter.mapZoom + "%"});
-        canvas.css({"left":Encounter.mapLeftDisplace});
-        canvas.css({"top":Encounter.mapTopDisplace});
+        canvas.css({"zoom":EncounterService.mapZoom + "%"});
+        canvas.css({"left":EncounterService.mapLeftDisplace});
+        canvas.css({"top":EncounterService.mapTopDisplace});
 
-        var dimX = Encounter.encounterState.mapDimX;
-        var dimY = Encounter.encounterState.mapDimY;
-        var resX = Encounter.encounterState.mapResX;
-        var resY = Encounter.encounterState.mapResY;
+        var dimX = EncounterService.encounterState.mapDimX;
+        var dimY = EncounterService.encounterState.mapDimY;
+        var resX = EncounterService.encounterState.mapResX;
+        var resY = EncounterService.encounterState.mapResY;
 
         context.clearRect(0, 0, resX, resY);
         context.fillStyle = "rgba(171,176,186,.3)";
@@ -40,11 +40,11 @@ clientApp.controller('gridRenderer', function ($scope, $window, Encounter) {
     }
 
     $scope.getResX = function(){
-        return Encounter.encounterState.mapResX;
+        return EncounterService.encounterState.mapResX;
     };
 
     $scope.getResY = function(){
-        return Encounter.encounterState.mapResY;
+        return EncounterService.encounterState.mapResY;
     };
 
     init();

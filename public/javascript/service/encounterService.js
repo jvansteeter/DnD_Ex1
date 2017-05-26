@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.factory('Encounter', function ($http, $q, Profile, socket)
+clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 {
     var encounterService = {};
 
@@ -115,6 +115,11 @@ clientApp.factory('Encounter', function ($http, $q, Profile, socket)
         {
             socket.emit('update:player', encounterService.encounterState.players[index]);
         });
+    };
+
+    encounterService.setUpdateHasRunFlag = function(value)
+    {
+        this.updateHasRun = value;
     };
 
     return encounterService;

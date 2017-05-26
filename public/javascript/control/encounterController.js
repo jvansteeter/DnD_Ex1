@@ -9,7 +9,7 @@ clientApp.config(function ($modalProvider)
 	});
 });
 
-clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, Encounter, $uibModal)
+clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, EncounterService, $uibModal)
 {
 	var encounterID = window.location.search.replace('?', '');
 	var modal;
@@ -21,10 +21,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	socket.on('init', function ()
 	{
-		Encounter.init(encounterID).then(function ()
+		EncounterService.init(encounterID).then(function ()
 		{
-			$scope.host = Encounter.isHost();
-			$scope.encounterState = Encounter.encounterState;
+			$scope.host = EncounterService.isHost();
+			$scope.encounterState = EncounterService.encounterState;
 
 			if (!$scope.encounterState.initialized)
 			{
@@ -46,7 +46,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 					username: username
 				});
 
-			Encounter.connect();
+			EncounterService.connect();
 		});
 	});
 
@@ -70,11 +70,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 	socket.on('update:player', function (player)
 	{
 		player.isHovered = false;
-		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
 		{
-			if (Encounter.encounterState.players[i]._id === player._id)
+			if (EncounterService.encounterState.players[i]._id === player._id)
 			{
-				if (angular.isDefined(Encounter.encounterState.players[i].isSelected) && Encounter.encounterState.players[i].isSelected === true)
+				if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true)
 				{
 					player.isSelected = true;
 				}
@@ -84,8 +84,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 				}
 				for (var value in player)
 				{
-					Encounter.encounterState.players[i][value] = player[value];
-					$scope.encounterState = Encounter.encounterState;
+					EncounterService.encounterState.players[i][value] = player[value];
+					$scope.encounterState = EncounterService.encounterState;
 				}
 			}
 		}
@@ -132,9 +132,9 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.updateEncounterState = function ()
 	{
-		Encounter.update().then(function ()
+		EncounterService.update().then(function ()
 		{
-			$scope.encounterState = Encounter.encounterState;
+			$scope.encounterState = EncounterService.encounterState;
 		});
 	};
 
@@ -164,9 +164,9 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		{
 			if ($scope.encounterState.players[i]._id === player._id)
 			{
-				Encounter.encounterState.players[i].visible = !Encounter.encounterState.players[i].visible;
-				$scope.encounterState = Encounter.encounterState;
-				updateServerPlayer(Encounter.encounterState.players[i]);
+				EncounterService.encounterState.players[i].visible = !EncounterService.encounterState.players[i].visible;
+				$scope.encounterState = EncounterService.encounterState;
+				updateServerPlayer(EncounterService.encounterState.players[i]);
 				return;
 			}
 		}
@@ -175,7 +175,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 	$scope.healPlayer = function (hit)
 	{
 		console.log("Heal player");
-		console.log(Encounter.encounterState.players[selectedPlayer]);
+		console.log(EncounterService.encounterState.players[selectedPlayer]);
 		console.log(hit);
 		if (hit === 0 || isNaN(hit))
 		{
@@ -382,39 +382,39 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.setHover = function (player)
 	{
-		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
 		{
-			if (Encounter.encounterState.players[i]._id === player._id)
+			if (EncounterService.encounterState.players[i]._id === player._id)
 			{
-				Encounter.encounterState.players[i].isHovered = true;
+				EncounterService.encounterState.players[i].isHovered = true;
 			}
 			else
 			{
-				Encounter.encounterState.players[i].isHovered = false;
+				EncounterService.encounterState.players[i].isHovered = false;
 			}
 		}
 	};
 
 	$scope.removeHover = function (player)
 	{
-		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
 		{
-			Encounter.encounterState.players[i].isHovered = false;
+			EncounterService.encounterState.players[i].isHovered = false;
 		}
 	};
 
 	$scope.isHovered = function (player)
 	{
-		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
 		{
-			if (Encounter.encounterState.players[i]._id === player._id && (Encounter.encounterState.players[i].isHovered || Encounter.encounterState.players[i].isSelected))
+			if (EncounterService.encounterState.players[i]._id === player._id && (EncounterService.encounterState.players[i].isHovered || EncounterService.encounterState.players[i].isSelected))
 			{
-				if (Encounter.encounterState.players[i].isSelected)
+				if (EncounterService.encounterState.players[i].isSelected)
 				{
 					return "background-color: rgba(0,0,0,.2); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
 				}
 
-				if (Encounter.encounterState.players[i].isHovered)
+				if (EncounterService.encounterState.players[i].isHovered)
 				{
 					return "background-color: rgba(0,0,0,0.05); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
 				}
@@ -426,23 +426,23 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.selectPlayer = function (player)
 	{
-		for (var i = 0; i < Encounter.encounterState.players.length; i++)
+		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
 		{
-			if (Encounter.encounterState.players[i]._id === player._id)
+			if (EncounterService.encounterState.players[i]._id === player._id)
 			{
-				if (Encounter.encounterState.players[i].isSelected)
+				if (EncounterService.encounterState.players[i].isSelected)
 				{
-					Encounter.encounterState.players[i].isSelected = false;
+					EncounterService.encounterState.players[i].isSelected = false;
 				}
 				else
 				{
 					selectedPlayer = i;
-					Encounter.encounterState.players[i].isSelected = true;
+					EncounterService.encounterState.players[i].isSelected = true;
 				}
 			}
 			else
 			{
-				Encounter.encounterState.players[i].isSelected = false;
+				EncounterService.encounterState.players[i].isSelected = false;
 			}
 		}
 	};

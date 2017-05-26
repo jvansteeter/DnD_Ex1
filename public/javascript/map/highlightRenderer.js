@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) {
+clientApp.controller('highlightRenderer', function ($scope, $window, EncounterService) {
 
     var canvas;
     var context;
@@ -16,29 +16,29 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
     }
 
     function draw() {
-        canvas.css({"zoom": Encounter.mapZoom + "%"});
-        canvas.css({"left": Encounter.mapLeftDisplace});
-        canvas.css({"top": Encounter.mapTopDisplace});
+        canvas.css({"zoom": EncounterService.mapZoom + "%"});
+        canvas.css({"left": EncounterService.mapLeftDisplace});
+        canvas.css({"top": EncounterService.mapTopDisplace});
 
-        context.clearRect(0, 0, Encounter.encounterState.mapResX, Encounter.encounterState.mapResY)
-        var players = Encounter.encounterState.players;
+        context.clearRect(0, 0, EncounterService.encounterState.mapResX, EncounterService.encounterState.mapResY)
+        var players = EncounterService.encounterState.players;
         var player;
 
         context.fillStyle = "rgba(255,0,0,.2)";
 
-        if (angular.isDefined(Encounter.hoverCell)) {
-            if (Encounter.hoverCell.x != -1) {
+        if (angular.isDefined(EncounterService.hoverCell)) {
+            if (EncounterService.hoverCell.x != -1) {
 
                 // check if the hover cell is over a player; if it is, don't render the red square
                 for( var j = 0; j < players.length; j++){
                     player = players[j];
-                    if(player.mapX === Encounter.hoverCell.x && player.mapY === Encounter.hoverCell.y && (player.visible || Encounter.isHost())){
+                    if(player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y && (player.visible || EncounterService.isHost())){
                         context.fillStyle = "rgba(102,178,255,0";
                     }
                 }
 
-                var xCoor = Encounter.hoverCell.x;
-                var yCoor = Encounter.hoverCell.y;
+                var xCoor = EncounterService.hoverCell.x;
+                var yCoor = EncounterService.hoverCell.y;
                 context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
             }
         }
@@ -74,11 +74,11 @@ clientApp.controller('highlightRenderer', function ($scope, $window, Encounter) 
     }
 
     $scope.getResX = function () {
-        return Encounter.encounterState.mapResX;
+        return EncounterService.encounterState.mapResX;
     };
 
     $scope.getResY = function () {
-        return Encounter.encounterState.mapResY;
+        return EncounterService.encounterState.mapResY;
     };
 
     init();
