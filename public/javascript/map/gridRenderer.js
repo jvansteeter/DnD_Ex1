@@ -17,9 +17,9 @@ clientApp.controller('gridRenderer', function ($scope, $window, EncounterService
     }
 
     function draw() {
-        canvas.css({"zoom":EncounterService.mapZoom + "%"});
-        canvas.css({"left":EncounterService.mapLeftDisplace});
-        canvas.css({"top":EncounterService.mapTopDisplace});
+        // canvas.css({"zoom":EncounterService.mapZoom + "%"});
+        // canvas.css({"left":EncounterService.mapLeftDisplace});
+        // canvas.css({"top":EncounterService.mapTopDisplace});
 
         var dimX = EncounterService.encounterState.mapDimX;
         var dimY = EncounterService.encounterState.mapDimY;

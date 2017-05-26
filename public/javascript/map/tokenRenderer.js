@@ -28,9 +28,9 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
     }
 
     function draw() {
-        canvas.css({"zoom": EncounterService.mapZoom + "%"});
-        canvas.css({"left": EncounterService.mapLeftDisplace});
-        canvas.css({"top": EncounterService.mapTopDisplace});
+        // canvas.css({"zoom": EncounterService.mapZoom + "%"});
+        // canvas.css({"left": EncounterService.mapLeftDisplace});
+        // canvas.css({"top": EncounterService.mapTopDisplace});
 
 
 		var encounterState = EncounterService.encounterState;

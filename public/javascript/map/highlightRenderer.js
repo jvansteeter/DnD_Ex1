@@ -16,15 +16,15 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     }
 
     function draw() {
-        canvas.css({"zoom": EncounterService.mapZoom + "%"});
-        canvas.css({"left": EncounterService.mapLeftDisplace});
-        canvas.css({"top": EncounterService.mapTopDisplace});
+        // canvas.css({"zoom": EncounterService.mapZoom + "%"});
+        // canvas.css({"left": EncounterService.mapLeftDisplace});
+        // canvas.css({"top": EncounterService.mapTopDisplace});
 
-        context.clearRect(0, 0, EncounterService.encounterState.mapResX, EncounterService.encounterState.mapResY)
         var players = EncounterService.encounterState.players;
         var player;
-
         context.fillStyle = "rgba(255,0,0,.2)";
+
+        context.clearRect(0, 0, EncounterService.encounterState.mapResX, EncounterService.encounterState.mapResY)
 
         if (angular.isDefined(EncounterService.hoverCell)) {
             if (EncounterService.hoverCell.x != -1) {

@@ -21,9 +21,9 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
 
         if (EncounterService.encounterState.mapURL) {
 
-            canvas.css({"zoom": EncounterService.mapZoom + "%"});
-            canvas.css({"left": EncounterService.mapLeftDisplace});
-            canvas.css({"top": EncounterService.mapTopDisplace});
+            // canvas.css({"zoom": EncounterService.mapZoom + "%"});
+            // canvas.css({"left": EncounterService.mapLeftDisplace});
+            // canvas.css({"top": EncounterService.mapTopDisplace});
 
             bgImage.src = "api/image/encounterMap/" + EncounterService.encounterID;
 
@@ -61,5 +61,4 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
     };
 
     init();
-    // new branch comment ... delete me
 });
