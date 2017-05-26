@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.factory('EncounterService', function ($http, $q, Profile, TokenService, socket)
+clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 {
     var encounterService = {};
 
@@ -117,10 +117,10 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, TokenService
         });
     };
 
-    encounterService.getPlayerIconById = function(playerId)
+    encounterService.setUpdateHasRunFlag = function(value)
     {
-        return TokenService.getPlayerIconById(playerId);
-	};
+        this.updateHasRun = value;
+    };
 
     return encounterService;
 });
