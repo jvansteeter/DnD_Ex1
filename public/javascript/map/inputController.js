@@ -51,12 +51,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         EncounterService.canvas_state.res_x = canvas[0].getBoundingClientRect().width;
         EncounterService.canvas_state.res_y = canvas[0].getBoundingClientRect().height;
 
-        // var x_offset = EncounterService.map_transform.x;
-        // var y_offset = EncounterService.map_transform.y;
-        // var scale = EncounterService.map_transform.scale;
-        //
-        // context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
-
         $window.requestAnimationFrame(draw);
     }
 
@@ -199,7 +193,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         //*************************************************************************************************
         // Function 'constants'
         //*************************************************************************************************
-        var scroll_scale_delta = 0.20;
+        var scroll_scale_delta = 0.10;
         var max_scale = 2.50;
         var min_scale = 0.35;
 
