@@ -16,49 +16,66 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     }
 
     function draw() {
-        canvas.css({"zoom": EncounterService.mapZoom + "%"});
-        canvas.css({"left": EncounterService.mapLeftDisplace});
-        canvas.css({"top": EncounterService.mapTopDisplace});
+        clear_canvas();
 
-        context.clearRect(0, 0, EncounterService.encounterState.mapResX, EncounterService.encounterState.mapResY)
+        var x_offset = EncounterService.map_transform.x;
+        var y_offset = EncounterService.map_transform.y;
+        var scale = EncounterService.map_transform.scale;
+
+        context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
+
         var players = EncounterService.encounterState.players;
         var player;
-
         context.fillStyle = "rgba(255,0,0,.2)";
 
         if (angular.isDefined(EncounterService.hoverCell)) {
-            if (EncounterService.hoverCell.x != -1) {
 
+            if (EncounterService.hoverCell.x != -1) {
                 // check if the hover cell is over a player; if it is, don't render the red square
+
                 for( var j = 0; j < players.length; j++){
                     player = players[j];
                     if(player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y && (player.visible || EncounterService.isHost())){
-                        context.fillStyle = "rgba(102,178,255,0";
+                        context.fillStyle = "rgba(102,178,255,0)";
                     }
                 }
-
                 var xCoor = EncounterService.hoverCell.x;
                 var yCoor = EncounterService.hoverCell.y;
                 context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
             }
+
+            // render the selected player with darker red, if present
+            for (var i = 0; i < players.length; i++) {
+                player = players[i];
+                if (player.isSelected) {
+                    context.fillStyle = "rgba(255,0,0,.4)";
+                    var selectX = player.mapX;
+                    var selectY = player.mapY;
+                    context.fillRect(
+                        tileSize * selectX + (tileSize * dialationFactor / 2),
+                        tileSize * selectY + (tileSize * dialationFactor / 2),
+                        tileSize * (1 - dialationFactor),
+                        tileSize * (1 - dialationFactor));
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
-        // render the selected player, if present
-        for (var i = 0; i < players.length; i++) {
-            player = players[i];
-            if (player.isSelected) {
-                context.fillStyle = "rgba(255,0,0,.4)";
-                var selectX = player.mapX;
-                var selectY = player.mapY;
-                context.fillRect(
-                    tileSize * selectX + (tileSize * dialationFactor / 2),
-                    tileSize * selectY + (tileSize * dialationFactor / 2),
-                    tileSize * (1 - dialationFactor),
-                    tileSize * (1 - dialationFactor));
-            }
-        }
 
         //render any players that are "isHovered"
+
         for(var k = 0; k < players.length; k++){
             player = players[k];
             if(angular.isDefined(player.isHovered)){
@@ -69,17 +86,21 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             }
         }
 
-
         $window.requestAnimationFrame(draw);
     }
 
-    $scope.getResX = function () {
-        return EncounterService.encounterState.mapResX;
+    $scope.get_res_x = function(){
+        return EncounterService.canvas_state.res_x;
     };
 
-    $scope.getResY = function () {
-        return EncounterService.encounterState.mapResY;
+    $scope.get_res_y = function(){
+        return EncounterService.canvas_state.res_y;
     };
+
+    function clear_canvas() {
+        var offset = EncounterService.canvas_state.clear_offset;
+        context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
+    }
 
     init();
 });

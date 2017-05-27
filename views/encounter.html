@@ -109,7 +109,7 @@
     </div>
 
     <!--Map Row-->
-    <div style="display: flex; flex:1">
+    <div style="display: flex; flex:1; margin-bottom: 5px">
 
         <!--Player Status Nav-->
         <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
@@ -197,19 +197,19 @@
                 <div style="position: relative; height: 100%" id="mapDiv">
 
                     <div ng-controller="mapRenderer">
-                        <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{getResX()}} height={{getResY()}}></canvas>
+                        <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="gridRenderer">
-                        <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{getResX()}} height={{getResY()}}></canvas>
+                        <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="highlightRenderer">
-                        <canvas style="z-index:2; position:absolute;" id="highlightCanvas" width={{getResX()}} height={{getResY()}}></canvas>
+                        <canvas style="z-index:2; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="tokenRenderer">
-                        <canvas style="z-index:3; position:absolute;" id="tokenCanvas" width={{getResX()}} height={{getResY()}}></canvas>
+                        <canvas style="z-index:3; position:absolute;" id="tokenCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="inputController">

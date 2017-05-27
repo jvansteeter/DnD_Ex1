@@ -4,8 +4,16 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 {
     var encounterService = {};
 
-    encounterService.encounterState = {};
+    encounterService.encounterState = {
+        mapDimX: 0,
+        mapDimY: 0,
+        mapResX: 0,
+        mapResY: 0
+    };
     encounterService.updateHasRun = false;
+
+    encounterService.map_transform = {x:0, y:0, scale:1};
+    encounterService.canvas_state = {res_x:0, res_y: 0, clear_offset: 1000};
 
     encounterService.init = function (inputID)
     {

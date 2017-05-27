@@ -28,10 +28,13 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
     }
 
     function draw() {
-        canvas.css({"zoom": EncounterService.mapZoom + "%"});
-        canvas.css({"left": EncounterService.mapLeftDisplace});
-        canvas.css({"top": EncounterService.mapTopDisplace});
+        clear_canvas();
 
+        var x_offset = EncounterService.map_transform.x;
+        var y_offset = EncounterService.map_transform.y;
+        var scale = EncounterService.map_transform.scale;
+
+        context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
 
 		var encounterState = EncounterService.encounterState;
 		if (EncounterService.updateHasRun)
@@ -46,7 +49,6 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
 			}
 			EncounterService.setUpdateHasRunFlag(false);
 		}
-		context.clearRect(0, 0, EncounterService.encounterState.mapResX, EncounterService.encounterState.mapResY);
 
 		//for each player entry in the encounter JSON
 		for (i = 0; i < encounterState.players.length; i++) {
@@ -91,16 +93,30 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
 				}
 			}
         }
+
         $window.requestAnimationFrame(draw);
     }
 
-    $scope.getResX = function(){
-        return EncounterService.encounterState.mapResX;
+    // $scope.getResX = function(){
+    //     return EncounterService.encounterState.mapResX;
+    // };
+    //
+    // $scope.getResY = function(){
+    //     return EncounterService.encounterState.mapResY;
+    // };
+
+    $scope.get_res_x = function(){
+        return EncounterService.canvas_state.res_x;
     };
 
-    $scope.getResY = function(){
-        return EncounterService.encounterState.mapResY;
+    $scope.get_res_y = function(){
+        return EncounterService.canvas_state.res_y;
     };
+
+    function clear_canvas() {
+        var offset = EncounterService.canvas_state.clear_offset;
+        context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
+    }
 
     init();
 });
