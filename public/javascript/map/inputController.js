@@ -132,17 +132,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
 
-        var log_1 = screenToCanvasRes(currentMouseScreen);
-        var log_2 = screenToMapRes(currentMouseScreen);
-        var log_3 = screenToMapDim(currentMouseScreen);
-
-        console.log('screen: ' + event.clientX + ', ' + event.clientY);
-        console.log('canvas: ' + log_1.x + ', ' + log_1.y);
-        console.log('map_re: ' + log_2.x + ', ' + log_2.y);
-        console.log('map_dm: ' + log_3.x + ', ' + log_3.y);
-        console.log(EncounterService.map_transform);
-        console.log('');
-
         if(mouseDown){
             var start_trans_x = EncounterService.map_transform.x;
             var start_trans_y = EncounterService.map_transform.y;
@@ -210,7 +199,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         //*************************************************************************************************
         // Function 'constants'
         //*************************************************************************************************
-        var scroll_scale_delta = 0.05;
+        var scroll_scale_delta = 0.20;
         var max_scale = 2.50;
         var min_scale = 0.35;
 
@@ -218,12 +207,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         // Known Priors
         //*************************************************************************************************
         var start_scale = EncounterService.map_transform.scale;
-        var canvas_coor = screenToCanvasRes(currentMouseScreen);
         var map_res_coor = screenToMapRes(currentMouseScreen);
-        var map_dim_coor = screenToMapDim(currentMouseScreen);
-
-        var start_left_offset = EncounterService.map_transform.x;
-        var start_top_offset = EncounterService.map_transform.y;
 
         //*************************************************************************************************
         // Scale calculation
@@ -236,25 +220,19 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
         if (preferred_new_scale >= max_scale) {
             // if the zoom in pushes past the max scale, set to max scale and calculate actual scale delta
-            new_scale = max_scale;
             new_scale_delta = start_scale - max_scale;
         }
         else if (preferred_new_scale <= min_scale) {
             // if the zoom out pushes past the min scale, set to min scale and calculate actual scale delta
-            new_scale = min_scale;
             new_scale_delta = min_scale - start_scale;
         }
         else {
             // if the zoom is within bounds, accept the zoom parameters
-            new_scale = preferred_new_scale;
             new_scale_delta = preferred_scale_delta;
         }
 
-        var zoom_point_x = (map_res_coor.x);
-        var zoom_point_y = (map_res_coor.y);
-
-        var x_offset = (zoom_point_x * new_scale_delta);
-        var y_offset = (zoom_point_y * new_scale_delta);
+        var x_offset = -(map_res_coor.x * new_scale_delta);
+        var y_offset = -(map_res_coor.y * new_scale_delta);
 
         EncounterService.map_transform.scale += new_scale_delta;
         EncounterService.map_transform.x += x_offset;
