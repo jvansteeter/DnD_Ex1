@@ -1,9 +1,10 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.controller('inputController', function ($scope, EncounterService) {
+
+clientApp.controller('inputController', function ($scope, EncounterService, $window) {
     var body;
 
-    var transform = {x:0, y:0, scale: 1};
+    var transform = {x: 0, y: 0, scale: 1};
 
     var canvas;
     var map_canvas_ctx;
@@ -42,14 +43,25 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
         width = canvas.width();
         height = canvas.height();
         context = canvas.get(0).getContext('2d');
-		EncounterService.mapZoom = 100;
-        EncounterService.mapLeftDisplace = 0;
-        EncounterService.mapTopDisplace = 0;
 
+        draw();
+    }
+
+    function draw(){
+        EncounterService.canvas_state.res_x = canvas[0].getBoundingClientRect().width;
+        EncounterService.canvas_state.res_y = canvas[0].getBoundingClientRect().height;
+
+        // var x_offset = EncounterService.map_transform.x;
+        // var y_offset = EncounterService.map_transform.y;
+        // var scale = EncounterService.map_transform.scale;
+        //
+        // context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
+
+        $window.requestAnimationFrame(draw);
     }
 
     $scope.click = function (event) {
-        var canvasPts = screenToMapDim(event.clientX, event.clientY);
+        var canvasPts = screenToMapDim({x: event.clientX, y: event.clientY});
         var players = EncounterService.encounterState.players;
 
         var selectedCount = 0;
@@ -86,13 +98,13 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
             }
 
             // move the selected token
-            if((canvasPts.x >= 0 && canvasPts.x < EncounterService.encounterState.mapDimX) && (canvasPts.y >= 0 && canvasPts.y < EncounterService.encounterState.mapDimY)){
+            if ((canvasPts.x >= 0 && canvasPts.x < EncounterService.encounterState.mapDimX) && (canvasPts.y >= 0 && canvasPts.y < EncounterService.encounterState.mapDimY)) {
                 players[selectedIndex].mapX = canvasPts.x;
                 players[selectedIndex].mapY = canvasPts.y;
             }
 
             // perpetuate the change
-			EncounterService.updatePlayer(selectedIndex);
+            EncounterService.updatePlayer(selectedIndex);
 
             // un-select the selected token
             players[selectedIndex].isSelected = false;
@@ -106,8 +118,8 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
                     if (players[k].visible) {
                         players[k].isSelected = true;
                     }
-                    else{
-                        if(EncounterService.isHost()){
+                    else {
+                        if (EncounterService.isHost()) {
                             players[k].isSelected = true;
                         }
                     }
@@ -120,33 +132,55 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
 
-        if (mouseDown) {
-            var oldMapTopDisplace = EncounterService.mapTopDisplace;
-            var oldMapLeftDisplace = EncounterService.mapLeftDisplace;
+        var log_1 = screenToCanvasRes(currentMouseScreen);
+        var log_2 = screenToMapRes(currentMouseScreen);
+        var log_3 = screenToMapDim(currentMouseScreen);
+
+        console.log('screen: ' + event.clientX + ', ' + event.clientY);
+        console.log('canvas: ' + log_1.x + ', ' + log_1.y);
+        console.log('map_re: ' + log_2.x + ', ' + log_2.y);
+        console.log('map_dm: ' + log_3.x + ', ' + log_3.y);
+        console.log(EncounterService.map_transform);
+        console.log('');
+
+        if(mouseDown){
+            var start_trans_x = EncounterService.map_transform.x;
+            var start_trans_y = EncounterService.map_transform.y;
+            var trans_scale = EncounterService.map_transform.scale;
 
             var deltaX = event.clientX - mouseX;
             var deltaY = event.clientY - mouseY;
 
-			EncounterService.mapTopDisplace = oldMapTopDisplace + (deltaY / (EncounterService.mapZoom / 100));
-			EncounterService.mapLeftDisplace = oldMapLeftDisplace + (deltaX / (EncounterService.mapZoom / 100));
+            EncounterService.map_transform.x = start_trans_x + deltaX;
+            EncounterService.map_transform.y = start_trans_y + deltaY;
 
             mouseX = event.clientX;
             mouseY = event.clientY;
         }
         else {
-            var newCell = screenToMapDim(event.clientX, event.clientY);
-			EncounterService.hoverCell = {x: newCell.x, y: newCell.y};
+            var newCell = screenToMapDim({x: event.clientX, y: event.clientY});
+            var max_x = EncounterService.encounterState.mapDimX;
+            var max_y = EncounterService.encounterState.mapDimY;
 
-            // check if the hoverCell coincides with any player tokens
-            var players = EncounterService.encounterState.players;
-            for (var i = 0; i < players.length; i++) {
-                var player = players[i];
-                if (player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y) {
-                    player.isHovered = true;
+            if(newCell.x < max_x && newCell.x >= 0 && newCell.y < max_y && newCell.y >= 0){
+                // the mouse is over the map
+                EncounterService.hoverCell = {x: newCell.x, y: newCell.y};
+
+                // check if the hoverCell coincides with any player tokens
+                var players = EncounterService.encounterState.players;
+                for (var i = 0; i < players.length; i++) {
+                    var player = players[i];
+                    if (player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y) {
+                        player.isHovered = true;
+                    }
+                    else {
+                        player.isHovered = false;
+                    }
                 }
-                else {
-                    player.isHovered = false;
-                }
+            }
+            else{
+                // the mouse is over a portion of the screen that is NOT part of the map
+                EncounterService.hoverCell = undefined;
             }
         }
     };
@@ -172,7 +206,7 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
     };
 
     $scope.mouseScroll = function (event, delta, deltaX, deltaY) {
-        var oldZoom = EncounterService.mapZoom;
+        // var oldZoom = EncounterService.mapZoom;
         //*************************************************************************************************
         // Function 'constants'
         //*************************************************************************************************
@@ -183,20 +217,13 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
         //*************************************************************************************************
         // Known Priors
         //*************************************************************************************************
-        var start_scale = EncounterService.mapZoom / 100.0;
+        var start_scale = EncounterService.map_transform.scale;
         var canvas_coor = screenToCanvasRes(currentMouseScreen);
-        var map_coor = screenToMapRes(currentMouseScreen);
+        var map_res_coor = screenToMapRes(currentMouseScreen);
+        var map_dim_coor = screenToMapDim(currentMouseScreen);
 
-        var start_left_offset = EncounterService.mapLeftDisplace;
-        var start_top_offset = EncounterService.mapTopDisplace;
-
-        console.log('PRIORS');
-        console.log('start_scale: ' + start_scale);
-        console.log('start_left_offset: ' + start_left_offset);
-        console.log('start_top_offset: ' + start_top_offset);
-        console.log('canvas_coor: ' + canvas_coor.x + ', ' + canvas_coor.y);
-        console.log('map_coor: ' + map_coor.x + ', ' + map_coor.y);
-        console.log('');
+        var start_left_offset = EncounterService.map_transform.x;
+        var start_top_offset = EncounterService.map_transform.y;
 
         //*************************************************************************************************
         // Scale calculation
@@ -223,86 +250,43 @@ clientApp.controller('inputController', function ($scope, EncounterService) {
             new_scale_delta = preferred_scale_delta;
         }
 
-        var zoom_point_x = (map_coor.x);
-        var zoom_point_y = (map_coor.y);
+        var zoom_point_x = (map_res_coor.x);
+        var zoom_point_y = (map_res_coor.y);
 
         var x_offset = (zoom_point_x * new_scale_delta);
         var y_offset = (zoom_point_y * new_scale_delta);
 
-        var end_left_offset = start_left_offset - x_offset;
-        var end_top_offset = start_top_offset - y_offset;
-
-        // Context scaling test
-        map_canvas_ctx.clearRect(-5, -5, EncounterService.encounterState.mapResX + 10, EncounterService.encounterState.mapResY + 10);
-        map_canvas_ctx.translate(zoom_point_x, zoom_point_y);
-        map_canvas_ctx.scale(1 + new_scale_delta, 1 + new_scale_delta);
-        map_canvas_ctx.translate(-zoom_point_x, -zoom_point_y);
-
-        grid_canvas_ctx.clearRect(-5, -5, EncounterService.encounterState.mapResX + 10, EncounterService.encounterState.mapResY + 10);
-        grid_canvas_ctx.translate(zoom_point_x, zoom_point_y);
-        grid_canvas_ctx.scale(1 + new_scale_delta, 1 + new_scale_delta);
-        grid_canvas_ctx.translate(-zoom_point_x, -zoom_point_y);
-
-        highlight_canvas_ctx.clearRect(-5, -5, EncounterService.encounterState.mapResX + 10, EncounterService.encounterState.mapResY + 10);
-        highlight_canvas_ctx.translate(zoom_point_x, zoom_point_y);
-        highlight_canvas_ctx.scale(1 + new_scale_delta, 1 + new_scale_delta);
-        highlight_canvas_ctx.translate(-zoom_point_x, -zoom_point_y);
-
-        token_canvas_ctx.clearRect(-5, -5, EncounterService.encounterState.mapResX + 10, EncounterService.encounterState.mapResY + 10);
-        token_canvas_ctx.translate(zoom_point_x, zoom_point_y);
-        token_canvas_ctx.scale(1 + new_scale_delta, 1 + new_scale_delta);
-        token_canvas_ctx.translate(-zoom_point_x, -zoom_point_y);
-
-        // console.log(map_canvas_ctx.)
-
-        console.log('FINALS');
-        console.log('x_offset: ' + x_offset);
-        console.log('y_offset: ' + y_offset);
-        console.log('new_scale_delta: ' + new_scale_delta);
-        console.log('new_scale: ' + new_scale);
-        console.log('end_left_offset: ' + end_left_offset);
-        console.log('end_top_offset: ' + end_top_offset);
-        console.log('');
-        console.log(' ------------------------------------------------------------------------');
-
-
-        // commit the new transform to the canvas
-        EncounterService.mapLeftDisplace = end_left_offset;
-        EncounterService.mapTopDisplace = end_top_offset;
-        EncounterService.mapZoom = new_scale * 100;
+        EncounterService.map_transform.scale += new_scale_delta;
+        EncounterService.map_transform.x += x_offset;
+        EncounterService.map_transform.y += y_offset;
     };
 
-    function screenToMapDim(inputX, inputY) {
-        var rect = canvas[0].getBoundingClientRect();
-        var canvasX = inputX - rect.left;
-        var canvasY = inputY - rect.top;
-
-        var mapX = (canvasX / (EncounterService.mapZoom / 100) - EncounterService.mapLeftDisplace);
-        var mapXcoor = Math.floor(mapX / 50);
-
-        var mapY = (canvasY / (EncounterService.mapZoom / 100) - EncounterService.mapTopDisplace);
-        var mapYcoor = Math.floor(mapY / 50);
-
-        return {x: mapXcoor, y: mapYcoor};
-    }
-
-    function screenToMapRes(coor) {
+    function screenToCanvasRes(coor) {
         var rect = canvas[0].getBoundingClientRect();
         var canvasX = coor.x - rect.left;
         var canvasY = coor.y - rect.top;
+        return {x: canvasX, y: canvasY}
+    }
 
-        var mapX = (canvasX / (EncounterService.mapZoom / 100) - EncounterService.mapLeftDisplace);
-        var mapY = (canvasY / (EncounterService.mapZoom / 100) - EncounterService.mapTopDisplace);
+    function screenToMapRes(coor) {
+        var canvas_res_coor = screenToCanvasRes(coor);
+
+        var mapX = (canvas_res_coor.x - EncounterService.map_transform.x)/EncounterService.map_transform.scale;
+        var mapY = (canvas_res_coor.y - EncounterService.map_transform.y)/EncounterService.map_transform.scale;
 
         return {x: mapX, y: mapY};
     }
 
-    function screenToCanvasRes(coor){
-        var rect = canvas[0].getBoundingClientRect();
-        var canvasX = coor.x - rect.left;
-        var canvasY = coor.y - rect.top;
-        return { x: canvasX, y: canvasY }
+    function screenToMapDim(coor) {
+        var map_res_coor = screenToMapRes(coor);
+
+        var map_dim_x = Math.floor(map_res_coor.x / 50);
+        var map_dim_y = Math.floor(map_res_coor.y / 50);
+
+        return {x: map_dim_x, y: map_dim_y};
     }
 
+
     init();
+
 });
