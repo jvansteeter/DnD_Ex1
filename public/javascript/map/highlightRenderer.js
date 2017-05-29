@@ -26,7 +26,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         var players = EncounterService.encounterState.players;
         var player;
-        context.fillStyle = "rgba(255,0,0,.2)";
+        context.fillStyle = "rgba(255,255,255,.2)";
 
         if (angular.isDefined(EncounterService.hoverCell)) {
 
@@ -43,36 +43,22 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
                 var yCoor = EncounterService.hoverCell.y;
                 context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
             }
-
-            // render the selected player with darker red, if present
-            for (var i = 0; i < players.length; i++) {
-                player = players[i];
-                if (player.isSelected) {
-                    context.fillStyle = "rgba(255,0,0,.4)";
-                    var selectX = player.mapX;
-                    var selectY = player.mapY;
-                    context.fillRect(
-                        tileSize * selectX + (tileSize * dialationFactor / 2),
-                        tileSize * selectY + (tileSize * dialationFactor / 2),
-                        tileSize * (1 - dialationFactor),
-                        tileSize * (1 - dialationFactor));
-                }
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
+        // render the selected player with darker red, if present
+        for (var i = 0; i < players.length; i++) {
+            player = players[i];
+            if (player.isSelected) {
+                context.fillStyle = "rgba(45,136,229,.4)";
+                var selectX = player.mapX;
+                var selectY = player.mapY;
+                context.fillRect(
+                    tileSize * selectX + (tileSize * dialationFactor / 2),
+                    tileSize * selectY + (tileSize * dialationFactor / 2),
+                    tileSize * (1 - dialationFactor),
+                    tileSize * (1 - dialationFactor));
+            }
+        }
 
         //render any players that are "isHovered"
 
