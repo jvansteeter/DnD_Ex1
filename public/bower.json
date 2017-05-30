@@ -17,16 +17,20 @@
     "tests"
   ],
   "dependencies": {
-    "angular-animate": "~1.5.6",
+    "angular":"1.5.5",
+    "angular-animate": "1.5.5",
+    "angular-aria":"1.5.5",
+    "angular-messages":"1.5.5",
+    "angular-material":"1.1.0",
     "angular-motion": "~0.4.4",
-    "angular-sanitize": "~1.5.6",
+    "angular-sanitize": "1.5.5",
+    "angular-mousewheel":"1.0.5",
+    "angular-bootstrap":"2.0.2",
+    "angular-strap": "~2.3.8",
     "bootstrap": "~3.3.6",
     "font-awesome": "~4.6.3",
-    "angular-strap": "~2.3.8",
     "jquery-ui": ">=1.9",
     "ng-flow": "~2",
-    "hamsterjs": "1.1.2",
-    "angular-mousewheel":"1.0.5",
-    "angular-bootstrap":"2.0.2"
+    "hamsterjs": "1.1.2"
   }
 }
