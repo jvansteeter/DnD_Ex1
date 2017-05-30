@@ -9,7 +9,7 @@ clientApp.config(function ($modalProvider)
 	});
 });
 
-clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, EncounterService, $uibModal)
+clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, EncounterService, $uibModal, $mdSidenav)
 {
 	var encounterID = window.location.search.replace('?', '');
 	var modal;
@@ -447,7 +447,16 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		}
 	};
 
-	$scope.toggleEncounterOpen = function()
+
+    // ********************************************************************************************
+    // Sidenav Features
+    // ********************************************************************************************
+    $scope.toggleMenu = function(){
+    	$mdSidenav('side_menu').toggle();
+    };
+
+
+    $scope.toggleEncounterOpen = function()
 	{
 		if ($scope.encounterState.active)
 		{
