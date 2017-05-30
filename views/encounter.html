@@ -54,6 +54,10 @@
 </head>
 <body style="display: flex; height: 100%; flex-direction: column;">
 
+<!--**********************************************************************************************-->
+<!--    Sidenav HTML -->
+<!--**********************************************************************************************-->
+
 <!--Top Menu Container-->
 <nav class="navbar navbar-static navbar-inverse" style="margin: 0px;">
     <div class="container">
@@ -89,33 +93,32 @@
 
 <!-- Content Space -->
 <div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
-    <!--PoC of ngMaterial-->
-    <!--<md-content>-->
-        <!--<md-button class="md-warn">Button</md-button>-->
-    <!--</md-content>-->
+
+    <!--Sidebar Content-->
+    <md-sidenav  class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Encounter Controls</h1>
+        </md-toolbar>
+        <div class="list-group">
+            <button class="list-group-item">Add Character</button>
+            <button ng-show="isHost()" class="list-group-item" ng-click="addNPC()">Add NPC</button>
+            <button ng-show="isHost()" class="list-group-item" ng-click="toggleEncounterOpen()">
+                <span ng-if="!encounterState.active">Open Encounter</span>
+                <span ng-if="encounterState.active">Close Encounter</span>
+            </button>
+        </div>
+
+    </md-sidenav>
+
 
     <!--Title Row-->
     <div style="margin-bottom:5px; display:flex">
-        <!--Menu Span-->
-        <span style="align-self: center">
-            <button type="button" class="btn btn-default" ng-click="menuOpen = !menuOpen" ng-mouseleave="menuOpen = false">Menu <i class="fa fa-chevron-down"></i></button>
-            <div style="width: initial">
-                <div uib-collapse="!menuOpen" ng-mouseenter="menuOpen = true" ng-mouseleave="menuOpen = false" style="position:absolute; z-index: 100;">
-                    <div class="list-group">
-                        <button class="list-group-item" ng-click="addCharacter()">Add Character</button>
-                        <button ng-show="isHost()" class="list-group-item" ng-click="addNPC()">Add NPC</button>
-                        <button ng-show="isHost()" class="list-group-item" ng-click="toggleEncounterOpen()">
-                            <span ng-if="!encounterState.active">Open Encounter</span>
-                            <span ng-if="encounterState.active">Close Encounter</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </span>
+        <!--Menu Toggle Button-->
+        <md-button class="md-raised" ng-click="toggleMenu()" style="background-color:white; height:40px; align-self: center;">Menu</md-button>
         <!--Title Span-->
         <span ng-bind="encounterState.title" style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
         <!--Encounter State Span-->
-        <span ng-if="!encounterState.active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif;">Closed</span>
+        <span ng-if="!encounterState.active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
     </div>
 
     <!--Map Row-->
