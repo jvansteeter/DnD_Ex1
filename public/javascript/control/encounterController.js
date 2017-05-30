@@ -334,7 +334,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 					});
 				socket.emit('new:encounter', {});
 				$scope.encounterState.active = active;
-				modal.close();
+				// modal.close();
 			}
 		});
 	};

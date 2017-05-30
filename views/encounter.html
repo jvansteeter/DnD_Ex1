@@ -94,9 +94,10 @@
     <md-sidenav  class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
         <!--Encounter Settings-->
         <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools">Encounter Controls</h1>
+            <h1 class="md-toolbar-tools">Encounter</h1>
         </md-toolbar>
         <md-list flex>
+            <md-list-item class="disabled" ng-show="isHost()" ng-click="null">Upload Map</md-list-item>
             <md-list-item ng-click="addCharacter()">Add Character</md-list-item>
             <md-list-item ng-show="isHost()" ng-click="addNPC()">Add NPC</md-list-item>
             <md-list-item ng-show="isHost()" ng-click="submit()">
@@ -107,12 +108,23 @@
 
         <!--Notation Settings-->
         <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools">Notation Controls</h1>
+            <h1 class="md-toolbar-tools">Notation</h1>
         </md-toolbar>
         <md-list>
-            <md-list-item ng-click="null">... under development ...</md-list-item>
-            <md-list-item ng-click="null">... under development ...</md-list-item>
-            <md-list-item ng-click="null">... under development ...</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Erase All</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Eraser</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Pen Mode</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Circle Mode</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Cone Mode</md-list-item>
+        </md-list>
+
+        <!--Light Settings-->
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Light</h1>
+        </md-toolbar>
+        <md-list>
+            <md-list-item ng-click="null" class="disabled">Toggle Light</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Light/Visibility Pen</md-list-item>
         </md-list>
     </md-sidenav>
 
