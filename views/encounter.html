@@ -100,7 +100,7 @@
             <h1 class="md-toolbar-tools">Encounter Controls</h1>
         </md-toolbar>
         <div class="list-group">
-            <button class="list-group-item">Add Character</button>
+            <button class="list-group-item" ng-click="addCharacter()">Add Character</button>
             <button ng-show="isHost()" class="list-group-item" ng-click="addNPC()">Add NPC</button>
             <button ng-show="isHost()" class="list-group-item" ng-click="toggleEncounterOpen()">
                 <span ng-if="!encounterState.active">Open Encounter</span>
