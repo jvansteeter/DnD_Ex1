@@ -334,7 +334,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 					});
 				socket.emit('new:encounter', {});
 				$scope.encounterState.active = active;
-				modal.close();
+				// modal.close();
 			}
 		});
 	};
@@ -456,23 +456,23 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
 
-    $scope.toggleEncounterOpen = function()
-	{
-		if ($scope.encounterState.active)
-		{
-			$scope.areYouSureTitle = "Close Encounter?";
-		}
-		else
-		{
-			$scope.areYouSureTitle = "Open Encounter?";
-		}
-		modal = $uibModal.open({
-			animation: true,
-			templateUrl: 'modal/areYouSureModal.html',
-			scope: $scope,
-			size: ''
-		});
-	};
+    // $scope.toggleEncounterOpen = function()
+	// {
+	// 	// if ($scope.encounterState.active)
+	// 	// {
+	// 	// 	$scope.areYouSureTitle = "Close Encounter?";
+	// 	// }
+	// 	// else
+	// 	// {
+	// 	// 	$scope.areYouSureTitle = "Open Encounter?";
+	// 	// }
+	// 	modal = $uibModal.open({
+	// 		animation: true,
+	// 		templateUrl: 'modal/areYouSureModal.html',
+	// 		scope: $scope,
+	// 		size: ''
+	// 	});
+	// };
 
 	function updateServerPlayer(player)
 	{

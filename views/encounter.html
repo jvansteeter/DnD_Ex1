@@ -54,10 +54,6 @@
 </head>
 <body style="display: flex; height: 100%; flex-direction: column;">
 
-<!--**********************************************************************************************-->
-<!--    Sidenav HTML -->
-<!--**********************************************************************************************-->
-
 <!--Top Menu Container-->
 <nav class="navbar navbar-static navbar-inverse" style="margin: 0px;">
     <div class="container">
@@ -96,18 +92,40 @@
 
     <!--Sidebar Content-->
     <md-sidenav  class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
+        <!--Encounter Settings-->
         <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools">Encounter Controls</h1>
+            <h1 class="md-toolbar-tools">Encounter</h1>
         </md-toolbar>
-        <div class="list-group">
-            <button class="list-group-item" ng-click="addCharacter()">Add Character</button>
-            <button ng-show="isHost()" class="list-group-item" ng-click="addNPC()">Add NPC</button>
-            <button ng-show="isHost()" class="list-group-item" ng-click="toggleEncounterOpen()">
+        <md-list flex>
+            <md-list-item class="disabled" ng-show="isHost()" ng-click="null">Upload Map</md-list-item>
+            <md-list-item ng-click="addCharacter()">Add Character</md-list-item>
+            <md-list-item ng-show="isHost()" ng-click="addNPC()">Add NPC</md-list-item>
+            <md-list-item ng-show="isHost()" ng-click="submit()">
                 <span ng-if="!encounterState.active">Open Encounter</span>
                 <span ng-if="encounterState.active">Close Encounter</span>
-            </button>
-        </div>
+            </md-list-item>
+        </md-list>
 
+        <!--Notation Settings-->
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Notation</h1>
+        </md-toolbar>
+        <md-list>
+            <md-list-item ng-click="null" class="disabled">Erase All</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Eraser</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Pen Mode</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Circle Mode</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Cone Mode</md-list-item>
+        </md-list>
+
+        <!--Light Settings-->
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Light</h1>
+        </md-toolbar>
+        <md-list>
+            <md-list-item ng-click="null" class="disabled">Toggle Light</md-list-item>
+            <md-list-item ng-click="null" class="disabled">Light/Visibility Pen</md-list-item>
+        </md-list>
     </md-sidenav>
 
 
