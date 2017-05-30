@@ -8,20 +8,28 @@
 
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="stylesheet/encounter.css">
     <link href="stylesheet/style.css" rel="stylesheet">
+
+    <!--angular-material dependencies-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+
+    <!--<script src="bower_components/angular/angular.min.js"></script>-->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
-    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+    <script src="bower_components/angular-mousewheel/mousewheel.js"></script>
+    <script src="bower_components/hamsterjs/hamster.js"></script>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="javascript/app/encounterApp.js"></script>
@@ -33,8 +41,6 @@
     <script src="javascript/map/gridRenderer.js"></script>
     <script src="javascript/map/tokenRenderer.js"></script>
     <script src="javascript/map/highlightRenderer.js"></script>
-    <script src="bower_components/angular-mousewheel/mousewheel.js"></script>
-    <script src="bower_components/hamsterjs/hamster.js"></script>
     <script src="javascript/map/inputController.js"></script>
     <script src="javascript/map/mapMain.js"></script>
     <script src="javascript/control/encounterController.js"></script>
@@ -83,6 +89,10 @@
 
 <!-- Content Space -->
 <div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
+    <!--PoC of ngMaterial-->
+    <!--<md-content>-->
+        <!--<md-button class="md-warn">Button</md-button>-->
+    <!--</md-content>-->
 
     <!--Title Row-->
     <div style="margin-bottom:5px; display:flex">
