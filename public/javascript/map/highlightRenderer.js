@@ -26,6 +26,21 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         var players = EncounterService.encounterState.players;
         var player;
+
+        var color_index = 0;
+        for(var user in EncounterService.notes){
+            var color_data = EncounterService.colors[color_index];
+
+            context.fillStyle = "rgba(" + color_data[0] + "," + color_data[1] + "," + color_data[2] + ", 0.2)";
+
+            var cells = EncounterService.notes[user];
+            for(var cell in cells){
+                var cell_actual = EncounterService.notes[user][cell];
+                context.fillRect(tileSize * cell_actual.x, tileSize * cell_actual.y, tileSize, tileSize);
+            }
+            color_index++;
+        }
+
         context.fillStyle = "rgba(255,255,255,.2)";
 
         if (angular.isDefined(EncounterService.hoverCell)) {
