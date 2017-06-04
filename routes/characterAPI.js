@@ -20,7 +20,7 @@ var path = require('path');
 router.post('/create', function(req, res)
 {
     var character = new Character();
-    character.userID = req.user._id;
+    character.userId = req.user._id;
     character.setCharacter(req.body.character);
     character.save(function(error)
     {
@@ -106,7 +106,7 @@ router.post('/update', function(req, res)
 
 router.get('/all/:user_id', function(req, res)
 {
-    Character.find({userID: req.params.user_id}, function(error, characters)
+    Character.find({userId: req.params.user_id}, function(error, characters)
     {
         if (error)
         {

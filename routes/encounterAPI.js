@@ -13,6 +13,8 @@ var NPC = mongoose.model('NPC');
 var formidable = require('formidable');
 var path = require('path');
 
+var encounterService = require('../services/encounterService');
+
 //
 //  Encounter API
 // /api/encounter
@@ -20,111 +22,47 @@ var path = require('path');
 
 router.post('/create', function (req, res)
 {
-    User.findById(req.user._id, function (error, user)
+    try
     {
-        if (error)
+        encounterService.createEncounter(req.user._id, req.body.title, req.body.campaignId, req.body.description, false, function()
         {
-            res.status(500).send("Error finding user");
-            return;
-        }
-
-        var name = user.first_name + " " + user.last_name;
-        Encounter.create(
-            {
-                title: req.body.title,
-                campaignID: req.body.campaignID,
-                description: req.body.description,
-                hostID: req.user._id,
-                hostName: name,
-                active: false
-            }, function (error, encounter)
-            {
-                if (error)
-                {
-                    res.status(500).send("Error creating encounter");
-                    return;
-                }
-
-                res.send("OK");
-            });
-    });
-});
-
-router.get('/all', function (req, res)
-{
-    Encounter.find({$or: [{active: true}, {hostID: req.user._id}]}, function (error, encounters)
+            res.send("OK");
+        });
+    }
+    catch (error)
     {
-        if (error)
-        {
-            res.status(500).send("Error finding encounters");
-            return;
-        }
-
-        res.json(encounters);
-    });
+        error500(res, error);
+    }
 });
 
 router.get('/:encounter_id', function (req, res)
 {
-    Encounter.findById(req.params.encounter_id, function (error, encounter)
+    try
     {
-        if (error)
+        encounterService.getEncounterById(req.params.encounter_id, function(encounter)
         {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        res.json(encounter);
-    });
+            res.json(encounter);
+        })
+    }
+    catch (error)
+    {
+        error500(res, error);
+    }
 });
 
 router.post('/addnpc/:encounter_id', function (req, res)
 {
-    Encounter.findById(req.params.encounter_id, function (error, encounterState)
+    try
     {
-        if (error)
+        encounterService.addNPC(req.params.encounter_id, req.body.npcId, function()
         {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        var npcID = req.body.npcID;
-        NPC.findById(npcID, function (error, npc)
-        {
-            if (error)
-            {
-                res.status(500).send("Error finding NPC");
-                return;
-            }
-
-            var encounterPlayer = new EncounterPlayer(
-                {
-                    name: npc.name,
-                    userID: npc.userID,
-                    iconURL: npc.iconURL,
-                    armorClass: npc.armorClass,
-                    hitPoints: npc.hitPoints,
-                    maxHitPoints: npc.hitPoints,
-                    passivePerception: npc.passivePerception,
-                    visible: false,
-                    saves: npc.getSaves(),
-                    npc: true
-                });
-
-            addEncounterPlayerToMap(encounterState, encounterPlayer, function ()
-            {
-                encounterPlayer.save(function (error)
-                {
-                    if (error)
-                    {
-                        res.status(500).send("Error saving encounter player");
-                        return;
-                    }
-                    res.send("OK");
-                });
-            });
+            res.send('OK');
         });
-    });
+    }
+    catch (error)
+    {
+        error500(res, error);
+    }
 });
 
 router.post('/addcharacter/:encounter_id', function (req, res)
@@ -149,7 +87,7 @@ router.post('/addcharacter/:encounter_id', function (req, res)
             var encounterPlayer = new EncounterPlayer(
                 {
                     name: character.name,
-                    userID: character.userID,
+                    userId: character.userId,
                     iconURL: character.iconURL,
                     armorClass: character.armorClass,
                     hitPoints: character.maxHitPoints,
@@ -520,7 +458,7 @@ router.post('/connect/:encounter_id', function (req, res)
         var unique = true;
         for (var i = 0; i < encounter.connectedUsers.length; i++)
         {
-            if (encounter.connectedUsers[i].userID === id)
+            if (encounter.connectedUsers[i].userId === id)
             {
                 unique = false;
             }
@@ -528,7 +466,7 @@ router.post('/connect/:encounter_id', function (req, res)
 
         if (unique)
         {
-            encounter.connectedUsers.push({userID: id, username: username});
+            encounter.connectedUsers.push({userId: id, username: username});
             encounter.save(function (error)
             {
                 if (error)
@@ -562,7 +500,7 @@ router.post('/disconnect/:encounter_id', function (req, res)
         for (var i = 0; i < encounter.connectedUsers.length; i++)
         {
             console.log(JSON.stringify(encounter.connectedUsers[i]));
-            if (encounter.connectedUsers[i].userID === id)
+            if (encounter.connectedUsers[i].userId === id)
             {
                 encounter.connectedUsers.splice(i, 1);
                 console.log("Found and removed disconnected user");
@@ -582,5 +520,9 @@ router.post('/disconnect/:encounter_id', function (req, res)
     });
 });
 
+function error500(res, error)
+{
+    res.status(500).send(error);
+}
 
 module.exports = router;

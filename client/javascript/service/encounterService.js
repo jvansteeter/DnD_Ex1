@@ -54,7 +54,7 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 
     encounterService.isHost = function ()
     {
-        if (encounterService.encounterState.hostID === Profile.getUserID())
+        if (encounterService.encounterState.hostId === Profile.getUserID())
         {
             return true;
         }

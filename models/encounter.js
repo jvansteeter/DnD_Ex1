@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 var encounterSchema = new mongoose.Schema(
 {
     title: String,
-    campaignID: String,
+    campaignId: String,
     description: String,
-    hostID: String,
+    hostId: String,
     hostName: String,
     players: [],
     createdAt: {type: Number, required: true, default: Date.now},
@@ -15,7 +15,7 @@ var encounterSchema = new mongoose.Schema(
     active: Boolean,
     connectedUsers: [
         {
-            userID: String,
+            userId: String,
             username: String
         }
     ],
@@ -27,10 +27,13 @@ var encounterSchema = new mongoose.Schema(
     mapDimY: Number
 });
 
-encounterSchema.methods.addPlayer = function(player)
+encounterSchema.methods.addPlayer = function(player, callback)
 {
     this.players.push(player);
-    this.save();
+    this.save(function()
+    {
+        callback();
+    });
 };
 
 encounterSchema.methods.removePlayer = function(player)

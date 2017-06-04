@@ -202,14 +202,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		var url = 'api/encounter/setinitiative';
 		var data =
 		{
-			playerID: $scope.encounterState.players[selectedPlayer]._id,
+			playerId: $scope.encounterState.players[selectedPlayer]._id,
 			initiative: initiative
 		};
 		$http.post(url, data).success(function (data)
 		{
 			socket.emit('update:encounter',
 				{
-					encounterID: encounterID
+					encounterId: encounterID
 				});
 
 			$scope.updateEncounterState();
@@ -221,14 +221,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		var url = 'api/encounter/removeplayer/' + encounterID;
 		var data =
 		{
-			playerID: player._id
+			playerId: player._id
 		};
 
 		$http.post(url, data).success(function (data)
 		{
 			socket.emit('update:encounter',
 				{
-					encounterID: encounterID
+					encounterId: encounterID
 				});
 
 			$scope.updateEncounterState();
@@ -261,14 +261,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		var url = 'api/encounter/addcharacter/' + encounterID;
 		var data =
 		{
-			characterID: $scope.characters[index]._id
+			characterId: $scope.characters[index]._id
 		};
 
 		$http.post(url, data).success(function (data)
 		{
 			socket.emit('update:encounter',
 				{
-					encounterID: encounterID
+					encounterId: encounterID
 				});
 			$scope.updateEncounterState();
 			modal.close();
@@ -301,14 +301,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		var url = 'api/encounter/addnpc/' + encounterID;
 		var data =
 		{
-			npcID: $scope.npcs[index]._id
+			npcId: $scope.npcs[index]._id
 		};
 
 		$http.post(url, data).success(function (data)
 		{
 			socket.emit('update:encounter',
 				{
-					encounterID: encounterID
+					encounterId: encounterID
 				});
 			$scope.updateEncounterState();
 			modal.close();
@@ -330,7 +330,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			{
 				socket.emit('encounter:end',
 					{
-						encounterID: encounterID
+						encounterId: encounterID
 					});
 				socket.emit('new:encounter', {});
 				$scope.encounterState.active = active;
@@ -357,7 +357,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			{
 				socket.emit('update:encounter',
 					{
-						encounterID: encounterID
+						encounterId: encounterID
 					});
 				$scope.updateEncounterState();
 			}

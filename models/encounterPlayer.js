@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var encounterPlayerSchema = new mongoose.Schema(
 {
     name: String,
-    userID: String,
+    userId: String,
     iconURL: String,
     initiative: Number,
     armorClass: Number,

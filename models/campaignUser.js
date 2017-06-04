@@ -3,8 +3,8 @@ var findOrCreate = require('mongoose-findorcreate');
 
 var campaignPostSchema = new mongoose.Schema(
 {
-    userID: String,
-    campaignID: String
+    userId: String,
+    campaignId: String
 });
 
 campaignPostSchema.plugin(findOrCreate);

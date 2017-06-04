@@ -15,17 +15,22 @@ var path = require('path');
 
 //
 //  Campaign API
+//  /api/campaign
 //
 
 router.get('/encounter/:campaign_id', function(req, res)
 {
-    Encounter.find({ campaignID: req.params.campaign_id, $or: [ { active : true }, { hostID : req.user._id } ] }, function(error, encounters)
+    Encounter.find({ campaignId: req.params.campaign_id, $or: [ { active : true }, { hostId : req.user._id } ] }, function(error, encounters)
     {
         if (error)
         {
             res.status(500).send("Error finding encounters");
             return;
         }
+
+        console.log('in get all encounters');
+        console.log(req.params.campaign_id);
+        console.log(encounters);
 
         res.json(encounters);
     });
@@ -69,7 +74,7 @@ router.get('/adventurers/:campaign_id', function(req, res)
             return;
         }
 
-        CampaignUser.find({campaignID : campaign._id}, function(error, campaignUsers)
+        CampaignUser.find({campaignId : campaign._id}, function(error, campaignUsers)
         {
             if (error)
             {
@@ -80,7 +85,7 @@ router.get('/adventurers/:campaign_id', function(req, res)
             var adventurerIDs = [];
             for (var i = 0; i < campaignUsers.length; i++)
             {
-                adventurerIDs.push(campaignUsers[i].userID);
+                adventurerIDs.push(campaignUsers[i].userId);
             }
 
             User.find({_id : {$in : adventurerIDs }}, function(error, users)
@@ -105,7 +110,7 @@ router.get('/adventurers/:campaign_id', function(req, res)
 
 router.get('/post/:campaign_id', function(req, res)
 {
-    CampaignPost.find({campaignID : req.params.campaign_id}, function(error, campaignPosts)
+    CampaignPost.find({campaignId : req.params.campaign_id}, function(error, campaignPosts)
     {
         if (error)
         {
@@ -132,8 +137,8 @@ router.post('/create', function(req, res)
         }
 
         var campaignUser = new CampaignUser();
-        campaignUser.userID = req.user._id;
-        campaignUser.campaignID = campaign._id;
+        campaignUser.userId = req.user._id;
+        campaignUser.campaignId = campaign._id;
 
         campaignUser.save(function(error)
         {
@@ -152,8 +157,8 @@ router.post('/join/', function(req, res)
 {
     CampaignUser.findOrCreate(
         {
-            userID: req.user._id,
-            campaignID: req.body.campaignID
+            userId: req.user._id,
+            campaignId: req.body.campaignId
         }, function(error, campaignUser)
         {
             if (error)
@@ -178,10 +183,10 @@ router.post('/join/', function(req, res)
 router.post('/post', function(req, res)
 {
     var post = new CampaignPost();
-    post.userID = req.user._id;
+    post.userId = req.user._id;
     post.author = req.user.first_name + " " + req.user.last_name;
     post.authorPhoto = req.user.profilePhotoURL;
-    post.campaignID = req.body.campaignID;
+    post.campaignId = req.body.campaignId;
     post.content = req.body.content;
     post.save(function(error)
     {

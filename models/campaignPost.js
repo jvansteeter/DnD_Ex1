@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 var campaignPostSchema = new mongoose.Schema(
     {
-        campaignID: String,
-        userID: String,
+        campaignId: String,
+        userId: String,
         author: String,
         authorPhoto: String,
         content: String,

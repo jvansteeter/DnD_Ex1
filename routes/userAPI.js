@@ -23,7 +23,7 @@ router.get('/', function(req, res)
 
 router.get('/campaigns', function(req, res)
 {
-    CampaignUser.find({userID: req.user._id}, function(error, campaignUsers)
+    CampaignUser.find({userId: req.user._id}, function(error, campaignUsers)
     {
         if (error)
         {
@@ -31,13 +31,13 @@ router.get('/campaigns', function(req, res)
             return;
         }
 
-        var campaignIDs = [];
+        var campaignIds = [];
         for (var i = 0; i < campaignUsers.length; i++)
         {
-            campaignIDs.push(campaignUsers[i].campaignID);
+            campaignIds.push(campaignUsers[i].campaignId);
         }
 
-        Campaign.find({_id: {$in: campaignIDs}}, function(error, campaigns)
+        Campaign.find({_id: {$in: campaignIds}}, function(error, campaigns)
         {
             if (error)
             {

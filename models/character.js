@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var characterSchema = new mongoose.Schema(
 {
-	userID: String,
+	userId: String,
     name: {type: String, default: ""},
 	iconURL: String,
     class: String,
