@@ -49,13 +49,13 @@ var character = require('./routes/characterAPI');
 var encounter = require('./routes/encounterAPI');
 var user = require('./routes/userAPI');
 
-// uncomment after placing your favicon in /public
-app.use(favicon('public/image/favicon.ico'));
+// uncomment after placing your favicon in /client
+app.use(favicon('client/image/favicon.ico'));
 app.use(logger('dev'));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client')));
 busboy.extend(app, {
     upload: true,
     path: '/upload',
