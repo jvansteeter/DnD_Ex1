@@ -46,6 +46,19 @@
     <script src="javascript/map/mapMain.js"></script>
     <script src="javascript/control/encounterController.js"></script>
 
+    Color picker dependencies
+    <link rel="stylesheet" href="bower_components/angular-color-picker/dist/angularjs-color-picker.min.css" />
+    <!-- only include if you use bootstrap -->
+    <!--<link rel="stylesheet" href="bower_components/angular-color-picker/dist/themes/angularjs-color-picker-bootstrap.min.css" />-->
+    <script src="bower_components/tinycolor/dist/tinycolor-min.js"></script>
+    <script src="bower_components/angular-color-picker/dist/angularjs-color-picker.min.js"></script>
+
+    <!--&lt;!&ndash;Second Color Picker Dependencies&ndash;&gt;-->
+    <!--<link href="bower_components/md-color-picker/dist/mdColorPicker.min.css" rel="stylesheet" />-->
+    <!--<script src="bower_components/tinycolor/dist/tinycolor-min.js"></script>-->
+    <!--<script src="bower_components/md-color-picker/dist/mdColorPicker.min.js"></script>-->
+
+
     <title>Dungeon Map</title>
     <style>
         a:hover {
@@ -222,12 +235,62 @@
             </div>
             <!--Red Notation Box-->
             <div><li class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733"><h4>Notations</h4></li></div>
-            <!--Notes-->
-            <div class="initiative-box" style="flex:1; overflow-y: scroll;">
 
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--Notes-->
+            <md-list>
+                <md-list-item ng-repeat="note in notes">
+                    <span>{{note.color}}</span>
+                </md-list-item>
+            </md-list>
+
+
+
+
+
+
+            <div class="initiative-box" style="flex:1; overflow-y: scroll;">
+                <ul class="list-group">
+                    <li ng-repeat="note in notes" class="list-group-item" style="padding-left: 0; padding-top:0; padding-bottom: 0; height: 42px;">
+                        <div style="display: flex;">
+                            <color-picker ng-model="note.color" options="note_options" style="align-self: center;"></color-picker>
+                            <span style="align-self: center; margin-right: auto">{{note.text}}</span>
+                            <span style="width:20px;"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                            <span style="align-self: center"><i class="fa fa-close"></i></span>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <md-button class="md-raised">Add Note</md-button>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!--Map Container-->
         <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">

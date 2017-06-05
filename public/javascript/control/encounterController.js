@@ -17,7 +17,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	$scope.encounterState = {};
 	$scope.host = false;
-	$scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
+    $scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
+
+    $scope.notes = EncounterService.mock_notes;
+    $scope.note_options = {
+        swatchOnly: [true]
+	};
 
 	socket.on('init', function ()
 	{

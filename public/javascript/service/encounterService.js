@@ -34,6 +34,36 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         [{x:2,y:0}, {x:3,y:1}, {x:4,y:2}, {x:0,y:3}, {x:1,y:4}]
     ];
 
+    encounterService.mock_notes = [
+        {
+            owner:'bob',
+            text:'Fire',
+            color:'#cc0000',
+            cells:[
+                {x:0, y:1},
+                {x:2, y:5}
+            ]
+        },
+        {
+            owner:'bob',
+            text:'Water',
+            color:'#0000cc',
+            cells:[
+                {x:3, y:1},
+                {x:2, y:2}
+            ]
+        },
+        {
+            owner:'bob',
+            text:'Lightning',
+            color:'#ffcc00',
+            cells:[
+                {x:1, y:2},
+                {x:5, y:3}
+            ]
+        }
+    ];
+
     encounterService.init = function (inputID)
     {
         encounterService.encounterID = inputID;
