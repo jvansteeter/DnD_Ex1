@@ -6,6 +6,8 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
     var transform = {x: 0, y: 0, scale: 1};
 
+    var tileSize;
+
     var canvas;
     var map_canvas_ctx;
     var grid_canvas_ctx;
@@ -27,6 +29,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     function init() {
         canvas = $('#inputCanvas');
         body = $('body');
+        tileSize = EncounterService.tileSize;
 
         var map_canvas = $('#mapCanvas');
         map_canvas_ctx = map_canvas.get(0).getContext('2d');
@@ -252,8 +255,8 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     function screenToMapDim(coor) {
         var map_res_coor = screenToMapRes(coor);
 
-        var map_dim_x = Math.floor(map_res_coor.x / 50);
-        var map_dim_y = Math.floor(map_res_coor.y / 50);
+        var map_dim_x = Math.floor(map_res_coor.x / tileSize);
+        var map_dim_y = Math.floor(map_res_coor.y / tileSize);
 
         return {x: map_dim_x, y: map_dim_y};
     }

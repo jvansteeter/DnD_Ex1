@@ -10,10 +10,13 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         mapResX: 0,
         mapResY: 0
     };
+
     encounterService.updateHasRun = false;
 
+    encounterService.tileSize = 50;
     encounterService.map_transform = {x:0, y:0, scale:1};
     encounterService.canvas_state = {res_x:0, res_y: 0, clear_offset: 1000};
+
     encounterService.colors = [
         [204,0,0],
         [0,0,204],

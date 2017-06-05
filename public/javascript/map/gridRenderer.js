@@ -11,7 +11,7 @@ clientApp.controller('gridRenderer', function ($scope, $window, EncounterService
         canvas = $('#gridCanvas');
 
         context = canvas.get(0).getContext('2d');
-        tileSize = 50;
+        tileSize = EncounterService.tileSize;
 
         draw();
     }

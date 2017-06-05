@@ -4,7 +4,6 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
 
     var canvas;
     var context;
-// minor change
     var tileSize;
 
     var url = 'api/image/encounterplayer/';
@@ -13,7 +12,7 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
     function init() {
         canvas = $('#tokenCanvas');
         context = canvas.get(0).getContext('2d');
-        tileSize = 50;
+        tileSize = EncounterService.tileSize;
 
 		var encounterState = EncounterService.encounterState;
 		for (var i = 0; i < encounterState.players.length; i++)
