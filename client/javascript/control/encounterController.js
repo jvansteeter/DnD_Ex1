@@ -52,13 +52,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	socket.on('new:joined', function (data)
 	{
-		console.log("New user has joined");
-		console.log(data);
 	});
 
 	socket.on('exit', function (data)
 	{
-		console.log(data.username + " has left the chat room");
 		// Encounter.disconnect(data.id);
 	});
 
@@ -172,17 +169,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		}
 	};
 
-	$scope.healPlayer = function (hit)
+	$scope.healPlayer = function (damage)
 	{
-		console.log("Heal player");
-		console.log(EncounterService.encounterState.players[selectedPlayer]);
-		console.log(hit);
-		if (hit === 0 || isNaN(hit))
+		if (damage === 0 || isNaN(damage))
 		{
 			return;
 		}
 
-		$scope.encounterState.players[selectedPlayer].hitPoints = $scope.encounterState.players[selectedPlayer].hitPoints + hit;
+		$scope.encounterState.players[selectedPlayer].hitPoints = $scope.encounterState.players[selectedPlayer].hitPoints + damage;
 		$scope.showPopover = false;
 		updateServerPlayer($scope.encounterState.players[selectedPlayer]);
 	};

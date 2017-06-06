@@ -28,10 +28,6 @@ router.get('/encounter/:campaign_id', function(req, res)
             return;
         }
 
-        console.log('in get all encounters');
-        console.log(req.params.campaign_id);
-        console.log(encounters);
-
         res.json(encounters);
     });
 });

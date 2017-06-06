@@ -101,7 +101,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 
     encounterService.disconnect = function()
     {
-        console.log("disconnecting user");
         var url = 'api/encounter/disconnect/' + encounterService.encounterID;
         var data = {
             id: Profile.getUserID()

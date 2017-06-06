@@ -25,9 +25,9 @@ var encounterPlayerSchema = new mongoose.Schema(
     mapY: Number
 });
 
-encounterPlayerSchema.methods.hit = function(hit)
+encounterPlayerSchema.methods.damage = function(damage)
 {
-	this.hitPoints = this.hitPoints + hit;
+	this.hitPoints = this.hitPoints - damage;
 };
 
 encounterPlayerSchema.methods.toggleVisible = function()

@@ -1,182 +1,191 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="clientApp" style="height: 100%">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="generator" content="Bootply"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="generator" content="Bootply"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
-    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
-    <link rel="stylesheet" href="stylesheet/encounter.css">
-    <link href="stylesheet/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.min.css">
+  <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+  <link rel="stylesheet" href="stylesheet/encounter.css">
+  <link href="stylesheet/style.css" rel="stylesheet">
 
-    <!--angular-material dependencies-->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
+  <!--angular-material dependencies-->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
 
-    <!--<script src="bower_components/angular/angular.min.js"></script>-->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
-    <script src="bower_components/angular-mousewheel/mousewheel.js"></script>
-    <script src="bower_components/hamsterjs/hamster.js"></script>
+  <!--<script src="bower_components/angular/angular.min.js"></script>-->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
+  <script src="bower_components/angular-mousewheel/mousewheel.js"></script>
+  <script src="bower_components/hamsterjs/hamster.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="javascript/app/encounterApp.js"></script>
-    <script src="javascript/service/profileService.js"></script>
-    <script src="javascript/service/encounterService.js"></script>
-    <script src="javascript/control/headerController.js"></script>
-    <script src="javascript/socketFactory.js"></script>
-    <script src="javascript/map/mapRenderer.js"></script>
-    <script src="javascript/map/gridRenderer.js"></script>
-    <script src="javascript/map/tokenRenderer.js"></script>
-    <script src="javascript/map/highlightRenderer.js"></script>
-    <script src="javascript/map/inputController.js"></script>
-    <script src="javascript/map/mapMain.js"></script>
-    <script src="javascript/control/encounterController.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="javascript/app/encounterApp.js"></script>
+  <script src="javascript/service/profileService.js"></script>
+  <script src="javascript/service/encounterService.js"></script>
+  <script src="javascript/control/headerController.js"></script>
+  <script src="javascript/socketFactory.js"></script>
+  <script src="javascript/map/mapRenderer.js"></script>
+  <script src="javascript/map/gridRenderer.js"></script>
+  <script src="javascript/map/tokenRenderer.js"></script>
+  <script src="javascript/map/highlightRenderer.js"></script>
+  <script src="javascript/map/inputController.js"></script>
+  <script src="javascript/map/mapMain.js"></script>
+  <script src="javascript/control/encounterController.js"></script>
 
-    <title>Dungeon Map</title>
-    <style>
-        a:hover {
-            text-decoration: none;
-        }
-    </style>
+  <title>Dungeon Map</title>
+  <style>
+    a:hover {
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body style="display: flex; height: 100%; flex-direction: column;">
 
 <!--Top Menu Container-->
 <nav class="navbar navbar-static navbar-inverse" style="margin: 0px;">
-    <div class="container">
-        <div class="nav-collapse collase">
-            <ul class="nav navbar-nav navbar-left">
-                <li><a href="home">Home</a></li>
-                <li><a href="campaignList">Campaign</a></li>
-                <li><a href="profile">Profile</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i
-                            class="fa fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <!--<li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>-->
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-right navbar-nav">
-                <li class="dropdown" ng-controller="headerController">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span> <i
-                            class="fa fa-user"></i> <i
-                            class="fa fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="login">Logout</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">About</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="nav-collapse collase">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="home">Home</a></li>
+        <li><a href="campaignList">Campaign</a></li>
+        <li><a href="profile">Profile</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <i
+                  class="fa fa-chevron-down"></i></a>
+          <ul class="dropdown-menu">
+            <!--<li><a href="pdf/Players Handbook 5E.pdf" target="_blank">Player's Handbook</a></li>-->
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-right navbar-nav">
+        <li class="dropdown" ng-controller="headerController">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span ng-bind="name"></span> <i
+                  class="fa fa-user"></i> <i
+                  class="fa fa-chevron-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="login">Logout</a></li>
+            <li><a href="#">Profile</a></li>
+            <li class="divider"></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
 <!-- Content Space -->
-<div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
+<div ng-controller="encounterController"
+     style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
 
-    <!--Sidebar Content-->
-    <md-sidenav  class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
-        <!--Encounter Settings-->
-        <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools">Encounter</h1>
-        </md-toolbar>
-        <md-list flex>
-            <md-list-item class="disabled" ng-show="isHost()" ng-click="null">Upload Map</md-list-item>
-            <md-list-item ng-click="addCharacter()">Add Character</md-list-item>
-            <md-list-item ng-show="isHost()" ng-click="addNPC()">Add NPC</md-list-item>
-            <md-list-item ng-show="isHost()" ng-click="submit()">
-                <span ng-if="!encounterState.active">Open Encounter</span>
-                <span ng-if="encounterState.active">Close Encounter</span>
-            </md-list-item>
-        </md-list>
+  <!--Sidebar Content-->
+  <md-sidenav class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
+    <!--Encounter Settings-->
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Encounter</h1>
+    </md-toolbar>
+    <md-list flex>
+      <md-list-item class="disabled" ng-show="isHost()" ng-click="null">Upload Map</md-list-item>
+      <md-list-item ng-click="addCharacter()">Add Character</md-list-item>
+      <md-list-item ng-show="isHost()" ng-click="addNPC()">Add NPC</md-list-item>
+      <md-list-item ng-show="isHost()" ng-click="submit()">
+        <span ng-if="!encounterState.active">Open Encounter</span>
+        <span ng-if="encounterState.active">Close Encounter</span>
+      </md-list-item>
+    </md-list>
 
-        <!--Notation Settings-->
-        <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools">Notation</h1>
-        </md-toolbar>
-        <md-list>
-            <md-list-item ng-click="null" class="disabled">Erase All</md-list-item>
-            <md-list-item ng-click="null" class="disabled">Eraser</md-list-item>
-            <md-list-item ng-click="null" class="disabled">Pen Mode</md-list-item>
-            <md-list-item ng-click="null" class="disabled">Circle Mode</md-list-item>
-            <md-list-item ng-click="null" class="disabled">Cone Mode</md-list-item>
-        </md-list>
+    <!--Notation Settings-->
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Notation</h1>
+    </md-toolbar>
+    <md-list>
+      <md-list-item ng-click="null" class="disabled">Erase All</md-list-item>
+      <md-list-item ng-click="null" class="disabled">Eraser</md-list-item>
+      <md-list-item ng-click="null" class="disabled">Pen Mode</md-list-item>
+      <md-list-item ng-click="null" class="disabled">Circle Mode</md-list-item>
+      <md-list-item ng-click="null" class="disabled">Cone Mode</md-list-item>
+    </md-list>
 
-        <!--Light Settings-->
-        <md-toolbar class="md-theme-indigo">
-            <h1 class="md-toolbar-tools">Light</h1>
-        </md-toolbar>
-        <md-list>
-            <md-list-item ng-click="null" class="disabled">Toggle Light</md-list-item>
-            <md-list-item ng-click="null" class="disabled">Light/Visibility Pen</md-list-item>
-        </md-list>
-    </md-sidenav>
+    <!--Light Settings-->
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Light</h1>
+    </md-toolbar>
+    <md-list>
+      <md-list-item ng-click="null" class="disabled">Toggle Light</md-list-item>
+      <md-list-item ng-click="null" class="disabled">Light/Visibility Pen</md-list-item>
+    </md-list>
+  </md-sidenav>
 
 
-    <!--Title Row-->
-    <div style="margin-bottom:5px; display:flex">
-        <!--Menu Toggle Button-->
-        <md-button class="md-raised" ng-click="toggleMenu()" style="background-color:white; height:40px; align-self: center;">Menu</md-button>
-        <!--Title Span-->
-        <span ng-bind="encounterState.title" style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
-        <!--Encounter State Span-->
-        <span ng-if="!encounterState.active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
-    </div>
+  <!--Title Row-->
+  <div style="margin-bottom:5px; display:flex">
+    <!--Menu Toggle Button-->
+    <md-button class="md-raised" ng-click="toggleMenu()"
+               style="background-color:white; height:40px; align-self: center;">Menu
+    </md-button>
+    <!--Title Span-->
+    <span ng-bind="encounterState.title"
+          style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
+    <!--Encounter State Span-->
+    <span ng-if="!encounterState.active"
+          style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
+  </div>
 
-    <!--Map Row-->
-    <div style="display: flex; flex:1; margin-bottom: 5px">
+  <!--Map Row-->
+  <div style="display: flex; flex:1; margin-bottom: 5px">
 
-        <!--Player Status Nav-->
-        <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
-            <!--Blue Players Tag-->
-            <div><li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li></div>
-            <!--List of Players-->
-            <div class="initiative-box" style="flex:1; overflow-y: scroll;">
-                <ul ng-model="players" class="list-group">
-                    <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
-                        class="list-group-item" ng-hide="!isHost() && !player.visible"
-                        ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)"
-                        ng-mouseleave="removeHover()"
-                        style="border-left: 10px solid {{ getColor(player) }}; {{ isHovered(player) }}">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col col-xs-4" style="padding: 0px">
+    <!--Player Status Nav-->
+    <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
+      <!--Blue Players Tag-->
+      <div>
+        <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
+      </div>
+      <!--List of Players-->
+      <div class="initiative-box" style="flex:1; overflow-y: scroll;">
+        <ul ng-model="players" class="list-group">
+          <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
+              class="list-group-item" ng-hide="!isHost() && !player.visible"
+              ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)"
+              ng-mouseleave="removeHover()"
+              style="border-left: 10px solid {{ getColor(player) }}; {{ isHovered(player) }}">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col col-xs-4" style="padding: 0px">
                       <span ng-if="player.hitPoints < 1" style="color:red">
                         <strike ng-bind="player.name"></strike>
                       </span>
-                                    <span ng-if="player.hitPoints >= 0" ng-bind="player.name"></span>
-                                </div>
+                  <span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
+                </div>
 
-                                <span ng-if="isMyCharacter(player) || isHost()" data-placement="bottom"
-                                      data-template-url="modal/playerHealPopover.html" data-auto-close="1"
-                                      bs-popover style="cursor: pointer">
+                <span ng-if="isMyCharacter(player) || isHost()" ng-click="selectPlayer(player)" data-placement="bottom"
+                      data-template-url="modal/playerHealPopover.html" data-auto-close="1"
+                      bs-popover style="cursor: pointer">
                       <i class="fa fa-heart"></i>
                     </span>
-                                <span ng-if="!isHost() && !isMyCharacter(player)">
+                <span ng-if="!isHost() && !isMyCharacter(player)">
                       <i class="fa fa-heart"></i>
                     </span>
-                                <span ng-if="!isHost() && player.npc">???
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                <span ng-if="!isHost() && player.npc">???
+                      <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span
+                              ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                      <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span
+                              ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
                       <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
                     </span>
-                                <span ng-if="isHost() || !player.npc">
+                <span ng-if="isHost() || !player.npc">
                       <span ng-if="player.hitPoints < 1" style="color: dimgrey" ng-bind="player.hitPoints"></span>
                       <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green"
                             ng-bind="player.hitPoints"></span>
@@ -185,24 +194,25 @@
                        / <span ng-bind="player.maxHitPoints"></span>
                     </span>
 
-                                <i class="fa fa-shield"></i>
-                                <span ng-if="!isHost() && player.npc">??? </span>
-                                <span ng-if="isHost() || !player.npc"
-                                      ng-bind="player.armorClass"> </span>
+                <i class="fa fa-shield"></i>
+                <span ng-if="!isHost() && player.npc">??? </span>
+                <span ng-if="isHost() || !player.npc"
+                      ng-bind="player.armorClass"> </span>
 
-                                <i class="fa fa-eye"></i>
-                                <span ng-if="!player.passivePerception || (!isHost() && player.npc)">???</span>
-                                <span ng-if="player.passivePerception && (isHost() || !player.npc)"
-                                      ng-bind="player.passivePerception"></span>
+                <i class="fa fa-eye"></i>
+                <span ng-if="!player.passivePerception || (!isHost() && player.npc)">???</span>
+                <span ng-if="player.passivePerception && (isHost() || !player.npc)"
+                      ng-bind="player.passivePerception"></span>
 
-                                <span style="float: right;">
+                <span style="float: right;">
                       <a href="#" ng-show="isHost() && player.npc && player.visible" ng-click="toggleVisible(player)">
                         <i class="fa fa-eye"></i>
                       </a>
                       <a href="#" ng-show="isHost() && player.npc && !player.visible" ng-click="toggleVisible(player)">
                         <i class="fa fa-eye-slash"></i>
                       </a>
-                      <span ng-if="isHost() || isMyCharacter(player)" class="badge"
+                      <span ng-if="isHost() || isMyCharacter(player)" ng-click="selectPlayer(player)" class="badge"
+                            data-placement="left"
                             data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer"
                             bs-popover><i class="fa fa-bolt"></i>
                         <span ng-bind="player.initiative"></span>
@@ -214,52 +224,56 @@
                             <i class="fa fa-close"></i>
                           </a>
                     </span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+              </div>
             </div>
-        </div>
-
-        <!--Map Container-->
-        <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">
-
-            <div style="overflow: hidden; background-color: #dedede; height: 100%;">
-                <div style="position: relative; height: 100%" id="mapDiv">
-
-                    <div ng-controller="mapRenderer">
-                        <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
-                    </div>
-
-                    <div ng-controller="gridRenderer">
-                        <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
-                    </div>
-
-                    <div ng-controller="highlightRenderer">
-                        <canvas style="z-index:2; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
-                    </div>
-
-                    <div ng-controller="tokenRenderer">
-                        <canvas style="z-index:3; position:absolute;" id="tokenCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
-                    </div>
-
-                    <div ng-controller="inputController">
-                        <canvas style="z-index:3; position:absolute; width: 100%; height: 100%"
-                                id="inputCanvas"
-                                ng-click="click($event)"
-                                ng-mousemove="mouseMove($event)"
-                                msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)"
-                                ng-mousedown="mouseDown($event)"
-                                ng-mouseup="mouseUp()"
-                                ng-mouseenter="mouseEnter()"
-                                ng-mouseleave="mouseLeave()">
-                        </canvas>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <!--Map Container-->
+    <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">
+
+      <div style="overflow: hidden; background-color: #dedede; height: 100%;">
+        <div style="position: relative; height: 100%" id="mapDiv">
+
+          <div ng-controller="mapRenderer">
+            <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}}
+                    height={{get_res_y()}}></canvas>
+          </div>
+
+          <div ng-controller="gridRenderer">
+            <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}}
+                    height={{get_res_y()}}></canvas>
+          </div>
+
+          <div ng-controller="highlightRenderer">
+            <canvas style="z-index:2; position:absolute;" id="highlightCanvas" width={{get_res_x()}}
+                    height={{get_res_y()}}></canvas>
+          </div>
+
+          <div ng-controller="tokenRenderer">
+            <canvas style="z-index:3; position:absolute;" id="tokenCanvas" width={{get_res_x()}}
+                    height={{get_res_y()}}></canvas>
+          </div>
+
+          <div ng-controller="inputController">
+            <canvas style="z-index:3; position:absolute; width: 100%; height: 100%"
+                    id="inputCanvas"
+                    ng-click="click($event)"
+                    ng-mousemove="mouseMove($event)"
+                    msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)"
+                    ng-mousedown="mouseDown($event)"
+                    ng-mouseup="mouseUp()"
+                    ng-mouseenter="mouseEnter()"
+                    ng-mouseleave="mouseLeave()">
+            </canvas>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>

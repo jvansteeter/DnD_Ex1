@@ -5,12 +5,16 @@ var NPC = mongoose.model('NPC');
 
 var npcRepository = {};
 
-npcRepository.readById = function (npcId, callback)
+npcRepository.read = function (npcId, callback)
 {
-    NPC.findById(npcId, function(error, user)
+    NPC.findById(npcId, function(error, npc)
     {
         handleError(error);
-        callback(user);
+        if (npc === null)
+        {
+            throw new Error('NPC with id: ' + npcId + ' not found.');
+        }
+        callback(npc);
     });
 };
 

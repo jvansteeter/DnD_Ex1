@@ -5,11 +5,15 @@ var User = mongoose.model('User');
 
 var userRepository = {};
 
-userRepository.readById = function (userId, callback)
+userRepository.read = function (userId, callback)
 {
     User.findById(userId, function(error, user)
     {
         handleError(error);
+        if (user === null)
+        {
+            throw new Error('User with id: ' + userId + ' not found.');
+        }
         callback(user);
     });
 };

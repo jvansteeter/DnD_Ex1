@@ -43,7 +43,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
         $http.get('api/campaign/' + campaignId).success(function(data)
         {
-            console.log(data);
             $scope.campaign = data;
 
             if ($scope.isHost())

@@ -67,251 +67,97 @@ router.post('/addnpc/:encounter_id', function (req, res)
 
 router.post('/addcharacter/:encounter_id', function (req, res)
 {
-    Encounter.findById(req.params.encounter_id, function (error, encounter)
+    try
     {
-        if (error)
+        encounterService.addCharacter(req.params.encounter_id, req.body.characterId, function()
         {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        var characterID = req.body.characterID;
-        Character.findById(characterID, function (error, character)
-        {
-            if (error)
-            {
-                res.status(500).send("Error finding character");
-                return;
-            }
-
-            var encounterPlayer = new EncounterPlayer(
-                {
-                    name: character.name,
-                    userId: character.userId,
-                    iconURL: character.iconURL,
-                    armorClass: character.armorClass,
-                    hitPoints: character.maxHitPoints,
-                    maxHitPoints: character.maxHitPoints,
-                    passivePerception: character.passivePerception,
-                    visible: true,
-                    saves: character.getSaves(),
-                    npc: false
-                });
-
-            addEncounterPlayerToMap(encounter, encounterPlayer, function ()
-            {
-                encounterPlayer.save(function (error)
-                {
-                    if (error)
-                    {
-                        res.status(500).send("Error saving encounter player");
-                        return;
-                    }
-                    res.send("OK");
-                });
-            });
+            res.send('OK');
         });
-    });
-});
-
-function addEncounterPlayerToMap(encounterState, encounterPlayer, cb)
-{
-    EncounterPlayer.find({_id: {$in: encounterState.players}}, function (error, players)
+    }
+    catch (error)
     {
-        if (error)
-        {
-            res.status(500).send("Error finding encounter players");
-            return;
-        }
-
-        //calculate and assign mapX, mapY to encounterPlayer
-        var tokenPlaced = false;
-        var y = 0;
-        var x = 0;
-
-        while (!tokenPlaced)
-        {
-            var spaceIsFree = true;
-            for (var i = 0; i < players.length; i++)
-            {
-                var player = players[i];
-                if (player.mapX === x && player.mapY === y)
-                {
-                    spaceIsFree = false;
-                }
-            }
-
-            if (spaceIsFree)
-            {
-                encounterPlayer.mapX = x;
-                encounterPlayer.mapY = y;
-                tokenPlaced = true;
-            }
-
-            x++;
-            if (x >= encounterState.mapDimX)
-            {
-                x = 0;
-                y++
-            }
-        }
-
-        encounterState.addPlayer(encounterPlayer._id);
-        cb();
-    });
-}
+        error500(res, error);
+    }
+});
 
 router.post('/removeplayer/:encounter_id', function (req, res)
 {
-    Encounter.findById(req.params.encounter_id, function (error, encounter)
+    try
     {
-        if (error)
+        encounterService.removePlayer(req.params.encounter_id, req.body.playerId, function()
         {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        //res.json(encounterPlayer);
-        encounter.removePlayer(req.body.playerID);
-        EncounterPlayer.remove({_id: req.body.playerID}, function (error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error removing encounter player");
-                return;
-            }
-            res.send("OK");
+            res.send('OK');
         });
-    });
+    }
+    catch (error)
+    {
+        error500(res, error);
+    }
 });
 
 router.get('/encounterstate/:encounter_id', function (req, res)
 {
-    Encounter.findById(req.params.encounter_id, function (error, encounter)
+    try
     {
-        if (error)
+        encounterService.getEncounterState(req.params.encounter_id, function(encounterState)
         {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        EncounterPlayer.find({_id: {$in: encounter.players}}, function (error, players)
-        {
-            if (error)
-            {
-                res.status(500).send("Error finding encounter players");
-                return;
-            }
-
-            encounter.players = players;
-            res.json(encounter);
+            res.json(encounterState);
         });
-    });
-});
-
-router.post('/hitplayer', function (req, res)
-{
-    EncounterPlayer.findById(req.body.playerID, function (error, player)
+    }
+    catch (error)
     {
-        if (error)
-        {
-            res.status(500).send("Error finding encounter player");
-            return;
-        }
-
-        player.hitPoints += req.body.hit;
-        if (!player.npc && player.hitPoints < -9)
-        {
-            player.status = "DEAD";
-        }
-        else if (player.npc && player.hitPoints < 1)
-        {
-            player.status = "DEAD"
-        }
-
-        player.save(function (error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving encounter player");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
+        error500(res, error);
+    }
 });
 
 router.post('/setinitiative', function (req, res)
 {
-    EncounterPlayer.findById(req.body.playerID, function (error, player)
+    try
     {
-        if (error)
+        encounterService.setInitiative(req.body.playerId, req.body.initiative, function()
         {
-            res.status(500).send("Error finding encounter player");
-            return;
-        }
-
-        player.initiative = req.body.initiative;
-        player.save(function (error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving player");
-                return;
-            }
-
             res.send("OK");
         });
-    });
-});
-
-router.post('/togglevisible', function (req, res)
-{
-    EncounterPlayer.findById(req.body.playerID, function (error, player)
+    }
+    catch (error)
     {
-        if (error)
-        {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        player.toggleVisible();
-        player.save(function (error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving player");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
+        error500(res, error);
+    }
 });
 
 router.post('/setactive/:encounter_id', function (req, res)
 {
-    Encounter.findById(req.params.encounter_id, function (error, encounter)
+    try
     {
-        if (error)
+        encounterService.setActive(req.params.encounter_id, req.body.active, function()
         {
-            res.status(500).send("Error finding encounter");
-            return;
-        }
-
-        encounter.setActive(req.body.active);
-        encounter.save(function (error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving encounter");
-                return;
-            }
-
             res.send("OK");
         });
-    });
+    }
+    catch (error)
+    {
+        error500(res, error);
+    }
+    // Encounter.findById(req.params.encounter_id, function (error, encounter)
+    // {
+    //     if (error)
+    //     {
+    //         res.status(500).send("Error finding encounter");
+    //         return;
+    //     }
+    //
+    //     encounter.setActive(req.body.active);
+    //     encounter.save(function (error)
+    //     {
+    //         if (error)
+    //         {
+    //             res.status(500).send("Error saving encounter");
+    //             return;
+    //         }
+    //
+    //         res.send("OK");
+    //     });
+    // });
 });
 
 router.post('/updatemapdata/:encounter_id', function (req, res)
@@ -496,14 +342,11 @@ router.post('/disconnect/:encounter_id', function (req, res)
         }
 
         var id = req.body.id;
-        console.log("Disconnect " + id);
         for (var i = 0; i < encounter.connectedUsers.length; i++)
         {
-            console.log(JSON.stringify(encounter.connectedUsers[i]));
             if (encounter.connectedUsers[i].userId === id)
             {
                 encounter.connectedUsers.splice(i, 1);
-                console.log("Found and removed disconnected user");
             }
         }
 

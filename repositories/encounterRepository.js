@@ -5,11 +5,15 @@ var Encounter = mongoose.model('Encounter');
 
 var encounterRepository = {};
 
-encounterRepository.readById = function (encounterId, callback)
+encounterRepository.read = function (encounterId, callback)
 {
     Encounter.findById(encounterId, function(error, encounter)
     {
         handleError(error);
+        if (encounter === null)
+        {
+            throw new Error('Encounter with id: ' + encounterId + ' not found.');
+        }
         callback(encounter);
     });
 };
@@ -30,6 +34,15 @@ encounterRepository.createEncounter = function (title, campaignId, description, 
             callback(encounter);
         }
     )
+};
+
+encounterRepository.update = function (encounter, callback)
+{
+    encounter.save(function (error)
+    {
+        handleError(error);
+        callback();
+    })
 };
 
 function handleError(error)
