@@ -39,6 +39,14 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             return false;
     };
 
+    $scope.toggleGrid = function () {
+        EncounterService.gridEnabled = !EncounterService.gridEnabled;
+    };
+
+    $scope.gridState = function () {
+        return EncounterService.gridEnabled;
+    };
+
     socket.on('init', function () {
         EncounterService.init(encounterID).then(function () {
             $scope.host = EncounterService.isHost();

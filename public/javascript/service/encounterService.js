@@ -13,6 +13,8 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 
     encounterService.hoverCell = null;
 
+    encounterService.gridEnabled = true;
+
     encounterService.updateHasRun = false;
 
     encounterService.tileSize = 50;
@@ -27,30 +29,21 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
             owner:'bob',
             text:'Fire',
             color:'hsla(0,100%,50%,0.3)',
-            cells:[
-                {x:0, y:1},
-                {x:2, y:4}
-            ]
+            cells:[]
         },
         {
             uid: 1,
             owner:'bob',
             text:'Water',
             color:'hsla(240,100%,50%,0.3)',
-            cells:[
-                {x:3, y:1},
-                {x:2, y:2}
-            ]
+            cells:[]
         },
         {
             uid: 2,
             owner:'bob',
             text:'Lightning',
             color:'hsla(48,100%,50%,0.3)',
-            cells:[
-                {x:1, y:2},
-                {x:4, y:3}
-            ]
+            cells:[]
         }
     ];
 
