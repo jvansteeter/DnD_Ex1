@@ -242,7 +242,9 @@
                     <li ng-repeat="note in notes" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
                         <div style="display: flex; height: 42px;">
                             <color-picker ng-show="isHost()" ng-model="note.color" options="note_options" style="align-self: center;"></color-picker>
-                            <span style="align-self: center; margin-right: auto">{{note.text}}</span>
+
+                            <input ng-model="note.text" ng-if="isHost()" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
+                            <span ng-if="!isHost()" style="align-self: center; margin-right: auto">{{note.text}}</span>
 
                             <span ng-show="isHost()" style="align-self: center">
                                 <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
@@ -253,7 +255,7 @@
                     </li>
                 </ul>
             </div>
-            <md-button ng-show="isHost()" class="md-raised">Add Note</md-button>
+            <md-button ng-click="addNote()" ng-show="isHost()" class="md-raised">Add Note</md-button>
         </div>
 
 

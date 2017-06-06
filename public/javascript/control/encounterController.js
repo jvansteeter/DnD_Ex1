@@ -47,6 +47,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return EncounterService.gridEnabled;
     };
 
+    $scope.addNote = function(){
+        EncounterService.addNote();
+    };
+
     socket.on('init', function () {
         EncounterService.init(encounterID).then(function () {
             $scope.host = EncounterService.isHost();

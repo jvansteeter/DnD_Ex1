@@ -21,8 +21,8 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     encounterService.map_transform = {x:0, y:0, scale:1};
     encounterService.canvas_state = {res_x:0, res_y: 0, clear_offset: 1000};
 
+    var note_uid_tally = 3;
     encounterService.selected_note_uid = null;
-
     encounterService.mock_notes = [
         {
             uid: 0,
@@ -46,6 +46,17 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
             cells:[]
         }
     ];
+
+    encounterService.addNote = function(){
+        encounterService.mock_notes.push({
+            uid: note_uid_tally,
+            owner: '',
+            text: 'Default Text',
+            color: 'hsla(0,0%,0%,1)',
+            cells: []
+        });
+        note_uid_tally += 1;
+    };
 
     encounterService.init = function (inputID)
     {
