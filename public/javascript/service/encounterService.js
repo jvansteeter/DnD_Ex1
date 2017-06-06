@@ -11,36 +11,42 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         mapResY: 0
     };
 
+    encounterService.hoverCell = null;
+
     encounterService.updateHasRun = false;
 
     encounterService.tileSize = 50;
     encounterService.map_transform = {x:0, y:0, scale:1};
     encounterService.canvas_state = {res_x:0, res_y: 0, clear_offset: 1000};
 
+    encounterService.selected_note_uid = null;
 
     encounterService.mock_notes = [
         {
+            uid: 0,
             owner:'bob',
             text:'Fire',
-            color:'hsl(0,100%,50%)',
+            color:'hsla(0,100%,50%,0.3)',
             cells:[
                 {x:0, y:1},
                 {x:2, y:4}
             ]
         },
         {
+            uid: 1,
             owner:'bob',
             text:'Water',
-            color:'hsl(240,100%,50%)',
+            color:'hsla(240,100%,50%,0.3)',
             cells:[
                 {x:3, y:1},
                 {x:2, y:2}
             ]
         },
         {
+            uid: 2,
             owner:'bob',
             text:'Lightning',
-            color:'hsl(48,100%,50%)',
+            color:'hsla(48,100%,50%,0.3)',
             cells:[
                 {x:1, y:2},
                 {x:4, y:3}

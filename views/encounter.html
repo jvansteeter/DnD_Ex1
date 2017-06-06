@@ -46,8 +46,8 @@
     <script src="javascript/map/mapMain.js"></script>
     <script src="javascript/control/encounterController.js"></script>
 
-    Color picker dependencies
-    <link rel="stylesheet" href="javascript/angular-color-picker/angularjs-color-picker.min.css" />
+    <!--Color picker dependencies-->
+    <link rel="stylesheet" href="javascript/angular-color-picker/angularjs-color-picker.min.css"/>
     <script src="bower_components/tinycolor/dist/tinycolor-min.js"></script>
     <script src="javascript/angular-color-picker/angularjs-color-picker.min.js"></script>
 
@@ -98,7 +98,7 @@
 <div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
 
     <!--Sidebar Content-->
-    <md-sidenav  class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
+    <md-sidenav class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
         <!--Encounter Settings-->
         <md-toolbar class="md-theme-indigo">
             <h1 class="md-toolbar-tools">Encounter</h1>
@@ -152,7 +152,9 @@
         <!--Player Status Nav-->
         <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
             <!--Blue Players Tag-->
-            <div><li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li></div>
+            <div>
+                <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
+            </div>
             <!--List of Players-->
             <div class="initiative-box" style="flex:1; overflow-y: scroll;">
                 <ul ng-model="players" class="list-group">
@@ -227,39 +229,21 @@
                 </ul>
             </div>
             <!--Red Notation Box-->
-            <div><li class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733"><h4>Notations</h4></li></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <!--Notes-->
-            <md-list flex>
-                <md-list-item class="note_bar" ng-click="null" ng-repeat="note in notes" style="border-left:10px solid {{note.color}}">
-                    <color-picker ng-model="note.color" options="note_options" style="align-self: center; padding-left:0;"></color-picker>
-                </md-list-item>
-            </md-list>
-
-
-
-
+            <div>
+                <li class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733"><h4>Notations</h4></li>
+            </div>
 
 
             <div class="initiative-box" style="flex:1; overflow-y: scroll;">
                 <ul class="list-group">
-                    <li ng-repeat="note in notes" class="list-group-item" style="padding-left: 0; padding-top:0; padding-bottom: 0; height: 42px;">
-                        <div style="display: flex;">
+                    <li ng-repeat="note in notes" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
+                        <div style="display: flex; height: 42px;">
                             <!--<color-picker ng-model="note.color" options="note_options" style="align-self: center;"></color-picker>-->
                             <span style="align-self: center; margin-right: auto">{{note.text}}</span>
-                            <span style="width:20px;"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+
+                            <span ng-if="isNoteSelected(note)" style="align-self: center; width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
+                            <span ng-if="!isNoteSelected(note)" style="align-self: center; width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
+
                             <span style="align-self: center"><i class="fa fa-close"></i></span>
                         </div>
                     </li>
@@ -267,22 +251,6 @@
             </div>
             <md-button class="md-raised">Add Note</md-button>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <!--Map Container-->

@@ -166,7 +166,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             }
             else{
                 // the mouse is over a portion of the screen that is NOT part of the map
-                EncounterService.hoverCell = undefined;
+                EncounterService.hoverCell = null;
             }
         }
     };
@@ -179,12 +179,10 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
     $scope.mouseLeave = function (event) {
         mouseDown = false;
-        EncounterService.hoverCell = {x: -1, y: -1};
-        // body.css({"overflow":"visible"});
+        EncounterService.hoverCell = null;
     };
 
     $scope.mouseEnter = function () {
-        // body.css({"overflow":"hidden"});
     };
 
     $scope.mouseUp = function () {
