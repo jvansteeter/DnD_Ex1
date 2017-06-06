@@ -21,7 +21,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
     $scope.notes = EncounterService.mock_notes;
     $scope.note_options = {
-        swatchOnly: [true]
+        format: ['hsl'],
+        swatchOnly: true
 	};
 
 	socket.on('init', function ()

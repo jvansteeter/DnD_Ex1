@@ -24,19 +24,20 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
 
         context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
 
-        var color_index = 0;
-        for(var user in EncounterService.notes){
-            var color_data = EncounterService.colors[color_index];
+        for(var i = 0; i < EncounterService.mock_notes.length; i++){
+            var user_group = EncounterService.mock_notes[i];
+            context.fillStyle = user_group.color;
 
-            context.fillStyle = "rgba(" + color_data[0] + "," + color_data[1] + "," + color_data[2] + ", 0.2)";
+            var cells = user_group.cells;
+            for(var j = 0; j < cells.length; j++){
+                var x = cells[j].x;
+                var y = cells[j].y;
 
-            var cells = EncounterService.notes[user];
-            for(var cell in cells){
-                var cell_actual = EncounterService.notes[user][cell];
-                context.fillRect(tileSize * cell_actual.x, tileSize * cell_actual.y, tileSize, tileSize);
+                context.fillRect(tileSize * x, tileSize * y, tileSize, tileSize);
             }
-            color_index++;
+
         }
+
         $window.requestAnimationFrame(draw);
 	}
 

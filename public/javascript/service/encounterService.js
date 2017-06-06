@@ -17,37 +17,21 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     encounterService.map_transform = {x:0, y:0, scale:1};
     encounterService.canvas_state = {res_x:0, res_y: 0, clear_offset: 1000};
 
-    encounterService.colors = [
-        [204,0,0],
-        [0,0,204],
-        [255,204,0],
-        [0,204,0],
-        [0,255,255],
-        [255,51,204],
-        [255,102,0],
-        [102,0,204]
-    ];
-
-    encounterService.notes = [
-        [{x:0,y:0}, {x:1,y:1}, {x:2,y:2}, {x:3,y:3}, {x:4,y:4}],
-        [{x:1,y:0}, {x:2,y:1}, {x:3,y:2}, {x:4,y:3}, {x:0,y:4}],
-        [{x:2,y:0}, {x:3,y:1}, {x:4,y:2}, {x:0,y:3}, {x:1,y:4}]
-    ];
 
     encounterService.mock_notes = [
         {
             owner:'bob',
             text:'Fire',
-            color:'#cc0000',
+            color:'hsl(0,100%,50%)',
             cells:[
                 {x:0, y:1},
-                {x:2, y:5}
+                {x:2, y:4}
             ]
         },
         {
             owner:'bob',
             text:'Water',
-            color:'#0000cc',
+            color:'hsl(240,100%,50%)',
             cells:[
                 {x:3, y:1},
                 {x:2, y:2}
@@ -56,10 +40,10 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         {
             owner:'bob',
             text:'Lightning',
-            color:'#ffcc00',
+            color:'hsl(48,100%,50%)',
             cells:[
                 {x:1, y:2},
-                {x:5, y:3}
+                {x:4, y:3}
             ]
         }
     ];
