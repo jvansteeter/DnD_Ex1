@@ -3,3 +3,14 @@
     background-color: rgba(255,0,30,0.32);
 }
 
+.note_container{
+    border-top: 1px solid #dddddd;
+    padding-top: 0;
+}
+
+.note_bar{
+    background-color: #ffffff;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
