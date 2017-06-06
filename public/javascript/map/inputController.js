@@ -19,6 +19,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     var height;
 
     var mouseDown = false;
+    var dragging = false;
     var mouseX = 0;
     var mouseY = 0;
 
@@ -58,17 +59,14 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     }
 
     $scope.click = function (event) {
-        if (EncounterService.selected_note_uid === null) {
-            handle_default_click();
-        } else {
-            handle_note_click();
-        }
+
     };
 
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
 
         if (mouseDown) {
+            dragging = true;
             var start_trans_x = EncounterService.map_transform.x;
             var start_trans_y = EncounterService.map_transform.y;
             var trans_scale = EncounterService.map_transform.scale;
@@ -126,6 +124,16 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
     $scope.mouseUp = function () {
         mouseDown = false;
+
+        if(!dragging){
+            if (EncounterService.selected_note_uid === null) {
+                handle_default_mouseUp();
+            } else {
+                handle_note_mouseUp();
+            }
+        }
+
+        dragging = false;
     };
 
     $scope.mouseScroll = function (event, delta, deltaX, deltaY) {
@@ -173,7 +181,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         EncounterService.map_transform.y += y_offset;
     };
 
-    function handle_default_click() {
+    function handle_default_mouseUp() {
         var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
         var players = EncounterService.encounterState.players;
 
@@ -242,7 +250,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         }
     }
 
-    function handle_note_click() {
+    function handle_note_mouseUp() {
         var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
         var current_note_id = EncounterService.selected_note_uid;
         var found_note = false;
