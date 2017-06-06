@@ -50,7 +50,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         draw();
     }
 
-    function draw(){
+    function draw() {
         EncounterService.canvas_state.res_x = canvas[0].getBoundingClientRect().width;
         EncounterService.canvas_state.res_y = canvas[0].getBoundingClientRect().height;
 
@@ -58,78 +58,17 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     }
 
     $scope.click = function (event) {
-        var canvasPts = screenToMapDim({x: event.clientX, y: event.clientY});
-        var players = EncounterService.encounterState.players;
-
-        var selectedCount = 0;
-        var selectedIndex = -1;
-
-        // before processing the click, check for any selected players
-        for (var i = 0; i < players.length; i++) {
-            if (angular.isDefined(players[i].isSelected)) {
-                if (players[i].isSelected == true) {
-                    selectedIndex = i;
-                    selectedCount++;
-                }
-            }
-        }
-
-        // if there is more than one piece selected, un-select all of them and return
-        if (selectedCount > 1) {
-            for (var j = 0; j < players.length; j++) {
-                players[j].isSelected = false;
-            }
-            return;
-        }
-
-        // there is a token selected, condition check the move location
-        if (selectedCount == 1) {
-            // is there a token on the destination location
-            for (var x = 0; x < players.length; x++) {
-                var player = players[x];
-                if (player.mapX == canvasPts.x && player.mapY == canvasPts.y) {
-                    //if a token is found, un-select the selected token and stop
-                    players[selectedIndex].isSelected = false;
-                    return;
-                }
-            }
-
-            // move the selected token
-            if ((canvasPts.x >= 0 && canvasPts.x < EncounterService.encounterState.mapDimX) && (canvasPts.y >= 0 && canvasPts.y < EncounterService.encounterState.mapDimY)) {
-                players[selectedIndex].mapX = canvasPts.x;
-                players[selectedIndex].mapY = canvasPts.y;
-            }
-
-            // perpetuate the change
-            EncounterService.updatePlayer(selectedIndex);
-
-            // un-select the selected token
-            players[selectedIndex].isSelected = false;
-        }
-
-        if (selectedCount == 0) {
-            // search for a token that was hot by the mouse event
-            for (var k = 0; k < players.length; k++) {
-                if (players[k].mapX == canvasPts.x && players[k].mapY == canvasPts.y) {
-                    //if a token is found, select it and stop
-                    if (players[k].visible) {
-                        players[k].isSelected = true;
-                    }
-                    else {
-                        if (EncounterService.isHost()) {
-                            players[k].isSelected = true;
-                        }
-                    }
-                    break;
-                }
-            }
+        if (EncounterService.selected_note_uid === null) {
+            handle_default_click();
+        } else {
+            handle_note_click();
         }
     };
 
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
 
-        if(mouseDown){
+        if (mouseDown) {
             var start_trans_x = EncounterService.map_transform.x;
             var start_trans_y = EncounterService.map_transform.y;
             var trans_scale = EncounterService.map_transform.scale;
@@ -144,13 +83,13 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             mouseY = event.clientY;
         }
         else {
-            var newCell = screenToMapDim({x: event.clientX, y: event.clientY});
+            var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
             var max_x = EncounterService.encounterState.mapDimX;
             var max_y = EncounterService.encounterState.mapDimY;
 
-            if(newCell.x < max_x && newCell.x >= 0 && newCell.y < max_y && newCell.y >= 0){
+            if (mapDim_mouse.x < max_x && mapDim_mouse.x >= 0 && mapDim_mouse.y < max_y && mapDim_mouse.y >= 0) {
                 // the mouse is over the map
-                EncounterService.hoverCell = {x: newCell.x, y: newCell.y};
+                EncounterService.hoverCell = {x: mapDim_mouse.x, y: mapDim_mouse.y};
 
                 // check if the hoverCell coincides with any player tokens
                 var players = EncounterService.encounterState.players;
@@ -164,7 +103,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
                     }
                 }
             }
-            else{
+            else {
                 // the mouse is over a portion of the screen that is NOT part of the map
                 EncounterService.hoverCell = null;
             }
@@ -234,6 +173,102 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         EncounterService.map_transform.y += y_offset;
     };
 
+    function handle_default_click() {
+        var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
+        var players = EncounterService.encounterState.players;
+
+        var selectedCount = 0;
+        var selectedIndex = -1;
+
+        // before processing the click, check for any selected players
+        for (var i = 0; i < players.length; i++) {
+            if (angular.isDefined(players[i].isSelected)) {
+                if (players[i].isSelected === true) {
+                    selectedIndex = i;
+                    selectedCount++;
+                }
+            }
+        }
+
+        // if there is more than one piece selected, un-select all of them and return
+        if (selectedCount > 1) {
+            for (var j = 0; j < players.length; j++) {
+                players[j].isSelected = false;
+            }
+            return;
+        }
+
+        // there is a token selected, condition check the move location
+        if (selectedCount === 1) {
+            // is there a token on the destination location
+            for (var x = 0; x < players.length; x++) {
+                var player = players[x];
+                if (player.mapX === mapDim_mouse.x && player.mapY === mapDim_mouse.y) {
+                    //if a token is found, un-select the selected token and stop
+                    players[selectedIndex].isSelected = false;
+                    return;
+                }
+            }
+
+            // move the selected token
+            if ((mapDim_mouse.x >= 0 && mapDim_mouse.x < EncounterService.encounterState.mapDimX) && (mapDim_mouse.y >= 0 && mapDim_mouse.y < EncounterService.encounterState.mapDimY)) {
+                players[selectedIndex].mapX = mapDim_mouse.x;
+                players[selectedIndex].mapY = mapDim_mouse.y;
+            }
+
+            // perpetuate the change
+            EncounterService.updatePlayer(selectedIndex);
+
+            // un-select the selected token
+            players[selectedIndex].isSelected = false;
+        }
+
+        if (selectedCount === 0) {
+            // search for a token that was hot by the mouse event
+            for (var k = 0; k < players.length; k++) {
+                if (players[k].mapX === mapDim_mouse.x && players[k].mapY === mapDim_mouse.y) {
+                    //if a token is found, select it and stop
+                    if (players[k].visible) {
+                        players[k].isSelected = true;
+                    }
+                    else {
+                        if (EncounterService.isHost()) {
+                            players[k].isSelected = true;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    function handle_note_click() {
+        var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
+        var current_note_id = EncounterService.selected_note_uid;
+        var found_note = false;
+
+        // find the note group in the EncounterService
+        for (var i = 0; i < EncounterService.mock_notes.length; i++) {
+            if (EncounterService.mock_notes[i].uid === current_note_id) {
+                found_note = true;
+
+                var cells = EncounterService.mock_notes[i].cells;
+                var cell_present = false;
+                for (var j = 0; j < cells.length; j++) {
+                    if (cells[j].x === mapDim_mouse.x && cells[j].y === mapDim_mouse.y) {
+                        cell_present = true;
+                        EncounterService.mock_notes[i].cells.splice(j, 1);
+                    }
+                }
+                if (!cell_present) {
+                    EncounterService.mock_notes[i].cells.push({x: mapDim_mouse.x, y: mapDim_mouse.y});
+                }
+            }
+            if (found_note)
+                break;
+        }
+    }
+
     function screenToCanvasRes(coor) {
         var rect = canvas[0].getBoundingClientRect();
         var canvasX = coor.x - rect.left;
@@ -244,8 +279,8 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     function screenToMapRes(coor) {
         var canvas_res_coor = screenToCanvasRes(coor);
 
-        var mapX = (canvas_res_coor.x - EncounterService.map_transform.x)/EncounterService.map_transform.scale;
-        var mapY = (canvas_res_coor.y - EncounterService.map_transform.y)/EncounterService.map_transform.scale;
+        var mapX = (canvas_res_coor.x - EncounterService.map_transform.x) / EncounterService.map_transform.scale;
+        var mapY = (canvas_res_coor.y - EncounterService.map_transform.y) / EncounterService.map_transform.scale;
 
         return {x: mapX, y: mapY};
     }

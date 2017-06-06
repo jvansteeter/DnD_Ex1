@@ -60,7 +60,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     init();
 
     /***********************************************************************************************
-     * handle_notation_mode()
+     * handle_default_mode()
      ***********************************************************************************************
      * Controller specific route for handling how the map should render when in default mode
      */
