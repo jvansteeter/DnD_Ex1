@@ -161,7 +161,7 @@
                 <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
             </div>
             <!--List of Players-->
-            <div class="initiative-box" style="flex:1; overflow-y: scroll;">
+            <div class="initiative-box" style="flex:2; overflow-y: scroll;">
                 <ul ng-model="players" class="list-group">
                     <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
                         class="list-group-item" ng-hide="!isHost() && !player.visible"
@@ -237,24 +237,23 @@
             <div>
                 <li class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733"><h4>Notations</h4></li>
             </div>
-
-
             <div class="initiative-box" style="flex:1; overflow-y: scroll;">
                 <ul class="list-group">
                     <li ng-repeat="note in notes" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
                         <div style="display: flex; height: 42px;">
-                            <color-picker ng-model="note.color" options="note_options" style="align-self: center;"></color-picker>
+                            <color-picker ng-show="isHost()" ng-model="note.color" options="note_options" style="align-self: center;"></color-picker>
                             <span style="align-self: center; margin-right: auto">{{note.text}}</span>
 
-                            <span ng-if="isNoteSelected(note)" style="align-self: center; width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
-                            <span ng-if="!isNoteSelected(note)" style="align-self: center; width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
-
-                            <span style="align-self: center"><i class="fa fa-close"></i></span>
+                            <span ng-show="isHost()" style="align-self: center">
+                                <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
+                                <span ng-if="!isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
+                                <span><i class="fa fa-close"></i></span>
+                            </span>
                         </div>
                     </li>
                 </ul>
             </div>
-            <md-button class="md-raised">Add Note</md-button>
+            <md-button ng-show="isHost()" class="md-raised">Add Note</md-button>
         </div>
 
 
