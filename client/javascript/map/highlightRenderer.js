@@ -122,8 +122,8 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         var note_uid = EncounterService.selected_note_uid;
         var color = null;
 
-        for (var i = 0; i < EncounterService.mock_notes.length; i++) {
-            var note_group = EncounterService.mock_notes[i];
+        for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
+            var note_group = EncounterService.encounterState.mapNotations[i];
             if (note_group.uid === note_uid)
                 color = note_group.color;
         }

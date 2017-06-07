@@ -25,7 +25,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
     $scope.toggleNoteSelected = function (note) {
         if (note.uid !== EncounterService.selected_note_uid) {
-            EncounterService.selected_note_uid = note.uid;
+            EncounterService.selected_note_uid = note._id;
         }
         else {
             EncounterService.selected_note_uid = null;
@@ -33,7 +33,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.isNoteSelected = function (note) {
-        if (note.uid === EncounterService.selected_note_uid)
+        if (note._id === EncounterService.selected_note_uid)
             return true;
         else
             return false;
@@ -52,9 +52,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.removeNote = function(note){
-        console.log(note);
         EncounterService.removeNote(note);
     };
+
+
 
     socket.on('init', function () {
         EncounterService.init(encounterId).then(function () {
@@ -407,24 +408,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         $mdSidenav('side_menu').toggle();
     };
 
-
-    // $scope.toggleEncounterOpen = function()
-    // {
-    // 	// if ($scope.encounterState.active)
-    // 	// {
-    // 	// 	$scope.areYouSureTitle = "Close Encounter?";
-    // 	// }
-    // 	// else
-    // 	// {
-    // 	// 	$scope.areYouSureTitle = "Open Encounter?";
-    // 	// }
-    // 	modal = $uibModal.open({
-    // 		animation: true,
-    // 		templateUrl: 'modal/areYouSureModal.html',
-    // 		scope: $scope,
-    // 		size: ''
-    // 	});
-    // };
 
     function updateServerPlayer(player) {
         var url = 'api/encounter/updateplayer';
