@@ -125,7 +125,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
     {
         if ($scope.campaign)
         {
-            return $scope.campaign.hosts.indexOf(Profile.getUserID()) != -1;
+            return $scope.campaign.hosts.indexOf(Profile.getUserId()) != -1;
         }
         else
         {

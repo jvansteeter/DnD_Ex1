@@ -66,7 +66,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
-        console.log(drag_threshold);
         drag_threshold -= 1;
 
         if (mouseDown) {

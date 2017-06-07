@@ -87,7 +87,7 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 
     encounterService.isHost = function ()
     {
-        if (encounterService.encounterState.hostID === Profile.getUserID())
+        if (encounterService.encounterState.hostId === Profile.getUserId())
         {
             return true;
         }
@@ -115,34 +115,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         {
 
         })
-    };
-
-    encounterService.connect = function ()
-    {
-        var id = Profile.getUserID();
-        var username = Profile.getFirstName() + " " + Profile.getLastName();
-        var url = 'api/encounter/connect/' + encounterService.encounterID;
-        var data = {
-            id: id,
-            username: username
-        };
-        $http.post(url, data).success(function(data)
-        {
-            encounterService.update();
-        });
-    };
-
-    encounterService.disconnect = function()
-    {
-        console.log("disconnecting user");
-        var url = 'api/encounter/disconnect/' + encounterService.encounterID;
-        var data = {
-            id: Profile.getUserID()
-        };
-        $http.post(url, data).success(function(data)
-        {
-            encounterService.update();
-        });
     };
 
     encounterService.updatePlayer = function(index)

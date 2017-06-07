@@ -41,9 +41,16 @@
   <script src="javascript/map/gridRenderer.js"></script>
   <script src="javascript/map/tokenRenderer.js"></script>
   <script src="javascript/map/highlightRenderer.js"></script>
+  <script src="javascript/map/noteRenderer.js"></script>
   <script src="javascript/map/inputController.js"></script>
   <script src="javascript/map/mapMain.js"></script>
   <script src="javascript/control/encounterController.js"></script>
+
+  <!--Color picker dependencies-->
+  <link rel="stylesheet" href="javascript/angular-color-picker/angularjs-color-picker.min.css"/>
+  <script src="bower_components/tinycolor/dist/tinycolor-min.js"></script>
+  <script src="javascript/angular-color-picker/angularjs-color-picker.min.js"></script>
+
 
   <title>Dungeon Map</title>
   <style>
@@ -88,8 +95,7 @@
 </nav>
 
 <!-- Content Space -->
-<div ng-controller="encounterController"
-     style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
+<div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
 
   <!--Sidebar Content-->
   <md-sidenav class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
@@ -105,18 +111,11 @@
         <span ng-if="!encounterState.active">Open Encounter</span>
         <span ng-if="encounterState.active">Close Encounter</span>
       </md-list-item>
-    </md-list>
+      <md-list-item ng-click="toggleGrid()">
+        <span ng-if="gridState()">Disable Grid</span>
+        <span ng-if="!gridState()">Enable Grid</span>
+      </md-list-item>
 
-    <!--Notation Settings-->
-    <md-toolbar class="md-theme-indigo">
-      <h1 class="md-toolbar-tools">Notation</h1>
-    </md-toolbar>
-    <md-list>
-      <md-list-item ng-click="null" class="disabled">Erase All</md-list-item>
-      <md-list-item ng-click="null" class="disabled">Eraser</md-list-item>
-      <md-list-item ng-click="null" class="disabled">Pen Mode</md-list-item>
-      <md-list-item ng-click="null" class="disabled">Circle Mode</md-list-item>
-      <md-list-item ng-click="null" class="disabled">Cone Mode</md-list-item>
     </md-list>
 
     <!--Light Settings-->
@@ -133,15 +132,11 @@
   <!--Title Row-->
   <div style="margin-bottom:5px; display:flex">
     <!--Menu Toggle Button-->
-    <md-button class="md-raised" ng-click="toggleMenu()"
-               style="background-color:white; height:40px; align-self: center;">Menu
-    </md-button>
+    <md-button class="md-raised" ng-click="toggleMenu()" style="background-color:white; height:40px; align-self: center;">Menu</md-button>
     <!--Title Span-->
-    <span ng-bind="encounterState.title"
-          style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
+    <span ng-bind="encounterState.title" style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
     <!--Encounter State Span-->
-    <span ng-if="!encounterState.active"
-          style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
+    <span ng-if="!encounterState.active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
   </div>
 
   <!--Map Row-->
@@ -151,7 +146,10 @@
     <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
       <!--Blue Players Tag-->
       <div>
-        <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
+        <li class="list-group-item active" style="display: flex; padding-top: 5px; padding-bottom: 5px">
+          <span class="h4_inline" style="margin-right: auto;">Players</span>
+          <i class="fa fa-bolt fa-2x" style="align-self: center"></i></h4>
+        </li>
       </div>
       <!--List of Players-->
       <div class="initiative-box" style="flex:1; overflow-y: scroll;">
@@ -170,19 +168,17 @@
                   <span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
                 </div>
 
-                <span ng-if="isMyCharacter(player) || isHost()" ng-click="selectPlayer(player)" data-placement="bottom"
+                <span ng-if="isMyCharacter(player) || isHost()" data-placement="bottom"
                       data-template-url="modal/playerHealPopover.html" data-auto-close="1"
                       bs-popover style="cursor: pointer">
                       <i class="fa fa-heart"></i>
                     </span>
-                <span ng-if="!isHost() && !isMyCharacter(player)">
+                <span ng-if="!isHost() && !isMyCharacter(player)" ng-click="selectPlayer(player)">
                       <i class="fa fa-heart"></i>
                     </span>
                 <span ng-if="!isHost() && player.npc">???
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span
-                              ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span
-                              ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                      <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                      <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
                       <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
                     </span>
                 <span ng-if="isHost() || !player.npc">
@@ -211,8 +207,7 @@
                       <a href="#" ng-show="isHost() && player.npc && !player.visible" ng-click="toggleVisible(player)">
                         <i class="fa fa-eye-slash"></i>
                       </a>
-                      <span ng-if="isHost() || isMyCharacter(player)" ng-click="selectPlayer(player)" class="badge"
-                            data-placement="left"
+                      <span ng-if="isHost() || isMyCharacter(player)" class="badge" ng-click="selectPlayer(player)"
                             data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer"
                             bs-popover><i class="fa fa-bolt"></i>
                         <span ng-bind="player.initiative"></span>
@@ -229,7 +224,44 @@
           </li>
         </ul>
       </div>
+      <!--Red Notation Box-->
+      <div>
+        <li class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733; display: flex; padding-top: 5px; padding-bottom: 5px">
+          <span class="h4_inline" style="margin-right: auto;">Notations</span>
+          <md-menu ng-show="isHost()" style="align-self: center">
+            <i class="fa fa-bars fa-2x" ng-click="$mdMenu.open($event)"></i>
+            <md-menu-content>
+              <md-menu-item><md-button>Single Square</md-button></md-menu-item>
+              <md-menu-item><md-button>5ft Radius</md-button></md-menu-item>
+              <md-menu-item><md-button>10ft Radius</md-button></md-menu-item>
+              <md-menu-item><md-button>15ft Radius</md-button></md-menu-item>
+              <md-menu-item><md-button>20ft Radius</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </li>
+
+      </div>
+      <div class="initiative-box" style="flex:1; overflow-y: scroll;">
+        <ul class="list-group">
+          <li ng-repeat="note in notes" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
+            <div style="display: flex; height: 42px;">
+              <color-picker ng-show="isHost()" ng-model="note.color" options="note_options" style="align-self: center;"></color-picker>
+
+              <input ng-model="note.text" ng-if="isHost()" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
+              <span ng-if="!isHost()" style="align-self: center; margin-right: auto">{{note.text}}</span>
+
+              <span ng-show="isHost()" style="align-self: center">
+                                <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
+                                <span ng-if="!isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
+                                <span><i ng-click="removeNote(note)" class="fa fa-close"></i></span>
+                            </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <md-button ng-click="addNote()" ng-show="isHost()" class="md-raised">Add Note</md-button>
     </div>
+
 
     <!--Map Container-->
     <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">
@@ -238,27 +270,27 @@
         <div style="position: relative; height: 100%" id="mapDiv">
 
           <div ng-controller="mapRenderer">
-            <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}}
-                    height={{get_res_y()}}></canvas>
+            <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
           </div>
 
           <div ng-controller="gridRenderer">
-            <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}}
-                    height={{get_res_y()}}></canvas>
+            <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+          </div>
+
+          <div ng-controller="noteRenderer">
+            <canvas style="z-index:2; position:absolute;" id="noteCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
           </div>
 
           <div ng-controller="highlightRenderer">
-            <canvas style="z-index:2; position:absolute;" id="highlightCanvas" width={{get_res_x()}}
-                    height={{get_res_y()}}></canvas>
+            <canvas style="z-index:3; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
           </div>
 
           <div ng-controller="tokenRenderer">
-            <canvas style="z-index:3; position:absolute;" id="tokenCanvas" width={{get_res_x()}}
-                    height={{get_res_y()}}></canvas>
+            <canvas style="z-index:4; position:absolute;" id="tokenCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
           </div>
 
           <div ng-controller="inputController">
-            <canvas style="z-index:3; position:absolute; width: 100%; height: 100%"
+            <canvas style="z-index:5; position:absolute; width: 100%; height: 100%"
                     id="inputCanvas"
                     ng-click="click($event)"
                     ng-mousemove="mouseMove($event)"

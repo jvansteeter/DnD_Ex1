@@ -49,7 +49,7 @@ clientApp.factory('Profile', function($window, $http, $q)
         return user.username;
     };
 
-    profile.getUserID = function()
+    profile.getUserId = function()
     {
         // var data = $window.sessionStorage.getItem("userID");
         // return data;

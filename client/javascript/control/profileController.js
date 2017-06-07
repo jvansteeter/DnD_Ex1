@@ -62,7 +62,7 @@ clientApp.controller('profileController', function($scope, $window, $uibModal, $
 
 	$scope.listModalgetCharacters = function()
 	{
-		var url = 'api/character/all/' + Profile.getUserID();
+		var url = 'api/character/all/' + Profile.getUserId();
 		$http.get(url).success(function(data)
 		{
 			$scope.characters = data.characters;
