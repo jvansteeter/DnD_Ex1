@@ -17,7 +17,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.host = false;
     $scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
-    $scope.notes = EncounterService.mock_notes;
     $scope.note_options = {
         format: ['hsl'],
         swatchOnly: true
@@ -49,6 +48,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
     $scope.addNote = function(){
         EncounterService.addNote();
+		socket.emit('update:encounter',
+			{
+				encounterId: encounterId
+			});
+		$scope.updateEncounterState();
     };
 
     $scope.removeNote = function(note){

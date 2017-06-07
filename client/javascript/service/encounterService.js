@@ -33,14 +33,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         {
             encounterService.update();
         });
-
-        encounterService.mock_notes.push({
-            uid: note_uid_tally,
-            userId: '',
-            text: 'Default Text',
-            color: 'hsla(0,0%,0%,1)',
-            cells: []
-        });
     };
 
     encounterService.removeNote = function(note)
