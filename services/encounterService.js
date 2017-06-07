@@ -230,12 +230,12 @@ encounterService.uploadMap = function (encounterId, imageFile, callback)
 	})
 };
 
-encounterService.addMapNotation = function (encounterId, userId, text, callback)
+encounterService.addMapNotation = function (encounterId, userId, callback)
 {
 	encounterRepository.read(encounterId, function(error, encounter)
 	{
         handleError(error, callback);
-        mapNotationRepository.create(userId, text, function (error, mapNotation)
+        mapNotationRepository.create(userId, function (error, mapNotation)
         {
             handleError(error, callback);
             encounter.addMapNotation(mapNotation._id);

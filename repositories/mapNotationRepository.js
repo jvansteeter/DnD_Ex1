@@ -5,11 +5,10 @@ var MapNotation = mongoose.model('MapNotation');
 
 var mapNotation = {};
 
-mapNotation.create = function (userId, text, callback)
+mapNotation.create = function (userId, callback)
 {
 	var mapNotation = new MapNotation({
 		userId: userId,
-		text: text
 	});
 	mapNotation.save(function (error)
 	{

@@ -26,7 +26,15 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     encounterService.mock_notes = [
     ];
 
-    encounterService.addNote = function(){
+    encounterService.addNote = function()
+    {
+        var url = 'api/encounter/addmapnotation/' + encounterService.encounterState._id;
+        $http.get(url).then(function()
+        {
+            encounterService.update();
+        });
+
+
         encounterService.mock_notes.push({
             uid: note_uid_tally,
             userId: '',
@@ -36,15 +44,41 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         });
     };
 
-    encounterService.removeNote = function(note){
+    encounterService.removeNote = function(note)
+    {
         console.log(note);
-        var note_id = note.uid;
-        for(var i = 0; i < encounterService.mock_notes.length; i++){
-            if(encounterService.mock_notes[i].uid === note_id){
-                console.log('Doing a thing');
-                encounterService.mock_notes.splice(i,1);
+        var noteId = note._id;
+        for(var i = 0; i < encounterService.mock_notes.length; i++)
+        {
+            if(encounterService.mapNotations[i]._id === noteId)
+            {
+                var url = 'api/encounter/removemapnotation/' + encounterService.encounterState._id;
+                var data = {
+                    mapNotationId: noteId
+                };
+                $http.post(url, data).then(function()
+                {
+					console.log('Doing a thing');
+					encounterService.update();
+					break;
+					// encounterService.mock_notes.splice(i,1);
+                })
             }
         }
+    };
+
+    encounterService.updateNote = function (note)
+    {
+        console.log('attempting to update note');
+        var url = 'api/encounter/updatemapnotation';
+        var data = {
+            mapNotation: note
+        };
+        $http.post(url, data).then(function()
+        {
+            encounterService.update();
+			socket.emit('update:encounter');
+        })
     };
 
     encounterService.init = function (inputID)
