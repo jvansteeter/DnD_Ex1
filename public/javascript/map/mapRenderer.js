@@ -7,12 +7,14 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
 
     var bgImage = new Image();
 
-    var tileSize = 50;
+    var tileSize;
     var mapDataUpdate = false;
 
     function init() {
         canvas = $('#mapCanvas');
         context = canvas.get(0).getContext('2d');
+
+        tileSize = EncounterService.tileSize;
 
         draw();
     }

@@ -10,10 +10,43 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         mapResX: 0,
         mapResY: 0
     };
+
+    encounterService.hoverCell = null;
+
+    encounterService.gridEnabled = true;
+
     encounterService.updateHasRun = false;
 
+    encounterService.tileSize = 50;
     encounterService.map_transform = {x:0, y:0, scale:1};
     encounterService.canvas_state = {res_x:0, res_y: 0, clear_offset: 1000};
+
+    var note_uid_tally = 3;
+    encounterService.selected_note_uid = null;
+    encounterService.mock_notes = [
+    ];
+
+    encounterService.addNote = function(){
+        encounterService.mock_notes.push({
+            uid: note_uid_tally,
+            owner: '',
+            text: 'Default Text',
+            color: 'hsla(0,0%,0%,1)',
+            cells: []
+        });
+        note_uid_tally += 1;
+    };
+
+    encounterService.removeNote = function(note){
+        console.log(note);
+        var note_id = note.uid;
+        for(var i = 0; i < encounterService.mock_notes.length; i++){
+            if(encounterService.mock_notes[i].uid === note_id){
+                console.log('Doing a thing');
+                encounterService.mock_notes.splice(i,1);
+            }
+        }
+    };
 
     encounterService.init = function (inputID)
     {
@@ -128,6 +161,10 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     encounterService.setUpdateHasRunFlag = function(value)
     {
         this.updateHasRun = value;
+    };
+
+    encounterService.pushNotes = function(){
+
     };
 
     return encounterService;

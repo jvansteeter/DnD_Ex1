@@ -1,1 +1,1 @@
-angular.module('clientApp', ['ngAnimate', 'ngMaterial', 'mgcrea.ngStrap', 'ngSanitize', 'monospaced.mousewheel', 'ui.bootstrap', 'flow']);
+angular.module('clientApp', ['ngAnimate', 'ngMaterial', 'mgcrea.ngStrap', 'ngSanitize', 'monospaced.mousewheel', 'ui.bootstrap', 'flow', 'color.picker']);
