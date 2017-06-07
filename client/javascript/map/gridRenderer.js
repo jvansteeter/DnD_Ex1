@@ -11,7 +11,7 @@ clientApp.controller('gridRenderer', function ($scope, $window, EncounterService
         canvas = $('#gridCanvas');
 
         context = canvas.get(0).getContext('2d');
-        tileSize = EncounterService.tileSize;
+        tileSize = 50;
 
         draw();
     }
@@ -19,31 +19,37 @@ clientApp.controller('gridRenderer', function ($scope, $window, EncounterService
     function draw() {
         clear_canvas();
 
-        if(EncounterService.gridEnabled){
-            var x_offset = EncounterService.map_transform.x;
-            var y_offset = EncounterService.map_transform.y;
-            var scale = EncounterService.map_transform.scale;
+        var x_offset = EncounterService.map_transform.x;
+        var y_offset = EncounterService.map_transform.y;
+        var scale = EncounterService.map_transform.scale;
 
-            context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
+        context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
 
-            var dimX = EncounterService.encounterState.mapDimX;
-            var dimY = EncounterService.encounterState.mapDimY;
-            var resX = EncounterService.encounterState.mapResX;
-            var resY = EncounterService.encounterState.mapResY;
+        var dimX = EncounterService.encounterState.mapDimX;
+        var dimY = EncounterService.encounterState.mapDimY;
+        var resX = EncounterService.encounterState.mapResX;
+        var resY = EncounterService.encounterState.mapResY;
 
-            context.clearRect(0, 0, resX, resY);
-            context.fillStyle = "rgba(171,176,186,.3)";
-            for (var vertLine = 0; vertLine <= dimX; vertLine++) {
-                context.fillRect(tileSize * vertLine, 0, 2, dimY * tileSize);
-            }
+        context.clearRect(0, 0, resX, resY);
+        context.fillStyle = "rgba(171,176,186,.3)";
+        for (var vertLine = 0; vertLine <= dimX; vertLine++) {
+            context.fillRect(tileSize * vertLine, 0, 2, dimY * tileSize);
+        }
 
-            for (var horizLine = 0; horizLine <= dimY; horizLine++) {
-                context.fillRect(0, tileSize * horizLine, dimX * tileSize, 2);
-            }
+        for (var horizLine = 0; horizLine <= dimY; horizLine++) {
+            context.fillRect(0, tileSize * horizLine, dimX * tileSize, 2);
         }
 
         $window.requestAnimationFrame(draw);
     }
+
+    // $scope.getResX = function(){
+    //     return EncounterService.encounterState.mapResX;
+    // };
+    //
+    // $scope.getResY = function(){
+    //     return EncounterService.encounterState.mapResY;
+    // };
 
     $scope.get_res_x = function(){
         return EncounterService.canvas_state.res_x;
