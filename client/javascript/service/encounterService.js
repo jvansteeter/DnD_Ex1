@@ -84,33 +84,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         })
     };
 
-    encounterService.connect = function ()
-    {
-        var id = Profile.getUserID();
-        var username = Profile.getFirstName() + " " + Profile.getLastName();
-        var url = 'api/encounter/connect/' + encounterService.encounterID;
-        var data = {
-            id: id,
-            username: username
-        };
-        $http.post(url, data).success(function(data)
-        {
-            encounterService.update();
-        });
-    };
-
-    encounterService.disconnect = function()
-    {
-        var url = 'api/encounter/disconnect/' + encounterService.encounterID;
-        var data = {
-            id: Profile.getUserID()
-        };
-        $http.post(url, data).success(function(data)
-        {
-            encounterService.update();
-        });
-    };
-
     encounterService.updatePlayer = function(index)
     {
         var player = encounterService.encounterState.players[index];

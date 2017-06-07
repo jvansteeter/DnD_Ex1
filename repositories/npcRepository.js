@@ -9,21 +9,20 @@ npcRepository.read = function (npcId, callback)
 {
     NPC.findById(npcId, function(error, npc)
     {
-        handleError(error);
+        handleError(error, callback);
         if (npc === null)
         {
-            throw new Error('NPC with id: ' + npcId + ' not found.');
+            callback(new Error('NPC with id: ' + npcId + ' not found.'));
         }
-        callback(npc);
+        callback(error, npc);
     });
 };
 
-function handleError(error)
+function handleError(error, callback)
 {
     if (error)
     {
-        console.log(error);
-        throw error;
+        callback(error);
     }
 }
 

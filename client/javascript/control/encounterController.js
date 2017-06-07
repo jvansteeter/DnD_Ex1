@@ -45,18 +45,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 					id: id,
 					username: username
 				});
-
-			EncounterService.connect();
 		});
-	});
-
-	socket.on('new:joined', function (data)
-	{
-	});
-
-	socket.on('exit', function (data)
-	{
-		// Encounter.disconnect(data.id);
 	});
 
 	socket.on('update:encounter', function (data)

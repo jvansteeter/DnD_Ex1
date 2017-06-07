@@ -12,9 +12,9 @@ encounterRepository.read = function (encounterId, callback)
         handleError(error);
         if (encounter === null)
         {
-            throw new Error('Encounter with id: ' + encounterId + ' not found.');
+            callback(new Error('Encounter with id: ' + encounterId + ' not found.'));
         }
-        callback(encounter);
+        callback(error, encounter);
     });
 };
 
@@ -30,8 +30,8 @@ encounterRepository.createEncounter = function (title, campaignId, description, 
             active: active
         }, function (error, encounter)
         {
-            handleError(error);
-            callback(encounter);
+            handleError(error, callback);
+            callback(error, encounter);
         }
     )
 };
@@ -40,18 +40,17 @@ encounterRepository.update = function (encounter, callback)
 {
     encounter.save(function (error)
     {
-        handleError(error);
-        callback();
+        handleError(error, callback);
+        callback(error);
     })
 };
 
-function handleError(error)
+function handleError(error, callback)
 {
     if (error)
     {
-        console.log(error);
-        throw error;
-    }
+		callback(error);
+	}
 }
 
 module.exports = encounterRepository;

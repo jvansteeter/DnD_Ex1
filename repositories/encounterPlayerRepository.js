@@ -22,8 +22,8 @@ encounterPlayerRepository.create = function (name, userId, iconURL, armorClass, 
         });
     encounterPlayer.save(function (error)
     {
-        handleError(error);
-        callback(encounterPlayer);
+        handleError(error, callback);
+        callback(error, encounterPlayer);
     });
 };
 
@@ -31,13 +31,13 @@ encounterPlayerRepository.read = function (playerId, callback)
 {
     EncounterPlayer.findById(playerId, function(error, player)
     {
-        handleError(error);
+        handleError(error, callback);
         console.log(playerId);
         if (player === null)
         {
-            throw new Error('Player with id: ' + playerId + ' not found.');
+            callback(new Error('Player with id: ' + playerId + ' not found.'));
         }
-        callback(player);
+        callback(error, player);
     })
 };
 
@@ -45,8 +45,8 @@ encounterPlayerRepository.readAll = function (playerIds, callback)
 {
     EncounterPlayer.find({_id: {$in: playerIds}}, function (error, players)
     {
-        handleError(error);
-        callback(players);
+        handleError(error, callback);
+        callback(error, players);
     })
 };
 
@@ -54,8 +54,8 @@ encounterPlayerRepository.update = function (player, callback)
 {
     player.save(function (error)
     {
-        handleError(error);
-        callback();
+        handleError(error, callback);
+        callback(error);
     })
 };
 
@@ -63,17 +63,16 @@ encounterPlayerRepository.delete = function (playerId, callback)
 {
     EncounterPlayer.remove({_id: playerId}, function (error)
     {
-        handleError(error);
-        callback();
+        handleError(error, callback);
+        callback(error);
     })
 };
 
-function handleError(error)
+function handleError(error, callback)
 {
     if (error)
     {
-        console.log(error);
-        throw error;
+        callback(error);
     }
 }
 

@@ -1,5 +1,8 @@
 'use strict';
 
+var fs = require('fs-extra');
+var path = require('path');
+
 var encounterRepository = require('../repositories/encounterRepository');
 var userRepository = require('../repositories/userRepository');
 var characterRepository = require('../repositories/characterRepository');
@@ -10,35 +13,40 @@ var encounterService = {};
 
 encounterService.createEncounter = function (userId, title, campaignId, description, active, callback)
 {
-    userRepository.read(userId, function (user)
+    userRepository.read(userId, function (error, user)
     {
+        handleError(error, callback);
         var hostName = user.first_name + ' ' + user.last_name;
-        encounterRepository.createEncounter(title, campaignId, description, userId, hostName, active, function ()
+        encounterRepository.createEncounter(title, campaignId, description, userId, hostName, active, function (error)
         {
-            callback();
+            handleError(error, callback);
+            callback(error);
         });
     });
 };
 
 encounterService.getEncounterById = function (encounterId, callback)
 {
-    encounterRepository.read(encounterId, function (encounter)
+    encounterRepository.read(encounterId, function (error, encounter)
     {
-        callback(encounter);
+        callback(error, encounter);
     });
 };
 
 encounterService.addNPC = function (encounterId, npcId, callback)
 {
-    encounterService.getEncounterState(encounterId, function (encounter)
+    encounterService.getEncounterState(encounterId, function (error, encounter)
     {
-        npcRepository.read(npcId, function (npc)
+        handleError(error, callback);
+        npcRepository.read(npcId, function (error, npc)
         {
-            encounterPlayerRepository.create(npc.name, npc.userId, npc.iconURL, npc.armorClass, npc.hitPoints, npc.hitPoints, npc.passivePerception, false, npc.getSaves(), true, function (encounterPlayer)
+            handleError(error, callback);
+            encounterPlayerRepository.create(npc.name, npc.userId, npc.iconURL, npc.armorClass, npc.hitPoints, npc.hitPoints, npc.passivePerception, false, npc.getSaves(), true, function (error, encounterPlayer)
             {
-                addEncounterPlayerToMap(encounter, encounterPlayer, function()
+                handleError(error, callback);
+                addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback();
+                    callback(error);
                 })
             })
         })
@@ -47,15 +55,18 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 
 encounterService.addCharacter = function (encounterId, characterId, callback)
 {
-    encounterService.getEncounterState(encounterId, function(encounter)
+    encounterService.getEncounterState(encounterId, function(error, encounter)
     {
-        characterRepository.read(characterId, function(character)
+        handleError(error, callback);
+        characterRepository.read(characterId, function(error, character)
         {
-            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, false, character.getSaves(), true, function (encounterPlayer)
+            handleError(error, callback);
+            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, false, character.getSaves(), true, function (error, encounterPlayer)
             {
-                addEncounterPlayerToMap(encounter, encounterPlayer, function()
+                handleError(error, callback);
+                addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback();
+                    callback(error);
                 })
             })
         })
@@ -64,83 +75,167 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
 
 encounterService.removePlayer = function (encounterId, playerId, callback)
 {
-    encounterRepository.read(encounterId, function(encounter)
+    encounterRepository.read(encounterId, function(error, encounter)
     {
+        handleError(error, callback);
         encounter.removePlayer(playerId);
-        encounterPlayerRepository.delete(playerId, function ()
+        encounterPlayerRepository.delete(playerId, function (error)
         {
-            callback();
+            callback(error);
         })
     })
 };
 
 encounterService.getEncounterState = function (encounterId, callback)
 {
-    encounterRepository.read(encounterId, function (encounter)
+    encounterRepository.read(encounterId, function (error, encounter)
     {
-        encounterPlayerRepository.readAll(encounter.players, function (players)
+        handleError(error, callback);
+        encounterPlayerRepository.readAll(encounter.players, function (error, players)
         {
+            handleError(error, callback);
             encounter.players = players;
-            callback(encounter);
+            callback(error, encounter);
         })
     })
 };
 
 encounterService.damagePlayer = function (playerId, damage, callback)
 {
-    encounterPlayerRepository.read(playerId, function (player)
+    encounterPlayerRepository.read(playerId, function (error, player)
     {
+        handleError(error, callback);
         player.damage(damage);
-        encounterPlayerRepository.update(player, function ()
+        encounterPlayerRepository.update(player, function (error)
         {
-            callback();
+            callback(error);
         })
     })
 };
 
 encounterService.healPlayer = function (playerId, heal, callback)
 {
-    encounterService.damagePlayer(playerId, -heal, function ()
+    encounterService.damagePlayer(playerId, -heal, function (error)
     {
-        callback();
+        callback(error);
     })
 };
 
 encounterService.setInitiative = function (playerId, initiative, callback)
 {
-    encounterPlayerRepository.read(playerId, function (player)
+    encounterPlayerRepository.read(playerId, function (error, player)
     {
+        handleError(error, callback);
         player.initiative = initiative;
-        encounterPlayerRepository.update(player, function ()
+        encounterPlayerRepository.update(player, function (error)
         {
-            callback();
+            callback(error);
         })
     })
 };
 
 encounterService.toggleVisible = function (playerId, callback)
 {
-    encounterPlayerRepository.read(playerId, function (player)
+    encounterPlayerRepository.read(playerId, function (error, player)
     {
+        handleError(error, callback);
         player.visible = !player.visible;
-        encounterPlayerRepository.update(player, function ()
+        encounterPlayerRepository.update(player, function (error)
         {
-            callback();
+            callback(error);
         })
     })
 };
 
 encounterService.setActive = function (encounterId, active, callback)
 {
-    encounterRepository.read(encounterId, function (encounter)
+    encounterRepository.read(encounterId, function (error, encounter)
     {
+        handleError(error, callback);
         encounter.active = active;
-        encounterRepository.update(encounter, function ()
+        encounterRepository.update(encounter, function (error)
         {
-            callback();
+            callback(error);
         })
     })
 };
+
+encounterService.updateMapData = function (encounterId, resX, resY, dimX, dimY, callback)
+{
+    encounterRepository.read(encounterId, function (error, encounter)
+    {
+        handleError(error, callback);
+        encounter.mapResX = resX;
+        encounter.mapResY = resY;
+        encounter.mapDimX = dimX;
+        encounter.mapDimY = dimY;
+        encounterRepository.update(encounter, function (error)
+        {
+            callback(error);
+		})
+	})
+};
+
+encounterService.updatePlayer = function (playerId, playerObject, callback)
+{
+    encounterPlayerRepository.read(playerId, function (error, player)
+    {
+        handleError(error, callback);
+        player.setPlayer(playerObject);
+        encounterPlayerRepository.update(player, function (error)
+        {
+            callback(error);
+		})
+    })
+};
+
+encounterService.initWithoutMap = function (encounterId, callback)
+{
+    encounterRepository.read(encounterId, function (error, encounter)
+    {
+        handleError(error, callback);
+        encounter.initialized = true;
+        encounterRepository.update(encounter, function (error)
+        {
+            callback(error);
+		})
+	})
+};
+
+encounterService.uploadMap = function (encounterId, imageFile, callback)
+{
+    encounterRepository.read(encounterId, function (error, encounter)
+    {
+        handleError(error, callback);
+
+        var directory = 'image/encounter/' + encounterId + '/';
+        var fileName = 'map' + path.extname(imageFile);
+
+        fs.ensureDirSync(directory);
+        fs.copy(imageFile, directory + fileName, function (error)
+        {
+            handleError(error, callback);
+            encounter.initialized = true;
+            encounter.mapURL = directory + fileName;
+            encounterRepository.update(encounter, function (error)
+            {
+                handleError(error, callback);
+                fs.unlink(imageFile, function (error)
+                {
+                    callback(error);
+				})
+			})
+		})
+	})
+};
+
+function handleError(error, callback)
+{
+    if (error)
+    {
+        callback(error);
+    }
+}
 
 function addEncounterPlayerToMap(encounter, encounterPlayer, callback)
 {
@@ -178,7 +273,7 @@ function addEncounterPlayerToMap(encounter, encounterPlayer, callback)
 
     encounter.addPlayer(encounterPlayer._id, function()
     {
-        encounterPlayer.save(callback());
+        encounterPlayer.save(callback);
     });
 }
 

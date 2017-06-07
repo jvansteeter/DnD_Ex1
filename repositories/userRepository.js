@@ -9,21 +9,20 @@ userRepository.read = function (userId, callback)
 {
     User.findById(userId, function(error, user)
     {
-        handleError(error);
+        handleError(error, callback);
         if (user === null)
         {
-            throw new Error('User with id: ' + userId + ' not found.');
+            callback(new Error('User with id: ' + userId + ' not found.'));
         }
-        callback(user);
+        callback(error, user);
     });
 };
 
-function handleError(error)
+function handleError(error, callback)
 {
     if (error)
     {
-        console.log(error);
-        throw error;
+        callback(error);
     }
 }
 

@@ -9,21 +9,20 @@ characterRepository.read = function (characterId, callback)
 {
     Character.findById(characterId, function(error, character)
     {
-        handleError(error);
+        handleError(error, callback);
         if (character === null)
         {
-            throw new Error('Character with id: ' + characterId + ' not found.');
+            callback(new Error('Character with id: ' + characterId + ' not found.'));
         }
-        callback(character);
+        callback(error, character);
     });
 };
 
-function handleError(error)
+function handleError(error, callback)
 {
     if (error)
     {
-        console.log(error);
-        throw error;
+        callback(error);
     }
 }
 
