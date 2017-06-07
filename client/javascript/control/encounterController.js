@@ -55,6 +55,17 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		$scope.updateEncounterState();
     };
 
+    $scope.updateNote = function (note)
+    {
+        EncounterService.updateNote(note);
+        console.log('update note')
+		socket.emit('update:encounter',
+			{
+				encounterId: encounterId
+			});
+		$scope.updateEncounterState();
+    };
+
     $scope.removeNote = function(note){
         EncounterService.removeNote(note);
     };

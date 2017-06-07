@@ -38,23 +38,32 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     encounterService.removeNote = function(note)
     {
         console.log(note);
-        var noteId = note._id;
-        for(var i = 0; i < encounterService.mock_notes.length; i++)
-        {
-            if(encounterService.mapNotations[i]._id === noteId)
-            {
-                var url = 'api/encounter/removemapnotation/' + encounterService.encounterState._id;
-                var data = {
-                    mapNotationId: noteId
-                };
-                $http.post(url, data).then(function()
-                {
-					console.log('Doing a thing');
-					encounterService.update();
-					// encounterService.mock_notes.splice(i,1);
-                })
-            }
-        }
+		var url = 'api/encounter/removemapnotation/' + encounterService.encounterState._id;
+		var data = {
+		    mapNotationId: note._id
+        };
+		$http.post(url, data).then(function()
+		{
+			encounterService.update();
+			socket.emit('update:encounter');
+		});
+        // var noteId = note._id;
+        // for(var i = 0; i < encounterService.mock_notes.length; i++)
+        // {
+        //     if(encounterService.mapNotations[i]._id === noteId)
+        //     {
+        //         var url = 'api/encounter/removemapnotation/' + encounterService.encounterState._id;
+        //         var data = {
+        //             mapNotationId: noteId
+        //         };
+        //         $http.post(url, data).then(function()
+        //         {
+			// 		console.log('Doing a thing');
+			// 		encounterService.update();
+			// 		encounterService.mock_notes.splice(i,1);
+                // })
+            // }
+        // }
     };
 
     encounterService.updateNote = function (note)
@@ -93,7 +102,7 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     {
         var deferred = $q.defer();
 
-        var url = 'api/encounter/encounterstate/' + encounterService.encounterID;
+        var url = 'api/encounter/encounterstate/' + EncounterService.encounterstate.encounterID;
 
         $http.get(url).success(function (data)
         {

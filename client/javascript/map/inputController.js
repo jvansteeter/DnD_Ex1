@@ -262,26 +262,28 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         var found_note = false;
 
         // find the note group in the EncounterService
-        for (var i = 0; i < EncounterService.mock_notes.length; i++) {
-            if (EncounterService.mock_notes[i].uid === current_note_id) {
+        for (var i = 0; i < EncounterService.encounterState.mapNotations.length; i++) {
+            if (EncounterService.encounterState.mapNotations[i]._id === current_note_id) {
                 found_note = true;
 
-                var cells = EncounterService.mock_notes[i].cells;
+                var cells = EncounterService.encounterState.mapNotations[i].cells;
                 var cell_present = false;
                 for (var j = 0; j < cells.length; j++) {
                     if (cells[j].x === mapDim_mouse.x && cells[j].y === mapDim_mouse.y) {
                         cell_present = true;
-                        EncounterService.mock_notes[i].cells.splice(j, 1);
+                        EncounterService.encounterState.mapNotations[i].cells.splice(j, 1);
                     }
                 }
                 if (!cell_present) {
-                    EncounterService.mock_notes[i].cells.push({x: mapDim_mouse.x, y: mapDim_mouse.y});
+                    EncounterService.encounterState.mapNotations[i].cells.push({x: mapDim_mouse.x, y: mapDim_mouse.y});
                 }
-            }
-            if (found_note)
-                break;
-        }
-    }
+				EncounterService.updateNote(EncounterService.encounterState.mapNotations[i]);
+			}
+			if (found_note) {
+				break;
+			}
+		}
+	}
 
     function screenToCanvasRes(coor) {
         var rect = canvas[0].getBoundingClientRect();
