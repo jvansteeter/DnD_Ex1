@@ -8,7 +8,7 @@ var mapNotation = {};
 mapNotation.create = function (userId, callback)
 {
 	var mapNotation = new MapNotation({
-		userId: userId,
+		userId: userId
 	});
 	mapNotation.save(function (error)
 	{

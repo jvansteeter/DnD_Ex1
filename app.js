@@ -35,6 +35,7 @@ require('./models/npc');
 require('./models/campaign');
 require('./models/campaignPost');
 require('./models/campaignUser');
+require('./models/mapNotatation');
 require('./config/passport');
 
 // setup routes
@@ -75,7 +76,6 @@ app.use('/newNPC', isLoggedIn, express.static('views/newNPC.html'));
 app.use('/campaign', isLoggedIn, express.static('views/campaign.html'));
 app.use('/campaignList', isLoggedIn, express.static('views/campaignList.html'));
 app.use('/auth', authRouter);
-// app.use('/api', isAuthenticated, api);
 app.use('/api', isAuthenticated, etc);
 app.use('/api/image', isAuthenticated, image);
 app.use('/api/npc', isAuthenticated, npc);
