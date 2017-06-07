@@ -115,6 +115,10 @@ router.post('/uploadmap/:encounter_id', function (req, res)
 	})
 });
 
+/***************************************************************************************************************
+ * MAP NOTATION ROUTES
+ ***************************************************************************************************************
+ */
 router.post('/addmapnotation/:encounter_id', function (req, res)
 {
 	encounterService.addMapNotation(req.params.encounter_id, req.body.userId, req.body.text, function(error)
