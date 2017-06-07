@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var encounterPlayerSchema = new mongoose.Schema(
 {
     name: String,
-    userID: String,
+    userId: String,
     iconURL: String,
     initiative: Number,
     armorClass: Number,
@@ -25,9 +25,9 @@ var encounterPlayerSchema = new mongoose.Schema(
     mapY: Number
 });
 
-encounterPlayerSchema.methods.hit = function(hit)
+encounterPlayerSchema.methods.damage = function(damage)
 {
-	this.hitPoints = this.hitPoints + hit;
+	this.hitPoints = this.hitPoints - damage;
 };
 
 encounterPlayerSchema.methods.toggleVisible = function()

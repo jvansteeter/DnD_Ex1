@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var characterSchema = new mongoose.Schema(
 {
-	userID: String,
+	userId: String,
     name: {type: String, default: ""},
 	iconURL: String,
     class: String,
@@ -98,7 +98,6 @@ var characterSchema = new mongoose.Schema(
 
 characterSchema.methods.setCharacter = function(character)
 {
-	console.log(JSON.stringify(character));
 	for (var value in character)
 	{
 		this[value] = character[value];

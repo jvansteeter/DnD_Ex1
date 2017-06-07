@@ -23,15 +23,15 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
         });
     });
 
-    $scope.joinCampaign = function(campaignID)
+    $scope.joinCampaign = function(campaignId)
     {
         var url = 'api/campaign/join';
         var data = {
-            campaignID: campaignID
+            campaignId: campaignId
         };
         $http.post(url, data).success(function(data)
         {
-            window.location = "campaign?" + campaignID;
+            window.location = "campaign?" + campaignId;
         });
     };
 });

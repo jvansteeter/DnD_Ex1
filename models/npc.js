@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var npcSchema = new mongoose.Schema(
     {
-        userID: String,
+        userId: String,
         name: String,
         iconURL: String,
         descriptors: String,

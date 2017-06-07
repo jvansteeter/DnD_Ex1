@@ -20,7 +20,7 @@ var path = require('path');
 router.post('/create', function(req, res)
 {
     var npc = new NPC();
-    npc.userID = req.user._id;
+    npc.userId = req.user._id;
     npc.setNPC(req.body.npc);
     npc.save(function(error)
     {
@@ -60,7 +60,7 @@ router.post('/update', function(req, res)
 
 router.get('/all/', function(req, res)
 {
-    NPC.find({userID: req.user._id}, function(error, npcs)
+    NPC.find({userId: req.user._id}, function(error, npcs)
     {
         if (error)
         {
