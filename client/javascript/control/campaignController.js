@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp');
 
 clientApp.controller('campaignController', function($scope, $window, $http, socket, Profile)
 {
-    var campaignId = window.location.search.replace('?', '');
+    var campaignID = window.location.search.replace('?', '');
 
     Profile.async().then(function()
     {
@@ -41,8 +41,9 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
             title: "Add tags to post"
         };
 
-        $http.get('api/campaign/' + campaignId).success(function(data)
+        $http.get('api/campaign/' + campaignID).success(function(data)
         {
+            console.log(data);
             $scope.campaign = data;
 
             if ($scope.isHost())
@@ -60,7 +61,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
             $scope.updatePosts();
         });
 
-        $http.get('api/campaign/adventurers/' + campaignId).success(function(data)
+        $http.get('api/campaign/adventurers/' + campaignID).success(function(data)
         {
             $scope.adventurers = data;
         });
@@ -77,7 +78,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     $scope.updatePosts = function()
     {
-        var url = 'api/campaign/post/' + campaignId;
+        var url = 'api/campaign/post/' + campaignID;
         $http.get(url).success(function(data)
         {
             $scope.posts = data.reverse();
@@ -88,7 +89,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
     {
         var url = 'api/campaign/post';
         var data = {
-            campaignId: campaignId,
+            campaignID: campaignID,
             content: $scope.newPost.content
         };
         $http.post(url, data).success(function(data)
@@ -109,7 +110,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         var data =
         {
             title: $scope.newEncounter.title,
-            campaignId: $scope.campaign._id,
+            campaignID: $scope.campaign._id,
             description: $scope.newEncounter.description
         };
 

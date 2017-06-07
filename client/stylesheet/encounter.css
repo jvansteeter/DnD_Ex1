@@ -2,3 +2,25 @@
     color:red;
     background-color: rgba(255,0,30,0.32);
 }
+
+.note_container{
+    border-top: 1px solid #dddddd;
+    padding-top: 0;
+}
+
+.note_bar{
+    background-color: #ffffff;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+
+.h4_inline {
+    display: inline;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: 500;
+}

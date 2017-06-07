@@ -5,45 +5,86 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     var canvas;
     var context;
 
-    var tileSize = 50;
+    var tileSize;
     var dialationFactor = 0;
 
     function init() {
         canvas = $('#highlightCanvas');
         context = canvas.get(0).getContext('2d');
 
+        tileSize = EncounterService.tileSize;
+
         draw();
     }
 
     function draw() {
+        // ***********************************************************************************
+        // SETUP PHASE
+        // ***********************************************************************************
         clear_canvas();
-
+        // transform step
         var x_offset = EncounterService.map_transform.x;
         var y_offset = EncounterService.map_transform.y;
         var scale = EncounterService.map_transform.scale;
-
         context.setTransform(scale, 0, 0, scale, x_offset, y_offset);
 
+        // ***********************************************************************************
+        // OPERATION PHASE
+        // ***********************************************************************************
+        if (EncounterService.selected_note_uid === null) {
+            handle_default_mode();
+        } else {
+            handle_notation_mode()
+        }
+
+
+        // ***********************************************************************************
+        // COMPLETE PHASE
+        // ***********************************************************************************
+        $window.requestAnimationFrame(draw);
+    }
+
+    $scope.get_res_x = function () {
+        return EncounterService.canvas_state.res_x;
+    };
+
+    $scope.get_res_y = function () {
+        return EncounterService.canvas_state.res_y;
+    };
+
+    function clear_canvas() {
+        var offset = EncounterService.canvas_state.clear_offset;
+        context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
+    }
+
+    init();
+
+    /***********************************************************************************************
+     * handle_default_mode()
+     ***********************************************************************************************
+     * Controller specific route for handling how the map should render when in default mode
+     */
+    function handle_default_mode() {
         var players = EncounterService.encounterState.players;
         var player;
+
         context.fillStyle = "rgba(255,255,255,.2)";
 
-        if (angular.isDefined(EncounterService.hoverCell)) {
+        // if there is a cell that the mouse point is hovering over
+        if (EncounterService.hoverCell !== null) {
+            // check if the hover cell is over a player; if it is, don't render the red square
 
-            if (EncounterService.hoverCell.x != -1) {
-                // check if the hover cell is over a player; if it is, don't render the red square
-
-                for( var j = 0; j < players.length; j++){
-                    player = players[j];
-                    if(player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y && (player.visible || EncounterService.isHost())){
-                        context.fillStyle = "rgba(102,178,255,0)";
-                    }
+            for (var j = 0; j < players.length; j++) {
+                player = players[j];
+                if (player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y && (player.visible || EncounterService.isHost())) {
+                    context.fillStyle = "rgba(102,178,255,0)";
                 }
-                var xCoor = EncounterService.hoverCell.x;
-                var yCoor = EncounterService.hoverCell.y;
-                context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
             }
+            var xCoor = EncounterService.hoverCell.x;
+            var yCoor = EncounterService.hoverCell.y;
+            context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
         }
+
 
         // render the selected player with darker red, if present
         for (var i = 0; i < players.length; i++) {
@@ -61,32 +102,38 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         }
 
         //render any players that are "isHovered"
-
-        for(var k = 0; k < players.length; k++){
+        for (var k = 0; k < players.length; k++) {
             player = players[k];
-            if(angular.isDefined(player.isHovered)){
-                if(player.isHovered && player.visible){
+            if (angular.isDefined(player.isHovered)) {
+                if (player.isHovered && player.visible) {
                     context.fillStyle = "rgba(102,178,255,.3)";
                     context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
                 }
             }
         }
-
-        $window.requestAnimationFrame(draw);
     }
 
-    $scope.get_res_x = function(){
-        return EncounterService.canvas_state.res_x;
-    };
+    /***********************************************************************************************
+     * handle_notation_mode()
+     ***********************************************************************************************
+     * Controller specific route for handling how the map should render when in note mode
+     */
+    function handle_notation_mode() {
+        var note_uid = EncounterService.selected_note_uid;
+        var color = null;
 
-    $scope.get_res_y = function(){
-        return EncounterService.canvas_state.res_y;
-    };
+        for (var i = 0; i < EncounterService.mock_notes.length; i++) {
+            var note_group = EncounterService.mock_notes[i];
+            if (note_group.uid === note_uid)
+                color = note_group.color;
+        }
 
-    function clear_canvas() {
-        var offset = EncounterService.canvas_state.clear_offset;
-        context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
+        context.fillStyle = color;
+        // if there is a cell that the mouse point is hovering over
+        if (EncounterService.hoverCell !== null) {
+            var xCoor = EncounterService.hoverCell.x;
+            var yCoor = EncounterService.hoverCell.y;
+            context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
+        }
     }
-
-    init();
 });
