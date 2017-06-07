@@ -121,8 +121,10 @@ router.post('/uploadmap/:encounter_id', function (req, res)
  */
 router.get('/addmapnotation/:encounter_id', function (req, res)
 {
-	encounterService.addMapNotation(req.params.encounter_id, req.user.user._id, function(error)
+	console.log('in route call');
+	encounterService.addMapNotation(req.params.encounter_id, req.user._id, function(error)
 	{
+		console.log('returned to route call')
 		handleError(error, res);
 		res.send('OK');
 	});

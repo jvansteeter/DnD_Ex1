@@ -30,6 +30,15 @@ mapNotation.read = function (mapNotationId, callback)
 	});
 };
 
+mapNotation.readAll = function (mapNotationIds, callback)
+{
+	MapNotation.find({_id: {$in: mapNotationIds}}, function (error, mapNotations)
+	{
+		handleError(error, callback);
+		callback(error, mapNotations);
+	})
+};
+
 mapNotation.update = function (mapNotation, callback)
 {
 	MapNotation.save(mapNotation, function (error)

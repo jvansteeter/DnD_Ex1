@@ -110,7 +110,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
         var data =
         {
             title: $scope.newEncounter.title,
-            campaignID: $scope.campaign._id,
+            campaignId: $scope.campaign._id,
             description: $scope.newEncounter.description
         };
 

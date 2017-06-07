@@ -31,17 +31,19 @@ var encounterSchema = new mongoose.Schema(
 encounterSchema.methods.addPlayer = function(player, callback)
 {
     this.players.push(player);
-    this.save(function()
+    this.save(function(error)
     {
-        callback();
+        callback(error);
     });
 };
 
 encounterSchema.methods.addMapNotation = function(mapNotation, callback)
-
 {
     this.mapNotations.push(mapNotation);
-    callback();
+    this.save(function (error)
+    {
+		callback(error);
+	});
 };
 
 encounterSchema.methods.removePlayer = function(player)

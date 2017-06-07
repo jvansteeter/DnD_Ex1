@@ -34,7 +34,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
             encounterService.update();
         });
 
-
         encounterService.mock_notes.push({
             uid: note_uid_tally,
             userId: '',
@@ -60,7 +59,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
                 {
 					console.log('Doing a thing');
 					encounterService.update();
-					break;
 					// encounterService.mock_notes.splice(i,1);
                 })
             }

@@ -96,7 +96,12 @@ encounterService.getEncounterState = function (encounterId, callback)
         {
             handleError(error, callback);
             encounter.players = players;
-            callback(error, encounter);
+            mapNotationRepository.readAll(encounter.mapNotations, function (error, mapNotations)
+            {
+                handleError(error, callback);
+                encounter.mapNotations = mapNotations;
+				callback(error, encounter);
+            })
         })
     })
 };
@@ -232,17 +237,20 @@ encounterService.uploadMap = function (encounterId, imageFile, callback)
 
 encounterService.addMapNotation = function (encounterId, userId, callback)
 {
+    console.log('in service addMapNotation');
 	encounterRepository.read(encounterId, function(error, encounter)
 	{
+	    console.log('have encounter');
         handleError(error, callback);
         mapNotationRepository.create(userId, function (error, mapNotation)
         {
+            console.log('created notation');
             handleError(error, callback);
-            encounter.addMapNotation(mapNotation._id);
-            encounterRepository.update(encounter, function (error)
+            encounter.addMapNotation(mapNotation._id, function(error)
             {
+				console.log('saved to encounter');
 				callback(error);
-			})
+            });
         })
 	})
 };
