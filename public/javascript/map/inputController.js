@@ -20,6 +20,8 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
     var mouseDown = false;
     var dragging = false;
+    var drag_threshold_default = 5;
+    var drag_threshold = drag_threshold_default;
     var mouseX = 0;
     var mouseY = 0;
 
@@ -64,9 +66,13 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
     $scope.mouseMove = function (event) {
         currentMouseScreen = {x: event.clientX, y: event.clientY};
+        console.log(drag_threshold);
+        drag_threshold -= 1;
 
         if (mouseDown) {
-            dragging = true;
+            if(drag_threshold < 0)
+                dragging = true;
+
             var start_trans_x = EncounterService.map_transform.x;
             var start_trans_y = EncounterService.map_transform.y;
             var trans_scale = EncounterService.map_transform.scale;
@@ -81,6 +87,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             mouseY = event.clientY;
         }
         else {
+            drag_threshold = drag_threshold_default;
             var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
             var max_x = EncounterService.encounterState.mapDimX;
             var max_y = EncounterService.encounterState.mapDimY;

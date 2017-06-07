@@ -24,27 +24,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     var note_uid_tally = 3;
     encounterService.selected_note_uid = null;
     encounterService.mock_notes = [
-        {
-            uid: 0,
-            owner:'bob',
-            text:'Fire',
-            color:'hsla(0,100%,50%,0.3)',
-            cells:[]
-        },
-        {
-            uid: 1,
-            owner:'bob',
-            text:'Water',
-            color:'hsla(240,100%,50%,0.3)',
-            cells:[]
-        },
-        {
-            uid: 2,
-            owner:'bob',
-            text:'Lightning',
-            color:'hsla(48,100%,50%,0.3)',
-            cells:[]
-        }
     ];
 
     encounterService.addNote = function(){

@@ -228,7 +228,7 @@
             <div>
                 <li class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733; display: flex; padding-top: 5px; padding-bottom: 5px">
                     <span class="h4_inline" style="margin-right: auto;">Notations</span>
-                    <md-menu style="align-self: center">
+                    <md-menu ng-show="isHost()" style="align-self: center">
                         <i class="fa fa-bars fa-2x" ng-click="$mdMenu.open($event)"></i>
                         <md-menu-content>
                             <md-menu-item><md-button>Single Square</md-button></md-menu-item>
