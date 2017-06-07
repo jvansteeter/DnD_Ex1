@@ -51,6 +51,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         EncounterService.addNote();
     };
 
+    $scope.removeNote = function(note){
+        console.log(note);
+        EncounterService.removeNote(note);
+    };
+
     socket.on('init', function () {
         EncounterService.init(encounterID).then(function () {
             $scope.host = EncounterService.isHost();

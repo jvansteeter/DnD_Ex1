@@ -58,6 +58,17 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         note_uid_tally += 1;
     };
 
+    encounterService.removeNote = function(note){
+        console.log(note);
+        var note_id = note.uid;
+        for(var i = 0; i < encounterService.mock_notes.length; i++){
+            if(encounterService.mock_notes[i].uid === note_id){
+                console.log('Doing a thing');
+                encounterService.mock_notes.splice(i,1);
+            }
+        }
+    };
+
     encounterService.init = function (inputID)
     {
         encounterService.encounterID = inputID;
