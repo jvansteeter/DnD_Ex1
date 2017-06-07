@@ -161,7 +161,7 @@
                 <li class="list-group-item active"><h4>Players <i class="fa fa-bolt"></i></h4></li>
             </div>
             <!--List of Players-->
-            <div class="initiative-box" style="flex:2; overflow-y: scroll;">
+            <div class="initiative-box" style="flex:1; overflow-y: scroll;">
                 <ul ng-model="players" class="list-group">
                     <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
                         class="list-group-item" ng-hide="!isHost() && !player.visible"
