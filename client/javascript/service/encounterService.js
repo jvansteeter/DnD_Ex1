@@ -29,12 +29,11 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     encounterService.addNote = function(){
         encounterService.mock_notes.push({
             uid: note_uid_tally,
-            owner: '',
+            userId: '',
             text: 'Default Text',
             color: 'hsla(0,0%,0%,1)',
             cells: []
         });
-        note_uid_tally += 1;
     };
 
     encounterService.removeNote = function(note){
@@ -129,6 +128,19 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
             socket.emit('update:player', encounterService.encounterState.players[index]);
         });
     };
+
+	encounterService.updateMapNotation = function(index)
+	{
+		var player = encounterService.encounterState.mapNotation[index];
+		var url = 'api/encounter/updateplayer';
+		var data = {
+			player: player
+		};
+		$http.post(url, data).success(function(data)
+		{
+			socket.emit('update:player', encounterService.encounterState.players[index]);
+		});
+	};
 
     encounterService.setUpdateHasRunFlag = function(value)
     {

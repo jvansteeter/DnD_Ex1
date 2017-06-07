@@ -115,6 +115,33 @@ router.post('/uploadmap/:encounter_id', function (req, res)
 	})
 });
 
+router.post('/addmapnotation/:encounter_id', function (req, res)
+{
+	encounterService.addMapNotation(req.params.encounter_id, req.body.userId, req.body.text, function(error)
+	{
+		handleError(error, res);
+		res.send('OK');
+	});
+});
+
+router.post('/removemapnotation/:encounter_id', function (req, res)
+{
+	encounterService.removeMapNotation(req.params.encounter_id, req.body.mapNotationId, function(error)
+	{
+		handleError(error, res);
+		res.send('OK');
+	});
+});
+
+router.post('/updatemapnotation', function (req, res)
+{
+	encounterService.updateMapNotation(req.body.mapNotation._id, req.body.mapNotation, function (error)
+	{
+		handleError(error, res);
+		res.send("OK");
+	})
+});
+
 function handleError(error, res)
 {
     if (error)

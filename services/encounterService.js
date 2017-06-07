@@ -8,6 +8,7 @@ var userRepository = require('../repositories/userRepository');
 var characterRepository = require('../repositories/characterRepository');
 var npcRepository = require('../repositories/npcRepository');
 var encounterPlayerRepository = require('../repositories/encounterPlayerRepository');
+var mapNotationRepository = require('../repositories/mapNotationRepository');
 
 var encounterService = {};
 
@@ -225,6 +226,53 @@ encounterService.uploadMap = function (encounterId, imageFile, callback)
                     callback(error);
 				})
 			})
+		})
+	})
+};
+
+encounterService.addMapNotation = function (encounterId, userId, text, callback)
+{
+	encounterRepository.read(encounterId, function(error, encounter)
+	{
+        handleError(error, callback);
+        mapNotationRepository.create(userId, text, function (error, mapNotation)
+        {
+            handleError(error, callback);
+            encounter.addMapNotation(mapNotation._id);
+            encounterRepository.update(encounter, function (error)
+            {
+				callback(error);
+			})
+        })
+	})
+};
+
+encounterService.removeMapNotation = function (encounterId, mapNotationId, callback)
+{
+    encounterRepository.read(encounterId, function (error, encounter)
+    {
+        handleError(error, callback);
+        encounter.mapNotations.remove(mapNotationId);
+		encounterRepository.update(encounter, function (error)
+        {
+            handleError(error, callback);
+			mapNotationRepository.delete(mapNotationId, function (error)
+			{
+				callback(error);
+			})
+		})
+	})
+};
+
+encounterService.updateMapNotation = function (mapNotationId, mapNotationObject, callback)
+{
+	mapNotationRepository.read(mapNotationId, function (error, mapNotation)
+	{
+		handleError(error, callback);
+		mapNotation.setMapNotation(mapNotationObject);
+		encounterPlayerRepository.update(mapNotation, function (error)
+		{
+			callback(error);
 		})
 	})
 };

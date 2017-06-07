@@ -8,6 +8,7 @@ var encounterSchema = new mongoose.Schema(
     hostId: String,
     hostName: String,
     players: [],
+    mapNotations: [],
     createdAt: {type: Number, required: true, default: Date.now},
     initialized: {type: Boolean, default: false},
     hasMap: Boolean,
@@ -34,6 +35,13 @@ encounterSchema.methods.addPlayer = function(player, callback)
     {
         callback();
     });
+};
+
+encounterSchema.methods.addMapNotation = function(mapNotation, callback)
+
+{
+    this.mapNotations.push(mapNotation);
+    callback();
 };
 
 encounterSchema.methods.removePlayer = function(player)
