@@ -15,7 +15,7 @@ app.set('view engine', 'jade');
 
 // setup mongo database
 var mongoose = require('mongoose');
-var database = mongoose.connect('mongodb://localhost/dev');
+var database = mongoose.connect('mongodb://localhost/dnd');
 
 // setup passport
 var configAuth = require('./config/auth.js');
