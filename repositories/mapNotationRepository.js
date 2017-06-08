@@ -41,7 +41,6 @@ mapNotationRepository.readAll = function (mapNotationIds, callback)
 
 mapNotationRepository.update = function (mapNotationObject, callback)
 {
-	console.log('in repository update')
 	mapNotationObject.save(function (error)
 	{
 		handleError(error, callback);

@@ -29,7 +29,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         onBlur:    function(api, color, $event) {},
         onOpen:    function(api, color, $event) {},
         onClose:   function(api, color, $event) {
-            console.log($scope.clickNote);
             EncounterService.updateNote($scope.clickNote);
             EncounterService.update();
         },
@@ -190,9 +189,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.healPlayer = function (hit) {
-        console.log("Heal player");
-        console.log(EncounterService.encounterState.players[selectedPlayer]);
-        console.log(hit);
         if (hit === 0 || isNaN(hit)) {
             return;
         }
