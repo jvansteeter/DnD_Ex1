@@ -11,11 +11,11 @@ var mapNotation = new mongoose.Schema(
 	}]
 });
 
-mapNotation.methods.setMapNotation = function(mapNotation)
+mapNotation.methods.setMapNotation = function(mapNotationObject)
 {
-	for (var value in mapNotation)
+	for (var value in mapNotationObject)
 	{
-		this[value] = mapNotation[value];
+		this[value] = mapNotationObject[value];
 	}
 };
 

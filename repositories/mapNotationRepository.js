@@ -3,9 +3,9 @@
 var mongoose = require('mongoose');
 var MapNotation = mongoose.model('MapNotation');
 
-var mapNotation = {};
+var mapNotationRepository = {};
 
-mapNotation.create = function (userId, callback)
+mapNotationRepository.create = function (userId, callback)
 {
 	var mapNotation = new MapNotation({
 		userId: userId
@@ -17,7 +17,7 @@ mapNotation.create = function (userId, callback)
 	})
 };
 
-mapNotation.read = function (mapNotationId, callback)
+mapNotationRepository.read = function (mapNotationId, callback)
 {
 	MapNotation.findById(mapNotationId, function(error, mapNotation)
 	{
@@ -30,7 +30,7 @@ mapNotation.read = function (mapNotationId, callback)
 	});
 };
 
-mapNotation.readAll = function (mapNotationIds, callback)
+mapNotationRepository.readAll = function (mapNotationIds, callback)
 {
 	MapNotation.find({_id: {$in: mapNotationIds}}, function (error, mapNotations)
 	{
@@ -39,15 +39,17 @@ mapNotation.readAll = function (mapNotationIds, callback)
 	})
 };
 
-mapNotation.update = function (mapNotation, callback)
+mapNotationRepository.update = function (mapNotationObject, callback)
 {
-	MapNotation.save(mapNotation, function (error)
+	console.log('in repository update')
+	mapNotationObject.save(function (error)
 	{
+		handleError(error, callback);
 		callback(error);
 	})
 };
 
-mapNotation.delete = function (mapNotationId, callback)
+mapNotationRepository.delete = function (mapNotationId, callback)
 {
 	MapNotation.remove({_id: mapNotationId}, function (error)
 	{
@@ -64,4 +66,4 @@ function handleError(error, callback)
 	}
 }
 
-module.exports = mapNotation;
+module.exports = mapNotationRepository;

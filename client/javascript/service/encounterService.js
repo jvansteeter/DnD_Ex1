@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
+clientApp.service('EncounterService', function ($http, $q, Profile, socket)
 {
     var encounterService = {};
 
@@ -23,8 +23,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 
     var note_uid_tally = 3;
     encounterService.selected_note_uid = null;
-    encounterService.mock_notes = [
-    ];
 
     encounterService.addNote = function()
     {
@@ -47,23 +45,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
 			encounterService.update();
 			socket.emit('update:encounter');
 		});
-        // var noteId = note._id;
-        // for(var i = 0; i < encounterService.mock_notes.length; i++)
-        // {
-        //     if(encounterService.mapNotations[i]._id === noteId)
-        //     {
-        //         var url = 'api/encounter/removemapnotation/' + encounterService.encounterState._id;
-        //         var data = {
-        //             mapNotationId: noteId
-        //         };
-        //         $http.post(url, data).then(function()
-        //         {
-			// 		console.log('Doing a thing');
-			// 		encounterService.update();
-			// 		encounterService.mock_notes.splice(i,1);
-                // })
-            // }
-        // }
     };
 
     encounterService.updateNote = function (note)
@@ -75,7 +56,6 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         };
         $http.post(url, data).then(function()
         {
-            encounterService.update();
 			socket.emit('update:encounter');
         })
     };
@@ -102,7 +82,7 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
     {
         var deferred = $q.defer();
 
-        var url = 'api/encounter/encounterstate/' + EncounterService.encounterstate.encounterID;
+        var url = 'api/encounter/encounterstate/' + encounterService.encounterID;
 
         $http.get(url).success(function (data)
         {
@@ -162,18 +142,19 @@ clientApp.factory('EncounterService', function ($http, $q, Profile, socket)
         });
     };
 
-	encounterService.updateMapNotation = function(index)
-	{
-		var player = encounterService.encounterState.mapNotation[index];
-		var url = 'api/encounter/updateplayer';
-		var data = {
-			player: player
-		};
-		$http.post(url, data).success(function(data)
-		{
-			socket.emit('update:player', encounterService.encounterState.players[index]);
-		});
-	};
+	// encounterService.updateMapNotation = function(index)
+	// {
+	//     console.log('CAT BUTT');
+	// 	var player = encounterService.encounterState.mapNotation[index];
+	// 	var url = 'api/encounter/updatemapnotation';
+	// 	var data = {
+	// 		player: player
+	// 	};
+	// 	$http.post(url, data).success(function(data)
+	// 	{
+	// 		socket.emit('update:encounter');
+	// 	});
+	// };
 
     encounterService.setUpdateHasRunFlag = function(value)
     {

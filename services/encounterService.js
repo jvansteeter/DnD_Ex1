@@ -274,16 +274,33 @@ encounterService.removeMapNotation = function (encounterId, mapNotationId, callb
 
 encounterService.updateMapNotation = function (mapNotationId, mapNotationObject, callback)
 {
+    console.log('in encounter service ' + mapNotationId);
 	mapNotationRepository.read(mapNotationId, function (error, mapNotation)
 	{
+	    console.log('this gets returned from read')
+	    console.log(mapNotation);
 		handleError(error, callback);
 		mapNotation.setMapNotation(mapNotationObject);
-		encounterPlayerRepository.update(mapNotation, function (error)
+        mapNotationRepository.update(mapNotation, function (error)
 		{
+		    console.log('returned from update')
 			callback(error);
 		})
 	})
 };
+
+// encounterService.updatePlayer = function (playerId, playerObject, callback)
+// {
+//     encounterPlayerRepository.read(playerId, function (error, player)
+//     {
+//         handleError(error, callback);
+//         player.setPlayer(playerObject);
+//         encounterPlayerRepository.update(player, function (error)
+//         {
+//             callback(error);
+//         })
+//     })
+// };
 
 function handleError(error, callback)
 {

@@ -141,10 +141,15 @@ router.post('/removemapnotation/:encounter_id', function (req, res)
 
 router.post('/updatemapnotation', function (req, res)
 {
+	console.log('in route')
 	encounterService.updateMapNotation(req.body.mapNotation._id, req.body.mapNotation, function (error)
 	{
+		console.log('back from update map notation');
 		handleError(error, res);
-		res.send("OK");
+		if (!error)
+        {
+            res.send("OK");
+        }
 	})
 });
 

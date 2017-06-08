@@ -2,13 +2,15 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.config(function ($modalProvider) {
+clientApp.config(function ($modalProvider)
+{
     angular.extend($modalProvider.defaults, {
         html: true
     });
 });
 
-clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, EncounterService, $uibModal, $mdSidenav) {
+clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, EncounterService, $uibModal, $mdSidenav)
+{
     var encounterId = window.location.search.replace('?', '');
     var modal;
     var selectedPlayer = -1;
@@ -22,62 +24,99 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         swatchOnly: true
     };
 
-    $scope.toggleNoteSelected = function (note) {
-        if (note.uid !== EncounterService.selected_note_uid) {
+    $scope.toggleNoteSelected = function (note)
+    {
+        if (note.uid !== EncounterService.selected_note_uid)
+        {
             EncounterService.selected_note_uid = note._id;
         }
-        else {
+        else
+        {
             EncounterService.selected_note_uid = null;
         }
     };
 
-    $scope.isNoteSelected = function (note) {
+    $scope.isNoteSelected = function (note)
+    {
         if (note._id === EncounterService.selected_note_uid)
             return true;
         else
             return false;
     };
 
-    $scope.toggleGrid = function () {
+    $scope.toggleGrid = function ()
+    {
         EncounterService.gridEnabled = !EncounterService.gridEnabled;
     };
 
-    $scope.gridState = function () {
+    $scope.gridState = function ()
+    {
         return EncounterService.gridEnabled;
     };
 
-    $scope.addNote = function(){
-        EncounterService.addNote();
-		socket.emit('update:encounter',
-			{
-				encounterId: encounterId
-			});
-		$scope.updateEncounterState();
-    };
-
-    $scope.updateNote = function (note)
+    $scope.addNote = function ()
     {
-        EncounterService.updateNote(note);
-        console.log('update note')
-		socket.emit('update:encounter',
-			{
-				encounterId: encounterId
-			});
-		$scope.updateEncounterState();
+        var url = 'api/encounter/addmapnotation/' + EncounterService.encounterState._id;
+        $http.get(url).then(function()
+        {
+            socket.emit('update:encounter',
+                {
+                    encounterId: encounterId
+                });
+            $scope.updateEncounterState();
+        });
     };
 
-    $scope.removeNote = function(note){
-        EncounterService.removeNote(note);
+    // $scope.updateNote = function (note)
+    // {
+        // EncounterService.updateNote(note);
+        // console.log('update note')
+        // socket.emit('update:encounter',
+        //     {
+        //         encounterId: encounterId
+        //     });
+        // $scope.updateEncounterState();
+        // console.log('controller update note');
+        //
+        // var url = 'api/encounter/updatemapnotation';
+        // var data = {
+        //     mapNotation: note
+        // };
+        // $http.post(url, data).then(function()
+        // {
+        //     socket.emit('update:encounter',
+        //         {
+        //             encounterId: encounterId
+        //         });
+        //     $scope.updateEncounterState();
+        // })
+    // };
+
+    $scope.removeNote = function (note)
+    {
+        var url = 'api/encounter/removemapnotation/' + EncounterService.encounterState._id;
+        var data = {
+            mapNotationId: note._id
+        };
+        $http.post(url, data).then(function()
+        {
+            socket.emit('update:encounter',
+                {
+                    encounterId: encounterId
+                });
+            $scope.updateEncounterState();
+        });
     };
 
-
-
-    socket.on('init', function () {
-        EncounterService.init(encounterId).then(function () {
+    socket.on('init', function ()
+    {
+        EncounterService.init(encounterId).then(function ()
+        {
             $scope.host = EncounterService.isHost();
             $scope.encounterState = EncounterService.encounterState;
 
-            if (!$scope.encounterState.initialized) {
+            if (!$scope.encounterState.initialized)
+            {
                 modal = $uibModal.open({
                     animation: true,
                     templateUrl: 'modal/initializeMapModal.html',
@@ -98,21 +137,30 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     });
 
-    socket.on('update:encounter', function (data) {
+    socket.on('update:encounter', function (data)
+    {
+        console.log('socket update encounter');
         $scope.updateEncounterState();
     });
 
-    socket.on('update:player', function (player) {
+    socket.on('update:player', function (player)
+    {
+        console.log('socket update player');
         player.isHovered = false;
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
-            if (EncounterService.encounterState.players[i]._id === player._id) {
-                if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true) {
+        for (var i = 0; i < EncounterService.encounterState.players.length; i++)
+        {
+            if (EncounterService.encounterState.players[i]._id === player._id)
+            {
+                if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true)
+                {
                     player.isSelected = true;
                 }
-                else {
+                else
+                {
                     player.isSelected = false;
                 }
-                for (var value in player) {
+                for (var value in player)
+                {
                     EncounterService.encounterState.players[i][value] = player[value];
                     $scope.encounterState = EncounterService.encounterState;
                 }
@@ -120,13 +168,16 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         }
     });
 
-    socket.on('encounter:end', function (data) {
-        if (data.encounterId === encounterId) {
+    socket.on('encounter:end', function (data)
+    {
+        if (data.encounterId === encounterId)
+        {
             $scope.status = 'ENDED'
         }
     });
 
-    $scope.uploadMapPhoto = function ($flow) {
+    $scope.uploadMapPhoto = function ($flow)
+    {
         $flow.upload();
         $flow.files[0] = $flow.files[$flow.files.length - 1];
 
@@ -139,45 +190,57 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 'Content-Type': undefined
             },
             transformRequest: angular.identity
-        }).success(function (data) {
+        }).success(function (data)
+        {
             $scope.updateEncounterState();
             modal.close();
         });
     };
 
-    $scope.initWithoutMap = function () {
+    $scope.initWithoutMap = function ()
+    {
         var url = 'api/encounter/initwithoutmap/' + encounterId;
-        $http.get(url).success(function (data) {
+        $http.get(url).success(function (data)
+        {
             $scope.updateEncounterState();
             modal.close();
         });
     };
 
-    $scope.updateEncounterState = function () {
-        EncounterService.update().then(function () {
+    $scope.updateEncounterState = function ()
+    {
+        EncounterService.update().then(function ()
+        {
             $scope.encounterState = EncounterService.encounterState;
         });
     };
 
-    $scope.isHost = function () {
+    $scope.isHost = function ()
+    {
         return $scope.host;
     };
 
-    $scope.isNPC = function (index) {
+    $scope.isNPC = function (index)
+    {
         return $scope.encounterState.players[index].npc;
     };
 
-    $scope.isMyCharacter = function (player) {
+    $scope.isMyCharacter = function (player)
+    {
         return (Profile.getUserId() === player.userId);
     };
 
-    $scope.isVisible = function (index) {
+    $scope.isVisible = function (index)
+    {
         return $scope.encounterState.players[index].visible;
     };
 
-    $scope.toggleVisible = function (player) {
-        for (var i = 0; i < $scope.encounterState.players.length; i++) {
-            if ($scope.encounterState.players[i]._id === player._id) {
+    $scope.toggleVisible = function (player)
+    {
+        for (var i = 0; i < $scope.encounterState.players.length; i++)
+        {
+            if ($scope.encounterState.players[i]._id === player._id)
+            {
                 EncounterService.encounterState.players[i].visible = !EncounterService.encounterState.players[i].visible;
                 $scope.encounterState = EncounterService.encounterState;
                 updateServerPlayer(EncounterService.encounterState.players[i]);
@@ -186,11 +249,13 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         }
     };
 
-    $scope.healPlayer = function (hit) {
+    $scope.healPlayer = function (hit)
+    {
         console.log("Heal player");
         console.log(EncounterService.encounterState.players[selectedPlayer]);
         console.log(hit);
-        if (hit === 0 || isNaN(hit)) {
+        if (hit === 0 || isNaN(hit))
+        {
             return;
         }
 
@@ -199,12 +264,15 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         updateServerPlayer($scope.encounterState.players[selectedPlayer]);
     };
 
-    $scope.damagePlayer = function (hit) {
+    $scope.damagePlayer = function (hit)
+    {
         $scope.healPlayer(-hit);
     };
 
-    $scope.setInitiative = function (initiative) {
-        if (initiative < 1 || isNaN(initiative)) {
+    $scope.setInitiative = function (initiative)
+    {
+        if (initiative < 1 || isNaN(initiative))
+        {
             return;
         }
 
@@ -214,7 +282,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 playerId: $scope.encounterState.players[selectedPlayer]._id,
                 initiative: initiative
             };
-        $http.post(url, data).success(function (data) {
+        $http.post(url, data).success(function (data)
+        {
             socket.emit('update:encounter',
                 {
                     encounterId: encounterId
@@ -224,14 +293,16 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.removePlayer = function (player) {
+    $scope.removePlayer = function (player)
+    {
         var url = 'api/encounter/removeplayer/' + encounterId;
         var data =
             {
                 playerId: player._id
             };
 
-        $http.post(url, data).success(function (data) {
+        $http.post(url, data).success(function (data)
+        {
             socket.emit('update:encounter',
                 {
                     encounterId: encounterId
@@ -241,14 +312,17 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.listModalgetCharacters = function () {
+    $scope.listModalgetCharacters = function ()
+    {
         var url = 'api/character/all/' + Profile.getUserId();
-        $http.get(url).success(function (data) {
+        $http.get(url).success(function (data)
+        {
             $scope.characters = data.characters;
         });
     };
 
-    $scope.addCharacter = function () {
+    $scope.addCharacter = function ()
+    {
         modal = $uibModal.open({
             animation: true,
             templateUrl: 'modal/listCharactersModal.html',
@@ -257,7 +331,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.listModalselectCharacter = function (index) {
+    $scope.listModalselectCharacter = function (index)
+    {
         var encounterId = $scope.encounterState._id;
 
         var url = 'api/encounter/addcharacter/' + encounterId;
@@ -266,7 +341,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 characterId: $scope.characters[index]._id
             };
 
-        $http.post(url, data).success(function (data) {
+        $http.post(url, data).success(function (data)
+        {
             socket.emit('update:encounter',
                 {
                     encounterId: encounterId
@@ -276,14 +352,17 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.listModalgetNPCs = function () {
+    $scope.listModalgetNPCs = function ()
+    {
         var url = 'api/npc/all/';
-        $http.get(url).success(function (data) {
+        $http.get(url).success(function (data)
+        {
             $scope.npcs = data.npcs;
         });
     };
 
-    $scope.addNPC = function () {
+    $scope.addNPC = function ()
+    {
         modal = $uibModal.open({
             animation: true,
             templateUrl: 'modal/listNPCModal.html',
@@ -292,7 +371,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.listModalselectNPC = function (index) {
+    $scope.listModalselectNPC = function (index)
+    {
         var encounterId = $scope.encounterState._id;
 
         var url = 'api/encounter/addnpc/' + encounterId;
@@ -301,7 +381,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 npcId: $scope.npcs[index]._id
             };
 
-        $http.post(url, data).success(function (data) {
+        $http.post(url, data).success(function (data)
+        {
             socket.emit('update:encounter',
                 {
                     encounterId: encounterId
@@ -311,7 +392,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.submit = function () {
+    $scope.submit = function ()
+    {
         var url = 'api/encounter/setactive/' + encounterId;
         var active = !$scope.encounterState.active;
         var data =
@@ -319,8 +401,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 active: active
             };
 
-        $http.post(url, data).success(function (data) {
-            if (data === "OK") {
+        $http.post(url, data).success(function (data)
+        {
+            if (data === "OK")
+            {
                 socket.emit('encounter:end',
                     {
                         encounterId: encounterId
@@ -332,18 +416,22 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.setNPCtoEdit = function (index) {
+    $scope.setNPCtoEdit = function (index)
+    {
         $scope.editNPC = JSON.parse(JSON.stringify($scope.encounterState.players[index]));
     };
 
-    $scope.editModalSave = function () {
+    $scope.editModalSave = function ()
+    {
         var url = "api/encounter/updateplayer";
         var data =
             {
                 player: $scope.editNPC
             };
-        $http.post(url, data).success(function (data) {
-            if (data === "OK") {
+        $http.post(url, data).success(function (data)
+        {
+            if (data === "OK")
+            {
                 socket.emit('update:encounter',
                     {
                         encounterId: encounterId
@@ -353,43 +441,58 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.getColor = function (player) {
-        if (player.npc) {
-            if (player.name === 'Commoner') {
+    $scope.getColor = function (player)
+    {
+        if (player.npc)
+        {
+            if (player.name === 'Commoner')
+            {
                 return "rgba(0, 255, 0, 0.3)";
             }
             return "rgba(255, 0, 0, 0.3)";
         }
-        else {
+        else
+        {
             return "rgba(51, 122, 183, 0.3)";
         }
     };
 
-    $scope.setHover = function (player) {
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
-            if (EncounterService.encounterState.players[i]._id === player._id) {
+    $scope.setHover = function (player)
+    {
+        for (var i = 0; i < EncounterService.encounterState.players.length; i++)
+        {
+            if (EncounterService.encounterState.players[i]._id === player._id)
+            {
                 EncounterService.encounterState.players[i].isHovered = true;
             }
-            else {
+            else
+            {
                 EncounterService.encounterState.players[i].isHovered = false;
             }
         }
     };
 
-    $scope.removeHover = function (player) {
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
+    $scope.removeHover = function (player)
+    {
+        for (var i = 0; i < EncounterService.encounterState.players.length; i++)
+        {
             EncounterService.encounterState.players[i].isHovered = false;
         }
     };
 
-    $scope.isHovered = function (player) {
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
-            if (EncounterService.encounterState.players[i]._id === player._id && (EncounterService.encounterState.players[i].isHovered || EncounterService.encounterState.players[i].isSelected)) {
-                if (EncounterService.encounterState.players[i].isSelected) {
+    $scope.isHovered = function (player)
+    {
+        for (var i = 0; i < EncounterService.encounterState.players.length; i++)
+        {
+            if (EncounterService.encounterState.players[i]._id === player._id && (EncounterService.encounterState.players[i].isHovered || EncounterService.encounterState.players[i].isSelected))
+            {
+                if (EncounterService.encounterState.players[i].isSelected)
+                {
                     return "background-color: rgba(0,0,0,.2); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
                 }
 
-                if (EncounterService.encounterState.players[i].isHovered) {
+                if (EncounterService.encounterState.players[i].isHovered)
+                {
                     return "background-color: rgba(0,0,0,0.05); box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);";
                 }
             }
@@ -398,18 +501,24 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return "";
     };
 
-    $scope.selectPlayer = function (player) {
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
-            if (EncounterService.encounterState.players[i]._id === player._id) {
-                if (EncounterService.encounterState.players[i].isSelected) {
+    $scope.selectPlayer = function (player)
+    {
+        for (var i = 0; i < EncounterService.encounterState.players.length; i++)
+        {
+            if (EncounterService.encounterState.players[i]._id === player._id)
+            {
+                if (EncounterService.encounterState.players[i].isSelected)
+                {
                     EncounterService.encounterState.players[i].isSelected = false;
                 }
-                else {
+                else
+                {
                     selectedPlayer = i;
                     EncounterService.encounterState.players[i].isSelected = true;
                 }
             }
-            else {
+            else
+            {
                 EncounterService.encounterState.players[i].isSelected = false;
             }
         }
@@ -419,19 +528,23 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     // ********************************************************************************************
     // Sidenav Features
     // ********************************************************************************************
-    $scope.toggleMenu = function () {
+    $scope.toggleMenu = function ()
+    {
         $mdSidenav('side_menu').toggle();
     };
 
 
-    function updateServerPlayer(player) {
+    function updateServerPlayer(player)
+    {
         var url = 'api/encounter/updateplayer';
         var data =
             {
                 player: player
             };
-        $http.post(url, data).success(function (data) {
-            if (data === "OK") {
+        $http.post(url, data).success(function (data)
+        {
+            if (data === "OK")
+            {
                 socket.emit('update:player', player);
             }
         });
