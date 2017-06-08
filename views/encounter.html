@@ -143,7 +143,7 @@
     <div style="display: flex; flex:1; margin-bottom: 5px">
 
         <!--Player Status Nav-->
-        <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px">
+        <div style="display:flex; flex-direction:column; flex: 0 0 375px; margin-right: 5px; margin-bottom: 8px;">
             <!--Blue Players Tag-->
             <div>
                 <li class="list-group-item active" style="display: flex; padding-top: 5px; padding-bottom: 5px">
@@ -232,6 +232,9 @@
                         <i class="fa fa-bars fa-2x" ng-click="$mdMenu.open($event)"></i>
                         <md-menu-content>
                             <md-menu-item>
+                                <md-button ng-click="addNote()">New Notation</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
                                 <md-button>Single Square</md-button>
                             </md-menu-item>
                             <md-menu-item>
@@ -269,7 +272,6 @@
                     </li>
                 </ul>
             </div>
-            <md-button ng-click="addNote()" ng-show="isHost()" class="md-raised">Add Note</md-button>
         </div>
 
 
