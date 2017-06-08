@@ -17,72 +17,25 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.host = false;
     $scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
-    $scope.clickNote = null;
-
-    $scope.note_options = {
-        format: ['hsl'],
-        swatchOnly: true
-    };
 
     $scope.colorPickerEventApi = {
-        onChange:  function(api, color, $event) {},
-        onBlur:    function(api, color, $event) {},
-        onOpen:    function(api, color, $event) {},
-        onClose:   function(api, color, $event) {
+        onChange: function (api, color, $event) {
+        },
+        onBlur: function (api, color, $event) {
+        },
+        onOpen: function (api, color, $event) {
+        },
+        onClose: function (api, color, $event) {
             EncounterService.updateNote($scope.clickNote);
             EncounterService.update();
         },
-        onClear:   function(api, color, $event) {},
-        onReset:   function(api, color, $event) {},
-        onDestroy: function(api, color) {}
-    };
-
-    $scope.noteClick = function (note) {
-        $scope.clickNote = note;
-    };
-
-
-    $scope.toggleNoteSelected = function (note) {
-        if (note._id !== EncounterService.selected_note_uid) {
-            EncounterService.selected_note_uid = note._id;
-        }
-        else {
-            EncounterService.selected_note_uid = null;
+        onClear: function (api, color, $event) {
+        },
+        onReset: function (api, color, $event) {
+        },
+        onDestroy: function (api, color) {
         }
     };
-
-    $scope.isNoteSelected = function (note) {
-        return note._id === EncounterService.selected_note_uid;
-    };
-
-    $scope.toggleGrid = function () {
-        EncounterService.gridEnabled = !EncounterService.gridEnabled;
-    };
-
-    $scope.gridState = function () {
-        return EncounterService.gridEnabled;
-    };
-
-    $scope.addNote = function () {
-        EncounterService.addNote();
-    };
-
-    $scope.removeNote = function (note) {
-        EncounterService.removeNote(note);
-    };
-
-    $scope.getNotes = function () {
-        return EncounterService.encounterState.mapNotations;
-    };
-
-    $scope.getEncounterState = function () {
-        return EncounterService.encounterState;
-    };
-
-    $scope.updateNote = function (note) {
-        EncounterService.updateNote(note);
-    };
-
 
     socket.on('init', function () {
         EncounterService.init(encounterId).then(function () {
@@ -110,30 +63,72 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     });
 
-    socket.on('update:player', function (player) {
-        player.isHovered = false;
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
-            if (EncounterService.encounterState.players[i]._id === player._id) {
-                if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true) {
-                    player.isSelected = true;
-                }
-                else {
-                    player.isSelected = false;
-                }
-                for (var value in player) {
-                    EncounterService.encounterState.players[i][value] = player[value];
-                    $scope.encounterState = EncounterService.encounterState;
-                }
-            }
-        }
-    });
 
-    socket.on('encounter:end', function (data) {
-        if (data.encounterId === encounterId) {
-            $scope.status = 'ENDED'
-        }
-    });
+    /******************************************************************************************
+     * NOTATION VARIABLES and FUNCTIONS
+     ******************************************************************************************/
+    $scope.note_options = {
+        format: ['hsl'],
+        swatchOnly: true
+    };
+    $scope.clickNote = null;
 
+    $scope.noteClick = function (note) {
+        $scope.clickNote = note;
+    };
+
+    $scope.toggleNoteSelected = function (note) {
+        if (note._id !== EncounterService.selected_note_uid) {
+            EncounterService.selected_note_uid = note._id;
+        }
+        else {
+            EncounterService.selected_note_uid = null;
+        }
+    };
+
+    $scope.isNoteSelected = function (note) {
+        return note._id === EncounterService.selected_note_uid;
+    };
+
+    $scope.getNotes = function () {
+        return EncounterService.encounterState.mapNotations;
+    };
+
+    $scope.addNote = function () {
+        EncounterService.addNote();
+    };
+
+    $scope.removeNote = function (note) {
+        EncounterService.removeNote(note);
+    };
+
+    $scope.updateNote = function (note) {
+        EncounterService.updateNote(note);
+    };
+
+    /******************************************************************************************
+     * SIDENAV VARIABLES and FUNCTIONS
+     ******************************************************************************************/
+    $scope.toggleMenu = function () {
+        $mdSidenav('side_menu').toggle();
+    };
+
+    $scope.toggleGrid = function () {
+        EncounterService.gridEnabled = !EncounterService.gridEnabled;
+    };
+
+    $scope.gridState = function () {
+        return EncounterService.gridEnabled;
+    };
+
+    $scope.getEncounterState = function () {
+        return EncounterService.encounterState;
+    };
+
+
+    /******************************************************************************************
+     * MAP VARIABLES and FUNCTIONS
+     ******************************************************************************************/
     $scope.uploadMapPhoto = function ($flow) {
         $flow.upload();
         $flow.files[0] = $flow.files[$flow.files.length - 1];
@@ -161,11 +156,44 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
+
+    /******************************************************************************************
+     * SOCKET VARIABLES and FUNCTIONS
+     ******************************************************************************************/
+    socket.on('update:player', function (player) {
+        player.isHovered = false;
+        for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
+            if (EncounterService.encounterState.players[i]._id === player._id) {
+                if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true) {
+                    player.isSelected = true;
+                }
+                else {
+                    player.isSelected = false;
+                }
+                for (var value in player) {
+                    EncounterService.encounterState.players[i][value] = player[value];
+                    $scope.encounterState = EncounterService.encounterState;
+                }
+            }
+        }
+    });
+
+    socket.on('encounter:end', function (data) {
+        if (data.encounterId === encounterId) {
+            $scope.status = 'ENDED'
+        }
+    });
+
+    /******************************************************************************************
+     * PLAYER STATUS ZONE VARIABLES and FUNCTIONS
+     ******************************************************************************************/
     $scope.isHost = function () {
         return $scope.host;
     };
 
     $scope.isNPC = function (index) {
+        console.log(index + ' ' + EncounterService.encounterState.players[index].npc);
+        // return EncounterService.encounterState.players[index].npc;
         return $scope.encounterState.players[index].npc;
     };
 
@@ -290,7 +318,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                     encounterId: encounterId
                 });
             EncounterService.update();
-            // $scope.updateEncounterState();
             modal.close();
         });
     };
@@ -333,7 +360,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                         encounterId: encounterId
                     });
                 EncounterService.update();
-                // $scope.updateEncounterState();
             }
         });
     };
@@ -399,15 +425,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             }
         }
     };
-
-
-    // ********************************************************************************************
-    // Sidenav Features
-    // ********************************************************************************************
-    $scope.toggleMenu = function () {
-        $mdSidenav('side_menu').toggle();
-    };
-
 
     function updateServerPlayer(player) {
         var url = 'api/encounter/updateplayer';
