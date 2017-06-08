@@ -1,6 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('EncounterService', function ($http, $q, Profile, socket) {
+clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uibModal) {
     var encounterService = {};
 
     encounterService.encounterState = {
@@ -21,6 +21,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket) {
     encounterService.canvas_state = {res_x: 0, res_y: 0, clear_offset: 1000};
 
     encounterService.selected_note_uid = null;
+
+    encounterService.modalCharacters = null;
+    var characterModal = null;
 
     encounterService.init = function (inputID) {
         encounterService.encounterID = inputID;
@@ -105,7 +108,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket) {
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
-
     encounterService.updatePlayer = function (index) {
         var player = encounterService.encounterState.players[index];
         var url = 'api/encounter/updateplayer';
@@ -116,6 +118,42 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket) {
             socket.emit('update:player', encounterService.encounterState.players[index]);
         });
     };
+    encounterService.listModalGetCharacters = function(){
+        var url = 'api/character/all/' + Profile.getUserId();
+        $http.get(url).success(function (data) {
+            encounterService.modalCharacters = data.characters;
+        });
+    };
+
+    encounterService.getModalCharacters = function(){
+        return encounterService.modalCharacters;
+    };
+
+    encounterService.addCharacter = function(scope){
+        characterModal = $uibModal.open({
+            animation: true,
+            templateUrl: 'modal/listCharactersModal.html',
+            scope: scope,
+            size: ''
+        });
+    };
+
+    encounterService.listModalSelectCharacter = function(index){
+        // var encounterId = $scope.encounterState._id;
+
+        var url = 'api/encounter/addcharacter/' + encounterService.encounterState._id;
+        var data =
+        {
+            characterId: encounterService.modalCharacters[index]._id
+        };
+
+        $http.post(url, data).success(function (data) {
+            socket.emit('update:encounter');
+            encounterService.update();
+            characterModal.close();
+        });
+    };
+
 
     /***********************************************************************************************
      * MAP FUNCTIONS

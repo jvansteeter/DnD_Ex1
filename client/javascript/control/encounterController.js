@@ -91,10 +91,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     });
 
-    // socket.on('update:encounter', function (data) {
-    //     EncounterService.update();
-    // });
-
     socket.on('update:player', function (player) {
         player.isHovered = false;
         for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
@@ -134,7 +130,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             transformRequest: angular.identity
         }).success(function (data) {
             EncounterService.update();
-            // $scope.updateEncounterState();
             modal.close();
         });
     };
@@ -146,14 +141,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             modal.close();
         });
     };
-
-    // $scope.updateEncounterState = function ()
-    // {
-    //     EncounterService.update().then(function ()
-    //     {
-    //         $scope.encounterState = EncounterService.encounterState;
-    //     });
-    // };
 
     $scope.isHost = function () {
         return $scope.host;
@@ -233,43 +220,27 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                     encounterId: encounterId
                 });
             EncounterService.update();
-            // $scope.updateEncounterState();
         });
     };
 
+    // Gets the characters associated with the Profile
     $scope.listModalgetCharacters = function () {
-        var url = 'api/character/all/' + Profile.getUserId();
-        $http.get(url).success(function (data) {
-            $scope.characters = data.characters;
-        });
+        EncounterService.listModalGetCharacters();
     };
 
+    $scope.getModalCharacters = function(){
+        return EncounterService.getModalCharacters();
+    };
+
+    // Activation function tied into the HTML
     $scope.addCharacter = function () {
-        modal = $uibModal.open({
-            animation: true,
-            templateUrl: 'modal/listCharactersModal.html',
-            scope: $scope,
-            size: ''
-        });
+        EncounterService.addCharacter($scope);
+
     };
 
+    //
     $scope.listModalselectCharacter = function (index) {
-        var encounterId = $scope.encounterState._id;
-
-        var url = 'api/encounter/addcharacter/' + encounterId;
-        var data =
-        {
-            characterId: $scope.characters[index]._id
-        };
-
-        $http.post(url, data).success(function (data) {
-            socket.emit('update:encounter',
-                {
-                    encounterId: encounterId
-                });
-            EncounterService.update();
-            modal.close();
-        });
+        EncounterService.listModalSelectCharacter(index);
     };
 
     $scope.listModalgetNPCs = function () {

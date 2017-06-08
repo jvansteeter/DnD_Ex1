@@ -4,7 +4,7 @@
 <div class="modal-body" ng-init="listModalgetCharacters()">
     <h4 class="modal-title" ng-bind="title"></h4>
     <div class="list-group">
-        <button type="submit" ng-repeat="character in characters track by $index" ng-click="listModalselectCharacter($index); $hide()" class="list-group-item"><h4>{{ character.name }} {{ character.class }} {{ character.level }}</h4></button>
+        <button type="submit" ng-repeat="character in getModalCharacters() track by $index" ng-click="listModalselectCharacter($index); $hide()" class="list-group-item"><h4>{{ character.name }} {{ character.class }} {{ character.level }}</h4></button>
     </div>
 </div>
 <div class="modal-footer">
