@@ -17,9 +17,29 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.host = false;
     $scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
+    $scope.clickNote = null;
+
     $scope.note_options = {
         format: ['hsl'],
         swatchOnly: true
+    };
+
+    $scope.colorPickerEventApi = {
+        onChange:  function(api, color, $event) {},
+        onBlur:    function(api, color, $event) {},
+        onOpen:    function(api, color, $event) {},
+        onClose:   function(api, color, $event) {
+            console.log($scope.clickNote);
+            EncounterService.updateNote($scope.clickNote);
+            EncounterService.update();
+        },
+        onClear:   function(api, color, $event) {},
+        onReset:   function(api, color, $event) {},
+        onDestroy: function(api, color) {}
+    };
+
+    $scope.noteClick = function (note) {
+        $scope.clickNote = note;
     };
 
 
@@ -56,7 +76,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return EncounterService.encounterState.mapNotations;
     };
 
-    $scope.getEncounterState = function() {
+    $scope.getEncounterState = function () {
         return EncounterService.encounterState;
     };
 
@@ -228,7 +248,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         EncounterService.listModalGetCharacters();
     };
 
-    $scope.getModalCharacters = function(){
+    $scope.getModalCharacters = function () {
         return EncounterService.getModalCharacters();
     };
 

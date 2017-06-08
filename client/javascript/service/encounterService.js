@@ -62,6 +62,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     };
 
     encounterService.updateNote = function (note) {
+        console.log('EncounterService updateNote');
         var url = 'api/encounter/updatemapnotation';
         var data = {
             mapNotation: note
@@ -70,10 +71,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             socket.emit('update:encounter');
             encounterService.update();
         })
-    };
-
-    encounterService.pushNotes = function () {
-
     };
 
 

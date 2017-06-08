@@ -245,7 +245,7 @@
         <ul class="list-group">
           <li ng-repeat="note in getNotes()" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
             <div style="display: flex; height: 42px;">
-              <color-picker ng-show="isHost()" ng-model="note.color" options="note_options" style="align-self: center;" ng-change="updateNote(note)"></color-picker>
+              <color-picker ng-click="noteClick(note)" ng-show="isHost()" ng-model="note.color" options="note_options" style="align-self: center;" event-api="colorPickerEventApi"></color-picker>
 
               <input ng-model="note.text" ng-if="isHost()" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
               <span ng-if="!isHost()" style="align-self: center; margin-right: auto">{{note.text}}</span>
