@@ -9,7 +9,7 @@ encounterRepository.read = function (encounterId, callback)
 {
     Encounter.findById(encounterId, function(error, encounter)
     {
-        handleError(error);
+        handleError(error, callback);
         if (encounter === null)
         {
             callback(new Error('Encounter with id: ' + encounterId + ' not found.'));
