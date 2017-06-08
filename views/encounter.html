@@ -154,7 +154,7 @@
       <!--List of Players-->
       <div class="initiative-box" style="flex:1; overflow-y: scroll;">
         <ul ng-model="players" class="list-group">
-          <li ng-repeat="player in encounterState.players | orderBy:'-initiative'"
+          <li ng-repeat="player in getEncounterState().players | orderBy:'-initiative'"
               class="list-group-item" ng-hide="!isHost() && !player.visible"
               ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)"
               ng-mouseleave="removeHover()"

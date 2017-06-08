@@ -56,6 +56,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return EncounterService.encounterState.mapNotations;
     };
 
+    $scope.getEncounterState = function() {
+        return EncounterService.encounterState;
+    };
+
     $scope.updateNote = function (note) {
         EncounterService.updateNote(note);
     };
@@ -129,7 +133,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             },
             transformRequest: angular.identity
         }).success(function (data) {
-            $scope.updateEncounterState();
+            EncounterService.update();
+            // $scope.updateEncounterState();
             modal.close();
         });
     };
@@ -210,8 +215,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 {
                     encounterId: encounterId
                 });
-
-            $scope.updateEncounterState();
+            EncounterService.update();
+            // $scope.updateEncounterState();
         });
     };
 
@@ -227,8 +232,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 {
                     encounterId: encounterId
                 });
-
-            $scope.updateEncounterState();
+            EncounterService.update();
+            // $scope.updateEncounterState();
         });
     };
 
@@ -262,7 +267,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 {
                     encounterId: encounterId
                 });
-            $scope.updateEncounterState();
+            EncounterService.update();
             modal.close();
         });
     };
@@ -297,7 +302,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 {
                     encounterId: encounterId
                 });
-            $scope.updateEncounterState();
+            EncounterService.update();
+            // $scope.updateEncounterState();
             modal.close();
         });
     };
@@ -339,7 +345,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                     {
                         encounterId: encounterId
                     });
-                $scope.updateEncounterState();
+                EncounterService.update();
+                // $scope.updateEncounterState();
             }
         });
     };
