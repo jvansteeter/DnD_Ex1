@@ -71,7 +71,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         format: ['hsl'],
         swatchOnly: true
     };
+    $scope.notes_collapsed = false;
     $scope.clickNote = null;
+
+    $scope.toggleNotes = function () {
+        $scope.notes_collapsed = !$scope.notes_collapsed;
+    };
 
     $scope.noteClick = function (note) {
         $scope.clickNote = note;

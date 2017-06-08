@@ -231,6 +231,7 @@
           <md-menu ng-show="isHost()" style="align-self: center">
             <i class="fa fa-bars fa-2x" ng-click="$mdMenu.open($event)"></i>
             <md-menu-content>
+              <md-menu-item><md-button ng-click="toggleNotes()">Toggle Notes</md-button></md-menu-item>
               <md-menu-item><md-button>Single Square</md-button></md-menu-item>
               <md-menu-item><md-button>5ft Radius</md-button></md-menu-item>
               <md-menu-item><md-button>10ft Radius</md-button></md-menu-item>
@@ -239,9 +240,9 @@
             </md-menu-content>
           </md-menu>
         </li>
-
       </div>
-      <div class="initiative-box" style="flex:1; overflow-y: scroll;">
+
+      <div class="initiative-box" style="flex:1; overflow-y: scroll;" ng-show="notes_collapsed">
         <ul class="list-group">
           <li ng-repeat="note in getNotes()" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
             <div style="display: flex; height: 42px;">
