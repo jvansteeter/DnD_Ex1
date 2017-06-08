@@ -32,7 +32,6 @@ encounterPlayerRepository.read = function (playerId, callback)
     EncounterPlayer.findById(playerId, function(error, player)
     {
         handleError(error, callback);
-        console.log(playerId);
         if (player === null)
         {
             callback(new Error('Player with id: ' + playerId + ' not found.'));

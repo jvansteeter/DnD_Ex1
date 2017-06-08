@@ -237,18 +237,14 @@ encounterService.uploadMap = function (encounterId, imageFile, callback)
 
 encounterService.addMapNotation = function (encounterId, userId, callback)
 {
-    console.log('in service addMapNotation');
 	encounterRepository.read(encounterId, function(error, encounter)
 	{
-	    console.log('have encounter');
         handleError(error, callback);
         mapNotationRepository.create(userId, function (error, mapNotation)
         {
-            console.log('created notation');
             handleError(error, callback);
             encounter.addMapNotation(mapNotation._id, function(error)
             {
-				console.log('saved to encounter');
 				callback(error);
             });
         })
@@ -274,16 +270,12 @@ encounterService.removeMapNotation = function (encounterId, mapNotationId, callb
 
 encounterService.updateMapNotation = function (mapNotationId, mapNotationObject, callback)
 {
-    console.log('in encounter service ' + mapNotationId);
 	mapNotationRepository.read(mapNotationId, function (error, mapNotation)
 	{
-	    console.log('this gets returned from read')
-	    console.log(mapNotation);
 		handleError(error, callback);
 		mapNotation.setMapNotation(mapNotationObject);
         mapNotationRepository.update(mapNotation, function (error)
 		{
-		    console.log('returned from update')
 			callback(error);
 		})
 	})
