@@ -1,131 +1,152 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uibModal) {
-    var encounterService = {};
-
-    encounterService.encounterState = {
+clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uibModal)
+{
+    this.encounterState = {
         mapDimX: 0,
         mapDimY: 0,
         mapResX: 0,
         mapResY: 0
     };
 
-    encounterService.hoverCell = null;
+    this.hoverCell = null;
 
-    encounterService.gridEnabled = true;
+    this.gridEnabled = true;
 
-    encounterService.updateHasRun = false;
+    this.updateHasRun = false;
 
-    encounterService.tileSize = 50;
-    encounterService.map_transform = {x: 0, y: 0, scale: 1};
-    encounterService.canvas_state = {res_x: 0, res_y: 0, clear_offset: 1000};
+    this.tileSize = 50;
+    this.map_transform = {x: 0, y: 0, scale: 1};
+    this.canvas_state = {res_x: 0, res_y: 0, clear_offset: 1000};
 
-    encounterService.selected_note_uid = null;
+    this.selected_note_uid = null;
 
-    encounterService.modalCharacters = null;
+    this.modalCharacters = null;
     var characterModal = null;
 
-    encounterService.init = function (inputID) {
-        encounterService.encounterID = inputID;
+    this.init = function (inputID)
+    {
+        this.encounterID = inputID;
         var deferred = $q.defer();
-        Profile.async().then(function () {
-            $http.get('api/encounter/' + encounterService.encounterID).success(function (data) {
-                encounterService.update().then(function () {
+        Profile.async().then(function ()
+        {
+            $http.get('api/encounter/' + this.encounterID).success(function (data)
+            {
+                this.update().then(function ()
+                {
                     deferred.resolve();
                 });
-            });
-        });
+            }.bind(this));
+        }.bind(this));
 
         return deferred.promise;
-    };
+    }.bind(this);
 
     /***********************************************************************************************
      * NOTATION FUNCTIONS
      ***********************************************************************************************/
-    encounterService.addNote = function () {
-        var url = 'api/encounter/addmapnotation/' + encounterService.encounterState._id;
-        $http.get(url).then(function () {
+    this.addNote = function ()
+    {
+        var url = 'api/encounter/addmapnotation/' + this.encounterState._id;
+        $http.get(url).then(function ()
+        {
             socket.emit('update:encounter');
-            encounterService.update();
-        });
-    };
+            this.update();
+        }.bind(this));
+    }.bind(this);
 
-    encounterService.removeNote = function (note) {
-        var url = 'api/encounter/removemapnotation/' + encounterService.encounterState._id;
+    this.removeNote = function (note)
+    {
+        var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
         var data = {
             mapNotationId: note._id
         };
-        $http.post(url, data).then(function () {
+        $http.post(url, data).then(function ()
+        {
             socket.emit('update:encounter');
-            encounterService.update();
-        });
-    };
+            this.update();
+        }.bind(this));
+    }.bind(this);
 
-    encounterService.updateNote = function (note) {
+    this.updateNote = function (note)
+    {
         var url = 'api/encounter/updatemapnotation';
         var data = {
             mapNotation: note
         };
-        $http.post(url, data).then(function () {
+        $http.post(url, data).then(function ()
+        {
             socket.emit('update:encounter');
-            encounterService.update();
-        })
-    };
+            this.update();
+        }.bind(this))
+    }.bind(this);
 
 
     /***********************************************************************************************
      * ENCOUNTER FUNCTIONS
      ***********************************************************************************************/
-    encounterService.update = function () {
+    this.update = function ()
+    {
         var deferred = $q.defer();
 
-        var url = 'api/encounter/encounterstate/' + encounterService.encounterID;
+        var url = 'api/encounter/encounterstate/' + this.encounterID;
 
-        $http.get(url).success(function (data) {
-            encounterService.encounterState = data;
-            encounterService.updateHasRun = true;
+        $http.get(url).success(function (data)
+        {
+            this.encounterState = data;
+            this.updateHasRun = true;
             deferred.resolve();
-        }).error(function () {
+        }.bind(this)).error(function ()
+        {
             deferred.reject();
         });
 
         return deferred.promise;
-    };
+    }.bind(this);
 
-    encounterService.setUpdateHasRunFlag = function (value) {
+    this.setUpdateHasRunFlag = function (value)
+    {
         this.updateHasRun = value;
-    };
+    }.bind(this);
 
 
-    encounterService.isHost = function () {
-        return encounterService.encounterState.hostId === Profile.getUserId();
-    };
+    this.isHost = function ()
+    {
+        return this.encounterState.hostId === Profile.getUserId();
+    }.bind(this);
 
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
-    encounterService.updatePlayer = function (index) {
-        var player = encounterService.encounterState.players[index];
+    this.updatePlayer = function (index)
+    {
+        var player = this.encounterState.players[index];
         var url = 'api/encounter/updateplayer';
         var data = {
             player: player
         };
-        $http.post(url, data).success(function (data) {
-            socket.emit('update:player', encounterService.encounterState.players[index]);
-        });
-    };
-    encounterService.listModalGetCharacters = function(){
+        $http.post(url, data).success(function (data)
+        {
+            socket.emit('update:player', this.encounterState.players[index]);
+        }.bind(this));
+    }.bind(this);
+
+    this.listModalGetCharacters = function ()
+    {
         var url = 'api/character/all/' + Profile.getUserId();
-        $http.get(url).success(function (data) {
-            encounterService.modalCharacters = data.characters;
-        });
-    };
+        $http.get(url).success(function (data)
+        {
+            this.modalCharacters = data.characters;
+        }.bind(this));
+    }.bind(this);
 
-    encounterService.getModalCharacters = function(){
-        return encounterService.modalCharacters;
-    };
+    this.getModalCharacters = function ()
+    {
+        return this.modalCharacters;
+    }.bind(this);
 
-    encounterService.addCharacter = function(scope){
+    this.addCharacter = function (scope)
+    {
         characterModal = $uibModal.open({
             animation: true,
             templateUrl: 'modal/listCharactersModal.html',
@@ -134,28 +155,30 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         });
     };
 
-    encounterService.listModalSelectCharacter = function(index){
+    this.listModalSelectCharacter = function (index)
+    {
         // var encounterId = $scope.encounterState._id;
 
-        var url = 'api/encounter/addcharacter/' + encounterService.encounterState._id;
+        var url = 'api/encounter/addcharacter/' + this.encounterState._id;
         var data =
+            {
+                characterId: this.modalCharacters[index]._id
+            };
+
+        $http.post(url, data).success(function (data)
         {
-            characterId: encounterService.modalCharacters[index]._id
-        };
-
-        $http.post(url, data).success(function (data) {
             socket.emit('update:encounter');
-            encounterService.update();
+            this.update();
             characterModal.close();
-        });
-    };
-
+        }.bind(this));
+    }.bind(this);
 
     /***********************************************************************************************
      * MAP FUNCTIONS
      ***********************************************************************************************/
-    encounterService.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY) {
-        var url = 'api/encounter/updatemapdata/' + encounterService.encounterID;
+    this.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY)
+    {
+        var url = 'api/encounter/updatemapdata/' + this.encounterID;
 
         var data = {
             mapDimX: mapDimX,
@@ -164,20 +187,20 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             mapResY: mapResY
         };
 
-        $http.post(url, data).success(function (data) {
+        $http.post(url, data).success(function (data)
+        {
 
-        }).error(function () {
+        }).error(function ()
+        {
 
         })
-    };
+    }.bind(this);
 
     /***********************************************************************************************
      * SOCKET FUNCTIONS
      ***********************************************************************************************/
-    socket.on('update:encounter', function (data) {
-        encounterService.update();
-    });
-
-
-    return encounterService;
+    socket.on('update:encounter', function (data)
+    {
+        this.update();
+    }.bind(this));
 });
