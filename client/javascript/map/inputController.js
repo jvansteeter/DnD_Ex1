@@ -309,4 +309,27 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
         return {x: map_dim_x, y: map_dim_y};
     }
+
+    function distanceToCellFromCell(start, end){
+        var distance = 0;
+        var tenSpace = false;
+
+        var deltaX = Math.abs(end.x - start.x);
+        var deltaY = Math.abs(end.y - start.y);
+
+        while(deltaX > 0 && deltaY > 0){
+            deltaX -= 1;
+            deltaY -= 1;
+
+            if(tenSpace)
+                distance += 5;
+            else
+                distance += 10;
+
+            tenSpace = !tenSpace;
+        }
+
+        distance = distance + deltaX * 5 + deltaY * 5;
+        return distance;
+    }
 });
