@@ -97,7 +97,9 @@
 <!-- Content Space -->
 <div ng-controller="encounterController" style="margin-right: 5px; margin-left: 5px; display: flex; flex-direction: column; flex:1">
 
-    <!--Sidebar Content-->
+    <!-----------------------------------------------------------------------------------------------------
+    Sidebar Content
+    ------------------------------------------------------------------------------------------------------->
     <md-sidenav class="md-sidenav-left" md-component-id="side_menu" md-whiteframe="4">
         <!--Encounter Settings-->
         <md-toolbar class="md-theme-indigo">
@@ -107,7 +109,7 @@
             <md-list-item class="disabled" ng-show="isHost()" ng-click="null">Upload Map</md-list-item>
             <md-list-item ng-click="addCharacter()">Add Character</md-list-item>
             <md-list-item ng-show="isHost()" ng-click="addNPC()">Add NPC</md-list-item>
-            <md-list-item ng-show="isHost()" ng-click="submit()">
+            <md-list-item ng-show="isHost()" ng-click="toggleEncounterState()">
                 <span ng-if="!getEncounterState().active">Open Encounter</span>
                 <span ng-if="getEncounterState().active">Close Encounter</span>
             </md-list-item>
@@ -129,7 +131,9 @@
     </md-sidenav>
 
 
-    <!--Title Row-->
+    <!-----------------------------------------------------------------------------------------------------
+    Title Bar
+    ------------------------------------------------------------------------------------------------------->
     <div style="margin-bottom:5px; display:flex">
         <!--Menu Toggle Button-->
         <md-button class="md-raised" ng-click="toggleMenu()" style="background-color:white; height:40px; align-self: center;">Menu</md-button>
@@ -139,7 +143,9 @@
         <span ng-if="!getEncounterState().active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
     </div>
 
-    <!--Map Row-->
+    <!-----------------------------------------------------------------------------------------------------
+    Map Row
+    ------------------------------------------------------------------------------------------------------->
     <div style="display: flex; flex:1; margin-bottom: 5px">
 
         <!--Player Status Nav-->

@@ -110,6 +110,28 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         return deferred.promise;
     }.bind(this);
 
+    this.toggleEncounterState = function(){
+        var url = 'api/encounter/setactive/' + this.encounterID;
+        var active = !this.encounterState.active;
+        var data =
+            {
+                active: active
+            };
+
+        $http.post(url, data).success(function (data)
+        {
+            if (data === "OK")
+            {
+                socket.emit('encounter:end',
+                    {
+                        encounterId: this.encounterID
+                    });
+                socket.emit('new:encounter', {});
+                this.encounterState.active = active;
+            }
+        }.bind(this));
+    }.bind(this);
+
     this.setUpdateHasRunFlag = function (value) {
         this.updateHasRun = value;
     }.bind(this);
@@ -154,8 +176,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     };
 
     this.listModalSelectCharacter = function (index) {
-        // var encounterId = $scope.encounterState._id;
-
         var url = 'api/encounter/addcharacter/' + this.encounterState._id;
         var data = {
             characterId: this.modalCharacters[index]._id

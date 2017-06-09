@@ -380,28 +380,30 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
-    $scope.submit = function ()
+    $scope.toggleEncounterState = function ()
     {
-        var url = 'api/encounter/setactive/' + encounterId;
-        var active = !$scope.encounterState.active;
-        var data =
-            {
-                active: active
-            };
+        EncounterService.toggleEncounterState();
 
-        $http.post(url, data).success(function (data)
-        {
-            if (data === "OK")
-            {
-                socket.emit('encounter:end',
-                    {
-                        encounterId: encounterId
-                    });
-                socket.emit('new:encounter', {});
-                $scope.encounterState.active = active;
-                // modal.close();
-            }
-        });
+        // var url = 'api/encounter/setactive/' + encounterId;
+        // var active = !$scope.encounterState.active;
+        // var data =
+        //     {
+        //         active: active
+        //     };
+        //
+        // $http.post(url, data).success(function (data)
+        // {
+        //     if (data === "OK")
+        //     {
+        //         socket.emit('encounter:end',
+        //             {
+        //                 encounterId: encounterId
+        //             });
+        //         socket.emit('new:encounter', {});
+        //         $scope.encounterState.active = active;
+        //         // modal.close();
+        //     }
+        // });
     };
 
     $scope.setNPCtoEdit = function (index)
