@@ -89,7 +89,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
     {
         var url = 'api/campaign/post';
         var data = {
-            campaignID: campaignID,
+            campaignId: campaignID,
             content: $scope.newPost.content
         };
         $http.post(url, data).success(function(data)

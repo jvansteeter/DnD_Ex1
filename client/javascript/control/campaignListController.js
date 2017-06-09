@@ -27,7 +27,7 @@ clientApp.controller('homeController', function($scope, $window, $http, socket)
     {
         var url = 'api/campaign/join';
         var data = {
-            campaignID: campaignID
+            campaignId: campaignID
         };
         $http.post(url, data).success(function(data)
         {

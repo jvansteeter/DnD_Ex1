@@ -417,19 +417,6 @@ encounterService.updateMapNotation = function (mapNotationId, mapNotationObject,
 	})
 };
 
-// encounterService.updatePlayer = function (playerId, playerObject, callback)
-// {
-//     encounterPlayerRepository.read(playerId, function (error, player)
-//     {
-//         handleError(error, callback);
-//         player.setPlayer(playerObject);
-//         encounterPlayerRepository.update(player, function (error)
-//         {
-//             callback(error);
-//         })
-//     })
-// };
-
 function addEncounterPlayerToMap(encounter, encounterPlayer, callback)
 {
     //calculate and assign mapX, mapY to encounterPlayer
@@ -437,37 +424,54 @@ function addEncounterPlayerToMap(encounter, encounterPlayer, callback)
     var y = 0;
     var x = 0;
 
-    while (!tokenPlaced)
-    {
-        var spaceIsFree = true;
-        for (var i = 0; i < encounter.players.length; i++)
-        {
-            var player = encounter.players[i];
-            if (player.mapX === x && player.mapY === y)
-            {
-                spaceIsFree = false;
-            }
-        }
+    encounterPlayerRepository.readAll(encounter.players, function (error, players)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
 
-        if (spaceIsFree)
-        {
-            encounterPlayer.mapX = x;
-            encounterPlayer.mapY = y;
-            tokenPlaced = true;
-        }
+		while (!tokenPlaced)
+		{
+			var spaceIsFree = true;
+			for (var i = 0; i < players.length; i++)
+			{
+				var player = players[i];
+				if (player.mapX === x && player.mapY === y)
+				{
+					spaceIsFree = false;
+				}
+			}
 
-        x++;
-        if (x >= encounter.mapDimX)
-        {
-            x = 0;
-            y++
-        }
-    }
+			if (spaceIsFree)
+			{
+				encounterPlayer.mapX = x;
+				encounterPlayer.mapY = y;
+				tokenPlaced = true;
+			}
 
-    encounter.addPlayer(encounterPlayer._id, function()
-    {
-        encounterPlayer.save(callback);
-    });
+			x++;
+			if (x >= encounter.mapDimX)
+			{
+				x = 0;
+				y++
+			}
+		}
+
+		encounter.addPlayer(encounterPlayer._id, function(error)
+		{
+			if (error)
+			{
+				callback(error);
+				return;
+			}
+
+			encounterPlayer.save(callback);
+		});
+	});
+
+
 }
 
 module.exports = encounterService;
