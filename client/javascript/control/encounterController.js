@@ -9,7 +9,7 @@ clientApp.config(function ($modalProvider)
     });
 });
 
-clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, mapMain, EncounterService, $uibModal, $mdSidenav)
+clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, EncounterService, $uibModal, $mdSidenav)
 {
     var encounterId = window.location.search.replace('?', '');
     var modal;
@@ -168,6 +168,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         var url = 'api/encounter/uploadmap/' + encounterId;
         var fd = new FormData();
         fd.append("file", $flow.files[0].file);
+
         $http.post(url, fd, {
             withCredentials: false,
             headers: {

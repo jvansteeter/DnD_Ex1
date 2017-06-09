@@ -96,14 +96,6 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
         $window.requestAnimationFrame(draw);
     }
 
-    // $scope.getResX = function(){
-    //     return EncounterService.encounterState.mapResX;
-    // };
-    //
-    // $scope.getResY = function(){
-    //     return EncounterService.encounterState.mapResY;
-    // };
-
     $scope.get_res_x = function(){
         return EncounterService.canvas_state.res_x;
     };

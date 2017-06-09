@@ -1,7 +1,6 @@
 var clientApp = angular.module('clientApp');
 
-clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uibModal)
-{
+clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uibModal) {
     this.encounterState = {
         mapDimX: 0,
         mapDimY: 0,
@@ -24,16 +23,12 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
-    this.init = function (inputID)
-    {
+    this.init = function (inputID) {
         this.encounterID = inputID;
         var deferred = $q.defer();
-        Profile.async().then(function ()
-        {
-            $http.get('api/encounter/' + this.encounterID).success(function (data)
-            {
-                this.update().then(function ()
-                {
+        Profile.async().then(function () {
+            $http.get('api/encounter/' + this.encounterID).success(function (data) {
+                this.update().then(function () {
                     deferred.resolve();
                 });
             }.bind(this));
@@ -43,39 +38,55 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     }.bind(this);
 
     /***********************************************************************************************
+     * SOCKET FUNCTIONS
+     ***********************************************************************************************/
+    socket.on('update:encounter', function (data) {
+        this.update();
+    }.bind(this));
+
+
+    /***********************************************************************************************
      * NOTATION FUNCTIONS
      ***********************************************************************************************/
-    this.addNote = function ()
-    {
+    /**
+     * Invokes a HTTP request that adds a default note to the encounter on the server, then emits a socket call
+     * to provoke updates to all clients
+     */
+    this.addNote = function () {
         var url = 'api/encounter/addmapnotation/' + this.encounterState._id;
-        $http.get(url).then(function ()
-        {
+        $http.get(url).then(function () {
             socket.emit('update:encounter');
             this.update();
         }.bind(this));
     }.bind(this);
 
-    this.removeNote = function (note)
-    {
+    /**
+     * Invokes a HTTP request that removes a specific note from an encounter, then emits a socket call
+     * to provoke updates to all clients
+     * @param note: the complete JSON object that represents the note to remove
+     */
+    this.removeNote = function (note) {
         var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
         var data = {
             mapNotationId: note._id
         };
-        $http.post(url, data).then(function ()
-        {
+        $http.post(url, data).then(function () {
             socket.emit('update:encounter');
             this.update();
         }.bind(this));
     }.bind(this);
 
-    this.updateNote = function (note)
-    {
+    /**
+     * Invokes a HTTP request that updates a specific note from an encounter, then emits a socket call
+     * to provoke updates to all clients
+     * @param note: the complete JSON object that represents the note to remove
+     */
+    this.updateNote = function (note) {
         var url = 'api/encounter/updatemapnotation';
         var data = {
             mapNotation: note
         };
-        $http.post(url, data).then(function ()
-        {
+        $http.post(url, data).then(function () {
             socket.emit('update:encounter');
             this.update();
         }.bind(this))
@@ -85,66 +96,55 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * ENCOUNTER FUNCTIONS
      ***********************************************************************************************/
-    this.update = function ()
-    {
+    this.update = function () {
         var deferred = $q.defer();
         var url = 'api/encounter/encounterstate/' + this.encounterID;
-        $http.get(url).success(function (data)
-        {
+        $http.get(url).success(function (data) {
             this.encounterState = data;
             this.updateHasRun = true;
             deferred.resolve();
-        }.bind(this)).error(function ()
-        {
+        }.bind(this)).error(function () {
             deferred.reject();
         });
 
         return deferred.promise;
     }.bind(this);
 
-    this.setUpdateHasRunFlag = function (value)
-    {
+    this.setUpdateHasRunFlag = function (value) {
         this.updateHasRun = value;
     }.bind(this);
 
 
-    this.isHost = function ()
-    {
+    this.isHost = function () {
         return this.encounterState.hostId === Profile.getUserId();
     }.bind(this);
 
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
-    this.updatePlayer = function (index)
-    {
+    this.updatePlayer = function (index) {
         var player = this.encounterState.players[index];
         var url = 'api/encounter/updateplayer';
         var data = {
             player: player
         };
-        $http.post(url, data).success(function (data)
-        {
+        $http.post(url, data).success(function (data) {
             socket.emit('update:player', this.encounterState.players[index]);
         }.bind(this));
     }.bind(this);
 
-    this.listModalGetCharacters = function ()
-    {
+    this.listModalGetCharacters = function () {
         var url = 'api/character/all/' + Profile.getUserId();
-        $http.get(url).success(function (data)
-        {
+        $http.get(url).success(function (data) {
             this.modalCharacters = data.characters;
         }.bind(this));
     }.bind(this);
 
-    this.getModalCharacters = function ()
-    {
+    this.getModalCharacters = function () {
         return this.modalCharacters;
     }.bind(this);
 
-    this.addCharacter = function (scope)
-    {
+    this.addCharacter = function (scope) {
         characterModal = $uibModal.open({
             animation: true,
             templateUrl: 'modal/listCharactersModal.html',
@@ -153,8 +153,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         });
     };
 
-    this.listModalSelectCharacter = function (index)
-    {
+    this.listModalSelectCharacter = function (index) {
         // var encounterId = $scope.encounterState._id;
 
         var url = 'api/encounter/addcharacter/' + this.encounterState._id;
@@ -162,8 +161,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             characterId: this.modalCharacters[index]._id
         };
 
-        $http.post(url, data).success(function (data)
-        {
+        $http.post(url, data).success(function (data) {
             socket.emit('update:encounter');
             this.update();
             characterModal.close();
@@ -173,8 +171,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * MAP FUNCTIONS
      ***********************************************************************************************/
-    this.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY)
-    {
+    this.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY) {
         var url = 'api/encounter/updatemapdata/' + this.encounterID;
 
         var data = {
@@ -184,20 +181,12 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             mapResY: mapResY
         };
 
-        $http.post(url, data).success(function (data)
-        {
+        $http.post(url, data).success(function (data) {
 
-        }).error(function ()
-        {
+        }).error(function () {
 
         })
     }.bind(this);
 
-    /***********************************************************************************************
-     * SOCKET FUNCTIONS
-     ***********************************************************************************************/
-    socket.on('update:encounter', function (data)
-    {
-        this.update();
-    }.bind(this));
+
 });
