@@ -5,7 +5,7 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
     var context;
     var tileSize;
 
-    function init() {
+    $scope.init = function() {
         canvas = $('#noteCanvas');
         context = canvas.get(0).getContext('2d');
 
@@ -13,7 +13,7 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
         tileSize = EncounterService.tileSize;
 
 		draw();
-    }
+    };
 
     function draw() {
     	clear_canvas();
@@ -56,5 +56,4 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
         var offset = EncounterService.canvas_state.clear_offset;
         context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
     }
-    init();
 });

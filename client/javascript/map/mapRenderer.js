@@ -10,14 +10,14 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
     var tileSize;
     var mapDataUpdate = false;
 
-    function init() {
+    $scope.init = function() {
         canvas = $('#mapCanvas');
         context = canvas.get(0).getContext('2d');
 
         tileSize = EncounterService.tileSize;
 
         draw();
-    }
+    };
 
     function draw() {
 
@@ -67,6 +67,4 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
         var offset = EncounterService.canvas_state.clear_offset;
         context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
     }
-
-    init();
 });

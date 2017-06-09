@@ -8,14 +8,14 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     var tileSize;
     var dialationFactor = 0;
 
-    function init() {
+    $scope.init = function() {
         canvas = $('#highlightCanvas');
         context = canvas.get(0).getContext('2d');
 
         tileSize = EncounterService.tileSize;
 
         draw();
-    }
+    };
 
     function draw() {
         // ***********************************************************************************
@@ -56,8 +56,6 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         var offset = EncounterService.canvas_state.clear_offset;
         context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
     }
-
-    init();
 
     /***********************************************************************************************
      * handle_default_mode()

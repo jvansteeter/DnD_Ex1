@@ -9,7 +9,7 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
     var url = 'api/image/encounterplayer/';
     var tokens = [];
 
-    function init() {
+    $scope.init = function() {
         canvas = $('#tokenCanvas');
         context = canvas.get(0).getContext('2d');
         tileSize = EncounterService.tileSize;
@@ -24,7 +24,7 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
 		}
 
 		draw();
-    }
+    };
 
     function draw() {
         clear_canvas();
@@ -108,6 +108,4 @@ clientApp.controller('tokenRenderer', function ($scope, $window, EncounterServic
         var offset = EncounterService.canvas_state.clear_offset;
         context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
     }
-
-    init();
 });
