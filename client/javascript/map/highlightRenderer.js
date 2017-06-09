@@ -122,7 +122,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
             var note_group = EncounterService.encounterState.mapNotations[i];
-            if (note_group.uid === note_uid)
+            if (note_group._id === note_uid)
                 color = note_group.color;
         }
 

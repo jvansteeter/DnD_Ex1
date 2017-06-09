@@ -274,7 +274,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
                         EncounterService.encounterState.mapNotations[i].cells.splice(j, 1);
                     }
                 }
-                if (!cell_present) {
+                if (!cell_present && cellInBounds(mapDim_mouse)) {
                     EncounterService.encounterState.mapNotations[i].cells.push({x: mapDim_mouse.x, y: mapDim_mouse.y});
                 }
 				EncounterService.updateNote(EncounterService.encounterState.mapNotations[i]);
@@ -308,6 +308,16 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         var map_dim_y = Math.floor(map_res_coor.y / tileSize);
 
         return {x: map_dim_x, y: map_dim_y};
+    }
+
+    function cellInBounds(cell){
+        if(cell.x < 0 || cell.y < 0)
+            return false;
+
+        if (cell.x >= EncounterService.encounterState.mapDimX || cell.y >= EncounterService.encounterState.mapDimY)
+            return false;
+
+        return true;
     }
 
     function distanceToCellFromCell(start, end){
