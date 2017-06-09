@@ -98,29 +98,37 @@ app.use(function(req, res, next)
 // will print stacktrace
 if (app.get('env') === 'development') 
 {
-    app.use(function(err, req, res, next) 
+    app.use(function(error, req, res)
     {
-        console.error("An error has occurred");
-        res.status(err.status || 500);
+        console.log("---!!! An error has occurred !!!---");
+        console.error(error);
+        res.status(error.status || 500);
         res.render('error', 
         {
-            message: err.message,
-            error: err
+            message: error.message,
+            error: error
         });
     });
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next)
+// app.use(function(err, req, res, next)
+// {
+//     console.log('---!!! non dev error has occurred !!!---');
+//     res.status(err.status || 500);
+//     res.render('error',
+//     {
+//         message: err.message,
+//         error: {}
+//     });
+// });
+
+// catch any other uncaughtException
+process.on('uncaughtException', function(error)
 {
-    console.error('non dev error has occurred');
-    res.status(err.status || 500);
-    res.render('error',
-    {
-        message: err.message,
-        error: {}
-    });
+    console.log("This actually worked");
+    console.error(error.stack)
 });
 
 function isLoggedIn(req, res, next)

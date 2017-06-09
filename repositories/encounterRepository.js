@@ -9,11 +9,18 @@ encounterRepository.read = function (encounterId, callback)
 {
     Encounter.findById(encounterId, function(error, encounter)
     {
-        handleError(error, callback);
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
         if (encounter === null)
         {
             callback(new Error('Encounter with id: ' + encounterId + ' not found.'));
+            return;
         }
+
         callback(error, encounter);
     });
 };
@@ -30,7 +37,12 @@ encounterRepository.createEncounter = function (title, campaignId, description, 
             active: active
         }, function (error, encounter)
         {
-            handleError(error, callback);
+			if (error)
+			{
+				callback(error);
+				return;
+			}
+
             callback(error, encounter);
         }
     )
@@ -40,17 +52,14 @@ encounterRepository.update = function (encounter, callback)
 {
     encounter.save(function (error)
     {
-        handleError(error, callback);
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
         callback(error);
     })
 };
-
-function handleError(error, callback)
-{
-    if (error)
-    {
-		callback(error);
-	}
-}
 
 module.exports = encounterRepository;

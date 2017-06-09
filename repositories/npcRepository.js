@@ -7,23 +7,22 @@ var npcRepository = {};
 
 npcRepository.read = function (npcId, callback)
 {
-    NPC.findById(npcId, function(error, npc)
-    {
-        handleError(error, callback);
-        if (npc === null)
-        {
-            callback(new Error('NPC with id: ' + npcId + ' not found.'));
-        }
-        callback(error, npc);
-    });
-};
+	NPC.findById(npcId, function(error, npc)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
 
-function handleError(error, callback)
-{
-    if (error)
-    {
-        callback(error);
-    }
-}
+		if (npc === null)
+		{
+			callback(new Error('NPC with id: ' + npcId + ' not found.'));
+			return;
+		}
+
+		callback(error, npc);
+	});
+};
 
 module.exports = npcRepository;

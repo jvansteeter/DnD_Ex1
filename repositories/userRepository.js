@@ -9,21 +9,20 @@ userRepository.read = function (userId, callback)
 {
     User.findById(userId, function(error, user)
     {
-        handleError(error, callback);
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
         if (user === null)
         {
             callback(new Error('User with id: ' + userId + ' not found.'));
+            return;
         }
+
         callback(error, user);
     });
 };
-
-function handleError(error, callback)
-{
-    if (error)
-    {
-        callback(error);
-    }
-}
 
 module.exports = userRepository;
