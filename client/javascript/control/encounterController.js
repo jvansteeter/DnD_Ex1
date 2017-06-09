@@ -211,10 +211,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 {
                     player.isSelected = false;
                 }
+
                 for (var value in player)
                 {
                     EncounterService.encounterState.players[i][value] = player[value];
-                    $scope.encounterState = EncounterService.encounterState;
                 }
             }
         }
@@ -238,9 +238,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
     $scope.isNPC = function (index)
     {
-        console.log(index + ' ' + EncounterService.encounterState.players[index].npc);
-        // return EncounterService.encounterState.players[index].npc;
-        return $scope.encounterState.players[index].npc;
+        return EncounterService.encounterState.players[index].npc;
     };
 
     $scope.isMyCharacter = function (player)
@@ -257,8 +255,8 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     {
         var playerIndex = EncounterService.encounterState.players.indexOf(player);
         EncounterService.encounterState.players[playerIndex].visible = !EncounterService.encounterState.players[playerIndex].visible;
-        $scope.encounterState = EncounterService.encounterState;
-        updateServerPlayer(EncounterService.encounterState.players[playerIndex]);
+
+        EncounterService.updatePlayer_byObject(EncounterService.encounterState.players[playerIndex]);
     };
 
     $scope.healPlayer = function (hit)
@@ -268,14 +266,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             return;
         }
 
-        $scope.encounterState.players[selectedPlayer].hitPoints = $scope.encounterState.players[selectedPlayer].hitPoints + hit;
-        $scope.showPopover = false;
-        updateServerPlayer($scope.encounterState.players[selectedPlayer]);
-    };
+        EncounterService.encounterState.players[selectedPlayer].hitPoints += hit;
 
-    $scope.damagePlayer = function (hit)
-    {
-        $scope.healPlayer(-hit);
+        $scope.showPopover = false;
+        EncounterService.updatePlayer_byObject(EncounterService.encounterState.players[selectedPlayer]);
     };
 
     $scope.setInitiative = function (initiative)
@@ -298,7 +292,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                     encounterId: encounterId
                 });
             EncounterService.update();
-            // $scope.updateEncounterState();
         });
     };
 
@@ -383,27 +376,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.toggleEncounterState = function ()
     {
         EncounterService.toggleEncounterState();
-
-        // var url = 'api/encounter/setactive/' + encounterId;
-        // var active = !$scope.encounterState.active;
-        // var data =
-        //     {
-        //         active: active
-        //     };
-        //
-        // $http.post(url, data).success(function (data)
-        // {
-        //     if (data === "OK")
-        //     {
-        //         socket.emit('encounter:end',
-        //             {
-        //                 encounterId: encounterId
-        //             });
-        //         socket.emit('new:encounter', {});
-        //         $scope.encounterState.active = active;
-        //         // modal.close();
-        //     }
-        // });
     };
 
     $scope.setNPCtoEdit = function (index)
@@ -513,20 +485,4 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             }
         }
     };
-
-    function updateServerPlayer(player)
-    {
-        var url = 'api/encounter/updateplayer';
-        var data =
-            {
-                player: player
-            };
-        $http.post(url, data).success(function (data)
-        {
-            if (data === "OK")
-            {
-                socket.emit('update:player', player);
-            }
-        });
-    }
 });

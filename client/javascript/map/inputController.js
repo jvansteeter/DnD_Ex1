@@ -231,7 +231,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             }
 
             // perpetuate the change
-            EncounterService.updatePlayer(selectedIndex);
+            EncounterService.updatePlayer_byIndex(selectedIndex);
 
             // un-select the selected token
             players[selectedIndex].isSelected = false;

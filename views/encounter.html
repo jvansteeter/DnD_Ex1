@@ -168,9 +168,9 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col col-xs-4" style="padding: 0px">
-                      <span ng-if="player.hitPoints < 1" style="color:red">
-                        <strike ng-bind="player.name"></strike>
-                      </span>
+                                    <span ng-if="player.hitPoints < 1" style="color:red">
+                                        <strike ng-bind="player.name"></strike>
+                                    </span>
                                     <span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
                                 </div>
 
@@ -230,7 +230,10 @@
                     </li>
                 </ul>
             </div>
-            <!--Red Notation Box-->
+
+            <!-----------------------------------------------------------------------------------------------------
+            Notations Section
+            ------------------------------------------------------------------------------------------------------->
             <div>
                 <li ng-click="toggleNotes()" class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733; display: flex; padding-top: 5px; padding-bottom: 5px">
                     <span class="h4_inline" style="margin-right: auto;">Notations</span>
@@ -281,7 +284,9 @@
         </div>
 
 
-        <!--Map Container-->
+        <!-----------------------------------------------------------------------------------------------------
+        Map Section
+        ------------------------------------------------------------------------------------------------------->
         <div ng-if="getEncounterState().mapURL" style="height: 100%; width: 100%">
 
             <div style="overflow: hidden; background-color: #dedede; height: 100%;">

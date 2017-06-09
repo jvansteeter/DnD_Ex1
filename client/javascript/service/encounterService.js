@@ -110,7 +110,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         return deferred.promise;
     }.bind(this);
 
-    this.toggleEncounterState = function(){
+    this.toggleEncounterState = function () {
         var url = 'api/encounter/setactive/' + this.encounterID;
         var active = !this.encounterState.active;
         var data =
@@ -118,10 +118,8 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
                 active: active
             };
 
-        $http.post(url, data).success(function (data)
-        {
-            if (data === "OK")
-            {
+        $http.post(url, data).success(function (data) {
+            if (data === "OK") {
                 socket.emit('encounter:end',
                     {
                         encounterId: this.encounterID
@@ -144,7 +142,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
-    this.updatePlayer = function (index) {
+    this.updatePlayer_byIndex = function (index) {
         var player = this.encounterState.players[index];
         var url = 'api/encounter/updateplayer';
         var data = {
@@ -152,6 +150,19 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         };
         $http.post(url, data).success(function (data) {
             socket.emit('update:player', this.encounterState.players[index]);
+        }.bind(this));
+    }.bind(this);
+
+    this.updatePlayer_byObject = function (player) {
+        var url = 'api/encounter/updateplayer';
+        var data =
+            {
+                player: player
+            };
+        $http.post(url, data).success(function (data) {
+            if (data === "OK") {
+                socket.emit('update:player', player);
+            }
         }.bind(this));
     }.bind(this);
 
