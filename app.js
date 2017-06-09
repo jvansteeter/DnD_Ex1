@@ -100,6 +100,7 @@ if (app.get('env') === 'development')
 {
     app.use(function(err, req, res, next) 
     {
+        console.error("An error has occurred");
         res.status(err.status || 500);
         res.render('error', 
         {
@@ -111,10 +112,11 @@ if (app.get('env') === 'development')
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) 
+app.use(function(err, req, res, next)
 {
+    console.error('non dev error has occurred');
     res.status(err.status || 500);
-    res.render('error', 
+    res.render('error',
     {
         message: err.message,
         error: {}

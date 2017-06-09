@@ -28,9 +28,9 @@ var encounterSchema = new mongoose.Schema(
     mapDimY: Number
 });
 
-encounterSchema.methods.addPlayer = function(player, callback)
+encounterSchema.methods.addPlayer = function(playerId, callback)
 {
-    this.players.push(player);
+    this.players.push(playerId);
     this.save(function(error)
     {
         callback(error);
@@ -46,10 +46,13 @@ encounterSchema.methods.addMapNotation = function(mapNotation, callback)
 	});
 };
 
-encounterSchema.methods.removePlayer = function(player)
+encounterSchema.methods.removePlayer = function(player, callback)
 {
 	this.players.splice(this.players.indexOf(player), 1);
-	this.save();
+	this.save(function (error)
+    {
+        callback(error);
+	});
 };
 
 encounterSchema.methods.setActive = function(active)

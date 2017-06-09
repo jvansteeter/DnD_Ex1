@@ -60,7 +60,7 @@ router.post('/update', function(req, res)
 
 router.get('/all/', function(req, res)
 {
-    NPC.find({userId: req.user._id}, function(error, npcs)
+    NPC.find({}, function(error, npcs)
     {
         if (error)
         {

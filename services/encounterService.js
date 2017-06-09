@@ -36,7 +36,7 @@ encounterService.getEncounterById = function (encounterId, callback)
 
 encounterService.addNPC = function (encounterId, npcId, callback)
 {
-    encounterService.getEncounterState(encounterId, function (error, encounter)
+    encounterRepository.read(encounterId, function (error, encounter)
     {
         handleError(error, callback);
         npcRepository.read(npcId, function (error, npc)
@@ -56,13 +56,13 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 
 encounterService.addCharacter = function (encounterId, characterId, callback)
 {
-    encounterService.getEncounterState(encounterId, function(error, encounter)
+    encounterRepository.read(encounterId, function(error, encounter)
     {
         handleError(error, callback);
         characterRepository.read(characterId, function(error, character)
         {
             handleError(error, callback);
-            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, false, character.getSaves(), true, function (error, encounterPlayer)
+            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, true, character.getSaves(), false, function (error, encounterPlayer)
             {
                 handleError(error, callback);
                 addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
@@ -79,11 +79,14 @@ encounterService.removePlayer = function (encounterId, playerId, callback)
     encounterRepository.read(encounterId, function(error, encounter)
     {
         handleError(error, callback);
-        encounter.removePlayer(playerId);
-        encounterPlayerRepository.delete(playerId, function (error)
+        encounter.removePlayer(playerId, function (error)
         {
-            callback(error);
-        })
+            handleError(error, callback);
+			encounterPlayerRepository.delete(playerId, function (error)
+			{
+				callback(error);
+			})
+		});
     })
 };
 
