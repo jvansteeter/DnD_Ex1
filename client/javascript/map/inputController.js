@@ -29,7 +29,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     var currentMouseScreen = {x: 0, y: 0};
     // end hackiness
 
-    function init() {
+    $scope.init = function() {
         canvas = $('#inputCanvas');
         body = $('body');
         tileSize = EncounterService.tileSize;
@@ -51,7 +51,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         context = canvas.get(0).getContext('2d');
 
         draw();
-    }
+    };
 
     function draw() {
         EncounterService.canvas_state.res_x = canvas[0].getBoundingClientRect().width;
@@ -309,8 +309,4 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
         return {x: map_dim_x, y: map_dim_y};
     }
-
-
-    init();
-
 });

@@ -43,7 +43,7 @@
     <script src="javascript/map/highlightRenderer.js"></script>
     <script src="javascript/map/noteRenderer.js"></script>
     <script src="javascript/map/inputController.js"></script>
-    <script src="javascript/map/mapMain.js"></script>
+    <!--<script src="javascript/map/mapMain.js"></script>-->
     <script src="javascript/control/encounterController.js"></script>
 
     <!--Color picker dependencies-->
@@ -108,8 +108,8 @@
             <md-list-item ng-click="addCharacter()">Add Character</md-list-item>
             <md-list-item ng-show="isHost()" ng-click="addNPC()">Add NPC</md-list-item>
             <md-list-item ng-show="isHost()" ng-click="submit()">
-                <span ng-if="!encounterState.active">Open Encounter</span>
-                <span ng-if="encounterState.active">Close Encounter</span>
+                <span ng-if="!getEncounterState().active">Open Encounter</span>
+                <span ng-if="getEncounterState().active">Close Encounter</span>
             </md-list-item>
             <md-list-item ng-click="toggleGrid()">
                 <span ng-if="gridState()">Disable Grid</span>
@@ -134,9 +134,9 @@
         <!--Menu Toggle Button-->
         <md-button class="md-raised" ng-click="toggleMenu()" style="background-color:white; height:40px; align-self: center;">Menu</md-button>
         <!--Title Span-->
-        <span ng-bind="encounterState.title" style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
+        <span ng-bind="getEncounterState().title" style="align-self: center; margin:auto; font-size: 3em; font-weight: bold;font-family: 'breathe_fire', sans-serif;"></span>
         <!--Encounter State Span-->
-        <span ng-if="!encounterState.active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
+        <span ng-if="!getEncounterState().active" style="color: red;align-self: center; font-size: 2em; font-weight: bold;font-family: 'breathe_fire', sans-serif; margin-right: 5px">Closed</span>
     </div>
 
     <!--Map Row-->
@@ -276,35 +276,36 @@
 
 
         <!--Map Container-->
-        <div ng-if="encounterState.mapURL" style="height: 100%; width: 100%">
+        <div ng-if="getEncounterState().mapURL" style="height: 100%; width: 100%">
 
             <div style="overflow: hidden; background-color: #dedede; height: 100%;">
                 <div style="position: relative; height: 100%" id="mapDiv">
 
                     <div ng-controller="mapRenderer">
-                        <canvas style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="gridRenderer">
-                        <canvas style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="noteRenderer">
-                        <canvas style="z-index:2; position:absolute;" id="noteCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:2; position:absolute;" id="noteCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="highlightRenderer">
-                        <canvas style="z-index:3; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:3; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="tokenRenderer">
-                        <canvas style="z-index:4; position:absolute;" id="tokenCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:4; position:absolute;" id="tokenCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="inputController">
                         <canvas style="z-index:5; position:absolute; width: 100%; height: 100%"
                                 id="inputCanvas"
                                 ng-click="click($event)"
+                                ng-init='init()'
                                 ng-mousemove="mouseMove($event)"
                                 msd-wheel="mouseScroll($event, $delta, $deltaX, $deltaY)"
                                 ng-mousedown="mouseDown($event)"

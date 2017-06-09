@@ -10,24 +10,18 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
     var tileSize;
     var mapDataUpdate = false;
 
-    function init() {
+    $scope.init = function() {
         canvas = $('#mapCanvas');
         context = canvas.get(0).getContext('2d');
 
         tileSize = EncounterService.tileSize;
 
         draw();
-    }
+    };
 
     function draw() {
 
         if (EncounterService.encounterState.mapURL) {
-
-            // canvas.css({"zoom": EncounterService.mapZoom + "%"});
-            // canvas.css({"left": EncounterService.mapLeftDisplace});
-            // canvas.css({"top": EncounterService.mapTopDisplace});
-
-            // setTransform(horiz_scale, horiz_skew, vert_skew, vert_scale, horiz_trans, vert_trans)
             var x_offset = EncounterService.map_transform.x;
             var y_offset = EncounterService.map_transform.y;
             var scale = EncounterService.map_transform.scale;
@@ -43,7 +37,7 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
             EncounterService.encounterState.mapDimX = bgImage.width / tileSize;
             EncounterService.encounterState.mapDimY = bgImage.height / tileSize;
 
-            if (!mapDataUpdate && EncounterService.encounterState.mapResX != 0) {
+            if (!mapDataUpdate && EncounterService.encounterState.mapResX !== 0) {
 
                 EncounterService.sendMapData(
                     EncounterService.encounterState.mapResX,
@@ -61,14 +55,6 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
         $window.requestAnimationFrame(draw);
     }
 
-    // $scope.getResX = function(){
-    //     return EncounterService.encounterState.mapResX;
-    // };
-    //
-    // $scope.getResY = function(){
-    //     return EncounterService.encounterState.mapResY;
-    // };
-
     $scope.get_res_x = function(){
         return EncounterService.canvas_state.res_x;
     };
@@ -81,6 +67,4 @@ clientApp.controller('mapRenderer', function ($scope, $window, EncounterService)
         var offset = EncounterService.canvas_state.clear_offset;
         context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
     }
-
-    init();
 });
