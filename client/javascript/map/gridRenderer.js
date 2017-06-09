@@ -34,11 +34,11 @@ clientApp.controller('gridRenderer', function ($scope, $window, EncounterService
             context.clearRect(0, 0, resX, resY);
             context.fillStyle = "rgba(171,176,186,.3)";
             for (var vertLine = 0; vertLine <= dimX; vertLine++) {
-                context.fillRect(tileSize * vertLine, 0, 2, dimY * tileSize);
+                context.fillRect(tileSize * vertLine, 0, 1, dimY * tileSize);
             }
 
             for (var horizLine = 0; horizLine <= dimY; horizLine++) {
-                context.fillRect(0, tileSize * horizLine, dimX * tileSize, 2);
+                context.fillRect(0, tileSize * horizLine, dimX * tileSize, 1);
             }
         }
 

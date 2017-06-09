@@ -133,6 +133,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         EncounterService.updateNote(note);
     };
 
+    $scope.onChangeText = function(note){
+        EncounterService.updateNote(note)
+    };
+
     /******************************************************************************************
      * SIDENAV VARIABLES and FUNCTIONS
      ******************************************************************************************/
