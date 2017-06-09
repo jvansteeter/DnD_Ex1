@@ -88,9 +88,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.update = function ()
     {
         var deferred = $q.defer();
-
         var url = 'api/encounter/encounterstate/' + this.encounterID;
-
         $http.get(url).success(function (data)
         {
             this.encounterState = data;
@@ -160,10 +158,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         // var encounterId = $scope.encounterState._id;
 
         var url = 'api/encounter/addcharacter/' + this.encounterState._id;
-        var data =
-            {
-                characterId: this.modalCharacters[index]._id
-            };
+        var data = {
+            characterId: this.modalCharacters[index]._id
+        };
 
         $http.post(url, data).success(function (data)
         {

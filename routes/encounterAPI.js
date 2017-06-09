@@ -15,7 +15,7 @@ router.post('/create', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -31,7 +31,7 @@ router.get('/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -47,7 +47,7 @@ router.post('/addnpc/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -63,7 +63,7 @@ router.post('/addcharacter/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -74,12 +74,13 @@ router.post('/addcharacter/:encounter_id', function (req, res)
 
 router.post('/removeplayer/:encounter_id', function (req, res)
 {
+	console.log(req.body.playerId);
 	encounterService.removePlayer(req.params.encounter_id, req.body.playerId, function(error)
 	{
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -95,7 +96,7 @@ router.get('/encounterstate/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -111,7 +112,7 @@ router.post('/setinitiative', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -127,7 +128,7 @@ router.post('/setactive/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -143,7 +144,7 @@ router.post('/updatemapdata/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -159,7 +160,7 @@ router.post('/updateplayer', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -175,7 +176,7 @@ router.get('/initwithoutmap/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -191,7 +192,7 @@ router.post('/uploadmap/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -211,7 +212,7 @@ router.get('/addmapnotation/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -227,7 +228,7 @@ router.post('/removemapnotation/:encounter_id', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {
@@ -243,7 +244,7 @@ router.post('/updatemapnotation', function (req, res)
         if (error)
         {
             console.error(error);
-            res.status(500).send(error);
+            // res.status(500).send(error);
         }
         else
         {

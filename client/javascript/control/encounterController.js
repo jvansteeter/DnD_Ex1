@@ -254,17 +254,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
     $scope.toggleVisible = function (player)
     {
-        console.log('controller: toggleVisible');
-        for (var i = 0; i < $scope.encounterState.players.length; i++)
-        {
-            if ($scope.encounterState.players[i]._id === player._id)
-            {
-                EncounterService.encounterState.players[i].visible = !EncounterService.encounterState.players[i].visible;
-                $scope.encounterState = EncounterService.encounterState;
-                updateServerPlayer(EncounterService.encounterState.players[i]);
-                return;
-            }
-        }
+        var playerIndex = EncounterService.encounterState.players.indexOf(player);
+        EncounterService.encounterState.players[playerIndex].visible = !EncounterService.encounterState.players[playerIndex].visible;
+        $scope.encounterState = EncounterService.encounterState;
+        updateServerPlayer(EncounterService.encounterState.players[playerIndex]);
     };
 
     $scope.healPlayer = function (hit)
@@ -311,17 +304,13 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.removePlayer = function (player)
     {
         var url = 'api/encounter/removeplayer/' + encounterId;
-        var data =
-            {
-                playerId: player._id
-            };
+        var data = {
+            playerId: player._id
+        };
 
         $http.post(url, data).success(function (data)
         {
-            socket.emit('update:encounter',
-                {
-                    encounterId: encounterId
-                });
+            socket.emit('update:encounter');
             EncounterService.update();
         });
     };
