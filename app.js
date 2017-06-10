@@ -15,7 +15,7 @@ app.set('view engine', 'jade');
 
 // setup mongo database
 var mongoose = require('mongoose');
-var database = mongoose.connect('mongodb://localhost/dev');
+var database = mongoose.connect('mongodb://localhost/dnd');
 
 // setup passport
 var configAuth = require('./config/auth.js');
@@ -127,7 +127,7 @@ if (app.get('env') === 'development')
 // catch any other uncaughtException
 process.on('uncaughtException', function(error)
 {
-    console.log("This actually worked");
+    console.log("Uncaught error exception");
     console.error(error.stack)
 });
 
