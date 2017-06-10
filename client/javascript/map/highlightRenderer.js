@@ -36,6 +36,15 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             handle_notation_mode()
         }
 
+        switch (EncounterService.input_mode){
+            case 'default':
+                handle_default_mode();
+                break;
+            case 'note_single':
+                handle_notation_mode();
+                break;
+        }
+
 
         // ***********************************************************************************
         // COMPLETE PHASE
@@ -112,10 +121,8 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         context.fillStyle = color;
         // if there is a cell that the mouse point is hovering over
-        if (EncounterService.hoverCell !== null) {
-            var xCoor = EncounterService.hoverCell.x;
-            var yCoor = EncounterService.hoverCell.y;
-            context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
+        if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
+            context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
         }
     }
 });

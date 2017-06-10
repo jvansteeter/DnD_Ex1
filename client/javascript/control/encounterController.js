@@ -101,10 +101,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         if (note._id !== EncounterService.selected_note_uid)
         {
             EncounterService.selected_note_uid = note._id;
+            EncounterService.input_mode = 'note_single';
         }
         else
         {
             EncounterService.selected_note_uid = null;
+            EncounterService.input_mode = 'default';
         }
     };
 

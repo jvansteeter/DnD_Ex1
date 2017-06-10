@@ -23,7 +23,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
+    // default, note_single
     this.input_mode = 'default';
+
     this.mouse_scn_res = null;
     this.mouse_map_res = null;
     this.mouse_cell = null;
