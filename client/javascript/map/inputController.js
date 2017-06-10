@@ -4,8 +4,6 @@ var clientApp = angular.module('clientApp');
 clientApp.controller('inputController', function ($scope, EncounterService, $window) {
     var body;
 
-    var transform = {x: 0, y: 0, scale: 1};
-
     var tileSize;
 
     var canvas;
@@ -26,25 +24,13 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     var mouseY = 0;
 
     // hackiness right here
-    var currentMouseScreen = {x: 0, y: 0};
+    // var currentMouseScreen = {x: 0, y: 0};
     // end hackiness
 
     $scope.init = function() {
         canvas = $('#inputCanvas');
         body = $('body');
         tileSize = EncounterService.tileSize;
-
-        var map_canvas = $('#mapCanvas');
-        map_canvas_ctx = map_canvas.get(0).getContext('2d');
-
-        var grid_canvas = $('#gridCanvas');
-        grid_canvas_ctx = grid_canvas.get(0).getContext('2d');
-
-        var highlight_canvas = $('#highlightCanvas');
-        highlight_canvas_ctx = highlight_canvas.get(0).getContext('2d');
-
-        var token_canvas = $('#tokenCanvas');
-        token_canvas_ctx = token_canvas.get(0).getContext('2d');
 
         width = canvas.width();
         height = canvas.height();
@@ -65,16 +51,19 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     };
 
     $scope.mouseMove = function (event) {
-        currentMouseScreen = {x: event.clientX, y: event.clientY};
+        EncounterService.mouse_scn_res = {x: event.clientX, y: event.clientY};
+        EncounterService.mouse_map_res = screenToMapRes({x: event.clientX, y: event.clientY});
+        EncounterService.mouse_cell = screenToMapDim({x: event.clientX, y: event.clientY});
+
         drag_threshold -= 1;
 
         if (mouseDown) {
+            // The mouse is being dragged
             if(drag_threshold < 0)
                 dragging = true;
 
             var start_trans_x = EncounterService.map_transform.x;
             var start_trans_y = EncounterService.map_transform.y;
-            var trans_scale = EncounterService.map_transform.scale;
 
             var deltaX = event.clientX - mouseX;
             var deltaY = event.clientY - mouseY;
@@ -86,31 +75,24 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             mouseY = event.clientY;
         }
         else {
+            // The mouse is not being dragged
             drag_threshold = drag_threshold_default;
-            var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
-            var max_x = EncounterService.encounterState.mapDimX;
-            var max_y = EncounterService.encounterState.mapDimY;
 
-            if (mapDim_mouse.x < max_x && mapDim_mouse.x >= 0 && mapDim_mouse.y < max_y && mapDim_mouse.y >= 0) {
-                // the mouse is over the map
-                EncounterService.hoverCell = {x: mapDim_mouse.x, y: mapDim_mouse.y};
+            if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
+                // if the mouse is within the map's bounds
+                // EncounterService.hoverCell = EncounterService.mouse_cell;
 
                 // check if the hoverCell coincides with any player tokens
                 var players = EncounterService.encounterState.players;
                 for (var i = 0; i < players.length; i++) {
                     var player = players[i];
-                    if (player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y) {
-                        player.isHovered = true;
-                    }
-                    else {
-                        player.isHovered = false;
-                    }
+                    player.isHovered = !!(player.mapX === EncounterService.mouse_cell.x && player.mapY === EncounterService.mouse_cell.y);
                 }
             }
-            else {
-                // the mouse is over a portion of the screen that is NOT part of the map
-                EncounterService.hoverCell = null;
-            }
+            // else {
+            //     // the mouse is over a portion of the screen that is NOT part of the map
+            //     EncounterService.hoverCell = null;
+            // }
         }
     };
 
@@ -179,8 +161,10 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             new_scale_delta = preferred_scale_delta;
         }
 
-        var x_offset = -(map_res_coor.x * new_scale_delta);
-        var y_offset = -(map_res_coor.y * new_scale_delta);
+
+
+        var x_offset = -(EncounterService.mouse_map_res.x * new_scale_delta);
+        var y_offset = -(EncounterService.mouse_map_res.y * new_scale_delta);
 
         EncounterService.map_transform.scale += new_scale_delta;
         EncounterService.map_transform.x += x_offset;
@@ -274,7 +258,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
                         EncounterService.encounterState.mapNotations[i].cells.splice(j, 1);
                     }
                 }
-                if (!cell_present && cellInBounds(mapDim_mouse)) {
+                if (!cell_present && EncounterService.cellInBounds(mapDim_mouse)) {
                     EncounterService.encounterState.mapNotations[i].cells.push({x: mapDim_mouse.x, y: mapDim_mouse.y});
                 }
 				EncounterService.updateNote(EncounterService.encounterState.mapNotations[i]);
@@ -310,36 +294,4 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         return {x: map_dim_x, y: map_dim_y};
     }
 
-    function cellInBounds(cell){
-        if(cell.x < 0 || cell.y < 0)
-            return false;
-
-        if (cell.x >= EncounterService.encounterState.mapDimX || cell.y >= EncounterService.encounterState.mapDimY)
-            return false;
-
-        return true;
-    }
-
-    function distanceToCellFromCell(start, end){
-        var distance = 0;
-        var tenSpace = false;
-
-        var deltaX = Math.abs(end.x - start.x);
-        var deltaY = Math.abs(end.y - start.y);
-
-        while(deltaX > 0 && deltaY > 0){
-            deltaX -= 1;
-            deltaY -= 1;
-
-            if(tenSpace)
-                distance += 5;
-            else
-                distance += 10;
-
-            tenSpace = !tenSpace;
-        }
-
-        distance = distance + deltaX * 5 + deltaY * 5;
-        return distance;
-    }
 });

@@ -23,6 +23,12 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
+    this.input_mode = 'default';
+    this.mouse_scn_res = null;
+    this.mouse_map_res = null;
+    this.mouse_cell = null;
+    this.mouse_corner = null;
+
     this.init = function (inputID) {
         this.encounterID = inputID;
         var deferred = $q.defer();
@@ -202,6 +208,42 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * MAP FUNCTIONS
      ***********************************************************************************************/
+    this.cellInBounds = function(cell){
+        if(cell === null)
+            return false;
+
+        if(cell.x < 0 || cell.y < 0)
+            return false;
+
+        if (cell.x >= this.encounterState.mapDimX || cell.y >= this.encounterState.mapDimY)
+            return false;
+
+        return true;
+    }.bind(this);
+
+    this.distanceToCellFromCell = function(start, end){
+        var distance = 0;
+        var tenSpace = false;
+
+        var deltaX = Math.abs(end.x - start.x);
+        var deltaY = Math.abs(end.y - start.y);
+
+        while(deltaX > 0 && deltaY > 0){
+            deltaX -= 1;
+            deltaY -= 1;
+
+            if(tenSpace)
+                distance += 5;
+            else
+                distance += 10;
+
+            tenSpace = !tenSpace;
+        }
+
+        distance = distance + deltaX * 5 + deltaY * 5;
+        return distance;
+    }.bind(this);
+
     this.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY) {
         var url = 'api/encounter/updatemapdata/' + this.encounterID;
 

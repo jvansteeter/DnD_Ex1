@@ -6,7 +6,6 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     var context;
 
     var tileSize;
-    var dialationFactor = 0;
 
     $scope.init = function() {
         canvas = $('#highlightCanvas');
@@ -63,50 +62,35 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
      * Controller specific route for handling how the map should render when in default mode
      */
     function handle_default_mode() {
-        var players = EncounterService.encounterState.players;
-        var player;
+        if(EncounterService.cellInBounds(EncounterService.mouse_cell)){
+            // The mouse is on the canvas and in the map bounds
 
-        context.fillStyle = "rgba(255,255,255,.2)";
+            // Render the mouse tile
+            var playerFound = false;
 
-        // if there is a cell that the mouse point is hovering over
-        if (EncounterService.hoverCell !== null) {
-            // check if the hover cell is over a player; if it is, don't render the red square
-
-            for (var j = 0; j < players.length; j++) {
-                player = players[j];
-                if (player.mapX === EncounterService.hoverCell.x && player.mapY === EncounterService.hoverCell.y && (player.visible || EncounterService.isHost())) {
-                    context.fillStyle = "rgba(102,178,255,0)";
+            // for (var j = 0; j < players.length; j++) {
+            for (player_index = 0; player_index < EncounterService.encounterState.players.length; player_index++) {
+                player = EncounterService.encounterState.players[player_index];
+                if (player.mapX === EncounterService.mouse_cell.x && player.mapY === EncounterService.mouse_cell.y && (player.visible || EncounterService.isHost())) {
+                    playerFound = true;
+                    break;
                 }
             }
-            var xCoor = EncounterService.hoverCell.x;
-            var yCoor = EncounterService.hoverCell.y;
-            context.fillRect(tileSize * xCoor, tileSize * yCoor, tileSize, tileSize);
+
+            if(playerFound)
+                context.fillStyle = "rgba(102,178,255,0.2)";
+            else
+                context.fillStyle = "rgba(255,255,255,.2)";
+
+            context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
         }
 
-
-        // render the selected player with darker red, if present
-        for (var i = 0; i < players.length; i++) {
-            player = players[i];
+        // render any selected players with darker color, if present
+        for(player_index = 0; player_index < EncounterService.encounterState.players.length; player_index++){
+            var player = EncounterService.encounterState.players[player_index];
             if (player.isSelected) {
                 context.fillStyle = "rgba(45,136,229,.4)";
-                var selectX = player.mapX;
-                var selectY = player.mapY;
-                context.fillRect(
-                    tileSize * selectX + (tileSize * dialationFactor / 2),
-                    tileSize * selectY + (tileSize * dialationFactor / 2),
-                    tileSize * (1 - dialationFactor),
-                    tileSize * (1 - dialationFactor));
-            }
-        }
-
-        //render any players that are "isHovered"
-        for (var k = 0; k < players.length; k++) {
-            player = players[k];
-            if (angular.isDefined(player.isHovered)) {
-                if (player.isHovered && player.visible) {
-                    context.fillStyle = "rgba(102,178,255,.3)";
-                    context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
-                }
+                context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
             }
         }
     }
