@@ -137,7 +137,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         // Known Priors
         //*************************************************************************************************
         var start_scale = EncounterService.map_transform.scale;
-        var map_res_coor = screenToMapRes(currentMouseScreen);
 
         //*************************************************************************************************
         // Scale calculation
