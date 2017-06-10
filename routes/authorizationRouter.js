@@ -43,7 +43,7 @@ router.post('/register', function(req, res) //passport.authenticate('local-regis
     });
 });
 
-router.post('/login',passport.authenticate('local'), function(req, res)
+router.post('/login', passport.authenticate('local'), function(req, res)
 {
 	res.json(req.user);
 	//res.sendStatus(200);	
