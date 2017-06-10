@@ -89,10 +89,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
                     player.isHovered = !!(player.mapX === EncounterService.mouse_cell.x && player.mapY === EncounterService.mouse_cell.y);
                 }
             }
-            // else {
-            //     // the mouse is over a portion of the screen that is NOT part of the map
-            //     EncounterService.hoverCell = null;
-            // }
         }
     };
 

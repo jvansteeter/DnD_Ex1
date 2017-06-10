@@ -7,6 +7,8 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
     var tileSize;
 
+    var space_check = 0;
+
     $scope.init = function() {
         canvas = $('#highlightCanvas');
         context = canvas.get(0).getContext('2d');
@@ -71,6 +73,8 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
      * Controller specific route for handling how the map should render when in default mode
      */
     function handle_default_mode() {
+        space_check += 1;
+
         if(EncounterService.cellInBounds(EncounterService.mouse_cell)){
             // The mouse is on the canvas and in the map bounds
 
@@ -86,12 +90,14 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
                 }
             }
 
-            if(playerFound)
+            if(playerFound){
                 context.fillStyle = "rgba(102,178,255,0.2)";
-            else
+                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+            }
+            else{
                 context.fillStyle = "rgba(255,255,255,.2)";
-
-            context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+            }
         }
 
         // render any selected players with darker color, if present
@@ -120,9 +126,28 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         }
 
         context.fillStyle = color;
-        // if there is a cell that the mouse point is hovering over
-        if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
-            context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+
+        var test_distance = 15;
+        var render_these = [];
+
+        for(var x = 0; x < EncounterService.encounterState.mapDimX; x++){
+            for(var y = 0; y < EncounterService.encounterState.mapDimY; y++){
+                var test_cell = {x:x,y:y};
+                if(EncounterService.distanceToCellFromCell(test_cell, EncounterService.mouse_cell) <= test_distance) {
+                    if(EncounterService.cellInBounds(test_cell))
+                        render_these.push(test_cell);
+                }
+            }
         }
+
+        for(i = 0; i < render_these.length; i++){
+            context.fillRect(tileSize * render_these[i].x, tileSize * render_these[i].y, tileSize, tileSize);
+        }
+
+
+        // // if there is a cell that the mouse point is hovering over
+        // if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
+        //     context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+        // }
     }
 });

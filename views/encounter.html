@@ -329,17 +329,19 @@
                         <canvas ng-init="init()" style="z-index:0; position:absolute;" id="mapCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
+                    <div ng-controller="highlightRenderer">
+                        <canvas ng-init="init()" style="z-index:1; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                    </div>
+
                     <div ng-controller="gridRenderer">
-                        <canvas ng-init="init()" style="z-index:1; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:2; position:absolute;" id="gridCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
                     <div ng-controller="noteRenderer">
-                        <canvas ng-init="init()" style="z-index:2; position:absolute;" id="noteCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
+                        <canvas ng-init="init()" style="z-index:3; position:absolute;" id="noteCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
                     </div>
 
-                    <div ng-controller="highlightRenderer">
-                        <canvas ng-init="init()" style="z-index:3; position:absolute;" id="highlightCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>
-                    </div>
+
 
                     <div ng-controller="tokenRenderer">
                         <canvas ng-init="init()" style="z-index:4; position:absolute;" id="tokenCanvas" width={{get_res_x()}} height={{get_res_y()}}></canvas>

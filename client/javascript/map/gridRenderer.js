@@ -32,7 +32,7 @@ clientApp.controller('gridRenderer', function ($scope, $window, EncounterService
             var resY = EncounterService.encounterState.mapResY;
 
             context.clearRect(0, 0, resX, resY);
-            context.fillStyle = "rgba(171,176,186,.3)";
+            context.fillStyle = "rgba(255,255,255,.3)";
             for (var vertLine = 0; vertLine <= dimX; vertLine++) {
                 context.fillRect(tileSize * vertLine, 0, 1, dimY * tileSize);
             }
