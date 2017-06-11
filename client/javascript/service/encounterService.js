@@ -23,7 +23,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
-    // default, note_single
+    // default, note_single, note_five, note_ten, note_fifteen, note_twenty
     this.input_mode = 'default';
 
     this.mouse_scn_res = null;
@@ -234,7 +234,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             deltaX -= 1;
             deltaY -= 1;
 
-            if(tenSpace)
+            if(!tenSpace)
                 distance += 5;
             else
                 distance += 10;

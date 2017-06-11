@@ -32,18 +32,25 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         // ***********************************************************************************
         // OPERATION PHASE
         // ***********************************************************************************
-        if (EncounterService.selected_note_uid === null) {
-            handle_default_mode();
-        } else {
-            handle_notation_mode()
-        }
 
         switch (EncounterService.input_mode){
             case 'default':
                 handle_default_mode();
                 break;
             case 'note_single':
-                handle_notation_mode();
+                handle_note_single();
+                break;
+            case 'note_five':
+                handle_note_sphere(5);
+                break;
+            case 'note_ten':
+                handle_note_sphere(10);
+                break;
+            case 'note_fifteen':
+                handle_note_sphere(15);
+                break;
+            case 'note_twenty':
+                handle_note_sphere(20);
                 break;
         }
 
@@ -111,12 +118,16 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     }
 
     /***********************************************************************************************
-     * handle_notation_mode()
+     * handle_note_single()
      ***********************************************************************************************
      * Controller specific route for handling how the map should render when in note mode
      */
-    function handle_notation_mode() {
+    function handle_note_single() {
         var note_uid = EncounterService.selected_note_uid;
+        if(note_uid === null){
+            return;
+        }
+
         var color = null;
 
         for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
@@ -127,7 +138,29 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         context.fillStyle = color;
 
-        var test_distance = 15;
+        // if there is a cell that the mouse point is hovering over
+        if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
+            context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+        }
+    }
+
+    function handle_note_sphere(radius){
+        var note_uid = EncounterService.selected_note_uid;
+        if(note_uid === null){
+            return;
+        }
+
+        var color = null;
+
+        for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
+            var note_group = EncounterService.encounterState.mapNotations[i];
+            if (note_group._id === note_uid)
+                color = note_group.color;
+        }
+
+        context.fillStyle = color;
+
+        var test_distance = radius;
         var render_these = [];
 
         for(var x = 0; x < EncounterService.encounterState.mapDimX; x++){
@@ -143,11 +176,5 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         for(i = 0; i < render_these.length; i++){
             context.fillRect(tileSize * render_these[i].x, tileSize * render_these[i].y, tileSize, tileSize);
         }
-
-
-        // // if there is a cell that the mouse point is hovering over
-        // if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
-        //     context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
-        // }
     }
 });
