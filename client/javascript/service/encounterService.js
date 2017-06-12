@@ -32,6 +32,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.mouse_cell = null;
     this.mouse_corner = null;
 
+    this.corner_ratio = 0.35;
+    this.corner_threshold = this.tileSize * this.corner_ratio * 0.5;
+
     this.init = function (inputID) {
         this.encounterID = inputID;
         var deferred = $q.defer();
@@ -247,6 +250,29 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         return distance;
     }.bind(this);
 
+    this.distanceToCornerFromCell = function(corner, cell){
+        var distance = 0;
+        var tenSpace = true;
+
+        var deltaX = Math.abs(cell.x - corner.x);
+        var deltaY = Math.abs(cell.y - corner.y);
+
+        while(deltaX > 0 && deltaY > 0){
+            deltaX -= 1;
+            deltaY -= 1;
+
+            if(!tenSpace)
+                distance += 5;
+            else
+                distance += 10;
+
+            tenSpace = !tenSpace;
+        }
+
+        distance = distance + deltaX * 5 + deltaY * 5;
+        return distance;
+    }.bind(this);
+
     this.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY) {
         var url = 'api/encounter/updatemapdata/' + this.encounterID;
 
@@ -263,6 +289,4 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
 
         })
     }.bind(this);
-
-
 });

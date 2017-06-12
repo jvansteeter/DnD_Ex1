@@ -9,7 +9,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
     var space_check = 0;
 
-    $scope.init = function() {
+    $scope.init = function () {
         canvas = $('#highlightCanvas');
         context = canvas.get(0).getContext('2d');
 
@@ -33,28 +33,13 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         // OPERATION PHASE
         // ***********************************************************************************
 
-        switch (EncounterService.input_mode){
+        switch (EncounterService.input_mode) {
             case 'default':
                 handle_default_mode();
                 break;
             case 'note':
                 handle_note_mode();
                 break;
-            // case 'note_single':
-            //     handle_note_single();
-            //     break;
-            // case 'note_five':
-            //     handle_note_sphere(5);
-            //     break;
-            // case 'note_ten':
-            //     handle_note_sphere(10);
-            //     break;
-            // case 'note_fifteen':
-            //     handle_note_sphere(15);
-            //     break;
-            // case 'note_twenty':
-            //     handle_note_sphere(20);
-            //     break;
         }
 
 
@@ -85,7 +70,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     function handle_default_mode() {
         space_check += 1;
 
-        if(EncounterService.cellInBounds(EncounterService.mouse_cell)){
+        if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
             // The mouse is on the canvas and in the map bounds
 
             // Render the mouse tile
@@ -100,18 +85,18 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
                 }
             }
 
-            if(playerFound){
+            if (playerFound) {
                 context.fillStyle = "rgba(102,178,255,0.2)";
                 context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
             }
-            else{
+            else {
                 context.fillStyle = "rgba(255,255,255,.2)";
                 context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
             }
         }
 
         // render any selected players with darker color, if present
-        for(player_index = 0; player_index < EncounterService.encounterState.players.length; player_index++){
+        for (player_index = 0; player_index < EncounterService.encounterState.players.length; player_index++) {
             var player = EncounterService.encounterState.players[player_index];
             if (player.isSelected) {
                 context.fillStyle = "rgba(45,136,229,.4)";
@@ -120,8 +105,21 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         }
     }
 
-    function handle_note_mode(){
-        switch(EncounterService.note_mode){
+    function handle_note_mode() {
+        if (EncounterService.mouse_corner !== null) {
+            // render the corner highlights
+            context.fillStyle = "rgba(255,0,0,0.3)";
+            if (EncounterService.mouse_corner !== null) {
+                // context.fillRect((tileSize * EncounterService.mouse_corner.x) - (tileSize * EncounterService.corner_ratio / 2), (tileSize * EncounterService.mouse_corner.y) - (tileSize * EncounterService.corner_ratio / 2), tileSize * EncounterService.corner_ratio, tileSize * EncounterService.corner_ratio);
+                context.beginPath();
+                context.arc(tileSize * EncounterService.mouse_corner.x, tileSize * EncounterService.mouse_corner.y, EncounterService.corner_threshold, 0, 2 * Math.PI);
+                context.lineWidth = 3;
+                context.strokeStyle = "rgba(255,0,0,0.6)";
+                context.stroke();
+            }
+        }
+
+        switch (EncounterService.note_mode) {
             case 'single':
                 handle_note_sphere(0);
                 break;
@@ -138,65 +136,75 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
                 handle_note_sphere(20);
                 break;
         }
+
     }
 
-    /***********************************************************************************************
-     * handle_note_single()
-     ***********************************************************************************************
-     * Controller specific route for handling how the map should render when in note mode
-     */
-    // function handle_note_single() {
-    //     var note_uid = EncounterService.selected_note_uid;
-    //     if(note_uid === null){
-    //         return;
-    //     }
-    //
-    //     var color = null;
-    //
-    //     for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
-    //         var note_group = EncounterService.encounterState.mapNotations[i];
-    //         if (note_group._id === note_uid)
-    //             color = note_group.color;
-    //     }
-    //
-    //     context.fillStyle = color;
-    //
-    //     // if there is a cell that the mouse point is hovering over
-    //     if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
-    //         context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
-    //     }
-    // }
-
-    function handle_note_sphere(radius){
+    function handle_note_sphere(radius) {
         var note_uid = EncounterService.selected_note_uid;
-        if(note_uid === null){
-            return;
-        }
-
         var color = null;
 
-        for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
+        for (var i = 0; i < EncounterService.encounterState.mapNotations.length; i++) {
             var note_group = EncounterService.encounterState.mapNotations[i];
             if (note_group._id === note_uid)
                 color = note_group.color;
         }
-
         context.fillStyle = color;
-
+        var start_cells = [];
         var test_distance = radius;
         var render_these = [];
 
-        for(var x = 0; x < EncounterService.encounterState.mapDimX; x++){
-            for(var y = 0; y < EncounterService.encounterState.mapDimY; y++){
-                var test_cell = {x:x,y:y};
-                if(EncounterService.distanceToCellFromCell(test_cell, EncounterService.mouse_cell) <= test_distance) {
-                    if(EncounterService.cellInBounds(test_cell))
-                        render_these.push(test_cell);
+
+        var corner = EncounterService.mouse_corner;
+        if (corner !== null) {
+            // highlight based around corner
+            if (EncounterService.cellInBounds({x: corner.x, y: corner.y}))
+                start_cells.push({x: corner.x, y: corner.y});
+            if (EncounterService.cellInBounds({x: corner.x - 1, y: corner.y}))
+                start_cells.push({x: corner.x - 1, y: corner.y});
+            if (EncounterService.cellInBounds({x: corner.x, y: corner.y - 1}))
+                start_cells.push({x: corner.x, y: corner.y - 1});
+            if (EncounterService.cellInBounds({x: corner.x - 1, y: corner.y - 1}))
+                start_cells.push({x: corner.x - 1, y: corner.y - 1});
+
+            for (x = 0; x < EncounterService.encounterState.mapDimX; x++) {
+                for (y = 0; y < EncounterService.encounterState.mapDimY; y++) {
+                    test_cell = {x: x, y: y};
+
+                    for (start_cell_index = 0; start_cell_index < start_cells.length; start_cell_index++) {
+                        if (EncounterService.distanceToCornerFromCell(start_cells[start_cell_index], test_cell) <= test_distance - 5) {
+                            if (EncounterService.cellInBounds(test_cell)) {
+                                render_these.push(test_cell);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            start_cells.push(EncounterService.mouse_cell);
+
+            // highlight based around cell
+            for (x = 0; x < EncounterService.encounterState.mapDimX; x++) {
+                for (y = 0; y < EncounterService.encounterState.mapDimY; y++) {
+                    test_cell = {x: x, y: y};
+
+                    for (start_cell_index = 0; start_cell_index < start_cells.length; start_cell_index++) {
+                        if (EncounterService.distanceToCellFromCell(start_cells[start_cell_index], test_cell) <= test_distance) {
+                            if (EncounterService.cellInBounds(test_cell)) {
+                                render_these.push(test_cell);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        for(i = 0; i < render_these.length; i++){
+
+
+        // render all cells connected to the desired notation style
+        for (i = 0; i < render_these.length; i++) {
             context.fillRect(tileSize * render_these[i].x, tileSize * render_these[i].y, tileSize, tileSize);
         }
     }

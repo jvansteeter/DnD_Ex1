@@ -48,6 +48,16 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         EncounterService.mouse_map_res = screenToMapRes({x: event.clientX, y: event.clientY});
         EncounterService.mouse_cell = screenToMapDim({x: event.clientX, y: event.clientY});
 
+        // calculate the presence of a activated corner
+        var x = Math.round(EncounterService.mouse_map_res.x / EncounterService.tileSize);
+        var y = Math.round(EncounterService.mouse_map_res.y / EncounterService.tileSize);
+
+        if(Math.abs(EncounterService.mouse_map_res.x - x * EncounterService.tileSize) < EncounterService.corner_threshold && Math.abs(EncounterService.mouse_map_res.y - y * EncounterService.tileSize) < EncounterService.corner_threshold)
+            EncounterService.mouse_corner = {x:x, y:y};
+        else
+            EncounterService.mouse_corner = null;
+
+
         drag_threshold -= 1;
 
         if (mouseDown) {
