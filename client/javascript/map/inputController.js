@@ -7,10 +7,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     var tileSize;
 
     var canvas;
-    var map_canvas_ctx;
-    var grid_canvas_ctx;
-    var highlight_canvas_ctx;
-    var token_canvas_ctx;
 
     var context;
     var width;
@@ -22,10 +18,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     var drag_threshold = drag_threshold_default;
     var mouseX = 0;
     var mouseY = 0;
-
-    // hackiness right here
-    // var currentMouseScreen = {x: 0, y: 0};
-    // end hackiness
 
     $scope.init = function() {
         canvas = $('#inputCanvas');
@@ -51,6 +43,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     };
 
     $scope.mouseMove = function (event) {
+        // update the mouse positions
         EncounterService.mouse_scn_res = {x: event.clientX, y: event.clientY};
         EncounterService.mouse_map_res = screenToMapRes({x: event.clientX, y: event.clientY});
         EncounterService.mouse_cell = screenToMapDim({x: event.clientX, y: event.clientY});
@@ -86,7 +79,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
                 var players = EncounterService.encounterState.players;
                 for (var i = 0; i < players.length; i++) {
                     var player = players[i];
-                    player.isHovered = !!(player.mapX === EncounterService.mouse_cell.x && player.mapY === EncounterService.mouse_cell.y);
+                    player.isHovered = (player.mapX === EncounterService.mouse_cell.x && player.mapY === EncounterService.mouse_cell.y);
                 }
             }
         }

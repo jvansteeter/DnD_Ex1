@@ -117,6 +117,10 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         }
     }
 
+    function handle_note_mode(){
+
+    }
+
     /***********************************************************************************************
      * handle_note_single()
      ***********************************************************************************************

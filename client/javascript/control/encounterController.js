@@ -86,12 +86,18 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return EncounterService.input_mode;
     };
 
+    $scope.getNoteMode = function(){
+        return EncounterService.note_mode;
+    };
+
     $scope.toggleNoteSelected = function (note) {
         if (note._id !== EncounterService.selected_note_uid) {
             EncounterService.selected_note_uid = note._id;
+            EncounterService.input_mode = 'note';
         }
         else {
             EncounterService.selected_note_uid = null;
+            EncounterService.input_mode = 'default';
         }
     };
 
@@ -120,41 +126,38 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.toggleSingle = function () {
-        if (EncounterService.input_mode === 'note_single')
-            EncounterService.input_mode = 'default';
-        else
-            EncounterService.input_mode = 'note_single';
+        EncounterService.note_mode = 'single';
     };
 
     $scope.toggleFive = function () {
-        if (EncounterService.input_mode === 'note_five')
-            EncounterService.input_mode = 'default';
+        if (EncounterService.note_mode === 'five')
+            EncounterService.note_mode = 'single';
         else
-            EncounterService.input_mode = 'note_five';
+            EncounterService.note_mode = 'five';
     };
 
     $scope.toggleTen = function () {
-        if (EncounterService.input_mode === 'note_ten')
-            EncounterService.input_mode = 'default';
+        if (EncounterService.note_mode === 'ten')
+            EncounterService.note_mode = 'single';
         else
-            EncounterService.input_mode = 'note_ten';
+            EncounterService.note_mode = 'ten';
     };
 
     $scope.toggleFifteen = function () {
         console.log('C');
-        if (EncounterService.input_mode === 'note_fifteen') {
-            EncounterService.input_mode = 'default';
+        if (EncounterService.note_mode === 'fifteen') {
+            EncounterService.note_mode = 'single';
         }
         else {
-            EncounterService.input_mode = 'note_fifteen';
+            EncounterService.note_mode = 'fifteen';
         }
     };
 
     $scope.toggleTwenty = function () {
-        if (EncounterService.input_mode === 'note_twenty')
-            EncounterService.input_mode = 'default';
+        if (EncounterService.note_mode === 'twenty')
+            EncounterService.note_mode = 'single';
         else
-            EncounterService.input_mode = 'note_twenty';
+            EncounterService.note_mode = 'twenty';
     };
 
     /******************************************************************************************
