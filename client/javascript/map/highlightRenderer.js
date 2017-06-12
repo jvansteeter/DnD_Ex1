@@ -37,21 +37,24 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             case 'default':
                 handle_default_mode();
                 break;
-            case 'note_single':
-                handle_note_single();
+            case 'note':
+                handle_note_mode();
                 break;
-            case 'note_five':
-                handle_note_sphere(5);
-                break;
-            case 'note_ten':
-                handle_note_sphere(10);
-                break;
-            case 'note_fifteen':
-                handle_note_sphere(15);
-                break;
-            case 'note_twenty':
-                handle_note_sphere(20);
-                break;
+            // case 'note_single':
+            //     handle_note_single();
+            //     break;
+            // case 'note_five':
+            //     handle_note_sphere(5);
+            //     break;
+            // case 'note_ten':
+            //     handle_note_sphere(10);
+            //     break;
+            // case 'note_fifteen':
+            //     handle_note_sphere(15);
+            //     break;
+            // case 'note_twenty':
+            //     handle_note_sphere(20);
+            //     break;
         }
 
 
@@ -118,7 +121,23 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     }
 
     function handle_note_mode(){
-
+        switch(EncounterService.note_mode){
+            case 'single':
+                handle_note_sphere(0);
+                break;
+            case 'five':
+                handle_note_sphere(5);
+                break;
+            case 'ten':
+                handle_note_sphere(10);
+                break;
+            case 'fifteen':
+                handle_note_sphere(15);
+                break;
+            case 'twenty':
+                handle_note_sphere(20);
+                break;
+        }
     }
 
     /***********************************************************************************************
@@ -126,27 +145,27 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
      ***********************************************************************************************
      * Controller specific route for handling how the map should render when in note mode
      */
-    function handle_note_single() {
-        var note_uid = EncounterService.selected_note_uid;
-        if(note_uid === null){
-            return;
-        }
-
-        var color = null;
-
-        for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
-            var note_group = EncounterService.encounterState.mapNotations[i];
-            if (note_group._id === note_uid)
-                color = note_group.color;
-        }
-
-        context.fillStyle = color;
-
-        // if there is a cell that the mouse point is hovering over
-        if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
-            context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
-        }
-    }
+    // function handle_note_single() {
+    //     var note_uid = EncounterService.selected_note_uid;
+    //     if(note_uid === null){
+    //         return;
+    //     }
+    //
+    //     var color = null;
+    //
+    //     for(var i = 0; i < EncounterService.encounterState.mapNotations.length; i++){
+    //         var note_group = EncounterService.encounterState.mapNotations[i];
+    //         if (note_group._id === note_uid)
+    //             color = note_group.color;
+    //     }
+    //
+    //     context.fillStyle = color;
+    //
+    //     // if there is a cell that the mouse point is hovering over
+    //     if (EncounterService.cellInBounds(EncounterService.mouse_cell)) {
+    //         context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+    //     }
+    // }
 
     function handle_note_sphere(radius){
         var note_uid = EncounterService.selected_note_uid;
