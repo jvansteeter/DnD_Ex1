@@ -142,13 +142,24 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     function handle_note_sphere(radius) {
         var note_uid = EncounterService.selected_note_uid;
         var color = null;
+        var stroke_color = null;
 
         for (var i = 0; i < EncounterService.encounterState.mapNotations.length; i++) {
             var note_group = EncounterService.encounterState.mapNotations[i];
-            if (note_group._id === note_uid)
+            if (note_group._id === note_uid){
                 color = note_group.color;
+                var color_split = note_group.color.split(',');
+                if(color_split.length === 4){
+                    color_split[3] = '  1.0)';
+                }
+                else{
+                //    handle the case where the color defaulted to hsl instead of hsla
+                }
+                stroke_color = color_split.join(',');
+            }
         }
         context.fillStyle = color;
+
         var start_cells = [];
         var test_distance = radius;
         var render_these = [];
@@ -180,24 +191,40 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
                     }
                 }
             }
+
+            context.beginPath();
+            context.arc(tileSize * corner.x, corner.y * tileSize, (radius / 5) * tileSize, 0, 2 * Math.PI);
+            context.lineWidth = 3;
+            context.strokeStyle = stroke_color;
+            context.stroke();
+
         }
         else {
-            start_cells.push(EncounterService.mouse_cell);
+            var mouse = EncounterService.mouse_cell;
+            start_cells.push(mouse);
 
-            // highlight based around cell
-            for (x = 0; x < EncounterService.encounterState.mapDimX; x++) {
-                for (y = 0; y < EncounterService.encounterState.mapDimY; y++) {
-                    test_cell = {x: x, y: y};
+            if(mouse !== null){
+                // highlight based around cell
+                for (x = 0; x < EncounterService.encounterState.mapDimX; x++) {
+                    for (y = 0; y < EncounterService.encounterState.mapDimY; y++) {
+                        test_cell = {x: x, y: y};
 
-                    for (start_cell_index = 0; start_cell_index < start_cells.length; start_cell_index++) {
-                        if (EncounterService.distanceToCellFromCell(start_cells[start_cell_index], test_cell) <= test_distance) {
-                            if (EncounterService.cellInBounds(test_cell)) {
-                                render_these.push(test_cell);
-                                break;
+                        for (start_cell_index = 0; start_cell_index < start_cells.length; start_cell_index++) {
+                            if (EncounterService.distanceToCellFromCell(start_cells[start_cell_index], test_cell) <= test_distance) {
+                                if (EncounterService.cellInBounds(test_cell)) {
+                                    render_these.push(test_cell);
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+
+                context.beginPath();
+                context.arc(tileSize * mouse.x + tileSize/2, mouse.y * tileSize + tileSize/2, (radius / 5) * tileSize, 0, 2 * Math.PI);
+                context.lineWidth = 3;
+                context.strokeStyle = stroke_color;
+                context.stroke();
             }
         }
 

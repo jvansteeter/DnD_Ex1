@@ -19,7 +19,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     var mouseX = 0;
     var mouseY = 0;
 
-    $scope.init = function() {
+    $scope.init = function () {
         canvas = $('#inputCanvas');
         body = $('body');
         tileSize = EncounterService.tileSize;
@@ -52,8 +52,8 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         var x = Math.round(EncounterService.mouse_map_res.x / EncounterService.tileSize);
         var y = Math.round(EncounterService.mouse_map_res.y / EncounterService.tileSize);
 
-        if(Math.abs(EncounterService.mouse_map_res.x - x * EncounterService.tileSize) < EncounterService.corner_threshold && Math.abs(EncounterService.mouse_map_res.y - y * EncounterService.tileSize) < EncounterService.corner_threshold)
-            EncounterService.mouse_corner = {x:x, y:y};
+        if (Math.abs(EncounterService.mouse_map_res.x - x * EncounterService.tileSize) < EncounterService.corner_threshold && Math.abs(EncounterService.mouse_map_res.y - y * EncounterService.tileSize) < EncounterService.corner_threshold)
+            EncounterService.mouse_corner = {x: x, y: y};
         else
             EncounterService.mouse_corner = null;
 
@@ -62,7 +62,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
 
         if (mouseDown) {
             // The mouse is being dragged
-            if(drag_threshold < 0)
+            if (drag_threshold < 0)
                 dragging = true;
 
             var start_trans_x = EncounterService.map_transform.x;
@@ -112,7 +112,7 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     $scope.mouseUp = function () {
         mouseDown = false;
 
-        if(!dragging){
+        if (!dragging) {
             if (EncounterService.selected_note_uid === null) {
                 handle_default_mouseUp();
             } else {
@@ -158,7 +158,6 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
             // if the zoom is within bounds, accept the zoom parameters
             new_scale_delta = preferred_scale_delta;
         }
-
 
 
         var x_offset = -(EncounterService.mouse_map_res.x * new_scale_delta);
@@ -239,33 +238,90 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
     }
 
     function handle_note_mouseUp() {
-        var mapDim_mouse = screenToMapDim({x: event.clientX, y: event.clientY});
-        var current_note_id = EncounterService.selected_note_uid;
-        var found_note = false;
+        var current_note = EncounterService.getCurrentNote();
+        var add_note_cells = [];
 
-        // find the note group in the EncounterService
-        for (var i = 0; i < EncounterService.encounterState.mapNotations.length; i++) {
-            if (EncounterService.encounterState.mapNotations[i]._id === current_note_id) {
-                found_note = true;
+        // determine the note type and associate that with a radius value
+        var radius;
+        switch (EncounterService.note_mode) {
+            case 'single':
+                radius = 0;
+                break;
+            case 'five':
+                radius = 5;
+                break;
+            case 'ten':
+                radius = 10;
+                break;
+            case 'fifteen':
+                radius = 15;
+                break;
+            case 'twenty':
+                radius = 20;
+                break;
+        }
 
-                var cells = EncounterService.encounterState.mapNotations[i].cells;
-                var cell_present = false;
-                for (var j = 0; j < cells.length; j++) {
-                    if (cells[j].x === mapDim_mouse.x && cells[j].y === mapDim_mouse.y) {
-                        cell_present = true;
-                        EncounterService.encounterState.mapNotations[i].cells.splice(j, 1);
+
+        if (EncounterService.mouse_corner !== null) {
+            // Case for making a note on the corner
+            var mouse_corner = EncounterService.mouse_corner;
+
+            var start_cells = [];
+            if (EncounterService.cellInBounds({x: mouse_corner.x, y: mouse_corner.y}))
+                start_cells.push({x: mouse_corner.x, y: mouse_corner.y});
+            if (EncounterService.cellInBounds({x: mouse_corner.x - 1, y: mouse_corner.y}))
+                start_cells.push({x: mouse_corner.x - 1, y: mouse_corner.y});
+            if (EncounterService.cellInBounds({x: mouse_corner.x, y: mouse_corner.y - 1}))
+                start_cells.push({x: mouse_corner.x, y: mouse_corner.y - 1});
+            if (EncounterService.cellInBounds({x: mouse_corner.x - 1, y: mouse_corner.y - 1}))
+                start_cells.push({x: mouse_corner.x - 1, y: mouse_corner.y - 1});
+            for (x = 0; x < EncounterService.encounterState.mapDimX; x++) {
+                for (y = 0; y < EncounterService.encounterState.mapDimY; y++) {
+                    test_cell = {x: x, y: y};
+                    for (start_cell_index = 0; start_cell_index < start_cells.length; start_cell_index++) {
+                        if (EncounterService.distanceToCornerFromCell(start_cells[start_cell_index], test_cell) <= radius - 5) {
+                            if (EncounterService.cellInBounds(test_cell)) {
+                                add_note_cells.push(test_cell);
+                            }
+                        }
                     }
                 }
-                if (!cell_present && EncounterService.cellInBounds(mapDim_mouse)) {
-                    EncounterService.encounterState.mapNotations[i].cells.push({x: mapDim_mouse.x, y: mapDim_mouse.y});
+            }
+        }
+        else {
+            //Case for making a note on the cell
+            var mouse_cell = EncounterService.mouse_cell;
+            //determine the cells to be impacted by this mouse up event
+            for (x = 0; x < EncounterService.encounterState.mapDimX; x++) {
+                for (y = 0; y < EncounterService.encounterState.mapDimY; y++) {
+                    test_cell = {x: x, y: y};
+                    if (EncounterService.distanceToCellFromCell(mouse_cell, test_cell) <= radius) {
+                        if (EncounterService.cellInBounds(test_cell)) {
+                            add_note_cells.push(test_cell);
+                        }
+                    }
                 }
-				EncounterService.updateNote(EncounterService.encounterState.mapNotations[i]);
-			}
-			if (found_note) {
-				break;
-			}
-		}
-	}
+            }
+        }
+
+        //check the diff between the addition to the notation and the current notation state, if there are new_cells, add them and flag
+        var new_cell_found = false;
+        for (j = 0; j < add_note_cells.length; j++){
+            if(!isCellInNote(add_note_cells[j], current_note)){
+                new_cell_found = true;
+                current_note.cells.push(add_note_cells[j]);
+            }
+        }
+
+        // if there were no new cells in the diff, remove the cells in the notation area.
+        if(!new_cell_found){
+            for(j = 0; j < add_note_cells.length; j++){
+                attemptRemoveCellFromNote(add_note_cells[j], current_note);
+            }
+        }
+
+        EncounterService.updateNote(current_note);
+    }
 
     function screenToCanvasRes(coor) {
         var rect = canvas[0].getBoundingClientRect();
@@ -290,6 +346,22 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         var map_dim_y = Math.floor(map_res_coor.y / tileSize);
 
         return {x: map_dim_x, y: map_dim_y};
+    }
+
+    function isCellInNote(cell, note){
+        for(i = 0; i < note.cells.length; i++){
+            if(cell.x === note.cells[i].x && cell.y === note.cells[i].y)
+                return true;
+        }
+        return false;
+    }
+
+    function attemptRemoveCellFromNote(cell, note){
+        for(i = 0; i < note.cells.length; i++){
+            if(cell.x === note.cells[i].x && cell.y === note.cells[i].y){
+                note.cells.splice(i,1);
+            }
+        }
     }
 
 });
