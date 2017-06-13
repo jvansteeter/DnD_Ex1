@@ -17,6 +17,10 @@ clientApp.controller('profileController', function($scope, $window, $uibModal, $
 	{
 		$scope.user = Profile.getUser();
 		$scope.name = $scope.user.first_name + " " + $scope.user.last_name;
+        $http.get('api/character/all/' + Profile.getUserId()).success(function(data)
+        {
+            $scope.characters = data.characters;
+        });
 	});
 
 	socket.on('init', function (data) 
@@ -60,13 +64,9 @@ clientApp.controller('profileController', function($scope, $window, $uibModal, $
 		});
 	};
 
-	$scope.listModalgetCharacters = function()
+	$scope.getModalCharacters = function()
 	{
-		var url = 'api/character/all/' + Profile.getUserId();
-		$http.get(url).success(function(data)
-		{
-			$scope.characters = data.characters;
-		});
+		return $scope.characters;
 	};
 	
 	$scope.listModalselectCharacter = function(index)

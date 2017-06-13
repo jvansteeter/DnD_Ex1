@@ -179,7 +179,7 @@
                                       bs-popover style="cursor: pointer">
                       <i class="fa fa-heart"></i>
                     </span>
-                                <span ng-if="!isHost() && !isMyCharacter(player)" ng-click="selectPlayer(player)">
+                                <span ng-if="!isHost() && !isMyCharacter(player)">
                       <i class="fa fa-heart"></i>
                     </span>
                                 <span ng-if="!isHost() && player.npc">???
@@ -215,7 +215,8 @@
                       </a>
                       <span ng-if="isHost() || isMyCharacter(player)" class="badge" ng-click="selectPlayer(player)"
                             data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer"
-                            data-placement="left" bs-popover><i class="fa fa-bolt" ng-click="selectPlayer(player)"></i>
+                            data-placement="left" bs-popover>
+                          <i class="fa fa-bolt" ng-click="selectPlayer(player)"></i>
                         <span ng-bind="player.initiative" ng-click="selectPlayer(player)"></span>
                       </span>
                       <span ng-if="!isHost() && !isMyCharacter(player)" class="badge"><i class="fa fa-bolt"></i>
