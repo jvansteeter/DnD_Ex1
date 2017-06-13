@@ -23,6 +23,18 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
+
+    this.input_mode = 'default';        // default, note
+    this.note_mode = 'single';          // single, five, ten, fifteen, twenty
+
+    this.mouse_scn_res = null;
+    this.mouse_map_res = null;
+    this.mouse_cell = null;
+    this.mouse_corner = null;
+
+    this.corner_ratio = 0.35;
+    this.corner_threshold = this.tileSize * this.corner_ratio * 0.5;
+
     this.init = function (inputID) {
         this.encounterID = inputID;
         var deferred = $q.defer();
@@ -66,6 +78,11 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      * @param note: the complete JSON object that represents the note to remove
      */
     this.removeNote = function (note) {
+        if(note._id === this.selected_note_uid){
+            this.selected_note_uid = null;
+            this.input_mode = 'default';
+        }
+
         var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
         var data = {
             mapNotationId: note._id
@@ -79,7 +96,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /**
      * Invokes a HTTP request that updates a specific note from an encounter, then emits a socket call
      * to provoke updates to all clients
-     * @param note: the complete JSON object that represents the note to remove
+     * @param note: the complete JSON object that represents the note to update
      */
     this.updateNote = function (note) {
         var url = 'api/encounter/updatemapnotation';
@@ -91,6 +108,27 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             this.update();
         }.bind(this))
     }.bind(this);
+
+    this.getCurrentNote = function () {
+        console.log(this.selected_note_uid);
+        if (this.selected_note_uid === null)
+            return null;
+        else
+            return this.getNoteById(this.selected_note_uid);
+    }.bind(this);
+
+    this.getNoteById = function (note_id) {
+        for (i = 0; i < this.encounterState.mapNotations.length; i++) {
+            if (this.encounterState.mapNotations[i]._id === note_id) {
+                return this.encounterState.mapNotations[i];
+            }
+        }
+        return null;
+    }.bind(this);
+
+    this.addCellToNote = function(cell, note){
+
+    };
 
 
     /***********************************************************************************************
@@ -202,6 +240,65 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * MAP FUNCTIONS
      ***********************************************************************************************/
+    this.cellInBounds = function (cell) {
+        if (cell === null)
+            return false;
+
+        if (cell.x < 0 || cell.y < 0)
+            return false;
+
+        if (cell.x >= this.encounterState.mapDimX || cell.y >= this.encounterState.mapDimY)
+            return false;
+
+        return true;
+    }.bind(this);
+
+    this.distanceToCellFromCell = function (start, end) {
+        var distance = 0;
+        var tenSpace = false;
+
+        var deltaX = Math.abs(end.x - start.x);
+        var deltaY = Math.abs(end.y - start.y);
+
+        while (deltaX > 0 && deltaY > 0) {
+            deltaX -= 1;
+            deltaY -= 1;
+
+            if (!tenSpace)
+                distance += 5;
+            else
+                distance += 10;
+
+            tenSpace = !tenSpace;
+        }
+
+        distance = distance + deltaX * 5 + deltaY * 5;
+        return distance;
+    }.bind(this);
+
+    this.distanceToCornerFromCell = function (corner, cell) {
+        var distance = 0;
+        var tenSpace = true;
+
+        var deltaX = Math.abs(cell.x - corner.x);
+        var deltaY = Math.abs(cell.y - corner.y);
+
+        while (deltaX > 0 && deltaY > 0) {
+            deltaX -= 1;
+            deltaY -= 1;
+
+            if (!tenSpace)
+                distance += 5;
+            else
+                distance += 10;
+
+            tenSpace = !tenSpace;
+        }
+
+        distance = distance + deltaX * 5 + deltaY * 5;
+        return distance;
+    }.bind(this);
+
     this.sendMapData = function (mapResX, mapResY, mapDimX, mapDimY) {
         var url = 'api/encounter/updatemapdata/' + this.encounterID;
 
@@ -218,6 +315,4 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
 
         })
     }.bind(this);
-
-
 });
