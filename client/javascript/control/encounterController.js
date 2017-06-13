@@ -284,17 +284,13 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         }
 
         var url = 'api/encounter/setinitiative';
-        var data =
-            {
-                playerId: $scope.encounterState.players[selectedPlayer]._id,
-                initiative: initiative
-            };
+        var data = {
+            playerId: EncounterService.encounterState.players[selectedPlayer]._id,
+            initiative: initiative
+        };
         $http.post(url, data).success(function (data)
         {
-            socket.emit('update:encounter',
-                {
-                    encounterId: encounterId
-                });
+            socket.emit('update:encounter');
             EncounterService.update();
         });
     };
