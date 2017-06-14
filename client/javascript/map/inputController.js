@@ -244,21 +244,24 @@ clientApp.controller('inputController', function ($scope, EncounterService, $win
         // determine the note type and associate that with a radius value
         var radius;
         switch (EncounterService.note_mode) {
-            case 'single':
-                radius = 0;
+            case 'sphere':
+                radius = EncounterService.note_size;
                 break;
-            case 'five':
-                radius = 5;
-                break;
-            case 'ten':
-                radius = 10;
-                break;
-            case 'fifteen':
-                radius = 15;
-                break;
-            case 'twenty':
-                radius = 20;
-                break;
+            // case 'single':
+            //     radius = 0;
+            //     break;
+            // case 'five':
+            //     radius = 5;
+            //     break;
+            // case 'ten':
+            //     radius = 10;
+            //     break;
+            // case 'fifteen':
+            //     radius = 15;
+            //     break;
+            // case 'twenty':
+            //     radius = 20;
+            //     break;
         }
 
 

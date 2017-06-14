@@ -25,7 +25,8 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
 
 
     this.input_mode = 'default';        // default, note
-    this.note_mode = 'single';          // single, five, ten, fifteen, twenty
+    this.note_mode = 'sphere';          // sphere, --square, --cone
+    this.note_size = 0;
 
     this.mouse_scn_res = null;
     this.mouse_map_res = null;
