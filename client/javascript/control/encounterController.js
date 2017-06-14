@@ -86,7 +86,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return EncounterService.input_mode;
     };
 
-    $scope.getNoteMode = function(){
+    $scope.getNoteMode = function () {
         return EncounterService.note_mode;
     };
 
@@ -125,40 +125,26 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         EncounterService.updateNote(note)
     };
 
-    $scope.toggleSingle = function () {
-        EncounterService.note_mode = 'single';
+    $scope.note_size = 0;
+
+    $scope.increaseNoteSize = function () {
+        if (EncounterService.note_size < 120)
+            EncounterService.note_size += 5;
+
+        $scope.note_size = EncounterService.note_size;
     };
 
-    $scope.toggleFive = function () {
-        if (EncounterService.note_mode === 'five')
-            EncounterService.note_mode = 'single';
-        else
-            EncounterService.note_mode = 'five';
+    $scope.decreaseNoteSize = function () {
+        if (EncounterService.note_size > 0)
+            EncounterService.note_size -= 5;
+
+        $scope.note_size = EncounterService.note_size;
     };
 
-    $scope.toggleTen = function () {
-        if (EncounterService.note_mode === 'ten')
-            EncounterService.note_mode = 'single';
-        else
-            EncounterService.note_mode = 'ten';
+    $scope.toggleSphereMode = function(){
+            EncounterService.note_mode = 'sphere';
     };
 
-    $scope.toggleFifteen = function () {
-        console.log('C');
-        if (EncounterService.note_mode === 'fifteen') {
-            EncounterService.note_mode = 'single';
-        }
-        else {
-            EncounterService.note_mode = 'fifteen';
-        }
-    };
-
-    $scope.toggleTwenty = function () {
-        if (EncounterService.note_mode === 'twenty')
-            EncounterService.note_mode = 'single';
-        else
-            EncounterService.note_mode = 'twenty';
-    };
 
     /******************************************************************************************
      * SIDENAV VARIABLES and FUNCTIONS
@@ -287,8 +273,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             playerId: EncounterService.encounterState.players[selectedPlayer]._id,
             initiative: initiative
         };
-        $http.post(url, data).success(function (data)
-        {
+        $http.post(url, data).success(function (data) {
             socket.emit('update:encounter');
             EncounterService.update();
         });
@@ -347,9 +332,9 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
         var url = 'api/encounter/addnpc/' + encounterId;
         var data =
-        {
-            npcId: $scope.npcs[index]._id
-        };
+            {
+                npcId: $scope.npcs[index]._id
+            };
 
         $http.post(url, data).success(function (data) {
             socket.emit('update:encounter',
@@ -372,9 +357,9 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.editModalSave = function () {
         var url = "api/encounter/updateplayer";
         var data =
-        {
-            player: $scope.editNPC
-        };
+            {
+                player: $scope.editNPC
+            };
         $http.post(url, data).success(function (data) {
             if (data === "OK") {
                 socket.emit('update:encounter',

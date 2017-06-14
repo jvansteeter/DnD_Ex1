@@ -245,24 +245,19 @@
                                 <md-button ng-click="addNote()">New Notation</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button class="selected_note" ng-if="getNoteMode() === 'single'" ng-click="toggleSingle()">Single Square</md-button>
-                                <md-button ng-if="getNoteMode() !== 'single'" ng-click="toggleSingle()">Single Square</md-button>
+                                <md-button class="selected_note" ng-if="getNoteMode() === 'sphere'" ng-click="toggleSphereMode()" md-prevent-menu-close="md-prevent-menu-close">Sphere Mode</md-button>
+                                <md-button ng-if="getNoteMode() !== 'sphere'" ng-click="toggleSphereMode()" md-prevent-menu-close="md-prevent-menu-close">Sphere Mode</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button class="selected_note" ng-if="getNoteMode() === 'five'" ng-click="toggleFive()">5ft Radius</md-button>
-                                <md-button ng-if="getNoteMode() !== 'five'" ng-click="toggleFive()">5ft Radius</md-button>
+                                <md-button ng-disabled="true" md-prevent-menu-close="md-prevent-menu-close">Square Mode</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button class="selected_note" ng-if="getNoteMode() === 'ten'" ng-click="toggleTen()">10ft Radius</md-button>
-                                <md-button ng-if="getNoteMode() !== 'ten'" ng-click="toggleTen()">10ft Radius</md-button>
+                                <md-button ng-disabled="true" md-prevent-menu-close="md-prevent-menu-close">Cone Mode</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button class="selected_note" ng-if="getNoteMode() === 'fifteen'" ng-click="toggleFifteen()">15ft Radius</md-button>
-                                <md-button ng-if="getNoteMode() !== 'fifteen'" ng-click="toggleFifteen()">15ft Radius</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button class="selected_note" ng-if="getNoteMode() === 'twenty'" ng-click="toggleTwenty()">20ft Radius</md-button>
-                                <md-button ng-if="getNoteMode() !== 'twenty'" ng-click="toggleTwenty()">20ft Radius</md-button>
+                                <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close"><div style="font-size: 25px; text-align: center">-</div></md-button>
+                                <div style="max-width: 100px; min-width: 100px; font-size: 25px; text-align: center; flex: 8">{{note_size}}</div>
+                                <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close"><div style="font-size: 25px; text-align: center">+</div></md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
