@@ -25,4 +25,18 @@ userRepository.read = function (userId, callback)
     });
 };
 
+userRepository.readAll = function (userIds, callback)
+{
+	User.find({_id : {$in : userIds }}, function(error, users)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		callback(error, users);
+	});
+};
+
 module.exports = userRepository;
