@@ -5,6 +5,18 @@ var Character = mongoose.model('Character');
 
 var characterRepository = {};
 
+characterRepository.create = function (userId, characterObject, callback)
+{
+	var character = new Character({
+		userId: userId
+	});
+	character.setCharacter(characterObject);
+	character.save(function (error, character)
+	{
+		callback(error, character);
+	});
+};
+
 characterRepository.read = function (characterId, callback)
 {
     Character.findById(characterId, function(error, character)
@@ -25,5 +37,12 @@ characterRepository.read = function (characterId, callback)
     });
 };
 
+characterRepository.update = function (character, callback)
+{
+	character.save(function (error)
+	{
+		callback(error);
+	})
+};
 
 module.exports = characterRepository;

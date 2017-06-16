@@ -12,71 +12,39 @@ var CampaignUser = mongoose.model('CampaignUser');
 var NPC = mongoose.model('NPC');
 var path = require('path');
 
+var characterService = require('../services/characterService');
+
 //
 //  Character API
 //  api/character
 //
 
-router.post('/create', function(req, res)
+router.post('/create', function(req, res, reportError)
 {
-    var character = new Character();
-    character.userId = req.user._id;
-    character.setCharacter(req.body.character);
-    character.save(function(error)
+    characterService.createNewCharacter(req.user._id, req.body.character, function (error, character)
     {
         if (error)
         {
-            res.status(500).send(error);
-            return;
-        }
+			reportError(error);
+			return;
+		}
 
-        res.send(character);
-    });
+		res.send(character);
+	})
 });
 
-router.post('/icon/:character_id', function(req, res)
+router.post('/icon/:character_id', function(req, res, reportError)
 {
-    var directory = "image/characters/" + req.params.character_id + "/";
-    var fileName = "icon" + path.extname(req.files.file.file);
+	characterService.uploadCharacterIcon(req.params.character_id, req.files.file.file, function (error)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-    fs.ensureDirSync(directory);
-
-    fs.copy(req.files.file.file, directory + fileName, function(error)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
-
-        Character.findById(req.params.character_id, function(error, character)
-        {
-            if (error)
-            {
-                res.status(500).send(error);
-                return;
-            }
-
-            character.iconURL = directory + fileName;
-            character.save(function(error)
-            {
-                if (error)
-                {
-                    res.status(500).send(error);
-                }
-
-                fs.unlink(req.files.file.file, function(error)
-                {
-                    if (error)
-                    {
-                        res.status(500).send(error);
-                    }
-
-                    res.send("OK");
-                });
-            });
-        });
-    });
+		res.send('OK');
+	});
 });
 
 router.post('/update', function(req, res)
