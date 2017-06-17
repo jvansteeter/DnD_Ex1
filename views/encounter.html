@@ -289,7 +289,7 @@
                                     <span ng-if="isNotePublic(note)" style="width:20px;"><i ng-click="toggleNotePublic(note)" class="fa fa-unlock"></i></span>
                                 </span>
 
-                                <md-menu>
+                                <md-menu ng-if="isNoteCogSettings(note)">
                                     <i class="fa fa-cog" ng-click="$mdMenu.open($event)" style="align-self: center; flex: 1"></i>
                                     <md-menu-content>
                                         <md-menu-item ng-if="isNoteOwner(note) || isHost()">
@@ -303,6 +303,11 @@
                                          <md-menu-item ng-if="isNoteOwner(note)">
                                             <md-button ng-if="isNotePublic(note)" ng-click="toggleNotePublic(note)">Make Private</md-button>
                                             <md-button ng-if="!isNotePublic(note)" ng-click="toggleNotePublic(note)">Make Public</md-button>
+                                        </md-menu-item>
+
+                                        <md-menu-item ng-if="isHost() && isNoteOwner(note)">
+                                            <md-button ng-if="!canNoteHide(note)" ng-click="toggleVisibilityControl(note)">Unlock Visibility Control</md-button>
+                                            <md-button ng-if="canNoteHide(note)" ng-click="toggleVisibilityControl(note)">Lock Visibility Control</md-button>
                                         </md-menu-item>
 
                                         <md-menu-item ng-if="canNoteHide(note)">

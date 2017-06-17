@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var mapNotation = new mongoose.Schema(
     {
         userId: String,
-        isPublic: { type: Boolean, default: true},
+        isPublic: { type: Boolean, default: false},
         canHide: { type: Boolean, default: true},
         text: { type: String, default: 'New Notation' },
         color: {type: String, default: 'hsla(240, 100%, 50%, 1)' },

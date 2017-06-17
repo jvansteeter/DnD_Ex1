@@ -162,6 +162,26 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         EncounterService.updateNote(note);
     };
 
+    $scope.toggleVisibilityControl = function(note){
+        note.canHide = !note.canHide;
+        EncounterService.updateNote(note);
+    };
+
+    $scope.toggleVisibilitySetting = function(note){
+
+    };
+
+    $scope.isNoteCogSettings = function(note){
+        if($scope.isNoteOwner(note) || $scope.isHost())
+            return true;
+
+        if(note.canHide)
+            return true;
+
+        return false;
+
+    };
+
 
     /******************************************************************************************
      * SIDENAV VARIABLES and FUNCTIONS
