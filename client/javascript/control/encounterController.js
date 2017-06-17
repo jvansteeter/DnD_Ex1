@@ -149,6 +149,19 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return note.userId === Profile.getUserId();
     };
 
+    $scope.canNoteHide = function(note){
+        return note.canHide;
+    };
+
+    $scope.isNotePublic = function(note){
+        return note.isPublic;
+    };
+
+    $scope.toggleNotePublic = function(note){
+        note.isPublic = !note.isPublic;
+        EncounterService.updateNote(note);
+    };
+
 
     /******************************************************************************************
      * SIDENAV VARIABLES and FUNCTIONS

@@ -26,14 +26,17 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
 
         for(var k = 0; k < EncounterService.encounterState.mapNotations.length; k++){
             var note_group = EncounterService.encounterState.mapNotations[k];
-            context.fillStyle = note_group.color;
 
-            var cells = note_group.cells;
-            for(var j = 0; j < cells.length; j++){
-                var x = cells[j].x;
-                var y = cells[j].y;
+            if(note_group.isPublic || EncounterService.isNoteOwner(note_group)){
+                context.fillStyle = note_group.color;
 
-                context.fillRect(tileSize * x, tileSize * y, tileSize, tileSize);
+                var cells = note_group.cells;
+                for(var j = 0; j < cells.length; j++){
+                    var x = cells[j].x;
+                    var y = cells[j].y;
+
+                    context.fillRect(tileSize * x, tileSize * y, tileSize, tileSize);
+                }
             }
         }
 

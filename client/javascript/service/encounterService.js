@@ -127,9 +127,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         return null;
     }.bind(this);
 
-    this.addCellToNote = function(cell, note){
-
-    };
+    this.isNoteOwner = function(note){
+        return note.userId === Profile.getUserId();
+    }.bind(this);
 
 
     /***********************************************************************************************

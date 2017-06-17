@@ -270,26 +270,43 @@
 
             <div class="initiative-box" style="flex:1; overflow-y: scroll;" ng-show="notes_collapsed">
                 <ul class="list-group">
-                    <li ng-repeat="note in getNotes()" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
+                    <li ng-repeat="note in getNotes()" ng-if="isNotePublic(note) || isNoteOwner(note)" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
                         <div style="display: flex; height: 42px;">
-
 
                             <color-picker ng-if="isNoteOwner(note)" ng-click="noteClick(note)" ng-model="note.color" options="note_options" style="align-self: center;" event-api="colorPickerEventApi"></color-picker>
 
                             <input ng-model="note.text" ng-blur="onChangeText(note)" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
 
-                            <span style="align-self: center">
-                                <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
-                                <span ng-if="!isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
+                            <span style="align-self: center; display: flex; width: 50px; justify-content: flex-end">
 
-                                <md-menu style="align-self: center">
-                                    <i class="fa fa-cog" ng-click="$mdMenu.open($event)" style="margin-left: 5px;"></i>
+                                <span ng-if="isNoteOwner(note) || isHost()" style="flex: 1">
+                                    <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
+                                    <span ng-if="!isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
+                                </span>
+
+                                <span ng-if="isNoteOwner(note)" style="flex: 1; margin: auto">
+                                    <span ng-if="!isNotePublic(note)" style="width:20px;"><i ng-click="toggleNotePublic(note)" class="fa fa-lock"></i></span>
+                                    <span ng-if="isNotePublic(note)" style="width:20px;"><i ng-click="toggleNotePublic(note)" class="fa fa-unlock"></i></span>
+                                </span>
+
+                                <md-menu>
+                                    <i class="fa fa-cog" ng-click="$mdMenu.open($event)" style="align-self: center; flex: 1"></i>
                                     <md-menu-content>
                                         <md-menu-item ng-if="isNoteOwner(note) || isHost()">
                                             <md-button ng-click="removeNote(note)">Delete Notation</md-button>
                                         </md-menu-item>
-                                        <md-menu-item>
+
+                                        <md-menu-item ng-if="isNoteOwner(note) || isHost()">
                                             <md-button ng-click="toggleNoteSelected(note)" md-prevent-menu-close="md-prevent-menu-close">Select Notation</md-button>
+                                        </md-menu-item>
+
+                                         <md-menu-item ng-if="isNoteOwner(note)">
+                                            <md-button ng-if="isNotePublic(note)" ng-click="toggleNotePublic(note)">Make Private</md-button>
+                                            <md-button ng-if="!isNotePublic(note)" ng-click="toggleNotePublic(note)">Make Public</md-button>
+                                        </md-menu-item>
+
+                                        <md-menu-item ng-if="canNoteHide(note)">
+                                            <md-button>Toggle Visibility: Full</md-button>
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
