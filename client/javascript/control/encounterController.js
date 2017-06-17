@@ -142,7 +142,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.toggleSphereMode = function(){
-            EncounterService.note_mode = 'sphere';
+        EncounterService.note_mode = 'sphere';
+    };
+
+    $scope.isNoteOwner = function(note){
+        return note.userId === Profile.getUserId();
     };
 
 

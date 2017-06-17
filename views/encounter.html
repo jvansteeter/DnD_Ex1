@@ -255,9 +255,13 @@
                                 <md-button ng-disabled="true" md-prevent-menu-close="md-prevent-menu-close">Cone Mode</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close"><div style="font-size: 25px; text-align: center">-</div></md-button>
+                                <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close">
+                                    <div style="font-size: 25px; text-align: center">-</div>
+                                </md-button>
                                 <div style="max-width: 100px; min-width: 100px; font-size: 25px; text-align: center; flex: 8">{{note_size}}</div>
-                                <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close"><div style="font-size: 25px; text-align: center">+</div></md-button>
+                                <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close">
+                                    <div style="font-size: 25px; text-align: center">+</div>
+                                </md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -268,13 +272,31 @@
                 <ul class="list-group">
                     <li ng-repeat="note in getNotes()" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
                         <div style="display: flex; height: 42px;">
-                            <color-picker ng-click="noteClick(note)" ng-model="note.color" options="note_options" style="align-self: center;" event-api="colorPickerEventApi"></color-picker>
+
+
+                            <color-picker ng-if="isNoteOwner(note)" ng-click="noteClick(note)" ng-model="note.color" options="note_options" style="align-self: center;" event-api="colorPickerEventApi"></color-picker>
+
                             <input ng-model="note.text" ng-blur="onChangeText(note)" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
+
                             <span style="align-self: center">
                                 <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
                                 <span ng-if="!isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
-                                <span><i ng-click="removeNote(note)" class="fa fa-close"></i></span>
+
+                                <md-menu style="align-self: center">
+                                    <i class="fa fa-cog" ng-click="$mdMenu.open($event)" style="margin-left: 5px;"></i>
+                                    <md-menu-content>
+                                        <md-menu-item ng-if="isNoteOwner(note) || isHost()">
+                                            <md-button ng-click="removeNote(note)">Delete Notation</md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="toggleNoteSelected(note)" md-prevent-menu-close="md-prevent-menu-close">Select Notation</md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+
                             </span>
+
+
                         </div>
                     </li>
                 </ul>
@@ -331,5 +353,3 @@
 </div>
 </body>
 </html>
-
-<!--minor change-->
