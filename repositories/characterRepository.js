@@ -37,11 +37,36 @@ characterRepository.read = function (characterId, callback)
     });
 };
 
+characterRepository.readAll = function (userId, callback)
+{
+	Character.find({userId: userId}, function (error, characters)
+	{
+		callback(error, characters);
+	})
+};
+
 characterRepository.update = function (character, callback)
 {
 	character.save(function (error)
 	{
 		callback(error);
+	})
+};
+
+characterRepository.delete = function (characterId, callback)
+{
+	Character.findById(characterId, function (error, character)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		character.remove(function (error)
+		{
+			callback(error);
+		})
 	})
 };
 

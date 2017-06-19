@@ -47,93 +47,60 @@ router.post('/icon/:character_id', function(req, res, reportError)
 	});
 });
 
-router.post('/update', function(req, res)
+router.post('/update', function(req, res, reportError)
 {
-    Character.findById(req.body.character._id, function(error, character)
+    characterService.update(req.body.character._id, req.body.character, function (error)
     {
         if (error)
         {
-            res.status(500).send("Error finding character");
+            reportError(error);
             return;
         }
 
-        character.setCharacter(req.body.character);
-        character.generateCharacter();
-        character.save(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving character");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
+        res.send('OK');
+    })
 });
 
-router.get('/all/:user_id', function(req, res)
+router.get('/all/:user_id', function(req, res, reportError)
 {
-    Character.find({userId: req.params.user_id}, function(error, characters)
+    characterService.getAllList(req.params.user_id, function (error, characterList)
     {
         if (error)
         {
-            res.status(500).send("Error finding character");
+            reportError(error);
             return;
         }
 
-        var list = [];
-        for (var i = 0; i < characters.length; i++)
-        {
-            var character =
-            {
-                _id: characters[i]._id,
-                name: characters[i].name,
-                class: characters[i].class,
-                level: characters[i].level
-            };
-            list.push(character);
-        }
-
-        res.json({characters: list});
-    });
+        res.json({characters: characterList});
+	})
 });
 
-router.get('/:character_id', function(req, res)
+router.get('/:character_id', function(req, res, reportError)
 {
-    Character.findById(req.params.character_id, function(error, character)
+    characterService.get(req.params.character_id, function (error, character)
     {
         if (error)
         {
-            res.status(500).send("Error finding character");
+            reportError(error);
             return;
         }
 
         res.json({character: character});
-    });
+    })
 });
 
-router.get('/delete/:character_id', function(req, res)
+router.get('/delete/:character_id', function(req, res, reportError)
 {
-    Character.findById(req.params.character_id, function(error, character)
+    characterService.delete(req.params.character_id, function (error)
     {
         if (error)
         {
-            res.status(500).send("Error finding character");
+            reportError(error);
             return;
         }
 
-        character.remove(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error removing character");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
+        res.send('OK');
+    })
 });
 
 module.exports = router;
