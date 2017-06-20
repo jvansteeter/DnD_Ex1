@@ -39,4 +39,12 @@ userRepository.readAll = function (userIds, callback)
 	});
 };
 
+userRepository.update = function (user, callback)
+{
+	user.save(function (error)
+	{
+		callback(error);
+	})
+};
+
 module.exports = userRepository;

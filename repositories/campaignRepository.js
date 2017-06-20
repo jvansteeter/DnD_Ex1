@@ -10,8 +10,7 @@ campaignRepository.create = function (title, description, hostId, callback)
 	Campaign.create(
 		{
 			title: title,
-			description: description,
-			hostId: hostId
+			description: description
 		}, function (error, campaign)
 		{
 			if (error)
@@ -20,7 +19,11 @@ campaignRepository.create = function (title, description, hostId, callback)
 				return;
 			}
 
-			callback(error, campaign);
+			campaign.addHost(hostId);
+			campaign.save(function (error, campaign)
+			{
+				callback(error, campaign);
+			})
 		}
 	)
 };
