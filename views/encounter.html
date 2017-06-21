@@ -421,11 +421,11 @@
                                             <md-button ng-click="toggleNoteSelected(note)">Select Notation</md-button>
                                         </md-menu-item>
 
-                                        <md-menu-item ng-if="canNoteHide(note) || isNoteOwner(note)">
-                                            <md-button ng-if="test_visibility % 4 == 0" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting()"><b>View:</b> Full</md-button>
-                                            <md-button ng-if="test_visibility % 4 == 1" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting()"><b>View:</b> Ghost</md-button>
-                                            <md-button ng-if="test_visibility % 4 == 2" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting()"><b>View:</b> Off</md-button>
-                                            <md-button ng-if="!canNoteHide(note)" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting()" ng-disabled="true"><b>View:</b> Control Disabled</md-button>
+                                        <md-menu-item>
+                                            <md-button ng-if="getNoteVisibility(note) === 'full'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)"><b>View:</b> Full</md-button>
+                                            <md-button ng-if="getNoteVisibility(note) === 'ghost'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)"><b>View:</b> Ghost</md-button>
+                                            <md-button ng-if="getNoteVisibility(note) === 'off'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)"><b>View:</b> Off</md-button>
+                                            <md-button ng-if="getNoteVisibility(note) === 'locked'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)" ng-disabled="true"><b>View:</b> Control Disabled</md-button>
                                         </md-menu-item>
 
                                          <md-menu-item ng-if="isNoteOwner(note)">
