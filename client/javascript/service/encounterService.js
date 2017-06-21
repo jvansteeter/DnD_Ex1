@@ -144,7 +144,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
 
                     // if I am the note owner, don't mess with the note visibility
                     if(this.isNoteOwner(note)){
-                        note_state.state = "full";
                         break;
                     }
 
@@ -163,8 +162,23 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
                 // add an entry into the note visibility state
                 if(note.canHide)
                     this.note_visibility_states.push({noteId: note._id, state: "full"});
-                else
-                    this.note_visibility_states.push({noteId: note._id, state: "locked"});
+                else{
+                    if(this.isNoteOwner(note)){
+                        this.note_visibility_states.push({noteId: note._id, state: "full"});
+                    }
+                    else{
+                        this.note_visibility_states.push({noteId: note._id, state: "locked"});
+                    }
+                }
+            }
+        }
+    }.bind(this);
+
+    this.getNoteVisibilityObject = function(note){
+        for(var i = 0; i < this.note_visibility_states.length; i++){
+            var vis_state = this.note_visibility_states[i];
+            if(vis_state.noteId === note._id){
+                return vis_state;
             }
         }
     }.bind(this);

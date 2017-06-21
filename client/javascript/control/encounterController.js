@@ -149,7 +149,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.toggleVisibilitySetting = function(note){
-        var note_vis_state_container = this.getNoteVisibilityObject(note);
+        var note_vis_state_container = EncounterService.getNoteVisibilityObject(note);
         switch (note_vis_state_container.state){
             case 'full':
                 note_vis_state_container.state = 'ghost';
@@ -166,21 +166,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.getNoteVisibility = function(note){
-        for(var i = 0; i < EncounterService.note_visibility_states.length; i++){
-            var vis_state = EncounterService.note_visibility_states[i];
-            if(vis_state.noteId === note._id){
-                return vis_state.state;
-            }
-        }
-    };
-
-    $scope.getNoteVisibilityObject = function(note){
-        for(var i = 0; i < EncounterService.note_visibility_states.length; i++){
-            var vis_state = EncounterService.note_visibility_states[i];
-            if(vis_state.noteId === note._id){
-                return vis_state;
-            }
-        }
+        return EncounterService.getNoteVisibilityObject(note).state;
     };
 
 
