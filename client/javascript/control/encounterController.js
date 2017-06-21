@@ -18,25 +18,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
 
-    $scope.colorPickerEventApi = {
-        onChange: function (api, color, $event) {
-        },
-        onBlur: function (api, color, $event) {
-        },
-        onOpen: function (api, color, $event) {
-        },
-        onClose: function (api, color, $event) {
-            EncounterService.updateNote($scope.clickNote);
-            EncounterService.update();
-        },
-        onClear: function (api, color, $event) {
-        },
-        onReset: function (api, color, $event) {
-        },
-        onDestroy: function (api, color) {
-        }
-    };
-
     socket.on('init', function () {
         EncounterService.init(encounterId).then(function () {
             $scope.host = EncounterService.isHost();
@@ -74,8 +55,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.notes_collapsed = false;
     $scope.clickNote = null;
     $scope.test_visibility = 0;
-
-
 
     $scope.toggleNotes = function () {
         $scope.notes_collapsed = !$scope.notes_collapsed;
