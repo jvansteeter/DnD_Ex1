@@ -18,25 +18,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
 
-    $scope.colorPickerEventApi = {
-        onChange: function (api, color, $event) {
-        },
-        onBlur: function (api, color, $event) {
-        },
-        onOpen: function (api, color, $event) {
-        },
-        onClose: function (api, color, $event) {
-            EncounterService.updateNote($scope.clickNote);
-            EncounterService.update();
-        },
-        onClear: function (api, color, $event) {
-        },
-        onReset: function (api, color, $event) {
-        },
-        onDestroy: function (api, color) {
-        }
-    };
-
     socket.on('init', function () {
         EncounterService.init(encounterId).then(function () {
             $scope.host = EncounterService.isHost();
@@ -142,7 +123,50 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.toggleSphereMode = function(){
-            EncounterService.note_mode = 'sphere';
+        EncounterService.note_mode = 'sphere';
+    };
+
+    $scope.isNoteOwner = function(note){
+        return note.userId === Profile.getUserId();
+    };
+
+    $scope.canNoteHide = function(note){
+        return note.canHide;
+    };
+
+    $scope.isNotePublic = function(note){
+        return note.isPublic;
+    };
+
+    $scope.toggleNotePublic = function(note){
+        note.isPublic = !note.isPublic;
+        EncounterService.updateNote(note);
+    };
+
+    $scope.toggleVisibilityControl = function(note){
+        note.canHide = !note.canHide;
+        EncounterService.updateNote(note);
+    };
+
+    $scope.toggleVisibilitySetting = function(note){
+        var note_vis_state_container = EncounterService.getNoteVisibilityObject(note);
+        switch (note_vis_state_container.state){
+            case 'full':
+                note_vis_state_container.state = 'ghost';
+                break;
+            case 'ghost':
+                note_vis_state_container.state = 'off';
+                break;
+            case 'off':
+                note_vis_state_container.state = 'full';
+                break;
+            case 'locked':
+                break;
+        }
+    };
+
+    $scope.getNoteVisibility = function(note){
+        return EncounterService.getNoteVisibilityObject(note).state;
     };
 
 

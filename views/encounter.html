@@ -43,14 +43,7 @@
     <script src="javascript/map/highlightRenderer.js"></script>
     <script src="javascript/map/noteRenderer.js"></script>
     <script src="javascript/map/inputController.js"></script>
-    <!--<script src="javascript/map/mapMain.js"></script>-->
     <script src="javascript/control/encounterController.js"></script>
-
-    <!--Color picker dependencies-->
-    <link rel="stylesheet" href="javascript/angular-color-picker/angularjs-color-picker.min.css"/>
-    <script src="bower_components/tinycolor/dist/tinycolor-min.js"></script>
-    <script src="javascript/angular-color-picker/angularjs-color-picker.min.js"></script>
-
 
     <title>Dungeon Map</title>
     <style>
@@ -255,9 +248,13 @@
                                 <md-button ng-disabled="true" md-prevent-menu-close="md-prevent-menu-close">Cone Mode</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close"><div style="font-size: 25px; text-align: center">-</div></md-button>
+                                <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close">
+                                    <div style="font-size: 25px; text-align: center">-</div>
+                                </md-button>
                                 <div style="max-width: 100px; min-width: 100px; font-size: 25px; text-align: center; flex: 8">{{note_size}}</div>
-                                <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close"><div style="font-size: 25px; text-align: center">+</div></md-button>
+                                <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close">
+                                    <div style="font-size: 25px; text-align: center">+</div>
+                                </md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -266,15 +263,187 @@
 
             <div class="initiative-box" style="flex:1; overflow-y: scroll;" ng-show="notes_collapsed">
                 <ul class="list-group">
-                    <li ng-repeat="note in getNotes()" class="list-group-item" style="border-left: 10px solid {{note.color}};padding-left: 5px; padding-top:0; padding-bottom: 0;">
-                        <div style="display: flex; height: 42px;">
-                            <color-picker ng-click="noteClick(note)" ng-model="note.color" options="note_options" style="align-self: center;" event-api="colorPickerEventApi"></color-picker>
-                            <input ng-model="note.text" ng-blur="onChangeText(note)" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
-                            <span style="align-self: center">
-                                <span ng-if="isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
-                                <span ng-if="!isNoteSelected(note)" style="width:20px;"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
-                                <span><i ng-click="removeNote(note)" class="fa fa-close"></i></span>
+                    <li ng-repeat="note in getNotes()" ng-if="isNotePublic(note) || isNoteOwner(note)" class="list-group-item" style="border-left: 10px solid {{note.color}}; padding-left: 0; padding-top:0; padding-bottom: 0;">
+                        <div style="display: flex; height: 42px; padding-left: 7px; border-left: 1px #dddddd solid">
+
+                            <input ng-if="isNoteOwner(note)" ng-model="note.text" ng-blur="onChangeText(note)" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">
+                            <span ng-if="!isNoteOwner(note)" style="align-self: center; margin-right: auto;">{{note.text}}</span>
+
+                            <span style="align-self: center; justify-content: flex-end">
+                                <md-menu ng-if="isNoteOwner(note)" style="align-self: center; margin-left: 5px;">
+                                    <i class="fa fa-paint-brush" ng-click="$mdMenu.open($event)"></i>
+                                    <md-menu-content width="5">
+                                        <md-grid-list md-cols="10" md-row-height="25px" style="margin: 5px;">
+                                            <!--REDS-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 0, 0, 0.1);" ng-click="note.color='rgba(255, 0, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 0, 0, 0.3);" ng-click="note.color='rgba(255, 0, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 0, 0, 0.5);" ng-click="note.color='rgba(255, 0, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 0, 0, 0.7);" ng-click="note.color='rgba(255, 0, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 0, 0, 1.0);" ng-click="note.color='rgba(255, 0, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(178, 34, 34, 0.1);" ng-click="note.color='rgba(178, 34, 34, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(178, 34, 34, 0.3);" ng-click="note.color='rgba(178, 34, 34, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(178, 34, 34, 0.5);" ng-click="note.color='rgba(178, 34, 34, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(178, 34, 34, 0.7);" ng-click="note.color='rgba(178, 34, 34, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(178, 34, 34, 1.0);" ng-click="note.color='rgba(178, 34, 34, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--ORANGES-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 165, 0, 0.1);" ng-click="note.color='rgba(255, 165, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 165, 0, 0.3);" ng-click="note.color='rgba(255, 165, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 165, 0, 0.5);" ng-click="note.color='rgba(255, 165, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 165, 0, 0.7);" ng-click="note.color='rgba(255, 165, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 165, 0, 1.0);" ng-click="note.color='rgba(255, 165, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 140, 0, 0.1);" ng-click="note.color='rgba(255, 140, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 140, 0, 0.3);" ng-click="note.color='rgba(255, 140, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 140, 0, 0.5);" ng-click="note.color='rgba(255, 140, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 140, 0, 0.7);" ng-click="note.color='rgba(255, 140, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 140, 0, 1.0);" ng-click="note.color='rgba(255, 140, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--YELLOW-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 0, 0.1);" ng-click="note.color='rgba(255, 255, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 0, 0.3);" ng-click="note.color='rgba(255, 255, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 0, 0.5);" ng-click="note.color='rgba(255, 255, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 0, 0.7);" ng-click="note.color='rgba(255, 255, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 0, 1.0);" ng-click="note.color='rgba(255, 255, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 215, 0, 0.1);" ng-click="note.color='rgba(255, 215, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 215, 0, 0.3);" ng-click="note.color='rgba(255, 215, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 215, 0, 0.5);" ng-click="note.color='rgba(255, 215, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 215, 0, 0.7);" ng-click="note.color='rgba(255, 215, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 215, 0, 1.0);" ng-click="note.color='rgba(255, 215, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--GREENS-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(50, 205, 50, 0.1);" ng-click="note.color='rgba(50, 205, 50, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(50, 205, 50, 0.3);" ng-click="note.color='rgba(50, 205, 50, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(50, 205, 50, 0.5);" ng-click="note.color='rgba(50, 205, 50, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(50, 205, 50, 0.7);" ng-click="note.color='rgba(50, 205, 50, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(50, 205, 50, 1.0);" ng-click="note.color='rgba(50, 205, 50, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 128, 0, 0.1);" ng-click="note.color='rgba(0, 128, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 128, 0, 0.3);" ng-click="note.color='rgba(0, 128, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 128, 0, 0.5);" ng-click="note.color='rgba(0, 128, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 128, 0, 0.7);" ng-click="note.color='rgba(0, 128, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 128, 0, 1.0);" ng-click="note.color='rgba(0, 128, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--BLUES-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(135, 206, 250, 0.1);" ng-click="note.color='rgba(135, 206, 250, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(135, 206, 250, 0.3);" ng-click="note.color='rgba(135, 206, 250, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(135, 206, 250, 0.5);" ng-click="note.color='rgba(135, 206, 250, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(135, 206, 250, 0.7);" ng-click="note.color='rgba(135, 206, 250, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(135, 206, 250, 1.0);" ng-click="note.color='rgba(135, 206, 250, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 139, 0.1);" ng-click="note.color='rgba(0, 0, 139, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 139, 0.3);" ng-click="note.color='rgba(0, 0, 139, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 139, 0.5);" ng-click="note.color='rgba(0, 0, 139, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 139, 0.7);" ng-click="note.color='rgba(0, 0, 139, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 139, 1.0);" ng-click="note.color='rgba(0, 0, 139, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--PURPLES-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(218, 112, 214, 0.1);" ng-click="note.color='rgba(218, 112, 214, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(218, 112, 214, 0.3);" ng-click="note.color='rgba(218, 112, 214, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(218, 112, 214, 0.5);" ng-click="note.color='rgba(218, 112, 214, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(218, 112, 214, 0.7);" ng-click="note.color='rgba(218, 112, 214, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(218, 112, 214, 1.0);" ng-click="note.color='rgba(218, 112, 214, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(75, 0, 130, 0.1);" ng-click="note.color='rgba(75, 0, 130, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(75, 0, 130, 0.3);" ng-click="note.color='rgba(75, 0, 130, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(75, 0, 130, 0.5);" ng-click="note.color='rgba(75, 0, 130, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(75, 0, 130, 0.7);" ng-click="note.color='rgba(75, 0, 130, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(75, 0, 130, 1.0);" ng-click="note.color='rgba(75, 0, 130, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--BROWNS-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(210, 180, 140, 0.1);" ng-click="note.color='rgba(210, 180, 140, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(210, 180, 140, 0.3);" ng-click="note.color='rgba(210, 180, 140, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(210, 180, 140, 0.5);" ng-click="note.color='rgba(210, 180, 140, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(210, 180, 140, 0.7);" ng-click="note.color='rgba(210, 180, 140, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(210, 180, 140, 1.0);" ng-click="note.color='rgba(210, 180, 140, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(102, 75, 40, 0.1);" ng-click="note.color='rgba(102, 75, 40, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(102, 75, 40, 0.3);" ng-click="note.color='rgba(102, 75, 40, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(102, 75, 40, 0.5);" ng-click="note.color='rgba(102, 75, 40, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(102, 75, 40, 0.7);" ng-click="note.color='rgba(102, 75, 40, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(102, 75, 40, 1.0);" ng-click="note.color='rgba(102, 75, 40, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <!--BLACK AND WHITES-->
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 255, 0.1);" ng-click="note.color='rgba(255, 255, 255, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 255, 0.3);" ng-click="note.color='rgba(255, 255, 255, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 255, 0.5);" ng-click="note.color='rgba(255, 255, 255, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 255, 0.7);" ng-click="note.color='rgba(255, 255, 255, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(255, 255, 255, 1.0);" ng-click="note.color='rgba(255, 255, 255, 1.0)'; updateNote(note)"></md-grid-tile>
+
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 0, 0.1);" ng-click="note.color='rgba(0, 0, 0, 0.1)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 0, 0.3);" ng-click="note.color='rgba(0, 0, 0, 0.3)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 0, 0.5);" ng-click="note.color='rgba(0, 0, 0, 0.5)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 0, 0.7);" ng-click="note.color='rgba(0, 0, 0, 0.7)'; updateNote(note)"></md-grid-tile>
+                                            <md-grid-tile md-colspan="1" md-rowspan="1" style="border: 1px solid #dddddd; background: rgba(0, 0, 0, 1.0);" ng-click="note.color='rgba(0, 0, 0, 1.0)'; updateNote(note)"></md-grid-tile>
+                                        </md-grid-list>
+                                    </md-menu-content>
+                                </md-menu>
+
+                                <span ng-if="isNoteOwner(note) && isHost()" style="margin-left: 5px; align-self: center">
+                                    <span ng-if="!canNoteHide(note)"><i ng-click="toggleVisibilityControl(note)" class="fa fa-lock"></i></span>
+                                    <span ng-if="canNoteHide(note)"><i ng-click="toggleVisibilityControl(note)" class="fa fa-unlock"></i></span>
+                                </span>
+
+                                <span ng-if="isNoteOwner(note)" style="margin-left: 5px; align-self: center">
+                                    <span ng-if="!isNotePublic(note)"><i ng-click="toggleNotePublic(note)" class="fa fa-eye-slash"></i></span>
+                                    <span ng-if="isNotePublic(note)"><i ng-click="toggleNotePublic(note)" class="fa fa-eye"></i></span>
+                                </span>
+
+                                <span ng-if="isNoteOwner(note) || isHost()" style="margin-left: 5px; align-self: center">
+                                    <span ng-if="isNoteSelected(note)"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil-square"></i></span>
+                                    <span ng-if="!isNoteSelected(note)"><i ng-click="toggleNoteSelected(note)" class="fa fa-pencil"></i></span>
+                                </span>
+
+                                <span style="margin-left: 5px; align-self: center">
+                                    <span ng-if="getNoteVisibility(note) === 'locked'"><i ng-click="toggleVisibilitySetting(note)" class="fa fa-ban"></i></span>
+                                    <span ng-if="getNoteVisibility(note) === 'full'"><i ng-click="toggleVisibilitySetting(note)" class="fa fa-circle"></i></span>
+                                    <span ng-if="getNoteVisibility(note) === 'ghost'"><i ng-click="toggleVisibilitySetting(note)" class="fa fa-dot-circle-o"></i></span>
+                                    <span ng-if="getNoteVisibility(note) === 'off'"><i ng-click="toggleVisibilitySetting(note)" class="fa fa-circle-o"></i></span>
+                                </span>
+
+                                <md-menu style="align-self: center; margin-left: 5px;">
+                                    <i class="fa fa-cog" ng-click="$mdMenu.open($event)"></i>
+                                    <md-menu-content>
+                                        <md-menu-item ng-if="isNoteOwner(note) || isHost()">
+                                            <md-button ng-click="removeNote(note)">Delete Notation</md-button>
+                                        </md-menu-item>
+
+                                        <md-menu-item ng-if="isNoteOwner(note) || isHost()">
+                                            <md-button ng-click="toggleNoteSelected(note)">Select Notation</md-button>
+                                        </md-menu-item>
+
+                                        <md-menu-item>
+                                            <md-button ng-if="getNoteVisibility(note) === 'full'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)"><b>View:</b> Full</md-button>
+                                            <md-button ng-if="getNoteVisibility(note) === 'ghost'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)"><b>View:</b> Ghost</md-button>
+                                            <md-button ng-if="getNoteVisibility(note) === 'off'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)"><b>View:</b> Off</md-button>
+                                            <md-button ng-if="getNoteVisibility(note) === 'locked'" md-prevent-menu-close="md-prevent-menu-close" ng-click="toggleVisibilitySetting(note)" ng-disabled="true"><b>View:</b> Control Disabled</md-button>
+                                        </md-menu-item>
+
+                                         <md-menu-item ng-if="isNoteOwner(note)">
+                                            <md-button ng-if="isNotePublic(note)" ng-click="toggleNotePublic(note)"><b>Sharing:</b> Public</md-button>
+                                            <md-button ng-if="!isNotePublic(note)" ng-click="toggleNotePublic(note)"><b>Sharing:</b> Private</md-button>
+                                        </md-menu-item>
+
+                                        <md-menu-item ng-if="isHost() && isNoteOwner(note)">
+                                            <md-button ng-if="!canNoteHide(note)" ng-click="toggleVisibilityControl(note)"><b>View Control:</b> Locked </md-button>
+                                            <md-button ng-if="canNoteHide(note)" ng-click="toggleVisibilityControl(note)"><b>View Control:</b>Unlocked</md-button>
+                                        </md-menu-item>
+
+                                    </md-menu-content>
+                                </md-menu>
+
                             </span>
+
+
                         </div>
                     </li>
                 </ul>
@@ -331,5 +500,3 @@
 </div>
 </body>
 </html>
-
-<!--minor change-->
