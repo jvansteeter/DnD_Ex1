@@ -143,8 +143,10 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
                     note_found = true;
 
                     // if I am the note owner, don't mess with the note visibility
-                    if(this.isNoteOwner(note))
+                    if(this.isNoteOwner(note)){
+                        note_state.state = "full";
                         break;
+                    }
 
                     // if I am not the note owner and the note is locked, lock it locally
                     if(!note.canHide){
