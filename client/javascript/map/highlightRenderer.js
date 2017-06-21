@@ -87,11 +87,11 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
             if (playerFound) {
                 context.fillStyle = "rgba(102,178,255,0.2)";
-                context.fillRect(tileSize * EncounterService.mouse_cell.x + 1, tileSize * EncounterService.mouse_cell.y + 1, tileSize - 1, tileSize - 1);
+                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
             }
             else {
                 context.fillStyle = "rgba(255,255,255,.2)";
-                context.fillRect(tileSize * EncounterService.mouse_cell.x + 1, tileSize * EncounterService.mouse_cell.y + 1, tileSize - 1, tileSize - 1);
+                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
             }
         }
 
@@ -100,7 +100,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             var player = EncounterService.encounterState.players[player_index];
             if (player.isSelected) {
                 context.fillStyle = "rgba(45,136,229,.4)";
-                context.fillRect(tileSize * player.mapX + 1, tileSize * player.mapY + 1, tileSize - 1, tileSize - 1);
+                context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
             }
         }
     }
@@ -220,7 +220,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         // render all cells connected to the desired notation style
         for (i = 0; i < render_these.length; i++) {
-            context.fillRect(tileSize * render_these[i].x + 1, tileSize * render_these[i].y + 1, tileSize - 1, tileSize - 1);
+            context.fillRect(tileSize * render_these[i].x - 1, tileSize * render_these[i].y - 1, tileSize + 1, tileSize + 1);
         }
     }
 });

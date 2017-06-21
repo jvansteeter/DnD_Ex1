@@ -35,7 +35,7 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
                     var x = cells[j].x;
                     var y = cells[j].y;
 
-                    context.fillRect(tileSize * x + 1, tileSize * y + 1, tileSize - 1, tileSize - 1);
+                    context.fillRect(tileSize * x, tileSize * y, tileSize, tileSize);
                 }
             }
         }
