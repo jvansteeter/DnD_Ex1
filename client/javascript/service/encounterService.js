@@ -26,7 +26,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.input_mode = 'default';        // default, note
     this.note_mode = 'sphere';          // sphere, --square, --cone
     this.note_size = 0;
-    this.note_visibility_states = [];   // {note_id: String, state: String}
+    this.note_visibility_states = [];   // {note_id: String, state: {full, ghost, off, locked}}
 
     this.mouse_scn_res = null;
     this.mouse_map_res = null;
@@ -111,7 +111,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     }.bind(this);
 
     this.getCurrentNote = function () {
-        console.log(this.selected_note_uid);
         if (this.selected_note_uid === null)
             return null;
         else
@@ -132,24 +131,40 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     }.bind(this);
 
     this.loadNotes = function(){
-        var note;
-        var note_state;
         var note_found;
 
-        for(note in this.encounterState.mapNotations){
+        for(i = 0; i < this.encounterState.mapNotations.length; i++){
+            var note = this.encounterState.mapNotations[i];
             note_found = false;
-            for(note_state in this.note_visibility_states){
+
+            for(j = 0; j < this.note_visibility_states.length; j++){
+                var note_state = this.note_visibility_states[j];
                 if(note._id === note_state.noteId){
                     note_found = true;
+
+                    // if I am the note owner, don't mess with the note visibility
+                    if(this.isNoteOwner(note))
+                        break;
+
+                    // if I am not the note owner and the note is locked, lock it locally
+                    if(!note.canHide){
+                        note_state.state = "locked";
+                    }
+                    else{
+                        // otherwise, set it to full
+                        note_state.state = "full";
+                    }
                     break;
                 }
             }
             if(!note_found){
                 // add an entry into the note visibility state
-                this.note_visibility_states.push({noteId: note._id, state: note})
+                if(note.canHide)
+                    this.note_visibility_states.push({noteId: note._id, state: "full"});
+                else
+                    this.note_visibility_states.push({noteId: note._id, state: "locked"});
             }
         }
-
     }.bind(this);
 
 
@@ -161,6 +176,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         var url = 'api/encounter/encounterstate/' + this.encounterID;
         $http.get(url).success(function (data) {
             this.encounterState = data;
+            this.loadNotes();
             this.updateHasRun = true;
             deferred.resolve();
         }.bind(this)).error(function () {

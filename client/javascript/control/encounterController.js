@@ -54,7 +54,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
     $scope.notes_collapsed = false;
     $scope.clickNote = null;
-    $scope.test_visibility = 0;
 
     $scope.toggleNotes = function () {
         $scope.notes_collapsed = !$scope.notes_collapsed;
@@ -150,18 +149,38 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.toggleVisibilitySetting = function(note){
-        $scope.test_visibility += 1;
+        var note_vis_state_container = this.getNoteVisibilityObject(note);
+        switch (note_vis_state_container.state){
+            case 'full':
+                note_vis_state_container.state = 'ghost';
+                break;
+            case 'ghost':
+                note_vis_state_container.state = 'off';
+                break;
+            case 'off':
+                note_vis_state_container.state = 'full';
+                break;
+            case 'locked':
+                break;
+        }
     };
 
-    $scope.isNoteCogSettings = function(note){
-        if($scope.isNoteOwner(note) || $scope.isHost())
-            return true;
+    $scope.getNoteVisibility = function(note){
+        for(var i = 0; i < EncounterService.note_visibility_states.length; i++){
+            var vis_state = EncounterService.note_visibility_states[i];
+            if(vis_state.noteId === note._id){
+                return vis_state.state;
+            }
+        }
+    };
 
-        if(note.canHide)
-            return true;
-
-        return false;
-
+    $scope.getNoteVisibilityObject = function(note){
+        for(var i = 0; i < EncounterService.note_visibility_states.length; i++){
+            var vis_state = EncounterService.note_visibility_states[i];
+            if(vis_state.noteId === note._id){
+                return vis_state;
+            }
+        }
     };
 
 

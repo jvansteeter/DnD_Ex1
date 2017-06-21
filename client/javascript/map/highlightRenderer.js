@@ -87,11 +87,11 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
             if (playerFound) {
                 context.fillStyle = "rgba(102,178,255,0.2)";
-                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize - 1, tileSize - 1);
             }
             else {
                 context.fillStyle = "rgba(255,255,255,.2)";
-                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize, tileSize);
+                context.fillRect(tileSize * EncounterService.mouse_cell.x, tileSize * EncounterService.mouse_cell.y, tileSize - 1, tileSize - 1);
             }
         }
 
@@ -100,7 +100,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             var player = EncounterService.encounterState.players[player_index];
             if (player.isSelected) {
                 context.fillStyle = "rgba(45,136,229,.4)";
-                context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize, tileSize);
+                context.fillRect(tileSize * player.mapX, tileSize * player.mapY, tileSize - 1, tileSize - 1);
             }
         }
     }
@@ -110,7 +110,6 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             // render the corner highlights
             context.fillStyle = "rgba(255,0,0,0.3)";
             if (EncounterService.mouse_corner !== null) {
-                // context.fillRect((tileSize * EncounterService.mouse_corner.x) - (tileSize * EncounterService.corner_ratio / 2), (tileSize * EncounterService.mouse_corner.y) - (tileSize * EncounterService.corner_ratio / 2), tileSize * EncounterService.corner_ratio, tileSize * EncounterService.corner_ratio);
                 context.beginPath();
                 context.arc(tileSize * EncounterService.mouse_corner.x, tileSize * EncounterService.mouse_corner.y, EncounterService.corner_threshold, 0, 2 * Math.PI);
                 context.lineWidth = 3;
@@ -220,7 +219,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
 
         // render all cells connected to the desired notation style
         for (i = 0; i < render_these.length; i++) {
-            context.fillRect(tileSize * render_these[i].x - 1, tileSize * render_these[i].y - 1, tileSize + 1, tileSize + 1);
+            context.fillRect(tileSize * render_these[i].x, tileSize * render_these[i].y, tileSize - 1, tileSize - 1);
         }
     }
 });
