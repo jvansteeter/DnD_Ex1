@@ -6,7 +6,7 @@ var mapNotation = new mongoose.Schema(
         isPublic: { type: Boolean, default: false},
         canHide: { type: Boolean, default: true},
         text: { type: String, default: 'New Notation' },
-        color: {type: String, default: 'hsla(240, 100%, 50%, 1)' },
+        color: {type: String, default: 'rgba(255, 255, 255, 0.5)' },
         cells: [{
             x: Number,
             y: Number
