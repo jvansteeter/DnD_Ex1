@@ -23,10 +23,10 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
-
     this.input_mode = 'default';        // default, note
     this.note_mode = 'sphere';          // sphere, --square, --cone
     this.note_size = 0;
+    this.note_visibility_states = [];   // {note_id: String, state: String}
 
     this.mouse_scn_res = null;
     this.mouse_map_res = null;
@@ -129,6 +129,27 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
 
     this.isNoteOwner = function(note){
         return note.userId === Profile.getUserId();
+    }.bind(this);
+
+    this.loadNotes = function(){
+        var note;
+        var note_state;
+        var note_found;
+
+        for(note in this.encounterState.mapNotations){
+            note_found = false;
+            for(note_state in this.note_visibility_states){
+                if(note._id === note_state.noteId){
+                    note_found = true;
+                    break;
+                }
+            }
+            if(!note_found){
+                // add an entry into the note visibility state
+                this.note_visibility_states.push({noteId: note._id, state: note})
+            }
+        }
+
     }.bind(this);
 
 

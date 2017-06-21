@@ -73,6 +73,9 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
     $scope.notes_collapsed = false;
     $scope.clickNote = null;
+    $scope.test_visibility = 0;
+
+
 
     $scope.toggleNotes = function () {
         $scope.notes_collapsed = !$scope.notes_collapsed;
@@ -168,7 +171,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     };
 
     $scope.toggleVisibilitySetting = function(note){
-
+        $scope.test_visibility += 1;
     };
 
     $scope.isNoteCogSettings = function(note){
