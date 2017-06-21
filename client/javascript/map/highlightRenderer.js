@@ -123,21 +123,6 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
             case 'sphere':
                 handle_note_sphere(EncounterService.note_size);
                 break;
-            // case 'single':
-            //     handle_note_sphere(0);
-            //     break;
-            // case 'five':
-            //     handle_note_sphere(5);
-            //     break;
-            // case 'ten':
-            //     handle_note_sphere(10);
-            //     break;
-            // case 'fifteen':
-            //     handle_note_sphere(15);
-            //     break;
-            // case 'twenty':
-            //     handle_note_sphere(20);
-            //     break;
         }
 
     }
