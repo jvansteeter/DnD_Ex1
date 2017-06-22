@@ -1,169 +1,95 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var fs = require('fs-extra');
-var User = mongoose.model('User');
-var Encounter = mongoose.model('Encounter');
-var EncounterPlayer = mongoose.model('EncounterPlayer');
-var Character = mongoose.model('Character');
-var Campaign = mongoose.model('Campaign');
-var CampaignPost = mongoose.model('CampaignPost');
-var CampaignUser = mongoose.model('CampaignUser');
-var NPC = mongoose.model('NPC');
-var path = require('path');
+
+var npcService = require('../services/npcService');
 
 //
 //  NPC API
 //  api/npc
 //
 
-router.post('/create', function(req, res)
+router.post('/create', function(req, res, reportError)
 {
-    var npc = new NPC();
-    npc.userId = req.user._id;
-    npc.setNPC(req.body.npc);
-    npc.save(function(error)
+    npcService.createNewNPC(req.user._id, req.body.npc, function (error, npc)
     {
         if (error)
         {
-            res.status(500).send("Error saving new NPC");
+            reportError(error);
             return;
         }
 
         res.send(npc);
-    });
+    })
 });
 
-router.post('/update', function(req, res)
+router.post('/update', function(req, res, reportError)
 {
-    NPC.findById(req.body.npc._id, function(error, npc)
+    npcService.update(req.body.npc._id, req.body.npc, function (error)
     {
         if (error)
         {
-            res.status(500).send("Error finding NPC");
+            reportError(error);
             return;
         }
 
-        npc.setNPC(req.body.npc);
-        npc.save(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error saving NPC");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
+        res.send('OK');
+    })
 });
 
-router.get('/all/', function(req, res)
+router.get('/all/', function(req, res, reportError)
 {
-    NPC.find({}, function(error, npcs)
+    npcService.getAllList(function (error, npcs)
     {
         if (error)
         {
-            res.status(500).send("Error finding NPC");
+            reportError(error);
             return;
         }
 
-        var list = [];
-        for (var i = 0; i < npcs.length; i++)
-        {
-            var character =
-            {
-                _id: npcs[i]._id,
-                name: npcs[i].name,
-                descriptors: npcs[i].descriptors
-            };
-            list.push(character);
-        }
-
-        res.json({npcs: list});
-    });
+        res.json({npcs: npcs});
+    })
 });
 
-router.get('/:npc_id', function(req, res)
+router.get('/:npc_id', function(req, res, reportError)
 {
-    NPC.findById(req.params.npc_id, function(error, npc)
+    npcService.get(req.params.npc_id, function (error, npc)
     {
         if (error)
         {
-            res.status(500).send("Error finding NPC");
+            reportError(error);
             return;
         }
 
         res.json({npc: npc});
-    });
+	})
 });
 
-router.get('/delete/:npc_id', function(req, res)
+router.get('/delete/:npc_id', function(req, res, reportError)
 {
-    NPC.findById(req.params.npc_id, function(error, npc)
+    npcService.delete(req.params.npc_id, function (error)
     {
         if (error)
         {
-            res.status(500).send("Error finding NPC");
+            reportError(error);
             return;
         }
 
-        npc.remove(function(error)
-        {
-            if (error)
-            {
-                res.status(500).send("Error deleting npc");
-                return;
-            }
-
-            res.send("OK");
-        });
-    });
+        res.send('OK');
+    })
 });
 
-router.post('/icon/:npc_id', function(req, res)
+router.post('/icon/:npc_id', function(req, res, reportError)
 {
-    var directory = "image/npcs/" + req.params.npc_id + "/";
-    var fileName = "icon" + path.extname(req.files.file.file);
+	npcService.uploadNPCIcon(req.params.npc_id, req.files.file.file, function(error)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-    fs.ensureDirSync(directory);
-
-    fs.copy(req.files.file.file, directory + fileName, function(error)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
-
-        NPC.findById(req.params.npc_id, function(error, npc)
-        {
-            if (error)
-            {
-                res.status(500).send(error);
-                return;
-            }
-
-            npc.iconURL = directory + fileName;
-            npc.save(function(error)
-            {
-                if (error)
-                {
-                    res.status(500).send(error);
-                }
-
-                fs.unlink(req.files.file.file, function(error)
-                {
-                    if (error)
-                    {
-                        res.status(500).send(error);
-                    }
-
-                    res.send("OK");
-                });
-            });
-        });
-    });
+		res.send('OK');
+	})
 });
 
 module.exports = router;

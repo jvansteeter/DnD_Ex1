@@ -1,16 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var fs = require('fs-extra');
-var User = mongoose.model('User');
-var Encounter = mongoose.model('Encounter');
-var EncounterPlayer = mongoose.model('EncounterPlayer');
-var Character = mongoose.model('Character');
-var Campaign = mongoose.model('Campaign');
-var CampaignPost = mongoose.model('CampaignPost');
-var CampaignUser = mongoose.model('CampaignUser');
-var NPC = mongoose.model('NPC');
-var path = require('path');
+
 var imageService = require('../services/imageService');
 var encounterService = require('../services/encounterService');
 var characterService = require('../services/characterService');

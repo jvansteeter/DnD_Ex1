@@ -82,8 +82,7 @@ npcService.getAllList = function (callback)
 			var npc = {
 				_id: npcs[i]._id,
 				name: npcs[i].name,
-				class: npcs[i].class,
-				level: npcs[i].level
+				descriptors: npcs[i].descriptors
 			};
 			list.push(npc);
 		}

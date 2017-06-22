@@ -64,7 +64,7 @@ npcRepository.delete = function (npcId, callback)
 			return;
 		}
 
-		npc.delete(function(error)
+		npc.remove(function(error)
 		{
 			callback(error);
 		})
