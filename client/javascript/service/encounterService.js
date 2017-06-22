@@ -53,7 +53,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * SOCKET FUNCTIONS
      ***********************************************************************************************/
-    socket.on('update:encounter', function (data) {
+    socket.on('update:encounter', function (data)
+    {
+        console.log('got word to update');
         this.update();
     }.bind(this));
 
