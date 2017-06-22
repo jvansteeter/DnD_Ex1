@@ -48,6 +48,14 @@ campaignRepository.read = function (campaignId, callback)
 	});
 };
 
+campaignRepository.readMany = function (campaignIds, callback)
+{
+	Campaign.find({_id: {$in: campaignIds}}, function (error, campaigns)
+	{
+		callback(error, campaigns);
+	})
+};
+
 campaignRepository.readAll = function (callback)
 {
 	Campaign.find({}, function(error, campaigns)

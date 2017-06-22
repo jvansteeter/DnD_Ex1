@@ -33,7 +33,7 @@ passport.use('local', new LocalStrategy(function (username, password, done)
 		}
 		if(!user.checkPassword(password))
 		{
-			return done(null, false, { message: 'Incorrectpassword.' });
+			return done(null, false, { message: 'Incorrect password.' });
 		}
 		return done(null, user);
 	});

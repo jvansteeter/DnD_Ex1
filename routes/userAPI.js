@@ -1,16 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var fs = require('fs-extra');
-var User = mongoose.model('User');
-var Encounter = mongoose.model('Encounter');
-var EncounterPlayer = mongoose.model('EncounterPlayer');
-var Character = mongoose.model('Character');
-var Campaign = mongoose.model('Campaign');
-var CampaignPost = mongoose.model('CampaignPost');
-var CampaignUser = mongoose.model('CampaignUser');
-var NPC = mongoose.model('NPC');
-var path = require('path');
+
+var userService = require('../services/userService');
 
 //
 // User API
@@ -21,33 +12,18 @@ router.get('/', function(req, res)
     res.json(req.user);
 });
 
-router.get('/campaigns', function(req, res)
+router.get('/campaigns', function(req, res, reportError)
 {
-    CampaignUser.find({userId: req.user._id}, function(error, campaignUsers)
+    userService.getAllCampaigns(req.user._id, function (error, campaigns)
     {
         if (error)
         {
-            res.status(500).send("Error finding campaign user relations");
+            reportError(error);
             return;
         }
 
-        var campaignIds = [];
-        for (var i = 0; i < campaignUsers.length; i++)
-        {
-            campaignIds.push(campaignUsers[i].campaignId);
-        }
-
-        Campaign.find({_id: {$in: campaignIds}}, function(error, campaigns)
-        {
-            if (error)
-            {
-                res.status(500).send("Error finding campaigns");
-                return;
-            }
-
-            res.send(campaigns);
-        });
-    });
+        res.send(campaigns);
+    })
 });
 
 module.exports = router;

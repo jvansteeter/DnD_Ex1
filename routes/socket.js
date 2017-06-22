@@ -24,11 +24,10 @@ module.exports = function (socket)
 
     socket.on('disconnect', function()
     {
-        socket.broadcast.to(room).emit('exit',
-            {
-            	id: id,
-                username: username
-            });
+        socket.broadcast.to(room).emit('exit', {
+			id: id,
+			username: username
+		});
     });
 
 	socket.on('new:encounter', function(data)
