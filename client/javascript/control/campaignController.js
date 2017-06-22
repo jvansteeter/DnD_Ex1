@@ -43,7 +43,6 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
         $http.get('api/campaign/' + campaignID).success(function(data)
         {
-            console.log(data);
             $scope.campaign = data;
 
             if ($scope.isHost())
@@ -78,7 +77,7 @@ clientApp.controller('campaignController', function($scope, $window, $http, sock
 
     $scope.updatePosts = function()
     {
-        var url = 'api/campaign/post/' + campaignID;
+        var url = 'api/campaign/posts/' + campaignID;
         $http.get(url).success(function(data)
         {
             $scope.posts = data.reverse();

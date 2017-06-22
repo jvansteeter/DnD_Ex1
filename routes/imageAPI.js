@@ -1,173 +1,128 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var fs = require('fs-extra');
-var User = mongoose.model('User');
-var Encounter = mongoose.model('Encounter');
-var EncounterPlayer = mongoose.model('EncounterPlayer');
-var Character = mongoose.model('Character');
-var Campaign = mongoose.model('Campaign');
-var CampaignPost = mongoose.model('CampaignPost');
-var CampaignUser = mongoose.model('CampaignUser');
-var NPC = mongoose.model('NPC');
-var path = require('path');
+
+var imageService = require('../services/imageService');
+var encounterService = require('../services/encounterService');
+var characterService = require('../services/characterService');
+var npcService = require('../services/npcService');
+var encounterPlayerRepository = require('../repositories/encounterPlayerRepository');
 
 //
 // Image API
+// /api/image
 //
 
-router.get('/profile', function(req, res)
+router.get('/profile', function(req, res, reportError)
 {
-    User.findById(req.user._id, function(error, user)
+    imageService.getProfilePhoto(req.user._id, function (error, imageFile)
     {
         if (error)
         {
-            res.status(500).send("Error finding user");
+            reportError(error);
             return;
         }
 
-        res.sendFile(path.resolve(user.profilePhotoURL));
-    });
+        res.sendFile(imageFile);
+    })
 });
 
 
-router.post('/profile', function(req, res)
+router.post('/profile', function(req, res, reportError)
 {
-    var directory = "image/users/" + req.user._id + "/";
-    var fileName = "profile" + path.extname(req.files.file.file);
-
-    fs.ensureDirSync(directory);
-
-    fs.copy(req.files.file.file, directory + fileName, function(error)
+    imageService.setProfilePhoto(req.user._id, req.files.file.file, function (error)
     {
         if (error)
         {
-            res.status(500).send("Error copying file");
+            reportError(error);
             return;
         }
 
-        User.findById(req.user._id, function(error, user)
-        {
-            if (error)
-            {
-                res.status(500).send("Error finding user");
-                return;
-            }
-
-            user.profilePhotoURL = directory + fileName;
-            user.save(function(error)
-            {
-                if (error)
-                {
-                    res.status(500).send("Error saving profile photo");
-                }
-
-                fs.unlink(req.files.file.file, function(error)
-                {
-                    if (error)
-                    {
-                        res.status(500).send("Error unlinking old file");
-                    }
-
-                    res.send("OK");
-                });
-            });
-        });
-    });
+        res.send('OK');
+	})
 });
 
 router.get('/users/:user_id/:photo_name', function(req, res)
 {
-    res.sendFile(path.resolve("image/users/" + req.params.user_id + "/" + req.params.photo_name));
+	imageService.get('image/users/' + req.params.user_id + '/' + req.params.photo_name, function (image)
+	{
+		res.sendFile(image);
+	});
 });
 
-router.get('/encountermap/:encounter_id', function(req, res)
+router.get('/encountermap/:encounter_id', function(req, res, reportError)
 {
-    Encounter.findById(req.params.encounter_id, function(error, encounter)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	encounterService.getEncounterById(req.params.encounter_id, function (error, encounter)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (encounter.mapURL)
-        {
-            res.sendFile(path.resolve(encounter.mapURL));
-        }
-        else
-        {
-            res.sendFile(path.resolve("public/image/map/dungeon.jpg"));
-        }
-    })
+		imageService.get(encounter.mapURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
-router.get('/character/:character_id', function(req, res)
+router.get('/character/:character_id', function(req, res, reportError)
 {
-    Character.findById(req.params.character_id, function(error, character)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	characterService.get(req.params.character_id, function (error, character)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (character.iconURL)
-        {
-            res.sendFile(path.resolve(character.iconURL));
-        }
-        else
-        {
-            res.sendFile(path.resolve("image/common/noImage.png"));
-        }
-    })
+		imageService.get(character.iconURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
-router.get('/npc/:npc_id', function(req, res)
+router.get('/npc/:npc_id', function(req, res, reportError)
 {
-    NPC.findById(req.params.npc_id, function(error, npc)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	npcService.get(req.params.npc_id, function (error, npc)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (npc.iconURL)
-        {
-            res.sendFile(path.resolve(npc.iconURL));
-        }
-        else
-        {
-            res.sendFile(path.resolve("image/common/noImage.png"));
-        }
-    })
+		imageService.get(npc.iconURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
-router.get('/encounterplayer/:player_id', function(req, res)
+router.get('/encounterplayer/:player_id', function(req, res, reportError)
 {
-    EncounterPlayer.findById(req.params.player_id, function(error, player)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	encounterPlayerRepository.read(req.params.player_id, function (error, player)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (player.iconURL)
-        {
-            res.sendFile(path.resolve(player.iconURL));
-        }
-        else
-        {
-            res.send("");
-        }
-    })
+		imageService.get(player.iconURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
 router.get('/noimage', function(req, res)
 {
-    res.sendFile(path.resolve("image/common/noImage.png"));
+	imageService.get('image/common/noImage.png', function (imageFile)
+	{
+		res.sendFile(imageFile);
+	})
 });
 
 module.exports = router;
