@@ -14,6 +14,8 @@ var path = require('path');
 var imageService = require('../services/imageService');
 var encounterService = require('../services/encounterService');
 var characterService = require('../services/characterService');
+var npcService = require('../services/npcService');
+var encounterPlayerRepository = require('../repositories/encounterPlayerRepository');
 
 //
 // Image API
@@ -76,80 +78,61 @@ router.get('/encountermap/:encounter_id', function(req, res, reportError)
 
 router.get('/character/:character_id', function(req, res, reportError)
 {
-	// characterService.get(req.params.character_id, function (error, character)
-	// {
-	// 	if (error)
-	// 	{
-	// 		reportError(error);
-	// 		return;
-	// 	}
-	//
-	//
-	// })
-    Character.findById(req.params.character_id, function(error, character)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	characterService.get(req.params.character_id, function (error, character)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (character.iconURL)
-        {
-            res.sendFile(path.resolve(character.iconURL));
-        }
-        else
-        {
-            res.sendFile(path.resolve("image/common/noImage.png"));
-        }
-    })
+		imageService.get(character.iconURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
-router.get('/npc/:npc_id', function(req, res)
+router.get('/npc/:npc_id', function(req, res, reportError)
 {
-    NPC.findById(req.params.npc_id, function(error, npc)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	npcService.get(req.params.npc_id, function (error, npc)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (npc.iconURL)
-        {
-            res.sendFile(path.resolve(npc.iconURL));
-        }
-        else
-        {
-            res.sendFile(path.resolve("image/common/noImage.png"));
-        }
-    })
+		imageService.get(npc.iconURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
-router.get('/encounterplayer/:player_id', function(req, res)
+router.get('/encounterplayer/:player_id', function(req, res, reportError)
 {
-    EncounterPlayer.findById(req.params.player_id, function(error, player)
-    {
-        if (error)
-        {
-            res.status(500).send(error);
-            return;
-        }
+	encounterPlayerRepository.read(req.params.player_id, function (error, player)
+	{
+		if (error)
+		{
+			reportError(error);
+			return;
+		}
 
-        if (player.iconURL)
-        {
-            res.sendFile(path.resolve(player.iconURL));
-        }
-        else
-        {
-            res.send("");
-        }
-    })
+		imageService.get(player.iconURL, function (imageFile)
+		{
+			res.sendFile(imageFile);
+		})
+	})
 });
 
 router.get('/noimage', function(req, res)
 {
-    res.sendFile(path.resolve("image/common/noImage.png"));
+	imageService.get('image/common/noImage.png', function (imageFile)
+	{
+		res.sendFile(imageFile);
+	})
 });
 
 module.exports = router;
