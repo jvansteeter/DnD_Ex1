@@ -12,16 +12,11 @@ var mapNotation = new mongoose.Schema(
 
 mapNotation.methods.setMapNotation = function(mapNotationObject)
 {
-    // for (var value in mapNotationObject)
-    // {
-    //     this[value] = mapNotationObject[value];
-    // }
     this.isPublic = mapNotationObject.isPublic;
     this.canHide = mapNotationObject.canHide;
 	this.text = mapNotationObject.text;
+	this.color = mapNotationObject.color;
 	this.cells = [];
-	console.log('mapNotationObject')
-	console.log(mapNotationObject)
 	for (var i = 0; i < mapNotationObject.cells.length; i++)
     {
         this.cells.push(JSON.stringify(mapNotationObject.cells[i]));

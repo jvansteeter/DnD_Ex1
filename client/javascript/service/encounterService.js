@@ -121,7 +121,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         };
         $http.post(url, data).then(function ()
         {
-			this.update();
 			socket.emit('update:mapNotation', note);
         }.bind(this))
     }.bind(this);

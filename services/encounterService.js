@@ -161,11 +161,10 @@ encounterService.getEncounterState = function (encounterId, callback)
 					return;
 				}
 
+				// convert stringified cells back to JSON
 				for (var i = 0; i < mapNotations.length; i++)
 				{
 					var mapNotation = mapNotations[i];
-					console.log('mapNotation')
-					console.log(mapNotation)
 					var cells = [];
 					for (var j = 0; j < mapNotation.cells.length; j++)
 					{
@@ -421,10 +420,8 @@ encounterService.updateMapNotation = function (mapNotationId, mapNotationObject,
 			callback(error);
 			return;
 		}
-		console.log(mapNotationObject);
 
 		mapNotation.setMapNotation(mapNotationObject);
-		// mapNotation.save()
         mapNotationRepository.update(mapNotation, function (error)
 		{
 			callback(error);
