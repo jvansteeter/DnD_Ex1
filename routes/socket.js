@@ -40,9 +40,14 @@ module.exports = function (socket)
 		socket.broadcast.to(room).emit('update:encounter');
 	});
 
-	socket.on('update:player', function(data)
+	socket.on('update:player', function(player)
 	{
-		socket.broadcast.to(room).emit('update:player', data);
+		socket.broadcast.to(room).emit('update:player', player);
+	});
+
+	socket.on('update:mapNotation', function(notation)
+	{
+		socket.broadcast.to(room).emit('update:mapNotation', notation);
 	});
 
 	socket.on('encounter:end', function(data)

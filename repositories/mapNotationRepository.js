@@ -62,7 +62,7 @@ mapNotationRepository.update = function (mapNotationObject, callback)
 	{
 		if (error)
 		{
-			callback(error);
+			callback(new Error('Error saving map notation ' + error.message));
 			return;
 		}
 

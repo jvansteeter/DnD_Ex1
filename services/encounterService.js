@@ -161,6 +161,19 @@ encounterService.getEncounterState = function (encounterId, callback)
 					return;
 				}
 
+				for (var i = 0; i < mapNotations.length; i++)
+				{
+					var mapNotation = mapNotations[i];
+					console.log('mapNotation')
+					console.log(mapNotation)
+					var cells = [];
+					for (var j = 0; j < mapNotation.cells.length; j++)
+					{
+						cells.push(JSON.parse(mapNotation.cells[j]))
+					}
+					mapNotation.cells = cells;
+				}
+
 				encounter.mapNotations = mapNotations;
 				callback(error, encounter);
 			})
@@ -408,8 +421,10 @@ encounterService.updateMapNotation = function (mapNotationId, mapNotationObject,
 			callback(error);
 			return;
 		}
+		console.log(mapNotationObject);
 
 		mapNotation.setMapNotation(mapNotationObject);
+		// mapNotation.save()
         mapNotationRepository.update(mapNotation, function (error)
 		{
 			callback(error);

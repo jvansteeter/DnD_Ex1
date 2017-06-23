@@ -49,9 +49,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
 	socket.on('update:player', function (player)
 	{
+		console.log('update player');
 		player.isHovered = false;
-		for (var i = 0; i < EncounterService.encounterState.players.length; i++) {
-			if (EncounterService.encounterState.players[i]._id === player._id) {
+		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
+		{
+			if (EncounterService.encounterState.players[i]._id === player._id)
+			{
 				if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true) {
 					player.isSelected = true;
 				}
@@ -59,7 +62,9 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 					player.isSelected = false;
 				}
 
-				for (var value in player) {
+				for (var value in player)
+				{
+
 					EncounterService.encounterState.players[i][value] = player[value];
 				}
 			}
@@ -291,15 +296,18 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			return;
 		}
 
+		var player = EncounterService.encounterState.players[selectedPlayer];
 		var url = 'api/encounter/setinitiative';
-
 		var data = {
-			playerId: EncounterService.encounterState.players[selectedPlayer]._id,
+			playerId: player._id,
 			initiative: initiative
 		};
-		$http.post(url, data).success(function (data) {
-			socket.emit('update:encounter');
-			EncounterService.update();
+		$http.post(url, data).success(function ()
+		{
+			EncounterService.update().then(function()
+			{
+				socket.emit('update:player', EncounterService.encounterState.players[selectedPlayer]);
+			});
 		});
 	};
 
