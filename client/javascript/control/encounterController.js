@@ -8,7 +8,7 @@ clientApp.config(function ($modalProvider) {
 	});
 });
 
-clientApp.controller('encounterController', function ($scope, $document, $http, $q, socket, Profile, EncounterService, $uibModal, $mdSidenav) {
+clientApp.controller('encounterController', function ($scope, $document, $http, $q, EncounterSocketService, Profile, EncounterService, $uibModal, $mdSidenav) {
 	var encounterId = window.location.search.replace('?', '');
 	var modal;
 	var selectedPlayer = -1;
@@ -17,69 +17,39 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 	$scope.host = false;
 	$scope.popoverTemplate = 'modal/playerHitPointsPopover.html';
 
+    this.init = function ()
+    {
+        EncounterService.init(encounterId).then(function ()
+        {
+            $scope.host = EncounterService.isHost();
+            $scope.encounterState = EncounterService.encounterState;
 
-	/******************************************************************************************
-	 * SOCKET VARIABLES and FUNCTIONS
-	 ******************************************************************************************/
+            if (!$scope.encounterState.initialized)
+            {
+                modal = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'modal/initializeMapModal.html',
+                    scope: $scope,
+                    backdrop: 'static',
+                    size: ''
+                });
+            }
 
-	socket.on('init', function () {
-		EncounterService.init(encounterId).then(function () {
-			$scope.host = EncounterService.isHost();
-			$scope.encounterState = EncounterService.encounterState;
+            var id = Profile.getUserId();
+            var username = Profile.getFirstName() + " " + Profile.getLastName();
+            EncounterSocketService.emit('join', {
+                room: encounterId,
+                id: id,
+                username: username
+            });
+        });
+    };
 
-			if (!$scope.encounterState.initialized) {
-				modal = $uibModal.open({
-					animation: true,
-					templateUrl: 'modal/initializeMapModal.html',
-					scope: $scope,
-					backdrop: 'static',
-					size: ''
-				});
-			}
-
-			var id = Profile.getUserId();
-			var username = Profile.getFirstName() + " " + Profile.getLastName();
-			socket.emit('join', {
-				room: encounterId,
-				id: id,
-				username: username
-			});
-		});
-	});
-
-	socket.on('update:player', function (player)
-	{
-		console.log('update player');
-		player.isHovered = false;
-		for (var i = 0; i < EncounterService.encounterState.players.length; i++)
-		{
-			if (EncounterService.encounterState.players[i]._id === player._id)
-			{
-				if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true) {
-					player.isSelected = true;
-				}
-				else {
-					player.isSelected = false;
-				}
-
-				for (var value in player)
-				{
-
-					EncounterService.encounterState.players[i][value] = player[value];
-				}
-			}
-		}
-	});
-
-	socket.on('encounter:end', function (data) {
-		if (data.encounterId === encounterId) {
-			$scope.status = 'ENDED'
-		}
-	});
 
 	/******************************************************************************************
 	 * NOTATION VARIABLES and FUNCTIONS
 	 ******************************************************************************************/
+
 	$scope.note_options = {
 		format: ['hsl'],
 		swatchOnly: true
@@ -306,7 +276,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		{
 			EncounterService.update().then(function()
 			{
-				socket.emit('update:player', EncounterService.encounterState.players[selectedPlayer]);
+				EncounterSocketService.emit('update:player', EncounterService.encounterState.players[selectedPlayer]);
 			});
 		});
 	};
@@ -318,7 +288,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 		};
 
 		$http.post(url, data).success(function (data) {
-			socket.emit('update:encounter');
+			EncounterSocketService.emit('update:encounter');
 			EncounterService.update();
 		});
 	};
@@ -369,7 +339,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			};
 
 		$http.post(url, data).success(function (data) {
-			socket.emit('update:encounter',
+			EncounterSocketService.emit('update:encounter',
 				{
 					encounterId: encounterId
 				});
@@ -394,7 +364,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			};
 		$http.post(url, data).success(function (data) {
 			if (data === "OK") {
-				socket.emit('update:encounter',
+				EncounterSocketService.emit('update:encounter',
 					{
 						encounterId: encounterId
 					});
@@ -464,4 +434,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 			}
 		}
 	};
+
+	this.init();
 });

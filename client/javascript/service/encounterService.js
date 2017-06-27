@@ -50,27 +50,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         return deferred.promise;
     }.bind(this);
 
-    /***********************************************************************************************
-     * SOCKET FUNCTIONS
-     ***********************************************************************************************/
-    socket.on('update:encounter', function (data)
-    {
-        console.log('got word to update');
-        this.update();
-    }.bind(this));
-
-    socket.on('update:mapNotation', function (mapNotation)
-    {
-        console.log('socket update map notation');
-        for (var i = 0; i < this.encounterState.mapNotations.length; i++)
-        {
-            if (mapNotation._id === this.encounterState.mapNotations[i]._id)
-            {
-                this.encounterState.mapNotations[i] = mapNotation;
-            }
-        }
-    }.bind(this));
-
 
     /***********************************************************************************************
      * NOTATION FUNCTIONS
@@ -204,7 +183,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      ***********************************************************************************************/
     this.update = function ()
     {
-        console.log('update encounter');
         var deferred = $q.defer();
         var url = 'api/encounter/encounterstate/' + this.encounterID;
         $http.get(url).success(function (data) {
