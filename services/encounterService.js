@@ -161,6 +161,18 @@ encounterService.getEncounterState = function (encounterId, callback)
 					return;
 				}
 
+				// convert stringified cells back to JSON
+				for (var i = 0; i < mapNotations.length; i++)
+				{
+					var mapNotation = mapNotations[i];
+					var cells = [];
+					for (var j = 0; j < mapNotation.cells.length; j++)
+					{
+						cells.push(JSON.parse(mapNotation.cells[j]))
+					}
+					mapNotation.cells = cells;
+				}
+
 				encounter.mapNotations = mapNotations;
 				callback(error, encounter);
 			})

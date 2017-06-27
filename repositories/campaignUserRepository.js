@@ -44,6 +44,26 @@ campaignUserRepository.readAll = function (campaignId, callback)
 	});
 };
 
+campaignUserRepository.readAllCampaigns = function (userId, callback)
+{
+	CampaignUser.find({userId : userId}, function(error, campaignUsers)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		if (campaignUsers === null)
+		{
+			callback(new Error('Error finding all campaignUsers'));
+			return;
+		}
+
+		callback(error, campaignUsers);
+	});
+};
+
 campaignUserRepository.update = function (campaignUser, callback)
 {
 	campaignUser.save(function (error)
