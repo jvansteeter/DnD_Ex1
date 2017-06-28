@@ -153,77 +153,92 @@
             </div>
             <!--List of Players-->
             <div class="initiative-box" style="flex:1; overflow-y: scroll;">
-                <ul ng-model="players" class="list-group">
-                    <li ng-repeat="player in getEncounterState().players | orderBy:'-initiative'"
-                        class="list-group-item" ng-hide="!isHost() && !player.visible"
-                        ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)"
-                        ng-mouseleave="removeHover()"
-                        style="border-left: 10px solid {{ getColor(player) }}; {{ isHovered(player) }}">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col col-xs-4" style="padding: 0px">
-                                    <span ng-if="player.hitPoints < 1" style="color:red">
-                                        <strike ng-bind="player.name"></strike>
+                <div class="list-group" ng-model="openedPlayerPanelIndex" role="tablist" aria-multiselectable="true" bs-collapse>
+                    <div ng-repeat="player in getEncounterState().players | orderBy:'-initiative'"
+                        ng-hide="!isHost() && !player.visible">
+						<div class="list-group-item" style="display: flex; flex-flow: row; justify-content: space-between;
+                            padding-left: 5px; border-left: 10px solid {{ getColor(player) }}; {{ isHovered(player) }}"
+                             ng-mouseenter="setHover(player)" ng-click="selectPlayer(player)"
+                             ng-mouseleave="removeHover()">
+                            <span bs-collapse-toggle data-toggle="collapse">
+                                <i class="fa fa-chevron-right" style="align-self: flex-start" ng-if="!panelIsOpen($index)"></i>
+                                <i class="fa fa-chevron-down" style="align-self: flex-start" ng-if="panelIsOpen($index)"></i>
+                            </span>
+                            <span style="flex: 4; align-self: center; margin-right: auto; padding-left: 5px">
+								<span ng-if="player.hitPoints < 1" style="color:red">
+									<strike ng-bind="player.name"></strike>
+								</span>
+								<span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
+							</span>
+							<span style="flex: 5; display: flex; flex-flow: row; justify-content: space-between; padding-left: 5px">
+                                <span style="display: inline-block">
+                                    <span ng-if="isMyCharacter(player) || isHost()" data-placement="bottom" ng-click="selectPlayer(player)"
+                                          data-template-url="modal/playerHealPopover.html" data-auto-close="1"
+                                          bs-popover style="cursor: pointer; flex: 1">
+                                        <i class="fa fa-heart"></i>
                                     </span>
-                                    <span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
-                                </div>
-
-                                <span ng-if="isMyCharacter(player) || isHost()" data-placement="bottom" ng-click="selectPlayer(player)"
-                                      data-template-url="modal/playerHealPopover.html" data-auto-close="1"
-                                      bs-popover style="cursor: pointer">
-                      <i class="fa fa-heart"></i>
-                    </span>
-                                <span ng-if="!isHost() && !isMyCharacter(player)">
-                      <i class="fa fa-heart"></i>
-                    </span>
-                                <span ng-if="!isHost() && player.npc">???
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
-                      <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
-                    </span>
-                                <span ng-if="isHost() || !player.npc">
-                      <span ng-if="player.hitPoints < 1" style="color: dimgrey" ng-bind="player.hitPoints"></span>
-                      <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green"
-                            ng-bind="player.hitPoints"></span>
-                      <span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"
-                            style="color: red" ng-bind="player.hitPoints"></span>
-                       / <span ng-bind="player.maxHitPoints"></span>
-                    </span>
-
-                                <i class="fa fa-shield"></i>
-                                <span ng-if="!isHost() && player.npc">??? </span>
-                                <span ng-if="isHost() || !player.npc"
-                                      ng-bind="player.armorClass"> </span>
-
-                                <i class="fa fa-eye"></i>
-                                <span ng-if="!player.passivePerception || (!isHost() && player.npc)">???</span>
-                                <span ng-if="player.passivePerception && (isHost() || !player.npc)"
-                                      ng-bind="player.passivePerception"></span>
-
-                                <span style="float: right;">
-                      <a href="#" ng-show="isHost() && player.npc && player.visible" ng-click="toggleVisible(player)">
-                        <i class="fa fa-eye"></i>
-                      </a>
-                      <a href="#" ng-show="isHost() && player.npc && !player.visible" ng-click="toggleVisible(player)">
-                        <i class="fa fa-eye-slash"></i>
-                      </a>
-                      <span ng-if="isHost() || isMyCharacter(player)" class="badge" ng-click="selectPlayer(player)"
-                            data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer"
-                            data-placement="left" bs-popover>
-                          <i class="fa fa-bolt" ng-click="selectPlayer(player)"></i>
-                        <span ng-bind="player.initiative" ng-click="selectPlayer(player)"></span>
-                      </span>
-                      <span ng-if="!isHost() && !isMyCharacter(player)" class="badge"><i class="fa fa-bolt"></i>
-                        <span ng-bind="player.initiative"></span>
-                      </span>
-                      <a href="#" ng-show="isHost()" ng-click="removePlayer(player)" style="color: black;">
-                            <i class="fa fa-close"></i>
-                          </a>
-                    </span>
+                                    <span ng-if="!isHost() && !isMyCharacter(player)">
+                                        <i class="fa fa-heart"></i>
+                                    </span>
+                                    <span ng-if="!isHost() && player.npc" style="flex: 1">???
+                                        <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                                        <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
+                                        <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
+                                    </span>
+                                    <span ng-if="isHost() || !player.npc">
+                                        <span ng-if="player.hitPoints < 1" style="color: dimgrey" ng-bind="player.hitPoints"></span>
+                                        <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green"
+                                        ng-bind="player.hitPoints"></span>
+                                        <span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"
+                                        style="color: red" ng-bind="player.hitPoints"></span>
+                                        / <span ng-bind="player.maxHitPoints"></span>
+                                    </span>
+                                </span>
+                                <span style="display: inline-block">
+                                    <i class="fa fa-shield"></i>
+                                    <span ng-if="!isHost() && player.npc">??? </span>
+                                    <span ng-if="isHost() || !player.npc"
+                                          ng-bind="player.armorClass"> </span>
+                                </span>
+                                <span style="display: inline-block">
+                                    <i class="fa fa-eye"></i>
+                                    <span ng-if="!player.passivePerception || (!isHost() && player.npc)">???</span>
+                                    <span ng-if="player.passivePerception && (isHost() || !player.npc)"
+                                          ng-bind="player.passivePerception"></span>
+                                </span>
+							</span>
+							<span style="flex: 3; display: inherit; justify-content: flex-end; padding-left: 5px">
+								<a href="#" ng-show="isHost() && player.npc && player.visible" ng-click="toggleVisible(player)">
+									<i class="fa fa-eye"></i>
+								</a>
+								<a href="#" ng-show="isHost() && player.npc && !player.visible" ng-click="toggleVisible(player)">
+									<i class="fa fa-eye-slash"></i>
+								</a>
+                                <span style="padding-left: 5px">
+                                    <span ng-if="isHost() || isMyCharacter(player)" class="badge" ng-click="selectPlayer(player)"
+                                    data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer"
+                                    data-placement="left" bs-popover>
+                                        <i class="fa fa-bolt" ng-click="selectPlayer(player)"></i>
+                                        <span ng-bind="player.initiative" ng-click="selectPlayer(player)"></span>
+                                    </span>
+                                    <span ng-if="!isHost() && !isMyCharacter(player)" class="badge">
+                                        <i class="fa fa-bolt"></i>
+                                        <span ng-bind="player.initiative"></span>
+                                    </span>
+                                </span>
+								<a href="#" ng-show="isHost()" ng-click="removePlayer(player)" style="color: black; padding-left: 5px">
+									<i class="fa fa-close"></i>
+								</a>
+							</span>
+						</div>
+                        <!--Player info collapse content-->
+                        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                            <div class="panel-body" style="border: 1px solid #ddd;">
+                                Content HERE!!!
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
 
             <!-----------------------------------------------------------------------------------------------------
