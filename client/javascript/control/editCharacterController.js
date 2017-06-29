@@ -114,14 +114,14 @@ clientApp.controller('editCharacterController', function($scope, $window, $http,
         $scope.character.languages.splice(-1, 1);
     };
 
-    $scope.addAttack = function()
+    $scope.addAction = function()
     {
-        $scope.character.attacks.push("");
+        $scope.character.actions.push("");
     };
 
-    $scope.removeAttack = function()
+    $scope.removeAction = function()
     {
-        $scope.character.attacks.splice(-1, 1);
+        $scope.character.actions.splice(-1, 1);
     };
 
     $scope.addEquipment = function()
