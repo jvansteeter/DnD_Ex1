@@ -64,7 +64,7 @@ var characterSchema = new mongoose.Schema(
     passivePerception: Number,
     armorClass: Number,
 	initiative: Number,
-    speed: String,
+    speed: {type: Number, default: 0},
     hitPoints: Number,
     maxHitPoints: {type: Number, default: 1},
     tempHitPoints: Number,

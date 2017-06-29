@@ -40,7 +40,7 @@ var npcSchema = new mongoose.Schema(
         passivePerception: {type: Number, default: 0},
         armorClass: {type: Number, default: 0},
         hitPoints: {type: Number, default: 1},
-        speed: String,
+        speed: {type: Number, default: 0},
         features: [],
         specials: [{
             name: String,

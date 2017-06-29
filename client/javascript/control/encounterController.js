@@ -58,6 +58,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         return (index === $scope.openedPlayerPanelIndex);
     };
 
+    $scope.updatePlayer = function (player)
+    {
+        EncounterService.updatePlayer_byObject(player);
+    };
+
 
     /******************************************************************************************
      * NOTATION VARIABLES and FUNCTIONS
@@ -276,6 +281,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     /******************************************************************************************
      * PLAYER STATUS ZONE VARIABLES and FUNCTIONS
      ******************************************************************************************/
+    $scope.hasRightsForPlayer = function (player)
+    {
+        return $scope.isHost() || $scope.isMyCharacter(player);
+    };
+
     $scope.isHost = function ()
     {
         return $scope.host;
