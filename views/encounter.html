@@ -223,7 +223,7 @@
 						</div>
                         <!--Player info collapse panel-->
                         <div class="panel-collapse" role="tabpanel" ng-show="hasRightsForPlayer(player)" bs-collapse-target>
-                            <div class="panel-body" style="border: 1px solid #ddd;">
+                            <div class="panel-body" style="display: flex; flex-flow: column; border: 1px solid #ddd;">
                                 <div class="playerPanelRow">
                                     <span style="flex: 1">
                                         <i class="fa fa-user"></i>
@@ -250,8 +250,17 @@
                                     <span class="playerPanelAttribute" style="flex: 1">Movement Speed:</span>
                                     <span style="flex: 1; display: flex; justify-content: flex-end">
                                         <input ng-model="player.speed" ng-blur="updatePlayer(player)" class="md-input playerPanelInput" style="width: 84px">
-                                        <md-switch class="md-primary" style="margin: 0px"></md-switch>
+                                        <md-switch aria-label="movement speed" class="md-primary" style="margin: 0px" role="checkbox"></md-switch>
                                     </span>
+                                </div>
+                                <div class="playerPanelRow" role="tablist" aria-multiselectable="true" bs-collapse>
+                                    <span bs-collapse-toggle data-toggle="collapse">
+                                        <i class="fa fa-chevron-right" style="align-self: flex-start"></i>
+                                        <!--<i class="fa fa-chevron-down" style="align-self: flex-start" ng-if="player.openAttackPanel === 0"></i>-->
+                                    </span>
+                                    <div class="panel-collapse" role="tabpanel" bs-collapse-target="">
+                                        Attack content here!!!
+                                    </div>
                                 </div>
                             </div>
                         </div>
