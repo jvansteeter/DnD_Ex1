@@ -5,7 +5,7 @@ var EncounterPlayer = mongoose.model('EncounterPlayer');
 
 var encounterPlayerRepository = {};
 
-encounterPlayerRepository.create = function (name, userId, iconURL, armorClass, hitPoints, maxHitPoints, passivePerception, visible, saves, npc, callback)
+encounterPlayerRepository.create = function (name, userId, iconURL, armorClass, hitPoints, maxHitPoints, passivePerception, speed, visible, saves, npc, callback)
 {
     var encounterPlayer = new EncounterPlayer(
         {
@@ -16,9 +16,54 @@ encounterPlayerRepository.create = function (name, userId, iconURL, armorClass, 
             hitPoints: hitPoints,
             maxHitPoints: maxHitPoints,
             passivePerception: passivePerception,
+            speed: speed,
             visible: visible,
             saves: saves,
             npc: npc
+        });
+    encounterPlayer.save(function (error)
+    {
+        callback(error, encounterPlayer);
+    });
+};
+
+encounterPlayerRepository.createFromNPC = function (npcObject, callback)
+{
+    var encounterPlayer = new EncounterPlayer(
+        {
+            name: npcObject.name,
+            userId: npcObject.userId,
+            iconURL: npcObject.iconURL,
+            armorClass: npcObject.armorClass,
+            hitPoints: npcObject.hitPoints,
+            maxHitPoints: npcObject.maxHitPoints,
+            passivePerception: npcObject.passivePerception,
+            speed: npcObject.speed,
+            visible: false,
+            saves: npc.getSaves(),
+            npc: true
+        });
+    encounterPlayer.save(function (error)
+    {
+        callback(error, encounterPlayer);
+    });
+};
+
+encounterPlayerRepository.createFromCharacter = function (characterObject, callback)
+{
+    var encounterPlayer = new EncounterPlayer(
+        {
+            name: characterObject.name,
+            userId: characterObject.userId,
+            iconURL: characterObject.iconURL,
+            armorClass: characterObject.armorClass,
+            hitPoints: characterObject.hitPoints,
+            maxHitPoints: characterObject.maxHitPoints,
+            passivePerception: characterObject.passivePerception,
+            speed: characterObject.speed,
+            visible: false,
+            saves: npc.getSaves(),
+            npc: true
         });
     encounterPlayer.save(function (error)
     {

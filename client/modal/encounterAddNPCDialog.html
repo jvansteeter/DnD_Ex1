@@ -1,0 +1,45 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" ng-controller="modalController">
+		<div class="modal-content">
+			<div class="modal-header" ng-show="title">
+				<button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" ng-bind="title"></h4>
+			</div>
+			<form ng-submit="$hide()">
+				<div class="modal-body container-fluid">
+					<div class="input-group">
+						<span class="input-group-addon" id="user-addon"><i class="fa fa-user"></i></span>
+						<input type='text' name='username' class='form-control' ng-model="name" placeholder='Character Name' aria-describedby="user-addon" required autofocus>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon" id="init-addon"><i class="fa fa-bolt"></i></span>
+								<input type='number' class='form-control' ng-model="initiative" style="font-size: 26px" placeholder="INIT" aria-describedby="init-addon" min="0" max="50" required>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon" id="armor-addon"><i class="fa fa-shield"></i></span>
+								<input type='number' class='form-control' ng-model="armorClass" style="font-size: 26px" placeholder="AC" aria-describedby="armor-addon" min="1" max="50" required>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon" id="hitpoint-addon"><i class="fa fa-heart"></i></span>
+								<input type='number' class='form-control' ng-model="hitPoints" style="font-size: 26px" placeholder="HP" aria-describedby="hitpoint-addon" min="1" max="1000" required>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<p style="color : red">{{ info }}</p>
+					<button type="submit" class="btn btn-primary" ng-click="addNPC()">Create</button>
+					<button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

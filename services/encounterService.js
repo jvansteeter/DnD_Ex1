@@ -56,7 +56,8 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 				return;
 			}
 
-            encounterPlayerRepository.create(npc.name, npc.userId, npc.iconURL, npc.armorClass, npc.hitPoints, npc.hitPoints, npc.passivePerception, false, npc.getSaves(), true, function (error, encounterPlayer)
+            // encounterPlayerRepository.create(npc.name, npc.userId, npc.iconURL, npc.armorClass, npc.hitPoints, npc.hitPoints, npc.passivePerception, npc.speed, false, npc.getSaves(), true, function (error, encounterPlayer)
+            encounterPlayerRepository.createFromNPC(npc, function (error, encounterPlayer)
             {
 				if (error)
 				{
@@ -91,7 +92,7 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
 				return;
 			}
 
-            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, true, character.getSaves(), false, function (error, encounterPlayer)
+            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, character.speed, true, character.getSaves(), false, function (error, encounterPlayer)
             {
 				if (error)
 				{
