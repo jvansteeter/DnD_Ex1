@@ -92,7 +92,8 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
 				return;
 			}
 
-            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, character.speed, true, character.getSaves(), false, function (error, encounterPlayer)
+            // encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, character.speed, true, character.getSaves(), false, function (error, encounterPlayer)
+            encounterPlayerRepository.createFromCharacter(character, function (error, encounterPlayer)
             {
 				if (error)
 				{

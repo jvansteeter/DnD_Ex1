@@ -2,6 +2,12 @@ a:hover {
     text-decoration: none;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .disabled{
     color:red;
     background-color: rgba(255,0,30,0.32);
@@ -47,6 +53,21 @@ a:hover {
 
 .playerPanelInput {
     border: 0;
-    background-color: #eee;
-    text-align: center;
+    background-color: inherit;
+    text-align: left;
+    width: 50%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    height: 22px;
+}
+
+.actionsSubPanel {
+    margin: 5px 10px 5px 10px;
+    background-color: whitesmoke;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.md-primary {
+    margin: 0px;
 }

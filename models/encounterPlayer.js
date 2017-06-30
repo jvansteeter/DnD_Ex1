@@ -11,6 +11,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     maxHitPoints: Number,
     passivePerception: Number,
     speed: Number,
+    actions: [],
     status: String,
     visible: Boolean,
     saves: {
@@ -38,9 +39,36 @@ encounterPlayerSchema.methods.toggleVisible = function()
 
 encounterPlayerSchema.methods.setPlayer = function(player)
 {
-    for (var value in player)
+    // for (var value in player)
+    // {
+    //     if (value !== 'actions')
+    //     {
+    //         this[value] = player[value];
+    //     }
+    // }
+    // this.actions = [];
+    // for (var i = 0; i < player.actions.length; i++)
+    // {
+    //     this.actions.push(player.actions[i]);
+    // }
+
+    this.name = player.name;
+    this.iconURL = player.iconURL;
+    this.initiative = player.initiative;
+    this.armorClass = player.armorClass;
+    this.hitPoints = player.hitPoints;
+    this.maxHitPoints = player.maxHitPoints;
+    this.passivePerception = player.passivePerception;
+    this.speed = player.speed;
+    this.status = player.status;
+    this.visible = player.visible;
+    this.saves = player.saves;
+    this.mapX = player.mapX;
+    this.mapY = player.mapY;
+    this.actions = [];
+    for (var i = 0; i < player.actions.length; i++)
     {
-        this[value] = player[value];
+        this.actions.push(player.actions[i]);
     }
 };
 

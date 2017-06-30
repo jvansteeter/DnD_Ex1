@@ -229,37 +229,49 @@
                                         <i class="fa fa-user"></i>
                                         <span class="playerPanelAttribute">Name:</span>
                                     </span>
-                                    <input ng-model="player.name" ng-blur="updatePlayer(player)" class="md-input playerPanelInput" style="flex: 1">
+                                    <input ng-model="player.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1">
                                 </div>
                                 <div class="playerPanelRow">
                                     <i class="fa fa-eye"></i>
                                     <span class="playerPanelAttribute">Passive Perception:</span>
-                                    <input ng-model="player.passivePerception" ng-blur="updatePlayer(player)" class="md-input playerPanelInput">
+                                    <input ng-model="player.passivePerception" ng-blur="updatePlayer(player)" class="playerPanelInput form-control">
                                 </div>
                                 <div class="playerPanelRow">
                                     <i class="fa fa-heart"></i>
                                     <span class="playerPanelAttribute">Max HP:</span>
-                                    <input ng-model="player.maxHitPoints" ng-blur="updatePlayer(player)" class="md-input playerPanelInput">
+                                    <input ng-model="player.maxHitPoints" ng-blur="updatePlayer(player)" class="playerPanelInput form-control">
                                 </div>
                                 <div class="playerPanelRow">
                                     <i class="fa fa-shield"></i>
                                     <span class="playerPanelAttribute">Armor Class:</span>
-                                    <input ng-model="player.armorClass" ng-blur="updatePlayer(player)" class="md-input playerPanelInput">
+                                    <input ng-model="player.armorClass" ng-blur="updatePlayer(player)" class="playerPanelInput form-control">
                                 </div>
                                 <div class="playerPanelRow">
                                     <span class="playerPanelAttribute" style="flex: 1">Movement Speed:</span>
                                     <span style="flex: 1; display: flex; justify-content: flex-end">
-                                        <input ng-model="player.speed" ng-blur="updatePlayer(player)" class="md-input playerPanelInput" style="width: 84px">
-                                        <md-switch aria-label="movement speed" class="md-primary" style="margin: 0px" role="checkbox"></md-switch>
+                                        <input ng-model="player.speed" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="width: 84px">
+                                        <md-switch aria-label="movement speed" class="md-primary" role="checkbox"></md-switch>
                                     </span>
                                 </div>
-                                <div class="playerPanelRow" role="tablist" aria-multiselectable="true" bs-collapse>
+                                <div ng-model="openPlayerActions" role="tablist" aria-multiselectable="true" style="display: flex; flex-flow: column;" bs-collapse ng-if="player.actions.length">
                                     <span bs-collapse-toggle data-toggle="collapse">
-                                        <i class="fa fa-chevron-right" style="align-self: flex-start"></i>
-                                        <!--<i class="fa fa-chevron-down" style="align-self: flex-start" ng-if="player.openAttackPanel === 0"></i>-->
+                                        <i class="fa fa-chevron-right" ng-if="openPlayerActions === -1"></i>
+                                        <i class="fa fa-chevron-down" ng-if="openPlayerActions === 0"></i>
+										<span>Actions</span>
                                     </span>
-                                    <div class="panel-collapse" role="tabpanel" bs-collapse-target="">
-                                        Attack content here!!!
+                                    <div class="panel-collapse actionsSubPanel" role="tabpanel" bs-collapse-target>
+										<div class="playerPanelRow">
+											<span style="flex: 3;">Name</span>
+											<span style="flex: 1">Range</span>
+										</div>
+                                        <div ng-repeat="action in player.actions">
+											<div class="playerPanelRow">
+												<!--<span style="flex: 3" ng-bind="action.name"></span>-->
+												<input ng-model="action.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 3;">
+												<input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1;">
+												<md-switch aria-label="action" class="md-primary" role="checkbox"></md-switch>
+											</div>
+										</div>
                                     </div>
                                 </div>
                             </div>
