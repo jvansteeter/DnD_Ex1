@@ -75,11 +75,10 @@ var characterSchema = new mongoose.Schema(
 	ideals: String,
 	bonds: String,
 	flaws: String,
-	attacks: [{
+	actions: [{
 		name: String,
-		bonus: Number,
-		damage: String,
-		damageType: String
+		range: Number,
+		details: String
 	}],
 	money: {
 		copper: Number,

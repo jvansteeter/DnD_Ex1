@@ -36,11 +36,12 @@ encounterPlayerRepository.createFromNPC = function (npcObject, callback)
             iconURL: npcObject.iconURL,
             armorClass: npcObject.armorClass,
             hitPoints: npcObject.hitPoints,
-            maxHitPoints: npcObject.maxHitPoints,
+            maxHitPoints: npcObject.hitPoints,
             passivePerception: npcObject.passivePerception,
             speed: npcObject.speed,
+            actions: npcObject.actions,
             visible: false,
-            saves: npc.getSaves(),
+            saves: npcObject.getSaves(),
             npc: true
         });
     encounterPlayer.save(function (error)
@@ -51,20 +52,20 @@ encounterPlayerRepository.createFromNPC = function (npcObject, callback)
 
 encounterPlayerRepository.createFromCharacter = function (characterObject, callback)
 {
-    var encounterPlayer = new EncounterPlayer(
-        {
-            name: characterObject.name,
-            userId: characterObject.userId,
-            iconURL: characterObject.iconURL,
-            armorClass: characterObject.armorClass,
-            hitPoints: characterObject.hitPoints,
-            maxHitPoints: characterObject.maxHitPoints,
-            passivePerception: characterObject.passivePerception,
-            speed: characterObject.speed,
-            visible: false,
-            saves: npc.getSaves(),
-            npc: true
-        });
+    var encounterPlayer = new EncounterPlayer({
+        name: characterObject.name,
+        userId: characterObject.userId,
+        iconURL: characterObject.iconURL,
+        armorClass: characterObject.armorClass,
+        hitPoints: characterObject.maxHitPoints,
+        maxHitPoints: characterObject.maxHitPoints,
+        passivePerception: characterObject.passivePerception,
+        speed: characterObject.speed,
+        actions: characterObject.actions,
+        visible: true,
+        saves: characterObject.getSaves(),
+        npc: false
+    });
     encounterPlayer.save(function (error)
     {
         callback(error, encounterPlayer);

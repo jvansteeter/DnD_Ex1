@@ -84,16 +84,6 @@ clientApp.controller('newNPCController', function($scope, $window, $http)
         $scope.npc.specials.splice(-1, 1);
     };
 
-    $scope.addAttack = function()
-    {
-        $scope.npc.attacks.push("");
-    };
-
-    $scope.removeAttack = function()
-    {
-        $scope.npc.attacks.splice(-1, 1);
-    };
-
     $scope.addEquipment = function()
     {
         $scope.npc.equipment.push("");

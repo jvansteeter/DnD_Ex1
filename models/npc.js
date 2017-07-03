@@ -57,15 +57,10 @@ var npcSchema = new mongoose.Schema(
             item: String,
             quantity: Number
         }],
-        attacks: [{
-            name: String,
-            bonus: Number,
-            damage: String,
-            damageType: String
-        }],
         actions: [{
             name: String,
-            description: String
+            range: Number,
+            details: String
         }],
         status: []
     });

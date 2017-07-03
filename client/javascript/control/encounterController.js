@@ -44,6 +44,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 id: id,
                 username: username
             });
+            console.log(EncounterService.encounterState.players);
         });
     };
 
@@ -52,6 +53,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
      ******************************************************************************************/
 
     $scope.openedPlayerPanelIndex = -1;
+    $scope.openPlayerActions = -1;
 
     $scope.panelIsOpen = function (index)
     {
