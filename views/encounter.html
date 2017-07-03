@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="stylesheet/encounter.css">
     <link href="stylesheet/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!--angular-material dependencies-->
     <script src="bower_components/angular/angular.js"></script>
@@ -143,7 +144,7 @@
             <div>
                 <li class="list-group-item active" style="display: flex; padding-top: 5px; padding-bottom: 5px">
                     <span class="h4_inline" style="margin-right: auto;">Players</span>
-                    <i class="fa fa-bolt fa-2x" style="align-self: center"></i></h4>
+                    <md-icon class="material-icons" ng-style="{color: 'white', 'font-size': 30 + 'px', 'padding-bottom': 32 + 'px', 'padding-right': 30 + 'px', 'margin-right': 0}">group</md-icon>
                 </li>
             </div>
             <!--List of Players-->
@@ -325,35 +326,25 @@
             Notations Section
             ------------------------------------------------------------------------------------------------------->
             <div>
-                <li ng-click="toggleNotes()" class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733; display: flex; padding-top: 5px; padding-bottom: 5px">
+                <li ng-click="toggleNotes()" class="list-group-item active" style="background-color: #cc4733; border-color: #cc4733; display: flex; padding-top: 5px; padding-bottom: 5px; padding-right: 0">
                     <span class="h4_inline" style="margin-right: auto;">Notations</span>
-                    <md-menu style="align-self: center">
-                        <i class="fa fa-bars fa-2x" ng-click="$mdMenu.open($event)"></i>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="addNote()">New Notation</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button class="selected_note" ng-if="getNoteMode() === 'sphere'" ng-click="toggleSphereMode()" md-prevent-menu-close="md-prevent-menu-close">Sphere Mode</md-button>
-                                <md-button ng-if="getNoteMode() !== 'sphere'" ng-click="toggleSphereMode()" md-prevent-menu-close="md-prevent-menu-close">Sphere Mode</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-disabled="true" md-prevent-menu-close="md-prevent-menu-close">Square Mode</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-disabled="true" md-prevent-menu-close="md-prevent-menu-close">Cone Mode</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close">
-                                    <div style="font-size: 25px; text-align: center">-</div>
-                                </md-button>
-                                <div style="max-width: 100px; min-width: 100px; font-size: 25px; text-align: center; flex: 8">{{note_size}}</div>
-                                <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close">
-                                    <div style="font-size: 25px; text-align: center">+</div>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                    <md-button ng-style="{'min-width': 1 + '%', 'margin': auto}" ng-click="addNote(); $event.stopPropagation()">
+                        <md-icon class="material-icons" ng-style="{color: 'white', 'font-size': 30 + 'px', 'padding-bottom': 32 + 'px', 'padding-right': 30 + 'px'}">add_circle_outline</md-icon>
+                    </md-button>
+
+                    <!--<md-menu style="align-self: center">-->
+                        <!--&lt;!&ndash;<md-menu-content>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<md-menu-item>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div style="font-size: 25px; text-align: center">-</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div style="max-width: 100px; min-width: 100px; font-size: 25px; text-align: center; flex: 8">{{note_size}}</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div style="font-size: 25px; text-align: center">+</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</md-menu-item>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</md-menu-content>&ndash;&gt;-->
+                    <!--</md-menu>-->
                 </li>
             </div>
 
@@ -532,6 +523,16 @@
                                         <md-menu-item ng-if="isHost() && isNoteOwner(note)">
                                             <md-button ng-if="!canNoteHide(note)" ng-click="toggleVisibilityControl(note)"><b>View Control:</b> Locked </md-button>
                                             <md-button ng-if="canNoteHide(note)" ng-click="toggleVisibilityControl(note)"><b>View Control:</b>Unlocked</md-button>
+                                        </md-menu-item>
+
+                                        <md-menu-item>
+                                            <md-button ng-click="decreaseNoteSize()" style="min-width: 1%;" md-prevent-menu-close="md-prevent-menu-close">
+                                                <div style="font-size: 25px; text-align: center">-</div>
+                                            </md-button>
+                                            <div style="max-width: 100px; min-width: 100px; font-size: 25px; text-align: center; flex: 8">{{note_size}}</div>
+                                            <md-button ng-click="increaseNoteSize()" style="min-width: 1%" md-prevent-menu-close="md-prevent-menu-close">
+                                                <div style="font-size: 25px; text-align: center">+</div>
+                                            </md-button>
                                         </md-menu-item>
 
                                     </md-menu-content>

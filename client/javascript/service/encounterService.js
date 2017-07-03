@@ -27,6 +27,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.note_mode = 'sphere';          // sphere, --square, --cone
     this.note_size = 0;
     this.note_visibility_states = [];   // {note_id: String, state: {full, ghost, off, locked}}
+    this.note_brush_sizes = [];         // {note_id: String, size: Number}
 
     this.mouse_scn_res = null;
     this.mouse_map_res = null;
