@@ -77,7 +77,7 @@ var characterSchema = new mongoose.Schema(
 	flaws: String,
 	actions: [{
 		name: String,
-		range: Number,
+		range: {type: Number, default: 0},
 		details: String
 	}],
 	money: {

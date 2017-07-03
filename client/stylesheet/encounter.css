@@ -56,7 +56,7 @@ input[type="number"]::-webkit-inner-spin-button {
     border: 0;
     background-color: inherit;
     text-align: right;
-    width: 50%;
+    /*width: 50%;*/
     -webkit-box-shadow: none;
     box-shadow: none;
     height: 22px;
@@ -67,6 +67,18 @@ input[type="number"]::-webkit-inner-spin-button {
     background-color: whitesmoke;
     border: 1px solid #ddd;
     padding: 5px;
+}
+
+.savesSubPanelAttribute {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+
+.savesSubPanelInput {
+    width: 50px;
+    text-align: center;
 }
 
 .md-primary {

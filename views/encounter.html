@@ -195,8 +195,7 @@
                                 <span style="width: 40%;">
                                     <i class="fa fa-shield"></i>
                                     <span ng-if="!isHost() && player.npc">??? </span>
-                                    <span ng-if="isHost() || !player.npc"
-                                          ng-bind="player.armorClass"> </span>
+                                    <span ng-if="isHost() || !player.npc" ng-bind="player.armorClass"> </span>
                                 </span>
 							</span>
 							<span style="width: 18%; display: flex; justify-content: flex-end; padding-left: 5px">
@@ -223,7 +222,10 @@
 								</a>
 							</span>
 						</div>
-                        <!--Player info collapse panel-->
+
+						<!----------------------------------------------------------------------------------------------
+                        Player info collapse panel
+						----------------------------------------------------------------------------------------------->
                         <div class="panel-collapse" role="tabpanel" ng-show="hasRightsForPlayer(player)" bs-collapse-target>
                             <div class="panel-body" style="display: flex; flex-flow: column; border: 1px solid #ddd;">
                                 <div class="playerPanelRow">
@@ -255,26 +257,63 @@
                                         <input ng-model="player.speed" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="width: 50px">
                                     </span>
                                 </div>
-                                <div ng-model="openPlayerActions" role="tablist" aria-multiselectable="true" style="display: flex; flex-flow: column;" bs-collapse ng-if="player.actions.length">
-                                    <span bs-collapse-toggle data-toggle="collapse">
-                                        <i class="fa fa-chevron-right" ng-if="openPlayerActions === -1"></i>
-                                        <i class="fa fa-chevron-down" ng-if="openPlayerActions === 0"></i>
-										<strong>Actions</strong>
-                                    </span>
-                                    <div class="panel-collapse actionsSubPanel" role="tabpanel" bs-collapse-target>
-										<div class="playerPanelRow">
-											<strong style="flex: 3; margin-left: 10px">Name</strong>
-											<strong style="flex: 1">Range</strong>
-										</div>
-                                        <div ng-repeat="action in player.actions">
-											<div class="playerPanelRow">
-												<!--<span style="flex: 3" ng-bind="action.name"></span>-->
-												<input ng-model="action.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 3; max-width: 80px; text-align: left; margin-right: auto">
-                                                <md-switch aria-label="action" class="md-primary" role="checkbox"></md-switch>
-                                                <input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1; max-width: 50px; text-align: left">
+								<!--Collapsable SubPanel-->
+                                <div ng-model="openPlayerSubPanel" role="tablist" aria-multiselectable="true" style="display: flex; flex-flow: column;" bs-collapse>
+									<div ng-if="player.saves">
+										<span bs-collapse-toggle data-toggle="collapse">
+											<i class="fa fa-chevron-right" ng-if="openPlayerSubPanel !== 0" style="width: 14px"></i>
+											<i class="fa fa-chevron-down" ng-if="openPlayerSubPanel === 0"></i>
+											<strong>Saves</strong>
+										</span>
+										<div class="panel-collapse actionsSubPanel" role="tabpanel" bs-collapse-target>
+											<div class="playerPanelRow" style="justify-content: space-between">
+												<div class="savesSubPanelAttribute">
+													<span>STR</span>
+													<input type="number" ng-model="player.saves.strength" ng-blur="updatePlayer(player)" class="playerPanelInput savesSubPanelInput form-control">
+												</div>
+												<div class="savesSubPanelAttribute">
+													<span>DEX</span>
+													<input type="number" ng-model="player.saves.dexterity" ng-blur="updatePlayer(player)" class="playerPanelInput savesSubPanelInput form-control">
+												</div>
+												<div class="savesSubPanelAttribute">
+													<span>CON</span>
+													<input type="number" ng-model="player.saves.constitution" ng-blur="updatePlayer(player)" class="playerPanelInput savesSubPanelInput form-control">
+												</div>
+												<div class="savesSubPanelAttribute">
+													<span>INT</span>
+													<input type="number" ng-model="player.saves.intelligence" ng-blur="updatePlayer(player)" class="playerPanelInput savesSubPanelInput form-control">
+												</div>
+												<div class="savesSubPanelAttribute">
+													<span>WIS</span>
+													<input type="number" ng-model="player.saves.wisdom" ng-blur="updatePlayer(player)" class="playerPanelInput savesSubPanelInput form-control">
+												</div>
+												<div class="savesSubPanelAttribute">
+													<span>CHA</span>
+													<input type="number" ng-model="player.saves.charisma" ng-blur="updatePlayer(player)" class="playerPanelInput savesSubPanelInput form-control">
+												</div>
 											</div>
 										</div>
-                                    </div>
+									</div>
+									<div ng-if="player.actions.length">
+										<span bs-collapse-toggle data-toggle="collapse">
+											<i class="fa fa-chevron-right" ng-if="openPlayerSubPanel !== 1" style="width: 14px"></i>
+											<i class="fa fa-chevron-down" ng-if="openPlayerSubPanel === 1"></i>
+											<strong>Actions</strong>
+										</span>
+										<div class="panel-collapse actionsSubPanel" role="tabpanel" bs-collapse-target>
+											<div class="playerPanelRow">
+												<strong style="flex: 3; margin-left: 10px">Name</strong>
+												<strong style="flex: 1">Range</strong>
+											</div>
+											<div ng-repeat="action in player.actions">
+												<div class="playerPanelRow">
+													<input ng-model="action.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 3; max-width: 120px; text-align: left; margin-right: auto">
+													<md-switch aria-label="action" class="md-primary" role="checkbox"></md-switch>
+													<input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1; max-width: 50px; text-align: left">
+												</div>
+											</div>
+										</div>
+									</div>
                                 </div>
                             </div>
                         </div>

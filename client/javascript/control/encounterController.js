@@ -53,7 +53,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
      ******************************************************************************************/
 
     $scope.openedPlayerPanelIndex = -1;
-    $scope.openPlayerActions = -1;
+    $scope.openPlayerSubPanel = -1;
 
     $scope.panelIsOpen = function (index)
     {
