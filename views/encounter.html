@@ -253,7 +253,7 @@
                                 </div>
                                 <div class="playerPanelRow">
                                     <span class="playerPanelAttribute" style="flex: 1">Movement Speed:</span>
-                                    <md-switch aria-label="movement speed" class="md-primary" role="checkbox"></md-switch>
+                                    <md-switch aria-label="movement speed" class="md-primary" role="checkbox" ng-model="player.renderToggle" ng-change="toggleMovement(player)"></md-switch>
                                     <span style="flex: 1; display: flex; justify-content: flex-end">
                                         <input ng-model="player.speed" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="width: 50px">
                                     </span>
@@ -309,7 +309,7 @@
 											<div ng-repeat="action in player.actions">
 												<div class="playerPanelRow">
 													<input ng-model="action.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 3; max-width: 120px; text-align: left; margin-right: auto">
-													<md-switch aria-label="action" class="md-primary" role="checkbox"></md-switch>
+													<md-switch aria-label="action" class="md-primary" role="checkbox" ng-model="action.renderToggle" ng-change="toggleAction(action)"></md-switch>
 													<input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1; max-width: 50px; text-align: left">
 												</div>
 											</div>
