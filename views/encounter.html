@@ -309,7 +309,7 @@
 											<div ng-repeat="action in player.actions">
 												<div class="playerPanelRow" data-title="{{action.details | keepNewLine}}" data-placement="bottom" bs-tooltip>
 													<input ng-model="action.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 3; max-width: 120px; text-align: left; margin-right: auto">
-													<md-switch aria-label="action" class="md-primary" role="checkbox"></md-switch>
+													<md-switch aria-label="action" class="md-primary" role="checkbox" ng-if="action.range > 0"></md-switch>
 													<input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1; max-width: 50px; text-align: left">
 												</div>
 											</div>
