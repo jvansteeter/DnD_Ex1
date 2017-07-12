@@ -32,6 +32,7 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
         // ***********************************************************************************
         // OPERATION PHASE
         // ***********************************************************************************
+        handle_move_action_step();
 
         switch (EncounterService.input_mode) {
             case 'default':
@@ -60,6 +61,60 @@ clientApp.controller('highlightRenderer', function ($scope, $window, EncounterSe
     function clear_canvas() {
         var offset = EncounterService.canvas_state.clear_offset;
         context.clearRect(-offset, -offset, EncounterService.encounterState.mapResX + (2 * offset), EncounterService.encounterState.mapResY + (2 * offset));
+    }
+
+    function handle_move_action_step(){
+        var action_colors = ['rgba(255, 0, 0, 0.3)', 'rgba(255, 165, 0, 0.3)', 'rgba(255, 255, 0, 0.3)', 'rgba(50, 205, 50, 0.3)', 'rgba(135, 206, 250, 0.3)', 'rgba(218, 112, 214, 0.3)'];
+
+        var players = EncounterService.encounterState.players;
+        for(var player_index = 0; player_index < players.length; player_index++){
+            var player = players[player_index];
+
+            if(angular.isDefined(player.renderToggle) && player.renderToggle === true){
+                // render the player's movement ring
+                renderRingOnCell(player.mapX, player.mapY, player.speed, 'rgba(0,0,255,0.25)');
+                renderRingOnCell(player.mapX, player.mapY, player.speed * 2, 'rgba(0,0,255,0.15)');
+            }
+
+            var actions = player.actions;
+            for(var action_index = 0; action_index < actions.length; action_index++){
+                var action = actions[action_index];
+                 if(angular.isDefined(action.renderToggle) && action.renderToggle === true){
+                     // render the actions influence radius
+                     renderRingOnCell(player.mapX, player.mapY, action.range, action_colors[action_index % 6]);
+                 }
+            }
+        }
+    }
+
+    function renderCircleOnCell(x, y, radius, rgbaString){
+        context.fillStyle = rgbaString;
+
+        for (x_loop = 0; x_loop < EncounterService.encounterState.mapDimX; x_loop++) {
+            for (y_loop = 0; y_loop < EncounterService.encounterState.mapDimY; y_loop++) {
+                test_cell = {x: x_loop, y: y_loop};
+                if (EncounterService.distanceToCellFromCell({x: x, y: y}, test_cell) <= radius) {
+                    if (EncounterService.cellInBounds(test_cell)) {
+                        context.fillRect(tileSize * test_cell.x - 1, tileSize * test_cell.y - 1, tileSize, tileSize);
+                    }
+                }
+            }
+        }
+    }
+
+    function renderRingOnCell(x, y, radius, rgbaString){
+        context.fillStyle = rgbaString;
+
+        for (x_loop = 0; x_loop < EncounterService.encounterState.mapDimX; x_loop++) {
+            for (y_loop = 0; y_loop < EncounterService.encounterState.mapDimY; y_loop++) {
+                test_cell = {x: x_loop, y: y_loop};
+                if (EncounterService.distanceToCellFromCell({x: x, y: y}, test_cell) == radius) {
+                    if (EncounterService.cellInBounds(test_cell)) {
+                        context.fillRect(tileSize * test_cell.x - 1, tileSize * test_cell.y - 1, tileSize, tileSize);
+                    }
+                }
+            }
+        }
     }
 
     /***********************************************************************************************

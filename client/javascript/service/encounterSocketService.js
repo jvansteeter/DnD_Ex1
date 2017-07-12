@@ -27,25 +27,7 @@ clientApp.service('EncounterSocketService', function (socket, EncounterService)
 
     socket.on('update:player', function (player)
     {
-        player.isHovered = false;
-        for (var i = 0; i < EncounterService.encounterState.players.length; i++)
-        {
-            if (EncounterService.encounterState.players[i]._id === player._id)
-            {
-                if (angular.isDefined(EncounterService.encounterState.players[i].isSelected) && EncounterService.encounterState.players[i].isSelected === true) {
-                    player.isSelected = true;
-                }
-                else {
-                    player.isSelected = false;
-                }
-
-                for (var value in player)
-                {
-
-                    EncounterService.encounterState.players[i][value] = player[value];
-                }
-            }
-        }
+        EncounterService.setPlayer(player);
     });
 
     this.emit = function (event, data)

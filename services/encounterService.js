@@ -484,8 +484,6 @@ function addEncounterPlayerToMap(encounter, encounterPlayer, callback)
 			encounterPlayer.save(callback);
 		});
 	});
-
-
 }
 
 module.exports = encounterService;
