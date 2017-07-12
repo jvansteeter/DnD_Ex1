@@ -2,11 +2,22 @@
 
 var clientApp = angular.module('clientApp');
 
-clientApp.config(function ($modalProvider)
+clientApp.config(function ($modalProvider, $tooltipProvider)
 {
     angular.extend($modalProvider.defaults, {
         html: true
     });
+    angular.extend($tooltipProvider.defaults, {
+        html: true
+    })
+});
+
+clientApp.filter('keepNewLine', function()
+{
+    return function (input)
+    {
+        return input.replace(/\n/g, "<br />");
+    }
 });
 
 clientApp.controller('encounterController', function ($scope, $document, $http, $q, EncounterSocketService, Profile, EncounterService, $uibModal, $mdSidenav, $mdDialog)

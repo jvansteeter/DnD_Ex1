@@ -84,3 +84,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .md-primary {
     margin: 0px;
 }
+
+.tooltip {
+    font-size: 15px;
+}
+
+.tooltip-inner {
+    text-align: left;
+}
