@@ -287,6 +287,47 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         }.bind(this));
     }.bind(this);
 
+    this.setPlayer = function (player)
+    {
+        for (var i = 0; i < this.encounterState.players.length; i++)
+        {
+            if (this.encounterState.players[i]._id === player._id)
+            {
+                var localPlayer = this.encounterState.players[i];
+
+                localPlayer.name = player.name;
+                localPlayer.iconURL = player.iconURL;
+                localPlayer.initiative = player.initiative;
+                localPlayer.armorClass = player.armorClass;
+                localPlayer.hitPoints = player.hitPoints;
+                localPlayer.maxHitPoints = player.maxHitPoints;
+                localPlayer.passivePerception = player.passivePerception;
+                localPlayer.speed = player.speed;
+                localPlayer.status = player.status;
+                localPlayer.visible = player.visible;
+                localPlayer.saves = player.saves;
+                localPlayer.mapX = player.mapX;
+                localPlayer.mapY = player.mapY;
+                var j;
+                for (j = 0; j < player.actions.length; j++)
+                {
+                    if (j >= localPlayer.actions.length)
+                    {
+                        localPlayer.actions.push({});
+                    }
+
+                    localPlayer.actions[j].name = player.actions[j].name;
+                    localPlayer.actions[j].range = player.actions[j].range;
+                    localPlayer.actions[j].details = player.actions[j].details;
+                }
+                if (j < localPlayer.actions.length)
+                {
+                    localPlayer.splice(j);
+                }
+            }
+        }
+    }.bind(this);
+
     /***********************************************************************************************
      * MAP FUNCTIONS
      ***********************************************************************************************/

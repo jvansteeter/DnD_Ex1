@@ -76,9 +76,9 @@ var characterSchema = new mongoose.Schema(
 	bonds: String,
 	flaws: String,
 	actions: [{
-		name: String,
+		name: {type: String, default: ''},
 		range: {type: Number, default: 0},
-		details: String
+		details: {type: String, default: ''}
 	}],
 	money: {
 		copper: Number,
