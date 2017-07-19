@@ -164,10 +164,10 @@
                                 </span>
                             </span>
                             <span style="width: 35%; align-self: center; margin-right: auto; padding-left: 5px">
-								<span ng-if="player.hitPoints < 1" style="color:red">
+								<span ng-if="isDead(player)" style="color:red">
 									<strike ng-bind="player.name"></strike>
 								</span>
-								<span ng-if="player.hitPoints > 0" ng-bind="player.name"></span>
+								<span ng-if="!isDead(player)" ng-bind="player.name"></span>
 							</span>
 							<span style="width: 45%; display: flex; flex-flow: row; padding-left: 5px; margin-right: auto">
                                 <span style="width: 60%">
@@ -180,16 +180,14 @@
                                         <i class="fa fa-heart"></i>
                                     </span>
                                     <span ng-if="!isHost() && player.npc" style="flex: 1">???
-                                        <span ng-if="(player.hitPoints - player.maxHitPoints) < 0" style="color: red">  <span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
-                                        <span ng-if="(player.hitPoints - player.maxHitPoints) > 0" style="color: green">  +<span ng-bind="player.hitPoints - player.maxHitPoints"></span> </span>
-                                        <span ng-if="(player.hitPoints - player.maxHitPoints) === 0"> </span>
+                                        <span ng-if="player.damage > 0" style="color: red">  <span ng-bind="player.damage"></span> </span>
+                                        <span ng-if="player.damage < 0" style="color: green">  +<span ng-bind="player.damage"></span> </span>
+                                        <span ng-if="player.damage === 0"> </span>
                                     </span>
                                     <span ng-if="isHost() || !player.npc">
-                                        <span ng-if="player.hitPoints < 1" style="color: dimgrey" ng-bind="player.hitPoints"></span>
-                                        <span ng-if="player.hitPoints >= player.maxHitPoints" style="color: green"
-                                        ng-bind="player.hitPoints"></span>
-                                        <span ng-if="player.hitPoints < player.maxHitPoints && player.hitPoints > 0"
-                                        style="color: red" ng-bind="player.hitPoints"></span>
+                                        <span ng-if="player.damage >= player.maxHitPoints" style="color: dimgrey" ng-bind="player.maxHitPoints - player.damage"></span>
+                                        <span ng-if="player.damage <= 0" style="color: green" ng-bind="player.maxHitPoints"></span>
+                                        <span ng-if="player.damage > 0 && player.damage < player.maxHitPoints" style="color: red" ng-bind="player.maxHitPoints - player.damage"></span>
                                         / <span ng-bind="player.maxHitPoints"></span>
                                     </span>
                                 </span>
