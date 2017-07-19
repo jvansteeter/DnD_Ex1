@@ -294,6 +294,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     /******************************************************************************************
      * PLAYER STATUS ZONE VARIABLES and FUNCTIONS
      ******************************************************************************************/
+    $scope.isDead = function (player)
+    {
+        return player.maxHitPoints - player.damage <= 0;
+    };
+
     $scope.hasRightsForPlayer = function (player)
     {
         return $scope.isHost() || $scope.isMyCharacter(player);
@@ -334,7 +339,7 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             return;
         }
 
-        EncounterService.encounterState.players[selectedPlayer].hitPoints += hit;
+        EncounterService.encounterState.players[selectedPlayer].damage += hit;
 
         $scope.showPopover = false;
         EncounterService.updatePlayer_byObject(EncounterService.encounterState.players[selectedPlayer]);
@@ -391,7 +396,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.addCharacter = function ()
     {
         EncounterService.addCharacter($scope);
-
     };
 
     //

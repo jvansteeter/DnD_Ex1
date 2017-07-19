@@ -7,7 +7,7 @@ var encounterPlayerSchema = new mongoose.Schema(
     iconURL: String,
     initiative: Number,
     armorClass: Number,
-    hitPoints: Number,
+    damage: {type: Number, default: 0},
     maxHitPoints: Number,
     passivePerception: Number,
     speed: Number,
@@ -31,11 +31,6 @@ var encounterPlayerSchema = new mongoose.Schema(
     mapY: Number
 });
 
-encounterPlayerSchema.methods.damage = function(damage)
-{
-	this.hitPoints = this.hitPoints - damage;
-};
-
 encounterPlayerSchema.methods.toggleVisible = function()
 {
 	this.visible = !this.visible;
@@ -47,7 +42,6 @@ encounterPlayerSchema.methods.setPlayer = function(player)
     this.iconURL = player.iconURL;
     this.initiative = player.initiative;
     this.armorClass = player.armorClass;
-    this.hitPoints = player.hitPoints;
     this.maxHitPoints = player.maxHitPoints;
     this.passivePerception = player.passivePerception;
     this.speed = player.speed;

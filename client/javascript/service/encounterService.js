@@ -184,6 +184,8 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      ***********************************************************************************************/
     this.update = function ()
     {
+        console.log('update encounter');
+
         var deferred = $q.defer();
         var url = 'api/encounter/encounterstate/' + this.encounterID;
         $http.get(url).success(function (data) {
@@ -299,7 +301,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
                 localPlayer.iconURL = player.iconURL;
                 localPlayer.initiative = player.initiative;
                 localPlayer.armorClass = player.armorClass;
-                localPlayer.hitPoints = player.hitPoints;
+                localPlayer.damage = player.damage;
                 localPlayer.maxHitPoints = player.maxHitPoints;
                 localPlayer.passivePerception = player.passivePerception;
                 localPlayer.speed = player.speed;
