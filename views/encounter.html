@@ -204,6 +204,22 @@
 								<a href="#" ng-show="isHost() && player.npc && !player.visible" ng-click="toggleVisible(player)">
 									<i class="fa fa-eye-slash"></i>
 								</a>
+								<!--Player options menu-->
+								<md-menu ng-show="hasRightsForPlayer(player)" style="align-self: center; margin-left: 5px;">
+                                    <i class="fa fa-cog" ng-click="$mdMenu.open($event)"></i>
+                                    <md-menu-content>
+										<md-menu-item ng-if="isHost() && player.npc">
+											<md-button ng-if="!player.visible" ng-click="toggleVisible(player)">Make Visible</md-button>
+											<md-button ng-if="player.visible" ng-click="toggleVisible(player)">Make Invisible</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button ng-click="addAction(player)">Add Action</md-button>
+										</md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="removePlayer(player)">Remove Player</md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
                                 <span style="padding-left: 5px">
                                     <span ng-if="isHost() || isMyCharacter(player)" class="badge" ng-click="selectPlayer(player)"
                                     data-template-url="modal/initiativePopover.html" data-auto-close="1" style="cursor: pointer"
@@ -216,9 +232,7 @@
                                         <span ng-bind="player.initiative"></span>
                                     </span>
                                 </span>
-								<a href="#" ng-show="isHost()" ng-click="removePlayer(player)" style="color: black; padding-left: 5px">
-									<i class="fa fa-close"></i>
-								</a>
+
 							</span>
 						</div>
 
@@ -308,7 +322,7 @@
 												<div class="playerPanelRow" data-title="{{action.details | keepNewLine}}" data-placement="bottom" bs-tooltip>
 													<input ng-model="action.name" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 3; max-width: 120px; text-align: left; margin-right: auto">
 													<md-switch aria-label="action" class="md-primary" role="checkbox" ng-if="action.range > 0" ng-model="action.renderToggle" ng-change="toggleAction(action)"></md-switch>
-													<input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1; max-width: 50px; text-align: left">
+													<input type="number" ng-model="action.range" ng-blur="updatePlayer(player)" class="playerPanelInput form-control" style="flex: 1; max-width: 50px; text-align: center">
 												</div>
 											</div>
 										</div>
