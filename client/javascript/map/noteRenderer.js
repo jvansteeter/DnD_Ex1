@@ -38,17 +38,17 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
                     var note_vis = EncounterService.getNoteVisibilityObject(note_group);
                     switch(note_vis.state){
                         case 'full':
-                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize, tileSize);
+                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize + 1, tileSize + 1);
                             break;
                         case 'ghost':
                             var start_alpha = getNoteColorAlpha(note_group);
                             context.fillStyle = genNewColorStringForContext_Alpha(note_group, start_alpha / 3);
-                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize, tileSize);
+                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize + 1, tileSize + 1);
                             break;
                         case 'off':
                             break;
                         case 'locked':
-                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize, tileSize);
+                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize + 1, tileSize + 1);
                             break;
                     }
                 }
