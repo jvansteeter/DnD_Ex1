@@ -42,6 +42,7 @@ encounterPlayerSchema.methods.setPlayer = function(player)
     this.iconURL = player.iconURL;
     this.initiative = player.initiative;
     this.armorClass = player.armorClass;
+    this.damage = player.damage;
     this.maxHitPoints = player.maxHitPoints;
     this.passivePerception = player.passivePerception;
     this.speed = player.speed;

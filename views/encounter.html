@@ -180,7 +180,7 @@
                                         <i class="fa fa-heart"></i>
                                     </span>
                                     <span ng-if="!isHost() && player.npc" style="flex: 1">???
-                                        <span ng-if="player.damage > 0" style="color: red">  <span ng-bind="player.damage"></span> </span>
+                                        <span ng-if="player.damage > 0" style="color: red">  -<span ng-bind="player.damage"></span> </span>
                                         <span ng-if="player.damage < 0" style="color: green">  +<span ng-bind="player.damage"></span> </span>
                                         <span ng-if="player.damage === 0"> </span>
                                     </span>
