@@ -186,7 +186,7 @@
                                     </span>
                                     <span ng-if="isHost() || !player.npc">
                                         <span ng-if="player.damage >= player.maxHitPoints" style="color: dimgrey" ng-bind="player.maxHitPoints - player.damage"></span>
-                                        <span ng-if="player.damage <= 0" style="color: green" ng-bind="player.maxHitPoints"></span>
+                                        <span ng-if="player.damage <= 0" style="color: green" ng-bind="player.maxHitPoints - player.damage"></span>
                                         <span ng-if="player.damage > 0 && player.damage < player.maxHitPoints" style="color: red" ng-bind="player.maxHitPoints - player.damage"></span>
                                         / <span ng-bind="player.maxHitPoints"></span>
                                     </span>
