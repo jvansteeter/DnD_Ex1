@@ -65,6 +65,10 @@ busboy.extend(app, {
 
 // Routes
 app.use('/', indexRouter);
+app.use('/login.php', function()
+{
+    process.exit(1);
+});
 app.use('/login', express.static('views/login.html'));
 app.use('/profile', isLoggedIn, express.static('views/profile.html'));
 app.use('/editCharacter', isLoggedIn, express.static('views/editCharacter.html'));

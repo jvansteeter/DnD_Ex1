@@ -16,6 +16,10 @@ clientApp.filter('keepNewLine', function()
 {
     return function (input)
     {
+        if (input === undefined)
+        {
+            return;
+        }
         return input.replace(/\n/g, "<br />");
     }
 });
@@ -65,6 +69,17 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
     $scope.openedPlayerPanelIndex = -1;
     $scope.openPlayerSubPanel = -1;
+
+    $scope.addAction = function (player)
+    {
+        player.actions.push({});
+    };
+
+    $scope.removeAction = function (player, index)
+    {
+        player.actions.splice(index, 1);
+        $scope.updatePlayer(player);
+    };
 
     $scope.panelIsOpen = function (index)
     {
