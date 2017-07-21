@@ -75,6 +75,12 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         player.actions.push({});
     };
 
+    $scope.removeAction = function (player, index)
+    {
+        player.actions.splice(index, 1);
+        $scope.updatePlayer(player);
+    };
+
     $scope.panelIsOpen = function (index)
     {
         return (index === $scope.openedPlayerPanelIndex);
