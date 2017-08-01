@@ -471,8 +471,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
 
         $http.post(url, data).success(function (players)
         {
-            console.log('add these players')
-            console.log(players)
             for (var i = 0; i < players.length; i++)
             {
                 EncounterSocketService.emit('add:player', players[i]);
