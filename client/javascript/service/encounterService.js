@@ -228,6 +228,20 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
+    this.clonePlayer = function (player)
+    {
+        var url = 'api/encounter/cloneplayer/' + this.encounterID;
+        var data = {
+            playerId: player._id
+        };
+
+        $http.post(url, data).success(function (player)
+        {
+            this.addPlayer(player);
+            socket.emit('add:player', player);
+        }.bind(this));
+    }.bind(this);
+
     this.addPlayer = function(player)
     {
         this.encounterState.players.push(player);

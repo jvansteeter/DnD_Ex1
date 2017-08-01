@@ -78,6 +78,20 @@ router.post('/removeplayer/:encounter_id', function (req, res, reportError)
 	});
 });
 
+router.post('/cloneplayer/:encounter_id', function (req, res, reportError)
+{
+	encounterService.clonePlayer(req.params.encounter_id, req.body.playerId, function(error, encounterPlayer)
+	{
+        if (error)
+        {
+            reportError(error);
+            return;
+        }
+
+        res.json(encounterPlayer);
+	})
+});
+
 router.get('/encounterstate/:encounter_id', function (req, res, reportError)
 {
 	encounterService.getEncounterState(req.params.encounter_id, function(error, encounterState)

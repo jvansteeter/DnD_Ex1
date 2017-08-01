@@ -215,6 +215,9 @@
 										<md-menu-item>
 											<md-button ng-click="addAction(player)">Add Action</md-button>
 										</md-menu-item>
+                                        <md-menu-item ng-if="isHost()">
+                                            <md-button ng-click="clonePlayer(player)">Clone</md-button>
+                                        </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="removePlayer(player)">Remove Player</md-button>
                                         </md-menu-item>

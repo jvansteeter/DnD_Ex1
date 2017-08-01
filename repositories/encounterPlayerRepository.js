@@ -72,6 +72,28 @@ encounterPlayerRepository.createFromCharacter = function (characterObject, callb
     });
 };
 
+encounterPlayerRepository.createFromEncounterPlayer = function (playerObject, callback)
+{
+    var encounterPlayer = new EncounterPlayer({
+        name: playerObject.name,
+        userId: playerObject.userId,
+        iconURL: playerObject.iconURL,
+        armorClass: playerObject.armorClass,
+        hitPoints: playerObject.maxHitPoints,
+        maxHitPoints: playerObject.maxHitPoints,
+        passivePerception: playerObject.passivePerception,
+        speed: playerObject.speed,
+        actions: playerObject.actions,
+        visible: playerObject.visible,
+        saves: playerObject.saves,
+        npc: playerObject.npc
+    });
+    encounterPlayer.save(function (error)
+    {
+        callback(error, encounterPlayer);
+    });
+};
+
 encounterPlayerRepository.read = function (playerId, callback)
 {
     EncounterPlayer.findById(playerId, function(error, player)

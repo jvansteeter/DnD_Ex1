@@ -90,6 +90,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         EncounterService.updatePlayer_byObject(player);
     };
 
+    $scope.clonePlayer = function (player)
+    {
+        EncounterService.clonePlayer(player);
+    };
+
 
     /******************************************************************************************
      * NOTATION VARIABLES and FUNCTIONS

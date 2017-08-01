@@ -123,6 +123,41 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
     })
 };
 
+encounterService.clonePlayer = function (encounterId, playerId, callback)
+{
+	encounterRepository.read(encounterId, function(error, encounter)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		encounterPlayerRepository.read(playerId, function(error, encounterPlayer)
+		{
+            if (error)
+            {
+                callback(error);
+                return;
+            }
+
+			encounterPlayerRepository.createFromEncounterPlayer(encounterPlayer, function(error, player)
+			{
+                if (error)
+                {
+                    callback(error);
+                    return;
+                }
+
+                addEncounterPlayerToMap(encounter, player, function(error)
+				{
+					callback(error, player);
+				})
+			})
+		})
+	})
+};
+
 encounterService.removePlayer = function (encounterId, playerId, callback)
 {
     encounterRepository.read(encounterId, function(error, encounter)
