@@ -38,8 +38,13 @@ encounterService.getEncounterById = function (encounterId, callback)
     });
 };
 
-encounterService.addNPC = function (encounterId, npcId, callback)
+encounterService.addNPC = function (encounterId, npcId, count, encounterPlayers, callback)
 {
+	if (count < 1)
+	{
+		return;
+	}
+
     encounterRepository.read(encounterId, function (error, encounter)
     {
 		if (error)
@@ -67,7 +72,15 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 
                 addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback(error, encounterPlayer);
+                	encounterPlayers.push(encounterPlayer);
+                	if (count === 1)
+					{
+                        callback(error, encounterPlayers);
+                    }
+                    else
+					{
+						encounterService.addNPC(encounterId, npcId, count - 1, encounterPlayers, callback);
+					}
                 })
             })
         })

@@ -424,6 +424,11 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         $http.get(url).success(function (data)
         {
             $scope.npcs = data.npcs;
+            $scope.npcCounts = [];
+            for (var i = 0; i < data.npcs.length; i++)
+            {
+                $scope.npcCounts.push(1);
+            }
         });
     };
 
@@ -437,18 +442,37 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
         });
     };
 
+    $scope.incrementNPCCount = function(index)
+    {
+        $scope.npcCounts[index]++;
+    };
+
+    $scope.decrementNPCCount = function(index)
+    {
+        if ($scope.npcCounts[index] > 1)
+        {
+            $scope.npcCounts[index]--;
+        }
+    };
+
     $scope.listModalselectNPC = function (index)
     {
         var encounterId = $scope.encounterState._id;
         var url = 'api/encounter/addnpc/' + encounterId;
         var data = {
-            npcId: $scope.npcs[index]._id
+            npcId: $scope.npcs[index]._id,
+            count: $scope.npcCounts[index]
         };
 
-        $http.post(url, data).success(function (player)
+        $http.post(url, data).success(function (players)
         {
-            EncounterSocketService.emit('add:player', player);
-            EncounterService.addPlayer(player);
+            console.log('add these players')
+            console.log(players)
+            for (var i = 0; i < players.length; i++)
+            {
+                EncounterSocketService.emit('add:player', players[i]);
+                EncounterService.addPlayer(players[i]);
+            }
             modal.close();
         });
     };

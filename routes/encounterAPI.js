@@ -38,7 +38,7 @@ router.get('/:encounter_id', function (req, res, reportError)
 
 router.post('/addnpc/:encounter_id', function (req, res, reportError)
 {
-	encounterService.addNPC(req.params.encounter_id, req.body.npcId, function(error, encounterPlayer)
+	encounterService.addNPC(req.params.encounter_id, req.body.npcId, req.body.count, [], function(error, encounterPlayers)
 	{
 		if (error)
 		{
@@ -46,7 +46,7 @@ router.post('/addnpc/:encounter_id', function (req, res, reportError)
 			return;
 		}
 
-		res.json(encounterPlayer);
+		res.json(encounterPlayers);
 	});
 });
 

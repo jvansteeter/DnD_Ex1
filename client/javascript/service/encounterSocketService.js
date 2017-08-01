@@ -6,7 +6,6 @@ clientApp.service('EncounterSocketService', function (socket, EncounterService)
 {
     socket.on('init', function ()
     {
-        console.log('socket connection initialized')
     });
 
     socket.on('update:encounter', function ()
