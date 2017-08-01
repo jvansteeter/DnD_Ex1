@@ -41,11 +41,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         this.encounterID = inputID;
         var deferred = $q.defer();
         Profile.async().then(function () {
-            $http.get('api/encounter/' + this.encounterID).success(function (data) {
-                this.update().then(function () {
-                    deferred.resolve();
-                });
-            }.bind(this));
+            this.update().then(function () {
+                deferred.resolve();
+            });
         }.bind(this));
 
         return deferred.promise;
@@ -184,8 +182,6 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      ***********************************************************************************************/
     this.update = function ()
     {
-        console.log('update encounter');
-
         var deferred = $q.defer();
         var url = 'api/encounter/encounterstate/' + this.encounterID;
         $http.get(url).success(function (data) {
@@ -232,6 +228,25 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
+    this.addPlayer = function(player)
+    {
+        this.encounterState.players.push(player);
+        this.updateHasRun = true;
+    };
+
+    this.removePlayer = function(player)
+    {
+        for (var i = 0; i < this.encounterState.players.length; i++)
+        {
+            var currentPlayer = this.encounterState.players[i];
+            if (currentPlayer._id === player._id)
+            {
+                this.encounterState.players.splice(i, 1);
+                this.updateHasRun = true;
+            }
+        }
+    }.bind(this);
+
     this.updatePlayer_byIndex = function (index) {
         var player = this.encounterState.players[index];
         var url = 'api/encounter/updateplayer';
@@ -282,9 +297,9 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             characterId: this.modalCharacters[index]._id
         };
 
-        $http.post(url, data).success(function (data) {
-            socket.emit('update:encounter');
-            this.update();
+        $http.post(url, data).success(function (player) {
+            socket.emit('add:player', player);
+            this.addPlayer(player);
             characterModal.close();
         }.bind(this));
     }.bind(this);

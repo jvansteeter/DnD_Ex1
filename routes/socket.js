@@ -45,6 +45,16 @@ module.exports = function (socket)
 		socket.broadcast.to(room).emit('update:player', player);
 	});
 
+	socket.on('add:player', function(player)
+	{
+		socket.broadcast.to(room).emit('add:player', player);
+	});
+
+	socket.on('remove:player', function (player)
+	{
+		socket.broadcast.to(room).emit('remove:player', player);
+    });
+
 	socket.on('update:mapNotation', function(notation)
 	{
 		socket.broadcast.to(room).emit('update:mapNotation', notation);

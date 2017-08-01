@@ -30,6 +30,16 @@ clientApp.service('EncounterSocketService', function (socket, EncounterService)
         EncounterService.setPlayer(player);
     });
 
+    socket.on('add:player', function (player)
+    {
+        EncounterService.addPlayer(player)
+    });
+
+    socket.on('remove:player', function (player)
+    {
+        EncounterService.removePlayer(player);
+    });
+
     this.emit = function (event, data)
     {
         socket.emit(event, data);

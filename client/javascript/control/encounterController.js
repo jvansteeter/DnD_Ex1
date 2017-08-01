@@ -59,7 +59,6 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
                 id: id,
                 username: username
             });
-            console.log(EncounterService.encounterState.players);
         });
     };
 
@@ -389,10 +388,10 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
             playerId: player._id
         };
 
-        $http.post(url, data).success(function (data)
+        $http.post(url, data).success(function ()
         {
-            EncounterSocketService.emit('update:encounter');
-            EncounterService.update();
+            EncounterSocketService.emit('remove:player', player);
+            EncounterService.removePlayer(player);
         });
     };
 
@@ -441,20 +440,15 @@ clientApp.controller('encounterController', function ($scope, $document, $http, 
     $scope.listModalselectNPC = function (index)
     {
         var encounterId = $scope.encounterState._id;
-
         var url = 'api/encounter/addnpc/' + encounterId;
-        var data =
-            {
-                npcId: $scope.npcs[index]._id
-            };
+        var data = {
+            npcId: $scope.npcs[index]._id
+        };
 
-        $http.post(url, data).success(function (data)
+        $http.post(url, data).success(function (player)
         {
-            EncounterSocketService.emit('update:encounter',
-                {
-                    encounterId: encounterId
-                });
-            EncounterService.update();
+            EncounterSocketService.emit('add:player', player);
+            EncounterService.addPlayer(player);
             modal.close();
         });
     };

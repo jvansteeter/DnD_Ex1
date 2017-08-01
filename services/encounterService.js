@@ -67,7 +67,7 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 
                 addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback(error);
+                    callback(error, encounterPlayer);
                 })
             })
         })
@@ -103,7 +103,7 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
 
                 addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback(error);
+                    callback(error, encounterPlayer);
                 })
             })
         })
