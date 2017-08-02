@@ -354,7 +354,7 @@
 
             <div class="initiative-box" style="flex:1; overflow-y: scroll;" ng-show="!notes_collapsed">
                 <ul class="list-group">
-                    <li ng-repeat="note in getNotes()" ng-if="isNotePublic(note) || isNoteOwner(note)" class="list-group-item" style="border-left: 10px solid {{note.color}}; padding-left: 0; padding-top:0; padding-bottom: 0;">
+                    <li ng-repeat="note in getNotes() track by $index" ng-if="isNotePublic(note) || isNoteOwner(note)" class="list-group-item" style="border-left: 10px solid {{note.color}}; padding-left: 0; padding-top:0; padding-bottom: 0;">
                         <div style="display: flex; height: 42px; padding-left: 7px; border-left: 1px #dddddd solid">
 
                             <input ng-if="isNoteOwner(note)" ng-model="note.text" ng-blur="onChangeText(note)" class="md-input" style="align-self: center; margin-right: auto; border:0 solid white;">

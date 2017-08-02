@@ -57,12 +57,16 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      * Invokes a HTTP request that adds a default note to the encounter on the server, then emits a socket call
      * to provoke updates to all clients
      */
-    this.addNote = function () {
-        var url = 'api/encounter/addmapnotation/' + this.encounterState._id;
-        $http.get(url).then(function () {
-            socket.emit('update:encounter');
-            this.update();
-        }.bind(this));
+    this.addNote = function ()
+    {
+        // var url = 'api/encounter/addmapnotation/' + this.encounterState._id;
+        socket.emit('add:mapNotation');
+
+        // $http.get(url).then(function ()
+        // {
+        //     socket.emit('update:encounter');
+        //     this.update();
+        // }.bind(this));
     }.bind(this);
 
     /**
@@ -76,14 +80,16 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             this.input_mode = 'default';
         }
 
-        var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
-        var data = {
-            mapNotationId: note._id
-        };
-        $http.post(url, data).then(function () {
-            socket.emit('update:encounter');
-            this.update();
-        }.bind(this));
+        socket.emit('remove:mapNotation', note);
+
+        // var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
+        // var data = {
+        //     mapNotationId: note._id
+        // };
+        // $http.post(url, data).then(function () {
+        //     socket.emit('update:encounter');
+        //     this.update();
+        // }.bind(this));
     }.bind(this);
 
     /**
@@ -176,6 +182,27 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         }
     }.bind(this);
 
+    this.addMapNotation = function(note)
+    {
+        this.encounterState.mapNotations.push(note);
+        this.loadNotes();
+        this.updateHasRun = true;
+    }.bind(this);
+
+    this.removeMapNotation = function(note)
+    {
+        for (var i = 0; i < this.encounterState.mapNotations.length; i++)
+        {
+            var currentNote = this.encounterState.mapNotations[i];
+            if (currentNote._id === note._id)
+            {
+                this.encounterState.mapNotations.splice(i, 1);
+                this.loadNotes();
+                this.updateHasRun = true;
+            }
+        }
+    }.bind(this);
+
 
     /***********************************************************************************************
      * ENCOUNTER FUNCTIONS
@@ -246,7 +273,7 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     {
         this.encounterState.players.push(player);
         this.updateHasRun = true;
-    };
+    }.bind(this);
 
     this.removePlayer = function(player)
     {

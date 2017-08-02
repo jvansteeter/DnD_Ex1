@@ -428,7 +428,7 @@ encounterService.addMapNotation = function (encounterId, userId, callback)
 
             encounter.addMapNotation(mapNotation._id, function(error)
             {
-				callback(error);
+				callback(error, mapNotation);
             });
         })
 	})

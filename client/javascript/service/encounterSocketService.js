@@ -22,6 +22,7 @@ clientApp.service('EncounterSocketService', function (socket, EncounterService)
                 EncounterService.encounterState.mapNotations[i] = mapNotation;
             }
         }
+        EncounterService.loadNotes();
     });
 
     socket.on('update:player', function (player)
@@ -37,6 +38,16 @@ clientApp.service('EncounterSocketService', function (socket, EncounterService)
     socket.on('remove:player', function (player)
     {
         EncounterService.removePlayer(player);
+    });
+
+    socket.on('add:mapNotation', function (note)
+    {
+        EncounterService.addMapNotation(note);
+    });
+
+    socket.on('remove:mapNotation', function (note)
+    {
+        EncounterService.removeMapNotation(note);
     });
 
     this.emit = function (event, data)
