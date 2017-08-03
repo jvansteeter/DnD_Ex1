@@ -58,7 +58,7 @@ clientApp.controller('profileController', function($scope, $window, $uibModal, $
 	{
 		modal = $uibModal.open({
 			animation: true,
-			templateUrl: 'modal/listNPCModal.html',
+			templateUrl: 'modal/profileListNPCModal.html',
 			scope: $scope,
 			size: ''
 		});
