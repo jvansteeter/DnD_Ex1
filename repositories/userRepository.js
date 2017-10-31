@@ -25,4 +25,26 @@ userRepository.read = function (userId, callback)
     });
 };
 
+userRepository.readAll = function (userIds, callback)
+{
+	User.find({_id : {$in : userIds }}, function(error, users)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		callback(error, users);
+	});
+};
+
+userRepository.update = function (user, callback)
+{
+	user.save(function (error)
+	{
+		callback(error);
+	})
+};
+
 module.exports = userRepository;

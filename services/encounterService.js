@@ -38,8 +38,13 @@ encounterService.getEncounterById = function (encounterId, callback)
     });
 };
 
-encounterService.addNPC = function (encounterId, npcId, callback)
+encounterService.addNPC = function (encounterId, npcId, count, encounterPlayers, callback)
 {
+	if (count < 1)
+	{
+		return;
+	}
+
     encounterRepository.read(encounterId, function (error, encounter)
     {
 		if (error)
@@ -56,7 +61,8 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 				return;
 			}
 
-            encounterPlayerRepository.create(npc.name, npc.userId, npc.iconURL, npc.armorClass, npc.hitPoints, npc.hitPoints, npc.passivePerception, false, npc.getSaves(), true, function (error, encounterPlayer)
+            // encounterPlayerRepository.create(npc.name, npc.userId, npc.iconURL, npc.armorClass, npc.hitPoints, npc.hitPoints, npc.passivePerception, npc.speed, false, npc.getSaves(), true, function (error, encounterPlayer)
+            encounterPlayerRepository.createFromNPC(npc, function (error, encounterPlayer)
             {
 				if (error)
 				{
@@ -66,7 +72,15 @@ encounterService.addNPC = function (encounterId, npcId, callback)
 
                 addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback(error);
+                	encounterPlayers.push(encounterPlayer);
+                	if (count === 1)
+					{
+                        callback(error, encounterPlayers);
+                    }
+                    else
+					{
+						encounterService.addNPC(encounterId, npcId, count - 1, encounterPlayers, callback);
+					}
                 })
             })
         })
@@ -91,7 +105,8 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
 				return;
 			}
 
-            encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, true, character.getSaves(), false, function (error, encounterPlayer)
+            // encounterPlayerRepository.create(character.name, character.userId, character.iconURL, character.armorClass, character.maxHitPoints, character.maxHitPoints, character.passivePerception, character.speed, true, character.getSaves(), false, function (error, encounterPlayer)
+            encounterPlayerRepository.createFromCharacter(character, function (error, encounterPlayer)
             {
 				if (error)
 				{
@@ -101,11 +116,46 @@ encounterService.addCharacter = function (encounterId, characterId, callback)
 
                 addEncounterPlayerToMap(encounter, encounterPlayer, function(error)
                 {
-                    callback(error);
+                    callback(error, encounterPlayer);
                 })
             })
         })
     })
+};
+
+encounterService.clonePlayer = function (encounterId, playerId, callback)
+{
+	encounterRepository.read(encounterId, function(error, encounter)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		encounterPlayerRepository.read(playerId, function(error, encounterPlayer)
+		{
+            if (error)
+            {
+                callback(error);
+                return;
+            }
+
+			encounterPlayerRepository.createFromEncounterPlayer(encounterPlayer, function(error, player)
+			{
+                if (error)
+                {
+                    callback(error);
+                    return;
+                }
+
+                addEncounterPlayerToMap(encounter, player, function(error)
+				{
+					callback(error, player);
+				})
+			})
+		})
+	})
 };
 
 encounterService.removePlayer = function (encounterId, playerId, callback)
@@ -159,6 +209,18 @@ encounterService.getEncounterState = function (encounterId, callback)
 				{
 					callback(error);
 					return;
+				}
+
+				// convert stringified cells back to JSON
+				for (var i = 0; i < mapNotations.length; i++)
+				{
+					var mapNotation = mapNotations[i];
+					var cells = [];
+					for (var j = 0; j < mapNotation.cells.length; j++)
+					{
+						cells.push(JSON.parse(mapNotation.cells[j]))
+					}
+					mapNotation.cells = cells;
 				}
 
 				encounter.mapNotations = mapNotations;
@@ -366,7 +428,7 @@ encounterService.addMapNotation = function (encounterId, userId, callback)
 
             encounter.addMapNotation(mapNotation._id, function(error)
             {
-				callback(error);
+				callback(error, mapNotation);
             });
         })
 	})
@@ -470,8 +532,6 @@ function addEncounterPlayerToMap(encounter, encounterPlayer, callback)
 			encounterPlayer.save(callback);
 		});
 	});
-
-
 }
 
 module.exports = encounterService;

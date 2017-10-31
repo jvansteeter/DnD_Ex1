@@ -25,6 +25,20 @@ encounterRepository.read = function (encounterId, callback)
     });
 };
 
+encounterRepository.readAll = function (campaignId, userId, callback)
+{
+	Encounter.find({ campaignId: campaignId, $or: [ { active : true }, { hostId : userId } ] }, function(error, encounters)
+	{
+		if (error)
+		{
+			callback(error);
+			return;
+		}
+
+		callback(error, encounters);
+	});
+};
+
 encounterRepository.createEncounter = function (title, campaignId, description, hostId, hostName, active, callback)
 {
     Encounter.create(

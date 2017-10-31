@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('dnd:server');
 var http = require('http');
 
+var errorService = require('../services/errorService');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -28,13 +30,14 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var socket = require('../routes/socket.js');
 io.sockets.on('connection', socket);
+io.sockets.on('error', onError);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
-server.on('error', onError);
+server.on('error', errorService.onError);
 server.on('listening', onListening);
 
 /**

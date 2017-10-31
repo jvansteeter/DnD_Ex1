@@ -40,7 +40,7 @@ var npcSchema = new mongoose.Schema(
         passivePerception: {type: Number, default: 0},
         armorClass: {type: Number, default: 0},
         hitPoints: {type: Number, default: 1},
-        speed: String,
+        speed: {type: Number, default: 0},
         features: [],
         specials: [{
             name: String,
@@ -57,15 +57,10 @@ var npcSchema = new mongoose.Schema(
             item: String,
             quantity: Number
         }],
-        attacks: [{
-            name: String,
-            bonus: Number,
-            damage: String,
-            damageType: String
-        }],
         actions: [{
             name: String,
-            description: String
+            range: Number,
+            details: String
         }],
         status: []
     });

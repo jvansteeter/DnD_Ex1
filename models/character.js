@@ -64,7 +64,7 @@ var characterSchema = new mongoose.Schema(
     passivePerception: Number,
     armorClass: Number,
 	initiative: Number,
-    speed: String,
+    speed: {type: Number, default: 0},
     hitPoints: Number,
     maxHitPoints: {type: Number, default: 1},
     tempHitPoints: Number,
@@ -75,11 +75,10 @@ var characterSchema = new mongoose.Schema(
 	ideals: String,
 	bonds: String,
 	flaws: String,
-	attacks: [{
-		name: String,
-		bonus: Number,
-		damage: String,
-		damageType: String
+	actions: [{
+		name: {type: String, default: ''},
+		range: {type: Number, default: 0},
+		details: {type: String, default: ''}
 	}],
 	money: {
 		copper: Number,

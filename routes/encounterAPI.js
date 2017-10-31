@@ -38,7 +38,7 @@ router.get('/:encounter_id', function (req, res, reportError)
 
 router.post('/addnpc/:encounter_id', function (req, res, reportError)
 {
-	encounterService.addNPC(req.params.encounter_id, req.body.npcId, function(error)
+	encounterService.addNPC(req.params.encounter_id, req.body.npcId, req.body.count, [], function(error, encounterPlayers)
 	{
 		if (error)
 		{
@@ -46,13 +46,13 @@ router.post('/addnpc/:encounter_id', function (req, res, reportError)
 			return;
 		}
 
-		res.send("OK");
+		res.json(encounterPlayers);
 	});
 });
 
 router.post('/addcharacter/:encounter_id', function (req, res, reportError)
 {
-	encounterService.addCharacter(req.params.encounter_id, req.body.characterId, function(error)
+	encounterService.addCharacter(req.params.encounter_id, req.body.characterId, function(error, encounterPlayer)
 	{
 		if (error)
 		{
@@ -60,7 +60,7 @@ router.post('/addcharacter/:encounter_id', function (req, res, reportError)
 			return;
 		}
 
-		res.send("OK");
+		res.json(encounterPlayer);
 	});
 });
 
@@ -76,6 +76,20 @@ router.post('/removeplayer/:encounter_id', function (req, res, reportError)
 
 		res.send("OK");
 	});
+});
+
+router.post('/cloneplayer/:encounter_id', function (req, res, reportError)
+{
+	encounterService.clonePlayer(req.params.encounter_id, req.body.playerId, function(error, encounterPlayer)
+	{
+        if (error)
+        {
+            reportError(error);
+            return;
+        }
+
+        res.json(encounterPlayer);
+	})
 });
 
 router.get('/encounterstate/:encounter_id', function (req, res, reportError)

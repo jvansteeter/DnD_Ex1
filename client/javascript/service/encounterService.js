@@ -23,10 +23,11 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     this.modalCharacters = null;
     var characterModal = null;
 
-
     this.input_mode = 'default';        // default, note
     this.note_mode = 'sphere';          // sphere, --square, --cone
     this.note_size = 0;
+    this.note_visibility_states = [];   // {note_id: String, state: {full, ghost, off, locked}}
+    this.note_brush_sizes = [];         // {note_id: String, size: Number}
 
     this.mouse_scn_res = null;
     this.mouse_map_res = null;
@@ -40,22 +41,13 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         this.encounterID = inputID;
         var deferred = $q.defer();
         Profile.async().then(function () {
-            $http.get('api/encounter/' + this.encounterID).success(function (data) {
-                this.update().then(function () {
-                    deferred.resolve();
-                });
-            }.bind(this));
+            this.update().then(function () {
+                deferred.resolve();
+            });
         }.bind(this));
 
         return deferred.promise;
     }.bind(this);
-
-    /***********************************************************************************************
-     * SOCKET FUNCTIONS
-     ***********************************************************************************************/
-    socket.on('update:encounter', function (data) {
-        this.update();
-    }.bind(this));
 
 
     /***********************************************************************************************
@@ -65,12 +57,16 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      * Invokes a HTTP request that adds a default note to the encounter on the server, then emits a socket call
      * to provoke updates to all clients
      */
-    this.addNote = function () {
-        var url = 'api/encounter/addmapnotation/' + this.encounterState._id;
-        $http.get(url).then(function () {
-            socket.emit('update:encounter');
-            this.update();
-        }.bind(this));
+    this.addNote = function ()
+    {
+        // var url = 'api/encounter/addmapnotation/' + this.encounterState._id;
+        socket.emit('add:mapNotation');
+
+        // $http.get(url).then(function ()
+        // {
+        //     socket.emit('update:encounter');
+        //     this.update();
+        // }.bind(this));
     }.bind(this);
 
     /**
@@ -84,14 +80,16 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             this.input_mode = 'default';
         }
 
-        var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
-        var data = {
-            mapNotationId: note._id
-        };
-        $http.post(url, data).then(function () {
-            socket.emit('update:encounter');
-            this.update();
-        }.bind(this));
+        socket.emit('remove:mapNotation', note);
+
+        // var url = 'api/encounter/removemapnotation/' + this.encounterState._id;
+        // var data = {
+        //     mapNotationId: note._id
+        // };
+        // $http.post(url, data).then(function () {
+        //     socket.emit('update:encounter');
+        //     this.update();
+        // }.bind(this));
     }.bind(this);
 
     /**
@@ -99,19 +97,19 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
      * to provoke updates to all clients
      * @param note: the complete JSON object that represents the note to update
      */
-    this.updateNote = function (note) {
+    this.updateNote = function (note)
+    {
         var url = 'api/encounter/updatemapnotation';
         var data = {
             mapNotation: note
         };
-        $http.post(url, data).then(function () {
-            socket.emit('update:encounter');
-            this.update();
+        $http.post(url, data).then(function ()
+        {
+			socket.emit('update:mapNotation', note);
         }.bind(this))
     }.bind(this);
 
     this.getCurrentNote = function () {
-        console.log(this.selected_note_uid);
         if (this.selected_note_uid === null)
             return null;
         else
@@ -127,19 +125,95 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
         return null;
     }.bind(this);
 
-    this.addCellToNote = function(cell, note){
+    this.isNoteOwner = function(note){
+        return note.userId === Profile.getUserId();
+    }.bind(this);
 
-    };
+    this.loadNotes = function(){
+        var note_found;
+
+        for(i = 0; i < this.encounterState.mapNotations.length; i++){
+            var note = this.encounterState.mapNotations[i];
+            note_found = false;
+
+            for(j = 0; j < this.note_visibility_states.length; j++){
+                var note_state = this.note_visibility_states[j];
+                if(note._id === note_state.noteId){
+                    note_found = true;
+
+                    // if I am the note owner, don't mess with the note visibility
+                    if(this.isNoteOwner(note)){
+                        break;
+                    }
+
+                    // if I am not the note owner and the note is locked, lock it locally
+                    if(!note.canHide){
+                        note_state.state = "locked";
+                    }
+                    else{
+                        // otherwise, set it to full
+                        note_state.state = "full";
+                    }
+                    break;
+                }
+            }
+            if(!note_found){
+                // add an entry into the note visibility state
+                if(note.canHide)
+                    this.note_visibility_states.push({noteId: note._id, state: "full"});
+                else{
+                    if(this.isNoteOwner(note)){
+                        this.note_visibility_states.push({noteId: note._id, state: "full"});
+                    }
+                    else{
+                        this.note_visibility_states.push({noteId: note._id, state: "locked"});
+                    }
+                }
+            }
+        }
+    }.bind(this);
+
+    this.getNoteVisibilityObject = function(note){
+        for(var i = 0; i < this.note_visibility_states.length; i++){
+            var vis_state = this.note_visibility_states[i];
+            if(vis_state.noteId === note._id){
+                return vis_state;
+            }
+        }
+    }.bind(this);
+
+    this.addMapNotation = function(note)
+    {
+        this.encounterState.mapNotations.push(note);
+        this.loadNotes();
+        this.updateHasRun = true;
+    }.bind(this);
+
+    this.removeMapNotation = function(note)
+    {
+        for (var i = 0; i < this.encounterState.mapNotations.length; i++)
+        {
+            var currentNote = this.encounterState.mapNotations[i];
+            if (currentNote._id === note._id)
+            {
+                this.encounterState.mapNotations.splice(i, 1);
+                this.loadNotes();
+                this.updateHasRun = true;
+            }
+        }
+    }.bind(this);
 
 
     /***********************************************************************************************
      * ENCOUNTER FUNCTIONS
      ***********************************************************************************************/
-    this.update = function () {
+    this.update = function ()
+    {
         var deferred = $q.defer();
         var url = 'api/encounter/encounterstate/' + this.encounterID;
         $http.get(url).success(function (data) {
             this.encounterState = data;
+            this.loadNotes();
             this.updateHasRun = true;
             deferred.resolve();
         }.bind(this)).error(function () {
@@ -181,6 +255,39 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
     /***********************************************************************************************
      * PLAYER FUNCTIONS
      ***********************************************************************************************/
+    this.clonePlayer = function (player)
+    {
+        var url = 'api/encounter/cloneplayer/' + this.encounterID;
+        var data = {
+            playerId: player._id
+        };
+
+        $http.post(url, data).success(function (player)
+        {
+            this.addPlayer(player);
+            socket.emit('add:player', player);
+        }.bind(this));
+    }.bind(this);
+
+    this.addPlayer = function(player)
+    {
+        this.encounterState.players.push(player);
+        this.updateHasRun = true;
+    }.bind(this);
+
+    this.removePlayer = function(player)
+    {
+        for (var i = 0; i < this.encounterState.players.length; i++)
+        {
+            var currentPlayer = this.encounterState.players[i];
+            if (currentPlayer._id === player._id)
+            {
+                this.encounterState.players.splice(i, 1);
+                this.updateHasRun = true;
+            }
+        }
+    }.bind(this);
+
     this.updatePlayer_byIndex = function (index) {
         var player = this.encounterState.players[index];
         var url = 'api/encounter/updateplayer';
@@ -231,11 +338,52 @@ clientApp.service('EncounterService', function ($http, $q, Profile, socket, $uib
             characterId: this.modalCharacters[index]._id
         };
 
-        $http.post(url, data).success(function (data) {
-            socket.emit('update:encounter');
-            this.update();
+        $http.post(url, data).success(function (player) {
+            socket.emit('add:player', player);
+            this.addPlayer(player);
             characterModal.close();
         }.bind(this));
+    }.bind(this);
+
+    this.setPlayer = function (player)
+    {
+        for (var i = 0; i < this.encounterState.players.length; i++)
+        {
+            if (this.encounterState.players[i]._id === player._id)
+            {
+                var localPlayer = this.encounterState.players[i];
+
+                localPlayer.name = player.name;
+                localPlayer.iconURL = player.iconURL;
+                localPlayer.initiative = player.initiative;
+                localPlayer.armorClass = player.armorClass;
+                localPlayer.damage = player.damage;
+                localPlayer.maxHitPoints = player.maxHitPoints;
+                localPlayer.passivePerception = player.passivePerception;
+                localPlayer.speed = player.speed;
+                localPlayer.status = player.status;
+                localPlayer.visible = player.visible;
+                localPlayer.saves = player.saves;
+                localPlayer.mapX = player.mapX;
+                localPlayer.mapY = player.mapY;
+                var j;
+                for (j = 0; j < player.actions.length; j++)
+                {
+                    if (j >= localPlayer.actions.length)
+                    {
+                        localPlayer.actions.push({});
+                    }
+
+                    localPlayer.actions[j].name = player.actions[j].name;
+                    localPlayer.actions[j].range = player.actions[j].range;
+                    localPlayer.actions[j].details = player.actions[j].details;
+                }
+                if (j < localPlayer.actions.length)
+                {
+                    localPlayer.splice(j);
+                }
+            }
+        }
     }.bind(this);
 
     /***********************************************************************************************

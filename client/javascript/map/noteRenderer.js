@@ -26,20 +26,48 @@ clientApp.controller('noteRenderer', function ($scope, $window, EncounterService
 
         for(var k = 0; k < EncounterService.encounterState.mapNotations.length; k++){
             var note_group = EncounterService.encounterState.mapNotations[k];
-            context.fillStyle = note_group.color;
 
-            var cells = note_group.cells;
-            for(var j = 0; j < cells.length; j++){
-                var x = cells[j].x;
-                var y = cells[j].y;
+            if(note_group.isPublic || EncounterService.isNoteOwner(note_group)){
+                context.fillStyle = note_group.color;
 
-                context.fillRect(tileSize * x, tileSize * y, tileSize, tileSize);
+                var cells = note_group.cells;
+                for(var j = 0; j < cells.length; j++){
+                    var x = cells[j].x;
+                    var y = cells[j].y;
+
+                    var note_vis = EncounterService.getNoteVisibilityObject(note_group);
+                    switch(note_vis.state){
+                        case 'full':
+                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize + 1, tileSize + 1);
+                            break;
+                        case 'ghost':
+                            var start_alpha = getNoteColorAlpha(note_group);
+                            context.fillStyle = genNewColorStringForContext_Alpha(note_group, start_alpha / 3);
+                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize + 1, tileSize + 1);
+                            break;
+                        case 'off':
+                            break;
+                        case 'locked':
+                            context.fillRect(tileSize * x - 1, tileSize * y - 1, tileSize + 1, tileSize + 1);
+                            break;
+                    }
+                }
             }
         }
 
         $window.requestAnimationFrame(draw);
 	}
 
+	function getNoteColorAlpha(note){
+        var alphaValue = note.color.split(',')[3].split(')')[0];
+        return parseFloat(alphaValue);
+    }
+
+    function genNewColorStringForContext_Alpha(note, alpha){
+	    var colorParts = note.color.split(',');
+	    colorParts[3] = alpha + ')';
+	    return colorParts.join(',');
+    }
 
     //******************************************************************************
 	// Renderer Generic
